@@ -66,6 +66,7 @@ body {
   color: var(--text-charcoal);
   line-height: 1.6;
   overflow-x: hidden;
+  padding-top: 80px;
 }
 
 /* --- Typography --- */
@@ -123,6 +124,8 @@ a:hover {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 var(--spacing-md);
+  position: relative;
+  min-height: 60px;
 }
 
 .nav-logo {
@@ -133,6 +136,7 @@ a:hover {
   display: flex;
   align-items: center;
   gap: var(--spacing-xs);
+  z-index: 1001;
 }
 
 .nav-logo-icon {
@@ -141,9 +145,14 @@ a:hover {
 }
 
 .nav-links {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-md);
   list-style: none;
+  align-items: center;
+  white-space: nowrap;
 }
 
 .nav-links a {
@@ -151,9 +160,13 @@ a:hover {
   font-weight: 600;
   font-size: 1rem;
   color: var(--text-charcoal);
-  padding: var(--spacing-xs) var(--spacing-sm);
+  padding: 0.5rem 1.1rem 0.5rem; /* Balanced padding */
   border-radius: var(--radius-full);
   transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
 .nav-links a:hover,
@@ -226,56 +239,82 @@ a:hover {
   align-items: center;
   justify-content: center;
   gap: var(--spacing-xs);
-  padding: var(--spacing-sm) var(--spacing-lg);
+  padding: 0.75rem 1.5rem;
   font-family: var(--font-display);
   font-size: 1.125rem;
-  font-weight: 700;
-  border: none;
+  font-weight: 800;
   border-radius: var(--radius-full);
+  border: 2px solid var(--text-charcoal);
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: all 0.15s ease-in-out;
   text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Highlight Streak */
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -110%;
+  width: 5rem;
+  height: 10rem;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-50%) rotate(20deg);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  pointer-events: none;
+  z-index: -1; /* Place behind text but above parent background? Wait... */
+}
+
+/* To keep the streak ABOVE the button background but BELOW the text, 
+   we need the text to be in its own layer or use a different strategy.
+   Actually, z-index: -1 on ::after with z-index: 1 on parent only works 
+    if parent has no background. 
+   So we'll use a span or just keep ::after on top but very transparent. */
+
+.btn:hover::after {
+  left: 150%;
 }
 
 .btn-primary {
   background: var(--primary-orange);
-  color: white;
-  box-shadow: var(--shadow-button);
+  color: var(--text-charcoal) !important;
 }
 
 .btn-primary:hover {
-  background: var(--primary-orange-dark);
-  color: white;
-  transform: translateY(2px);
-  box-shadow: var(--shadow-button-hover);
+  transform: translateY(-4px);
+  box-shadow: 0 4px 0 0 var(--text-charcoal);
 }
 
 .btn-primary:active {
-  transform: translateY(4px);
+  transform: translateY(0);
   box-shadow: none;
 }
 
 .btn-secondary {
   background: var(--accent-yellow);
   color: var(--text-charcoal);
-  box-shadow: var(--shadow-button);
+  box-shadow: none;
 }
 
 .btn-secondary:hover {
-  background: var(--accent-yellow-dark);
+  background: var(--accent-yellow);
   color: var(--text-charcoal);
-  transform: translateY(2px);
-  box-shadow: var(--shadow-button-hover);
+  transform: translateY(-4px);
+  box-shadow: 0 4px 0 0 var(--text-charcoal);
 }
 
 .btn-secondary:active {
-  transform: translateY(4px);
+  transform: translateY(0);
   box-shadow: none;
 }
 
 .btn-large {
-  padding: var(--spacing-md) var(--spacing-xl);
+  padding: 1rem 2.5rem;
   font-size: 1.25rem;
+  flex-shrink: 0;
 }
 
 /* --- Cards --- */
@@ -317,11 +356,11 @@ a:hover {
 
 .hero-headline {
   font-family: var(--font-display);
-  font-size: clamp(3rem, 8vw, 6rem);
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
   font-weight: 800;
   color: var(--primary-orange);
   margin-bottom: var(--spacing-sm);
-  animation: float 3s ease-in-out infinite;
+  animation: floatSubtle 4s ease-in-out infinite;
 }
 
 .hero-subheadline {
@@ -620,6 +659,11 @@ a:hover {
   50% { transform: translateY(-20px); }
 }
 
+@keyframes floatSubtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -744,7 +788,6 @@ a:hover {
 /* --- Main Content Wrapper --- */
 main {
   min-height: calc(100vh - 200px);
-  padding-top: 80px;
 }
 
 main.no-nav-padding {

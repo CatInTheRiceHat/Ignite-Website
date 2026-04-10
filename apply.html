@@ -32,7 +32,7 @@
         <li><a href="program.html">Program</a></li>
         <li><a href="curriculum.html">Curriculum</a></li>
         <li><a href="faq.html">FAQ</a></li>
-        <li><a href="apply.html" class="btn btn-primary" style="padding: 0.5rem 1.5rem; color: white;">Apply</a></li>
+        <li><a href="apply.html" class="btn btn-primary" >Apply</a></li>
       </ul>
     </div>
   </nav>
@@ -49,10 +49,19 @@
   <section class="section">
     <div class="container">
       <p class="section-subtitle fade-in" style="text-align: center; max-width: 500px;">
-        This form takes about 5 minutes. We read every application.
+        This form takes about 5 minutes. Everyone who applies is welcome!
       </p>
 
-      <div class="contact-form fade-in">
+      <div class="application-type-selector fade-in" style="text-align: center; margin-bottom: 2rem;">
+        <h2 style="margin-bottom: 1rem;">I am applying as a...</h2>
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+          <button type="button" id="btnStudent" class="btn btn-primary" onclick="showForm('student')" style="min-width: 150px;">Student</button>
+          <button type="button" id="btnMentor" class="btn btn-secondary" onclick="showForm('mentor')" style="min-width: 150px;">Mentor</button>
+        </div>
+      </div>
+
+      <!-- Student Form -->
+      <div id="studentFormSection" class="contact-form fade-in">
         <form id="applyForm">
           <div class="form-group">
             <label for="studentName">Student Name *</label>
@@ -80,19 +89,11 @@
           </div>
 
           <div class="form-group">
-            <label for="interestLevel">Interest Level *</label>
-            <select id="interestLevel" name="interestLevel" required style="width: 100%; padding: 0.75rem 1rem; font-family: var(--font-primary); font-size: 1rem; border: 3px solid #E0E0E0; border-radius: var(--radius-md); background: var(--bg-cream);">
-              <option value="">Select one</option>
-              <option value="very-interested">Very interested - I really want to join!</option>
-              <option value="interested">Interested - I'd like to learn more</option>
-              <option value="curious">Curious - Just exploring options</option>
-            </select>
+            <label for="availability">Dates of Availability *</label>
+            <input type="text" id="availability" name="availability" placeholder="e.g. Mid-June to August, any time" required>
           </div>
 
-          <div class="form-group">
-            <label for="whyInterested">Why are you interested in Ignite? *</label>
-            <textarea id="whyInterested" name="whyInterested" placeholder="Tell us what excites you about this program... (a few sentences is perfect)" required style="min-height: 120px;"></textarea>
-          </div>
+
 
           <div class="form-group">
             <label for="parentName">Parent/Guardian Name</label>
@@ -106,6 +107,44 @@
 
           <button type="submit" class="btn btn-primary btn-large" style="width: 100%;">
             Submit Application 🔥
+          </button>
+        </form>
+      </div>
+
+      <!-- Mentor Form -->
+      <div id="mentorFormSection" class="contact-form fade-in" style="display: none;">
+        <form id="applyMentorForm">
+          <div class="form-group">
+            <label for="mentorName">Mentor Name *</label>
+            <input type="text" id="mentorName" name="mentorName" placeholder="First and last name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="mentorGrade">Current Grade *</label>
+            <select id="mentorGrade" name="mentorGrade" required style="width: 100%; padding: 0.75rem 1rem; font-family: var(--font-primary); font-size: 1rem; border: 3px solid #E0E0E0; border-radius: var(--radius-md); background: var(--bg-cream);">
+              <option value="">Select grade</option>
+              <option value="9">9th Grade</option>
+              <option value="10">10th Grade</option>
+              <option value="11">11th Grade</option>
+              <option value="12">12th Grade</option>
+              <option value="College">College</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="mentorSchool">School *</label>
+            <input type="text" id="mentorSchool" name="mentorSchool" placeholder="Your high school or college" required>
+          </div>
+
+          <div class="form-group">
+            <label for="mentorEmail">Email Address *</label>
+            <input type="email" id="mentorEmail" name="mentorEmail" placeholder="Your best contact email" required>
+          </div>
+
+
+
+          <button type="submit" class="btn btn-primary btn-large" style="width: 100%;">
+            Submit Mentor Application 🔥
           </button>
         </form>
       </div>
@@ -123,14 +162,14 @@
           <p>You'll receive a confirmation email within 48 hours.</p>
         </div>
         <div class="feature-card fade-in">
-          <span class="feature-icon">📋</span>
-          <h3>2. Review</h3>
-          <p>Our team reviews your application personally.</p>
+          <span class="feature-icon">💻</span>
+          <h3>2. Zoom Details</h3>
+          <p>We'll send you the Zoom links and program schedule.</p>
         </div>
         <div class="feature-card fade-in">
           <span class="feature-icon">✅</span>
-          <h3>3. Decision</h3>
-          <p>Acceptance letters go out on a rolling basis.</p>
+          <h3>3. Get Ready!</h3>
+          <p>All applicants are welcome. Get ready to start learning!</p>
         </div>
       </div>
     </div>
@@ -159,6 +198,20 @@
 
   <script src="js/main.js"></script>
   <script>
+    function showForm(type) {
+      if (type === 'student') {
+        document.getElementById('studentFormSection').style.display = 'block';
+        document.getElementById('mentorFormSection').style.display = 'none';
+        document.getElementById('btnStudent').className = 'btn btn-primary';
+        document.getElementById('btnMentor').className = 'btn btn-secondary';
+      } else {
+        document.getElementById('studentFormSection').style.display = 'none';
+        document.getElementById('mentorFormSection').style.display = 'block';
+        document.getElementById('btnStudent').className = 'btn btn-secondary';
+        document.getElementById('btnMentor').className = 'btn btn-primary';
+      }
+    }
+
     document.getElementById('applyForm').addEventListener('submit', function(e) {
       e.preventDefault();
 
@@ -166,8 +219,7 @@
       const grade = document.getElementById('grade').value;
       const school = document.getElementById('school').value;
       const email = document.getElementById('email').value;
-      const interestLevel = document.getElementById('interestLevel').value;
-      const whyInterested = document.getElementById('whyInterested').value;
+      const availability = document.getElementById('availability').value;
       const parentName = document.getElementById('parentName').value;
       const parentEmail = document.getElementById('parentEmail').value;
 
@@ -179,8 +231,7 @@
         `Grade: ${grade}\n` +
         `School: ${school}\n` +
         `Email: ${email}\n` +
-        `Interest Level: ${interestLevel}\n` +
-        `\nWhy Interested:\n${whyInterested}\n` +
+        `Availability: ${availability}\n` +
         `\nParent/Guardian:\n` +
         `Name: ${parentName || 'N/A'}\n` +
         `Email: ${parentEmail || 'N/A'}\n`
@@ -189,6 +240,30 @@
       window.location.href = `mailto:ignite.saratoga@gmail.com?subject=${subject}&body=${body}`;
 
       alert('Thanks for applying! Your email client should open to send the application. 🔥');
+      this.reset();
+    });
+
+    document.getElementById('applyMentorForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const mentorName = document.getElementById('mentorName').value;
+      const mentorGrade = document.getElementById('mentorGrade').value;
+      const mentorSchool = document.getElementById('mentorSchool').value;
+      const mentorEmail = document.getElementById('mentorEmail').value;
+
+      const subject = encodeURIComponent(`Ignite Mentor Application: ${mentorName}`);
+      const body = encodeURIComponent(
+        `Mentor Application\n` +
+        `-------------------\n` +
+        `Name: ${mentorName}\n` +
+        `Grade: ${mentorGrade}\n` +
+        `School: ${mentorSchool}\n` +
+        `Email: ${mentorEmail}\n`
+      );
+
+      window.location.href = `mailto:ignite.saratoga@gmail.com?subject=${subject}&body=${body}`;
+
+      alert('Thanks for applying to be a mentor! Your email client should open to send the application. 🔥');
       this.reset();
     });
   </script>
