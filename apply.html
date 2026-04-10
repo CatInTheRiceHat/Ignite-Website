@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apply - Ignite</title>
+  <meta name="description" content="Apply for Ignite, a free summer mentorship program for middle school students.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-icon">🔥</span>
+        Ignite
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="mentors.html">Mentors</a></li>
+        <li><a href="program.html">Program</a></li>
+        <li><a href="curriculum.html">Curriculum</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="apply.html" class="btn btn-primary" style="padding: 0.5rem 1.5rem; color: white;">Apply</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1>Apply to Ignite 🔥</h1>
+      <p>Ready to find your fire? Let's get started.</p>
+    </div>
+  </section>
+
+  <!-- Application Form -->
+  <section class="section">
+    <div class="container">
+      <p class="section-subtitle fade-in" style="text-align: center; max-width: 500px;">
+        This form takes about 5 minutes. We read every application.
+      </p>
+
+      <div class="contact-form fade-in">
+        <form id="applyForm">
+          <div class="form-group">
+            <label for="studentName">Student Name *</label>
+            <input type="text" id="studentName" name="studentName" placeholder="First and last name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="grade">Current Grade *</label>
+            <select id="grade" name="grade" required style="width: 100%; padding: 0.75rem 1rem; font-family: var(--font-primary); font-size: 1rem; border: 3px solid #E0E0E0; border-radius: var(--radius-md); background: var(--bg-cream);">
+              <option value="">Select grade</option>
+              <option value="6">6th Grade</option>
+              <option value="7">7th Grade</option>
+              <option value="8">8th Grade</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="school">School *</label>
+            <input type="text" id="school" name="school" placeholder="Your middle school" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" placeholder="Student or parent email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="interestLevel">Interest Level *</label>
+            <select id="interestLevel" name="interestLevel" required style="width: 100%; padding: 0.75rem 1rem; font-family: var(--font-primary); font-size: 1rem; border: 3px solid #E0E0E0; border-radius: var(--radius-md); background: var(--bg-cream);">
+              <option value="">Select one</option>
+              <option value="very-interested">Very interested - I really want to join!</option>
+              <option value="interested">Interested - I'd like to learn more</option>
+              <option value="curious">Curious - Just exploring options</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="whyInterested">Why are you interested in Ignite? *</label>
+            <textarea id="whyInterested" name="whyInterested" placeholder="Tell us what excites you about this program... (a few sentences is perfect)" required style="min-height: 120px;"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="parentName">Parent/Guardian Name</label>
+            <input type="text" id="parentName" name="parentName" placeholder="Optional">
+          </div>
+
+          <div class="form-group">
+            <label for="parentEmail">Parent/Guardian Email</label>
+            <input type="email" id="parentEmail" name="parentEmail" placeholder="Optional">
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-large" style="width: 100%;">
+            Submit Application 🔥
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- What Happens Next -->
+  <section class="section" style="background: var(--card-white);">
+    <div class="container">
+      <h2 class="section-title fade-in">What Happens Next?</h2>
+      <div class="grid-3">
+        <div class="feature-card fade-in">
+          <span class="feature-icon">📧</span>
+          <h3>1. Confirmation</h3>
+          <p>You'll receive a confirmation email within 48 hours.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <span class="feature-icon">📋</span>
+          <h3>2. Review</h3>
+          <p>Our team reviews your application personally.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <span class="feature-icon">✅</span>
+          <h3>3. Decision</h3>
+          <p>Acceptance letters go out on a rolling basis.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Questions -->
+  <section class="section">
+    <div class="container">
+      <p class="section-subtitle fade-in" style="text-align: center;">
+        Have questions before applying?
+        <a href="faq.html" style="font-weight: 700;">Check our FAQ</a> or
+        <a href="mailto:ignite.saratoga@gmail.com" style="font-weight: 700;">email us</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <span class="footer-logo">🔥 Ignite</span>
+        <p class="footer-text">Find your fire. © 2026</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById('applyForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const studentName = document.getElementById('studentName').value;
+      const grade = document.getElementById('grade').value;
+      const school = document.getElementById('school').value;
+      const email = document.getElementById('email').value;
+      const interestLevel = document.getElementById('interestLevel').value;
+      const whyInterested = document.getElementById('whyInterested').value;
+      const parentName = document.getElementById('parentName').value;
+      const parentEmail = document.getElementById('parentEmail').value;
+
+      const subject = encodeURIComponent(`Ignite Application: ${studentName}`);
+      const body = encodeURIComponent(
+        `Student Application\n` +
+        `-------------------\n` +
+        `Name: ${studentName}\n` +
+        `Grade: ${grade}\n` +
+        `School: ${school}\n` +
+        `Email: ${email}\n` +
+        `Interest Level: ${interestLevel}\n` +
+        `\nWhy Interested:\n${whyInterested}\n` +
+        `\nParent/Guardian:\n` +
+        `Name: ${parentName || 'N/A'}\n` +
+        `Email: ${parentEmail || 'N/A'}\n`
+      );
+
+      window.location.href = `mailto:ignite.saratoga@gmail.com?subject=${subject}&body=${body}`;
+
+      alert('Thanks for applying! Your email client should open to send the application. 🔥');
+      this.reset();
+    });
+  </script>
+</body>
+</html>
