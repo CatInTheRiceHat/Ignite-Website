@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-cream: #FFF8F0;
+    --primary-orange: #F07B2A;
+    --primary-orange-dark: #D46A20;
+    --accent-yellow: #FFD166;
+    --accent-yellow-dark: #E5B852;
+    --text-charcoal: #1A1A2E;
+    --text-light: #4A4A5E;
+    --card-white: #FFFFFF;
+    --success-green: #58CC02;
+  }
+
+  body {
+    @apply bg-[var(--bg-cream)] text-[var(--text-charcoal)] font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold;
+  }
+}
