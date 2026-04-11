@@ -245,8 +245,8 @@
 :root {
   /* Colors */
   --bg-cream: #FFF8F0;
-  --primary-orange: #FF6B35;
-  --primary-orange-dark: #E55A2B;
+  --primary-orange: #F07B2A;
+  --primary-orange-dark: #D46A20;
   --accent-yellow: #FFD166;
   --accent-yellow-dark: #E5B852;
   --text-charcoal: #1A1A2E;
@@ -371,8 +371,9 @@ a:hover {
   margin: 0 auto;
   padding: 0 var(--spacing-md);
   position: relative;
-  min-height: 60px;
-  gap: var(--spacing-lg);
+  min-height: 80px;
+  flex-direction: column;
+  gap: var(--spacing-sm);
 }
 
 .nav-logo {
@@ -384,12 +385,11 @@ a:hover {
   align-items: center;
   gap: var(--spacing-xs);
   z-index: 1001;
-  position: absolute;
-  left: var(--spacing-md);
 }
 
 .nav-logo-icon {
   font-size: 2rem;
+  animation: none !important;
 }
 
 .nav-links {
@@ -441,6 +441,12 @@ a:hover {
 
 /* Mobile Navigation */
 @media (max-width: 768px) {
+  .nav-container {
+    flex-direction: row;
+    justify-content: space-between;
+    min-height: 60px;
+  }
+
   .nav-toggle {
     display: flex;
   }
@@ -608,29 +614,27 @@ a:hover {
 }
 
 .hero-content {
-  max-width: 700px;
+  max-width: 800px;
   position: relative;
   z-index: 2;
-  margin-left: auto;
-  margin-right: -250px;
+  margin: 0 auto;
 }
 
 .hero-headline {
   font-family: var(--font-rammetto);
-  font-size: clamp(4rem, 11vw, 6rem);
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
   font-weight: 400;
   color: white;
   margin-bottom: var(--spacing-sm);
-  text-shadow: 2px 2px 8px rgba(26, 26, 46, 0.3);
-  animation: floatSubtle 4s ease-in-out infinite;
+  text-shadow: 2px 2px 8px rgba(26, 26, 46, 0.4);
 }
 
 .hero-subheadline {
-  font-size: clamp(1.75rem, 5vw, 2.75rem);
+  font-size: clamp(1.25rem, 4vw, 2rem);
   color: white;
   margin-bottom: var(--spacing-md);
   font-weight: 600;
-  text-shadow: 1px 1px 4px rgba(26, 26, 46, 0.2);
+  text-shadow: 1px 1px 4px rgba(26, 26, 46, 0.3);
 }
 
 .hero-flame {
@@ -723,7 +727,6 @@ a:hover {
 .feature-icon {
   font-size: 4rem;
   margin-bottom: var(--spacing-md);
-  animation: float 3s ease-in-out infinite;
   display: inline-block;
 }
 
@@ -1123,4 +1126,85 @@ main {
 
 main.no-nav-padding {
   padding-top: 0;
+}
+
+/* --- Section Backgrounds --- */
+.section-with-bg {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  isolation: isolate;
+  min-height: 800px;
+  display: flex;
+  align-items: center;
+}
+
+.section-with-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 26, 46, 0.2); /* Dark overlay for readability */
+  z-index: -1;
+}
+
+.bg-what-you-get { background-image: url('../assets/What%20You\'ll%20Get.png'); }
+.bg-who-is-ignite { background-image: url('../assets/Who%20is%20Ignite%20For.png'); }
+.bg-program-overview { background-image: url('../assets/Program%20Overview.png'); }
+.bg-meet-mentors { background-image: url('../assets/Meet%20Your%20Mentors.png'); }
+
+/* Chalkboard Layout */
+.chalkboard-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 100px !important;
+  text-align: center;
+}
+
+.chalkboard-layout .section-title {
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.chalkboard-layout .grid-3 {
+  margin-top: 40px;
+}
+
+/* Circular Testimonials Layout */
+.circular-testimonials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 4rem 0;
+}
+
+.circular-testimonials .feature-card {
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  aspect-ratio: 1 / 1;
+}
+
+.circular-testimonials .feature-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+/* Responsive Scaling for Hero Graphic */
+.hero-flame img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  margin-top: 40px;
 }
