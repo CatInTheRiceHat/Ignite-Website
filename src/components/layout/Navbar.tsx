@@ -18,8 +18,10 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 h-24 flex flex-col md:flex-row items-center justify-between transition-all duration-300">
         {/* Mobile Header */}
         <div className="w-full md:w-auto flex items-center justify-between h-20 md:h-auto">
-          <Link to="/" className="flex items-center gap-2 text-2xl font-rammetto text-[var(--primary-orange)]">
-            <img src="/assets/Logo.png" alt="Ignite" className="w-8 h-8" />
+          <Link to="/" className="flex items-center gap-3 text-2xl font-rammetto text-[var(--primary-orange)] group">
+            <div className="bg-white p-1 rounded-lg transition-transform group-hover:scale-105">
+              <img src="/assets/Logo.png" alt="Ignite" className="w-10 h-10 object-contain" />
+            </div>
             Ignite
           </Link>
           
