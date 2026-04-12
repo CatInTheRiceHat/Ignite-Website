@@ -6,9 +6,19 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
-        'ignite-orange': '#F07B2A',
-        'ignite-orange-dark': '#D46A20',
+      animation: {
+        'marquee': 'marquee 35s linear infinite',
+        'marquee-reverse': 'marquee-reverse 35s linear infinite',
+      },
+      keyframes: {
+        'marquee': {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-100%)' },
+        },
+        'marquee-reverse': {
+          from: { transform: 'translateX(-100%)' },
+          to: { transform: 'translateX(0)' },
+        },
       },
       fontFamily: {
         sans: ['Nunito', 'sans-serif'],

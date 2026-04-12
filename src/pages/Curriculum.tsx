@@ -71,7 +71,7 @@ const Curriculum = () => {
       {/* Key Skills Section */}
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-4xl font-rammetto text-center text-[var(--primary-orange)] mb-16 underline decoration-double">Key Skills You'll Learn</h2>
+          <h2 className="text-4xl font-rammetto text-center text-[var(--primary-orange)] mb-16">Key Skills You'll Learn</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {keySkills.map((skill, i) => (
               <div key={i} className="bg-white p-10 rounded-3xl text-center shadow-sm hover:shadow-md transition-shadow group">

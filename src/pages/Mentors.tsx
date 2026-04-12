@@ -1,3 +1,5 @@
+import BlurFade from '../components/ui/blur-fade';
+
 const Mentors = () => {
   const mentors = [
     {
@@ -63,10 +65,11 @@ const Mentors = () => {
       {/* Mentors Grid */}
       <section className="pb-32">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl font-rammetto text-center text-[var(--text-charcoal)] mb-12 underline decoration-[var(--primary-orange)] decoration-4 underline-offset-8">Leadership Team</h2>
+          <h2 className="text-3xl font-rammetto text-center text-[var(--text-charcoal)] mb-12">Leadership Team</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {mentors.map((mentor, index) => (
-              <div key={index} className="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border-b-8 border-[var(--primary-orange)] hover:-translate-y-2 group">
+              <BlurFade key={index} delay={index * 0.08}>
+              <div className="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border-b-8 border-[var(--primary-orange)] hover:-translate-y-2 group h-full">
                 <div className="flex items-center gap-6 mb-8">
                   <div className="w-20 h-20 bg-orange-100 rounded-2xl flex items-center justify-center text-4xl font-rammetto text-[var(--primary-orange)] shadow-inner transform group-hover:rotate-6 transition-transform">
                     {mentor.initial}
@@ -91,6 +94,7 @@ const Mentors = () => {
                    <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-gray-400 hover:bg-[var(--primary-orange)] hover:text-white transition-colors cursor-pointer">📧</div>
                 </div>
               </div>
+              </BlurFade>
             ))}
           </div>
         </div>
@@ -99,7 +103,7 @@ const Mentors = () => {
       {/* Call to Action */}
       <section className="py-24 bg-white rounded-t-[4rem]">
         <div className="max-w-4xl mx-auto px-4 text-center">
-            <h2 className="text-4xl font-rammetto text-[var(--primary-orange)] mb-6 underline decoration-dashed decoration-2">Want to Join the Team?</h2>
+            <h2 className="text-4xl font-rammetto text-[var(--primary-orange)] mb-6">Want to Join the Team?</h2>
             <p className="text-lg text-[var(--text-light)] mb-10">
               We are always looking for passionate high school students to join our mentorship program as volunteers. 
               Gain leadership experience and give back to your community.

@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
+import { motion, useScroll, useSpring } from 'framer-motion';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 200, damping: 40, restDelta: 0.001 });
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -15,6 +18,10 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
+      <motion.div
+        style={{ scaleX }}
+        className="absolute bottom-0 left-0 right-0 h-[3px] bg-[var(--primary-orange)] origin-left z-50"
+      />
       <div className="max-w-7xl mx-auto px-4 h-24 md:h-28 flex flex-col md:flex-row items-center justify-between transition-all duration-300">
         {/* Mobile Header */}
         <div className="w-full md:w-auto flex items-center justify-between h-20 md:h-auto">

@@ -81,7 +81,7 @@ const Program = () => {
       {/* Program Structure */}
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-4xl font-rammetto text-center text-[var(--primary-orange)] mb-16 underline decoration-double">Program Structure</h2>
+          <h2 className="text-4xl font-rammetto text-center text-[var(--primary-orange)] mb-16">Program Structure</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {programStructure.map((item, i) => (
               <div key={i} className="bg-white p-8 rounded-[2rem] shadow-sm text-center hover:scale-105 transition-all border-2 border-transparent hover:border-orange-200">
@@ -97,7 +97,7 @@ const Program = () => {
       {/* What Students Will Do */}
       <section className="py-24 bg-white rounded-[4rem]">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-rammetto text-center text-[var(--primary-orange)] mb-16 underline decoration-wavy">What Students Will Do</h2>
+          <h2 className="text-4xl md:text-5xl font-rammetto text-center text-[var(--primary-orange)] mb-16">What Students Will Do</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {studentActivities.map((item, i) => (
               <div key={i} className="flex gap-8 p-8 bg-[var(--bg-cream)] rounded-[2.5rem] hover:bg-orange-50 transition-colors group">
@@ -117,7 +117,7 @@ const Program = () => {
       {/* Sample Activities */}
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-rammetto text-center text-[var(--primary-orange)] mb-16 underline decoration-wavy">Sample Activities</h2>
+          <h2 className="text-4xl md:text-5xl font-rammetto text-center text-[var(--primary-orange)] mb-16">Sample Activities</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {sampleActivities.map((item, i) => (
               <div key={i} className="bg-white p-10 rounded-[2.5rem] shadow-sm hover:shadow-xl transition-shadow border-t-8 border-[var(--primary-orange)] group">
@@ -133,7 +133,7 @@ const Program = () => {
       {/* Guest Speakers Section */}
       <section className="py-24 bg-white rounded-[4rem]">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)] mb-16 underline decoration-wavy">Guest Speakers</h2>
+          <h2 className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)] mb-16">Guest Speakers</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
               { icon: '🔬', field: 'STEM', desc: 'Scientists, engineers, and tech professionals sharing their journeys.' },

@@ -1,3 +1,5 @@
+import BlurFade from '../components/ui/blur-fade';
+
 const About = () => {
   return (
     <div className="bg-[var(--bg-cream)]">
@@ -14,7 +16,7 @@ const About = () => {
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-            <div className="space-y-6">
+            <BlurFade className="space-y-6">
               <h2 className="text-4xl font-rammetto text-[var(--primary-orange)]">Our Story</h2>
               <p className="text-xl font-semibold text-[var(--text-charcoal)]">
                 Ignite started with a failure — and that's exactly why it exists.
@@ -35,12 +37,12 @@ const About = () => {
                   learned the hard way, and want to light the path for the next generation.
                 </p>
               </div>
-            </div>
-            <div className="relative">
+            </BlurFade>
+            <BlurFade delay={0.15} className="relative">
               <div className="bg-orange-100 rounded-[3rem] p-12 aspect-square flex items-center justify-center transform hover:rotate-3 transition-transform duration-500 shadow-xl">
                  <img src="/assets/Hero.png" alt="Hero flame" className="w-full max-w-[250px] drop-shadow-2xl animate-float" />
               </div>
-            </div>
+            </BlurFade>
           </div>
         </div>
       </section>
@@ -48,30 +50,32 @@ const About = () => {
       {/* Mission Section */}
       <section className="py-24 bg-white rounded-[4rem]">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-rammetto text-center text-[var(--primary-orange)] mb-16 underline decoration-wavy">Our Mission</h2>
+          <h2 className="text-4xl md:text-5xl font-rammetto text-center text-[var(--primary-orange)] mb-16">Our Mission</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { 
-                icon: <img src="/assets/Lightbulb.png" alt="Access" className="w-12 h-12" />, 
-                title: 'Access', 
-                desc: "We believe every student deserves access to career mentorship — regardless of background or budget. That's why Ignite is 100% free." 
+              {
+                icon: <img src="/assets/Lightbulb.png" alt="Access" className="w-12 h-12" />,
+                title: 'Access',
+                desc: "We believe every student deserves access to career mentorship — regardless of background or budget. That's why Ignite is 100% free."
               },
-              { 
-                icon: '🤝', 
-                title: 'Connection', 
-                desc: "We connect middle schoolers with high school mentors who understand their challenges and can guide them forward." 
+              {
+                icon: '🤝',
+                title: 'Connection',
+                desc: "We connect middle schoolers with high school mentors who understand their challenges and can guide them forward."
               },
-              { 
-                icon: '🚀', 
-                title: 'Empowerment', 
-                desc: "We teach practical skills that students can use immediately — from professional communication to public speaking." 
+              {
+                icon: '🚀',
+                title: 'Empowerment',
+                desc: "We teach practical skills that students can use immediately — from professional communication to public speaking."
               }
             ].map((item, i) => (
-              <div key={i} className="bg-[var(--bg-cream)] p-10 rounded-3xl border-2 border-orange-50 hover:border-[var(--primary-orange)] transition-colors shadow-sm group">
-                <div className="text-4xl mb-6 group-hover:scale-110 transition-transform">{item.icon}</div>
-                <h3 className="text-2xl font-bold mb-4 text-[var(--text-charcoal)]">{item.title}</h3>
-                <p className="text-[var(--text-light)] text-lg leading-relaxed">{item.desc}</p>
-              </div>
+              <BlurFade key={i} delay={i * 0.1}>
+                <div className="bg-[var(--bg-cream)] p-10 rounded-3xl border-2 border-orange-50 hover:border-[var(--primary-orange)] transition-colors shadow-sm group h-full">
+                  <div className="text-4xl mb-6 group-hover:scale-110 transition-transform">{item.icon}</div>
+                  <h3 className="text-2xl font-bold mb-4 text-[var(--text-charcoal)]">{item.title}</h3>
+                  <p className="text-[var(--text-light)] text-lg leading-relaxed">{item.desc}</p>
+                </div>
+              </BlurFade>
             ))}
           </div>
         </div>
@@ -92,10 +96,12 @@ const About = () => {
               { text: "Near-peer mentorship (high school → middle school) is uniquely effective" },
               { text: "Practical skills build confidence that lasts through high school and beyond" }
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-6 p-6 bg-white rounded-2xl shadow-sm border-l-8 border-[var(--primary-orange)] hover:translate-x-2 transition-transform">
-                <div className="bg-orange-100 text-[var(--primary-orange)] p-2 rounded-lg font-bold">✓</div>
-                <p className="text-lg font-semibold text-[var(--text-charcoal)]">{item.text}</p>
-              </div>
+              <BlurFade key={i} delay={i * 0.08}>
+                <div className="flex items-center gap-6 p-6 bg-white rounded-2xl shadow-sm border-l-8 border-[var(--primary-orange)] hover:translate-x-2 transition-transform">
+                  <div className="bg-orange-100 text-[var(--primary-orange)] p-2 rounded-lg font-bold">✓</div>
+                  <p className="text-lg font-semibold text-[var(--text-charcoal)]">{item.text}</p>
+                </div>
+              </BlurFade>
             ))}
           </div>
         </div>
@@ -112,11 +118,13 @@ const About = () => {
               { icon: '🤝', title: 'Community', desc: "We lift each other up. No one gets left behind." },
               { icon: '🚀', title: 'Growth', desc: "Mistakes are part of learning. Keep going." }
             ].map((item, i) => (
-              <div key={i} className="text-center p-8 bg-[var(--bg-cream)] rounded-3xl hover:-translate-y-2 transition-transform shadow-sm">
-                <div className="text-4xl mb-6">{item.icon}</div>
-                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                <p className="text-sm text-[var(--text-light)]">{item.desc}</p>
-              </div>
+              <BlurFade key={i} delay={i * 0.08}>
+                <div className="text-center p-8 bg-[var(--bg-cream)] rounded-3xl hover:-translate-y-2 transition-transform shadow-sm h-full">
+                  <div className="text-4xl mb-6">{item.icon}</div>
+                  <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                  <p className="text-sm text-[var(--text-light)]">{item.desc}</p>
+                </div>
+              </BlurFade>
             ))}
           </div>
         </div>

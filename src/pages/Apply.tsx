@@ -51,7 +51,7 @@ const Apply = () => {
     <div className="bg-[var(--bg-cream)]">
       {/* Page Header */}
       <section className="bg-[var(--primary-orange)] py-24 md:py-28 text-white text-center rounded-b-[4rem] shadow-lg relative overflow-hidden min-h-[20rem] flex items-center">
-        <div className="absolute inset-y-0 right-0 w-full md:w-1/2 opacity-18 sm:opacity-24 pointer-events-none">
+        <div className="absolute inset-y-0 right-0 w-full md:w-1/2 opacity-20 sm:opacity-25 pointer-events-none">
           <img
             src="/assets/Graduation.png"
             alt=""
@@ -171,7 +171,7 @@ const Apply = () => {
       {/* What Happens Next */}
       <section className="py-24 bg-white rounded-t-[4rem]">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)] mb-16 underline decoration-double">What Happens Next?</h2>
+          <h2 className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)] mb-16">What Happens Next?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {[
               { icon: '📧', title: '1. Confirmation', desc: 'You\'ll receive a confirmation email within 48 hours.' },
