@@ -1,5 +1,3 @@
-import React from 'react';
-
 const About = () => {
   return (
     <div className="bg-[var(--bg-cream)]">
@@ -7,7 +5,7 @@ const About = () => {
       <section className="bg-[var(--primary-orange)] py-20 text-white text-center rounded-b-[4rem] shadow-lg relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
         <div className="container mx-auto px-4 relative z-10">
-          <h1 className="text-5xl md:text-7xl font-rammetto text-white">About Ignite 🔥</h1>
+          <h1 className="text-5xl md:text-7xl font-rammetto text-white">About Ignite</h1>
           <p className="text-xl md:text-2xl opacity-90 mt-4">Our story. Our mission. Our why.</p>
         </div>
       </section>
@@ -134,7 +132,7 @@ const About = () => {
                 Applications are open for our summer program. Spots are limited!
               </p>
               <button className="bg-white text-[var(--primary-orange)] px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-xl">
-                Apply Now 🔥
+                Apply Now
               </button>
             </div>
           </div>

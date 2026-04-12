@@ -1,10 +1,11 @@
 "use client";
-import React, {
+import {
   useEffect,
   useRef,
   useState,
   useMemo,
   useCallback,
+  type CSSProperties,
 } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
@@ -70,7 +71,7 @@ export const CircularTestimonials = ({
   const [containerWidth, setContainerWidth] = useState(1200);
 
   const imageContainerRef = useRef<HTMLDivElement>(null);
-  const autoplayIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const autoplayIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const testimonialsLength = useMemo(() => testimonials.length, [testimonials]);
   const activeTestimonial = useMemo(
@@ -124,10 +125,9 @@ export const CircularTestimonials = ({
   }, [testimonialsLength]);
 
   // Compute transforms for each image (always show 3: left, center, right)
-  function getImageStyle(index: number): React.CSSProperties {
+  function getImageStyle(index: number): CSSProperties {
     const gap = calculateGap(containerWidth);
     const maxStickUp = gap * 0.8;
-    const offset = (index - activeIndex + testimonialsLength) % testimonialsLength;
     const isActive = index === activeIndex;
     const isLeft = (activeIndex - 1 + testimonialsLength) % testimonialsLength === index;
     const isRight = (activeIndex + 1) % testimonialsLength === index;

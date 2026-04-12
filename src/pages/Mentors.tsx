@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Mentors = () => {
   const mentors = [
     {
@@ -44,7 +42,7 @@ const Mentors = () => {
       {/* Page Header */}
       <section className="bg-[var(--primary-orange)] py-20 text-white text-center rounded-b-[4rem] shadow-lg relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
-          <h1 className="text-5xl md:text-7xl font-rammetto text-white">Our Mentors 🔥</h1>
+          <h1 className="text-5xl md:text-7xl font-rammetto text-white">Our Mentors</h1>
           <p className="text-xl md:text-2xl opacity-90 mt-4 leading-relaxed">High schoolers who've been there. Ready to guide you.</p>
         </div>
         <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black/10 to-transparent"></div>

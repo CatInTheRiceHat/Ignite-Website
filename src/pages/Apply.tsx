@@ -23,7 +23,7 @@ const Apply = () => {
     );
 
     window.location.href = `mailto:ignite.saratoga@gmail.com?subject=${subject}&body=${body}`;
-    alert('Thanks for applying! Your email client should open to send the application. 🔥');
+    alert('Thanks for applying! Your email client should open to send the application.');
     (e.target as HTMLFormElement).reset();
   };
 
@@ -43,16 +43,24 @@ const Apply = () => {
     );
 
     window.location.href = `mailto:ignite.saratoga@gmail.com?subject=${subject}&body=${body}`;
-    alert('Thanks for applying to be a mentor! Your email client should open to send the application. 🔥');
+    alert('Thanks for applying to be a mentor! Your email client should open to send the application.');
     (e.target as HTMLFormElement).reset();
   };
 
   return (
     <div className="bg-[var(--bg-cream)]">
       {/* Page Header */}
-      <section className="bg-[var(--primary-orange)] py-20 text-white text-center rounded-b-[4rem] shadow-lg relative overflow-hidden">
+      <section className="bg-[var(--primary-orange)] py-24 md:py-28 text-white text-center rounded-b-[4rem] shadow-lg relative overflow-hidden min-h-[20rem] flex items-center">
+        <div className="absolute inset-y-0 right-0 w-full md:w-1/2 opacity-18 sm:opacity-24 pointer-events-none">
+          <img
+            src="/assets/Graduation.png"
+            alt=""
+            className="h-full w-full object-contain object-right-bottom"
+            loading="lazy"
+          />
+        </div>
         <div className="container mx-auto px-4 relative z-10">
-          <h1 className="text-5xl md:text-7xl font-rammetto text-white">Apply to Ignite 🔥</h1>
+          <h1 className="text-5xl md:text-7xl font-rammetto text-white">Apply to Ignite</h1>
           <p className="text-xl md:text-2xl opacity-90 mt-4 leading-relaxed">Ready to find your fire? Let's get started.</p>
         </div>
       </section>
@@ -122,7 +130,7 @@ const Apply = () => {
                   </div>
                 </div>
                 <button type="submit" className="w-full bg-[var(--primary-orange)] text-white py-5 rounded-3xl font-bold text-xl hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg hover:shadow-orange-200 mt-8">
-                  Submit Application 🔥
+                  Submit Application
                 </button>
               </form>
             ) : (
@@ -152,7 +160,7 @@ const Apply = () => {
                   <input name="mentorEmail" type="email" placeholder="Preferred contact email" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
                 </div>
                 <button type="submit" className="w-full bg-[var(--primary-orange)] text-white py-5 rounded-3xl font-bold text-xl hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg hover:shadow-orange-200 mt-8">
-                  Submit Mentor Application 🔥
+                  Submit Mentor Application
                 </button>
               </form>
             )}

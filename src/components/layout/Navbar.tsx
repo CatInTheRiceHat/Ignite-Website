@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 
 const Navbar = () => {
@@ -15,13 +15,15 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 h-24 flex flex-col md:flex-row items-center justify-between transition-all duration-300">
+      <div className="max-w-7xl mx-auto px-4 h-24 md:h-28 flex flex-col md:flex-row items-center justify-between transition-all duration-300">
         {/* Mobile Header */}
         <div className="w-full md:w-auto flex items-center justify-between h-20 md:h-auto">
-          <Link to="/" className="flex items-center gap-3 text-2xl font-rammetto text-[var(--primary-orange)] group">
-            <div className="bg-white p-1 rounded-lg transition-transform group-hover:scale-105">
-              <img src="/assets/Logo.png" alt="Ignite" className="w-10 h-10 object-contain" />
-            </div>
+          <Link to="/" className="flex items-center gap-3 text-[1.7rem] md:text-[1.95rem] font-rammetto text-[var(--primary-orange)] group">
+            <img
+              src="/assets/Logo.png"
+              alt="Ignite"
+              className="w-10 h-10 object-contain transition-transform group-hover:scale-105"
+            />
             Ignite
           </Link>
           
@@ -37,7 +39,7 @@ const Navbar = () => {
         </div>
 
         {/* Links */}
-        <div className={`${isOpen ? 'flex' : 'hidden md:flex'} w-full md:w-auto flex-col md:flex-row items-center gap-4 md:gap-8 pb-6 md:pb-0 font-semibold text-sm`}>
+        <div className={`${isOpen ? 'flex' : 'hidden md:flex'} w-full md:w-auto flex-col md:flex-row items-center gap-4 md:gap-8 pb-6 md:pb-0 font-semibold text-base md:text-lg`}>
           {navLinks.map((link) => (
             <NavLink
               key={link.path}
@@ -53,7 +55,7 @@ const Navbar = () => {
           <Link 
             to="/apply" 
             onClick={() => setIsOpen(false)}
-            className="bg-[var(--primary-orange)] text-white px-6 py-2 rounded-full hover:bg-[var(--primary-orange-dark)] transition-colors shadow-md"
+            className="bg-[var(--primary-orange)] text-white px-7 py-2.5 rounded-full hover:bg-[var(--primary-orange-dark)] transition-colors shadow-md"
           >
             Apply Now
           </Link>

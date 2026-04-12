@@ -1,4 +1,16 @@
-import React from 'react';
+const keySkills = [
+  { icon: '📧', title: 'Communication', desc: 'Professional email writing, tone, and structure.' },
+  {
+    icon: <img src="/assets/Artist.png" alt="Artist palette icon" className="h-14 w-14 object-contain" />,
+    title: 'Visual Design',
+    desc: 'Canva basics, color theory, and personal branding.'
+  },
+  {
+    icon: <img src="/assets/Microphone.png" alt="Microphone icon" className="h-14 w-14 object-contain" />,
+    title: 'Presentation',
+    desc: 'Public speaking, body language, and confidence.'
+  }
+];
 
 const Curriculum = () => {
   const weeks = [
@@ -11,14 +23,14 @@ const Curriculum = () => {
     },
     {
       week: "Week 2",
-      icon: "🎨",
+      icon: <img src="/assets/Artist.png" alt="Artist palette icon" className="h-16 w-16 object-contain" />,
       title: "Digital Branding with Canva",
       desc: "Create stunning visuals and develop your personal brand. Learn design principles, color theory, typography, and how to use Canva like a pro.",
       project: "Design a personal brand board showcasing your interests and goals."
     },
     {
       week: "Week 3",
-      icon: "🎤",
+      icon: <img src="/assets/Microphone.png" alt="Microphone icon" className="h-16 w-16 object-contain" />,
       title: "Public Speaking Basics",
       desc: "Find your voice and own the room. Learn breathing techniques, body language, voice projection, and how to manage nervous energy.",
       project: "Deliver a 2-minute talk on something you're passionate about."
@@ -39,7 +51,7 @@ const Curriculum = () => {
     },
     {
       week: "Week 6",
-      icon: "🏆",
+      icon: <img src="/assets/Trophy.png" alt="Trophy icon" className="h-16 w-16 object-contain" />,
       title: "Shark Tank Showcase",
       desc: "Put it all together. Present your elevator pitch to mentors, peers, and guest speakers at our finale celebration event.",
       project: "Final pitch presentation + certificate ceremony."
@@ -51,7 +63,7 @@ const Curriculum = () => {
       {/* Page Header */}
       <section className="bg-[var(--primary-orange)] py-20 text-white text-center rounded-b-[4rem] shadow-lg relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
-          <h1 className="text-5xl md:text-7xl font-rammetto text-white">Curriculum 🔥</h1>
+          <h1 className="text-5xl md:text-7xl font-rammetto text-white">Curriculum</h1>
           <p className="text-xl md:text-2xl opacity-90 mt-4">Week by week breakdown. Skills for life.</p>
         </div>
       </section>
@@ -61,13 +73,9 @@ const Curriculum = () => {
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-4xl font-rammetto text-center text-[var(--primary-orange)] mb-16 underline decoration-double">Key Skills You'll Learn</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { icon: '📧', title: 'Communication', desc: 'Professional email writing, tone, and structure.' },
-              { icon: '🎨', title: 'Visual Design', desc: 'Canva basics, color theory, and personal branding.' },
-              { icon: '🎤', title: 'Presentation', desc: 'Public speaking, body language, and confidence.' }
-            ].map((skill, i) => (
+            {keySkills.map((skill, i) => (
               <div key={i} className="bg-white p-10 rounded-3xl text-center shadow-sm hover:shadow-md transition-shadow group">
-                <div className="text-4xl mb-6 group-hover:scale-110 transition-transform">{skill.icon}</div>
+                <div className="mb-6 flex h-14 items-center justify-center text-4xl group-hover:scale-110 transition-transform">{skill.icon}</div>
                 <h3 className="text-2xl font-bold mb-3 text-[var(--text-charcoal)]">{skill.title}</h3>
                 <p className="text-[var(--text-light)]">{skill.desc}</p>
               </div>
@@ -142,7 +150,7 @@ const Curriculum = () => {
                 Applications are open for our summer program. Spots are limited!
               </p>
               <button className="bg-white text-[var(--primary-orange)] px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-xl">
-                Apply Now 🔥
+                Apply Now
               </button>
             </div>
           </div>
