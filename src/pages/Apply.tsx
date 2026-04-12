@@ -196,7 +196,7 @@ const Apply = () => {
           <p className="text-xl text-[var(--text-light)]">
             Have questions before applying?{' '}
             <a href="/faq" className="font-bold text-[var(--primary-orange)] hover:underline">Check our FAQ</a> or{' '}
-            <a href="mailto:ignite.saratoga@gmail.com" className="font-bold text-[var(--primary-orange)] hover:underline">email us</a>.
+            <a href="mailto:ignitefindyourfire@gmail.com" className="font-bold text-[var(--primary-orange)] hover:underline">email us</a>.
           </p>
         </div>
       </section>
