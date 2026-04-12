@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useInView } from 'framer-motion';
 import BlurFade from '../components/ui/blur-fade';
 import Marquee from '../components/ui/marquee';
+import FadingCarousel from '../components/ui/fading-carousel';
 
 // ---------------------------------------------------------------------------
 // Data
@@ -10,7 +11,7 @@ import Marquee from '../components/ui/marquee';
 
 const programStructurePreview = [
   { icon: '📅', title: '6 Weeks', desc: 'A focused summer experience with flexible scheduling for families.' },
-  { icon: '🤝', title: 'Open Cohorts', desc: 'Online learning circles where every student can participate and belong.' },
+  { icon: <img src="/assets/Mentors.png" alt="Mentors icon" className="h-14 w-14 object-contain" />, title: 'Open Cohorts', desc: 'Online learning circles where every student can participate and belong.' },
   { icon: '⏱️', title: '2-3 Hours/Week', desc: 'Live sessions plus independent projects that stay manageable.' },
   { icon: '🎯', title: 'Project-Based', desc: 'Students build confidence by making and presenting real work.' },
 ];
@@ -185,16 +186,16 @@ const Home = () => {
           </BlurFade>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
             {[
-              { icon: '💼', title: 'Career Skills', desc: "Professional email, presentations, visual design — skills you'll use for life." },
-              { icon: '💡', title: 'Career Exposure', desc: "Meet professionals from STEM, business, law, and entrepreneurship." },
-              { icon: '🤝', title: '1-on-1 Mentorship', desc: "High school mentors who've been in your shoes and want to help." },
-              { icon: '💸', title: '100% Free', desc: "No tuition, no fees, no hidden costs. Just bring your curiosity." },
-              { icon: '📚', title: 'No Experience Needed', desc: "We welcome all students — no prior skills or grades required." },
-              { icon: '🏆', title: 'Shark Tank Finale', desc: "End the summer pitching your ideas at our showcase event." }
+              { img: '/assets/Career%20Skills.png',   title: 'Career Skills',       desc: "Professional email, presentations, visual design — skills you'll use for life." },
+              { img: '/assets/Career%20Exposure.png', title: 'Career Exposure',     desc: "Meet professionals from STEM, business, law, and entrepreneurship." },
+              { img: '/assets/Mentorship.png',        title: '1-on-1 Mentorship',   desc: "High school mentors who've been in your shoes and want to help." },
+              { img: '/assets/Free.png',              title: '100% Free',           desc: "No tuition, no fees, no hidden costs. Just bring your curiosity." },
+              { img: '/assets/No%20Experience.png',   title: 'No Experience Needed',desc: "We welcome all students — no prior skills or grades required." },
+              { img: '/assets/Shark.png',             title: 'Shark Tank Finale',   desc: "End the summer pitching your ideas at our showcase event." }
             ].map((feature, i) => (
               <BlurFade key={i} delay={i * 0.08}>
                 <div className="bg-white/90 backdrop-blur-md p-10 md:p-12 rounded-3xl border border-orange-50 hover:bg-white hover:shadow-xl transition-all duration-300 group h-full">
-                  <span className="text-5xl mb-5 block group-hover:scale-110 transition-transform">{feature.icon}</span>
+                  <img src={feature.img} alt={feature.title} className="h-14 w-14 object-contain mb-5 group-hover:scale-110 transition-transform" />
                   <h3 className="text-2xl font-bold text-[var(--text-charcoal)] mb-4">{feature.title}</h3>
                   <p className="text-lg text-[var(--text-light)] leading-relaxed">{feature.desc}</p>
                 </div>
@@ -234,28 +235,20 @@ const Home = () => {
           className="absolute inset-0 h-full w-full object-cover object-[center_30%]"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-white/58 backdrop-blur-[1px]"></div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4">
+        <div className="absolute inset-0 bg-black/35 backdrop-blur-[1px]"></div>
+        <div className="relative z-10">
           <BlurFade>
-            <h2 className="text-4xl md:text-6xl font-rammetto text-center text-white mb-14 md:mb-20 drop-shadow-[0_3px_10px_rgba(0,0,0,0.45)]">Who Is Ignite For?</h2>
+            <h2 className="text-4xl md:text-6xl font-rammetto text-center text-white mb-14 md:mb-16 px-4 drop-shadow-[0_3px_10px_rgba(0,0,0,0.45)]">Who Is Ignite For?</h2>
           </BlurFade>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-14 text-center">
-            {[
-              { icon: '🎓', title: 'Grades 6-8', desc: "Currently in middle school and ready to explore what's beyond the classroom." },
-              { icon: '🌐', title: 'Online & Zoom', desc: "Fully remote and accessible on Zoom. Open to motivated students from anywhere!" },
-              { icon: '✨', title: 'Curious Minds', desc: "You don't need to know your future — just bring curiosity and willingness to learn." }
-            ].map((item, i) => (
-              <BlurFade key={i} delay={i * 0.1}>
-                <div className="group">
-                  <div className="bg-white w-28 h-28 rounded-3xl flex items-center justify-center text-5xl mx-auto mb-7 shadow-lg group-hover:rotate-6 transition-all border-4 border-[var(--primary-orange)] font-bold">
-                    {item.icon}
-                  </div>
-                  <h3 className="text-3xl font-bold text-white mb-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)]">{item.title}</h3>
-                  <p className="text-lg text-white leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)]">{item.desc}</p>
-                </div>
-              </BlurFade>
-            ))}
-          </div>
+          <FadingCarousel
+            variant="light"
+            imageStyle="open"
+            items={[
+              { image: '/assets/Grades.png',  title: 'Grades 6–8',    desc: "Currently in middle school and ready to explore what's beyond the classroom." },
+              { image: '/assets/Zoom.png',    title: 'Online & Zoom', desc: "Fully remote and accessible on Zoom. Open to motivated students from anywhere!" },
+              { image: '/assets/Curious.png', title: 'Curious Minds', desc: "You don't need to know your future — just bring curiosity and willingness to learn." },
+            ]}
+          />
         </div>
       </section>
 
@@ -267,7 +260,6 @@ const Home = () => {
           className="absolute inset-0 h-full w-full object-cover object-top"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,248,240,0.56),rgba(255,255,255,0.34),rgba(255,248,240,0.58))]"></div>
         <div className="relative z-10 max-w-7xl mx-auto px-4">
           <BlurFade>
             <div className="text-center mb-12 md:mb-14">
@@ -339,7 +331,7 @@ const Home = () => {
             <div className="bg-[var(--primary-orange)] rounded-[3rem] p-12 md:p-14 text-center text-white shadow-2xl relative overflow-hidden min-h-[24rem] flex items-center justify-center">
               <div className="absolute inset-y-0 right-0 w-full md:w-1/2 pointer-events-none opacity-20 sm:opacity-25 md:opacity-30">
                 <img
-                  src="/assets/Mascot.png"
+                  src="/assets/Celebrate.png"
                   alt=""
                   className="h-full w-full object-contain object-right-bottom"
                   loading="lazy"

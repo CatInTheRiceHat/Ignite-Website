@@ -4,7 +4,7 @@ const About = () => {
   return (
     <div className="bg-[var(--bg-cream)]">
       {/* Page Header */}
-      <section className="bg-[var(--primary-orange)] py-20 text-white text-center rounded-b-[4rem] shadow-lg relative overflow-hidden">
+      <section className="bg-[var(--primary-orange)] py-20 text-white text-center shadow-lg relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
         <div className="container mx-auto px-4 relative z-10">
           <h1 className="text-5xl md:text-7xl font-rammetto text-white">About Ignite</h1>
@@ -13,37 +13,43 @@ const About = () => {
       </section>
 
       {/* Our Story */}
-      <section className="py-24">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-            <BlurFade className="space-y-6">
-              <h2 className="text-4xl font-rammetto text-[var(--primary-orange)]">Our Story</h2>
-              <p className="text-xl font-semibold text-[var(--text-charcoal)]">
-                Ignite started with a failure — and that's exactly why it exists.
+      <section className="py-24 relative overflow-hidden">
+        <img
+          src="/assets/Story.png"
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover object-center"
+          loading="lazy"
+        />
+        <div className="max-w-7xl mx-auto px-4 relative z-10">
+          <BlurFade className="max-w-4xl">
+            <div className="bg-white/85 backdrop-blur-sm rounded-3xl p-10 md:p-14 space-y-6 shadow-xl">
+            <h2 className="text-4xl font-rammetto text-[var(--primary-orange)]">Our Story</h2>
+            <p className="text-2xl font-semibold text-[var(--text-charcoal)]">
+              "What do you want to be when you grow up?"
+            </p>
+            <div className="space-y-5 text-[var(--text-charcoal)] text-xl leading-relaxed">
+              <p>
+                You've probably been asked that since you were five. Nobody really updates the answer though.
+                By the time you graduate college, a lot of the careers you're being pointed toward today will
+                look different — some might not exist the same way at all. That's not doom and gloom, it's
+                just where things are heading.
               </p>
-              <div className="space-y-4 text-[var(--text-light)] text-lg leading-relaxed">
-                <p>
-                  Our founders tried starting a traditional club in middle school. It didn't work.
-                  Low turnout, low engagement, low impact. We realized that what students needed
-                  wasn't another club — it was real mentorship and real skills.
-                </p>
-                <p>
-                  So we pivoted. We created Ignite: a free, intensive summer program led by high
-                  schoolers who remember exactly what it's like to be in middle school and unsure
-                  about the future.
-                </p>
-                <p>
-                  We're not teachers. We're not professors. We're students who've been there,
-                  learned the hard way, and want to light the path for the next generation.
-                </p>
-              </div>
-            </BlurFade>
-            <BlurFade delay={0.15} className="relative">
-              <div className="bg-orange-100 rounded-[3rem] p-12 aspect-square flex items-center justify-center transform hover:rotate-3 transition-transform duration-500 shadow-xl">
-                 <img src="/assets/Hero.png" alt="Hero flame" className="w-full max-w-[250px] drop-shadow-2xl animate-float" />
-              </div>
-            </BlurFade>
-          </div>
+              <p>
+                So the question isn't what job to pick. It's whether you actually know how to communicate,
+                how to carry yourself, how to figure out what you're good at. That's harder to teach than
+                it sounds, and most school curriculums aren't built for it.
+              </p>
+              <p>
+                Ignite is a free summer program where high schoolers mentor 6th through 8th graders on
+                exactly that. They're close enough in age to remember what middle school actually felt like.
+                That proximity matters more than any lesson plan.
+              </p>
+              <p className="text-xl font-bold text-[var(--text-charcoal)]">
+                Right now, knowing yourself is more useful than knowing what job to aim for.
+              </p>
+            </div>
+            </div>
+          </BlurFade>
         </div>
       </section>
 
@@ -82,27 +88,34 @@ const About = () => {
       </section>
 
       {/* Why It Matters */}
-      <section className="py-24">
-        <div className="max-w-5xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)] mb-4">Why This Matters</h2>
-            <p className="text-xl text-[var(--text-light)]">Middle school is when students start asking: "What am I good at? What could I become?"</p>
-          </div>
-          
-          <div className="grid gap-6">
-            {[
-              { text: "Underrepresented students often lack access to career mentorship" },
-              { text: "Early exposure to careers changes trajectories" },
-              { text: "Near-peer mentorship (high school → middle school) is uniquely effective" },
-              { text: "Practical skills build confidence that lasts through high school and beyond" }
-            ].map((item, i) => (
-              <BlurFade key={i} delay={i * 0.08}>
-                <div className="flex items-center gap-6 p-6 bg-white rounded-2xl shadow-sm border-l-8 border-[var(--primary-orange)] hover:translate-x-2 transition-transform">
-                  <div className="bg-orange-100 text-[var(--primary-orange)] p-2 rounded-lg font-bold">✓</div>
-                  <p className="text-lg font-semibold text-[var(--text-charcoal)]">{item.text}</p>
-                </div>
-              </BlurFade>
-            ))}
+      <section className="pt-24 pb-48 relative overflow-hidden">
+        <img
+          src="/assets/Matters.png"
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover object-top"
+          loading="lazy"
+        />
+        <div className="max-w-5xl mx-auto px-4 relative z-10">
+          <div className="bg-white/85 backdrop-blur-sm rounded-3xl p-10 md:p-14 shadow-xl">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)] mb-4">Why This Matters</h2>
+              <p className="text-xl text-[var(--text-light)]">Middle school is when students start asking: "What am I good at? What could I become?"</p>
+            </div>
+            <div className="grid gap-6">
+              {[
+                { text: "Underrepresented students often lack access to career mentorship" },
+                { text: "Early exposure to careers changes trajectories" },
+                { text: "Near-peer mentorship (high school → middle school) is uniquely effective" },
+                { text: "Practical skills build confidence that lasts through high school and beyond" }
+              ].map((item, i) => (
+                <BlurFade key={i} delay={i * 0.08}>
+                  <div className="flex items-center gap-6 p-6 bg-white rounded-2xl shadow-sm border-l-8 border-[var(--primary-orange)] hover:translate-x-2 transition-transform">
+                    <div className="bg-orange-100 text-[var(--primary-orange)] p-2 rounded-lg font-bold">✓</div>
+                    <p className="text-lg font-semibold text-[var(--text-charcoal)]">{item.text}</p>
+                  </div>
+                </BlurFade>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -114,7 +127,7 @@ const About = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
               { icon: '🌟', title: 'Inclusion', desc: "Every voice matters. Every background is valued." },
-              { icon: '💡', title: 'Curiosity', desc: "Questions are welcome. Exploration is encouraged." },
+              { icon: <img src="/assets/Lightbulb.png" alt="Lightbulb icon" className="w-12 h-12 object-contain" />, title: 'Curiosity', desc: "Questions are welcome. Exploration is encouraged." },
               { icon: '🤝', title: 'Community', desc: "We lift each other up. No one gets left behind." },
               { icon: '🚀', title: 'Growth', desc: "Mistakes are part of learning. Keep going." }
             ].map((item, i) => (

@@ -22,8 +22,8 @@ const Apply = () => {
       `Email: ${data.parentEmail || 'N/A'}\n`
     );
 
-    window.location.href = `mailto:ignite.saratoga@gmail.com?subject=${subject}&body=${body}`;
-    alert('Thanks for applying! Your email client should open to send the application.');
+    window.open(`https://mail.google.com/mail/?view=cm&to=ignite.saratoga@gmail.com&su=${subject}&body=${body}`, '_blank');
+    alert('Thanks for applying! Gmail should open in a new tab — just hit Send!');
     (e.target as HTMLFormElement).reset();
   };
 
@@ -42,15 +42,15 @@ const Apply = () => {
       `Email: ${data.mentorEmail}\n`
     );
 
-    window.location.href = `mailto:ignite.saratoga@gmail.com?subject=${subject}&body=${body}`;
-    alert('Thanks for applying to be a mentor! Your email client should open to send the application.');
+    window.open(`https://mail.google.com/mail/?view=cm&to=ignite.saratoga@gmail.com&su=${subject}&body=${body}`, '_blank');
+    alert('Thanks for applying to be a mentor! Gmail should open in a new tab — just hit Send!');
     (e.target as HTMLFormElement).reset();
   };
 
   return (
     <div className="bg-[var(--bg-cream)]">
       {/* Page Header */}
-      <section className="bg-[var(--primary-orange)] py-24 md:py-28 text-white text-center rounded-b-[4rem] shadow-lg relative overflow-hidden min-h-[20rem] flex items-center">
+      <section className="bg-[var(--primary-orange)] py-24 md:py-28 text-white text-center shadow-lg relative overflow-hidden min-h-[20rem] flex items-center">
         <div className="absolute inset-y-0 right-0 w-full md:w-1/2 opacity-20 sm:opacity-25 pointer-events-none">
           <img
             src="/assets/Graduation.png"
@@ -174,9 +174,9 @@ const Apply = () => {
           <h2 className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)] mb-16">What Happens Next?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {[
-              { icon: '📧', title: '1. Confirmation', desc: 'You\'ll receive a confirmation email within 48 hours.' },
-              { icon: '💻', title: '2. Zoom Details', desc: 'We\'ll send you the Zoom links and program schedule.' },
-              { icon: '✅', title: '3. Get Ready!', desc: 'All applicants are welcome. Get ready to start learning!' }
+              { icon: <img src="/assets/Confirmation Email.png" alt="Confirmation email" className="h-12 w-12 object-contain" />, title: '1. Confirmation', desc: 'You\'ll receive a confirmation email within 48 hours.' },
+              { icon: <img src="/assets/Zoom.png" alt="Zoom" className="h-12 w-12 object-contain" />, title: '2. Zoom Details', desc: 'We\'ll send you the Zoom links and program schedule.' },
+              { icon: <img src="/assets/Celebrate.png" alt="Celebrate" className="h-12 w-12 object-contain" />, title: '3. Get Ready!', desc: 'All applicants are welcome. Get ready to start learning!' }
             ].map((step, i) => (
               <div key={i} className="group">
                 <div className="bg-[var(--bg-cream)] w-24 h-24 rounded-full flex items-center justify-center text-4xl mx-auto mb-6 shadow-lg border-2 border-transparent group-hover:border-[var(--primary-orange)] group-hover:rotate-12 transition-all">

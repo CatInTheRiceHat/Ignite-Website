@@ -1,5 +1,5 @@
 const keySkills = [
-  { icon: '📧', title: 'Communication', desc: 'Professional email writing, tone, and structure.' },
+  { icon: <img src="/assets/Laptop.png" alt="Laptop icon" className="h-14 w-14 object-contain" />, title: 'Communication', desc: 'Professional email writing, tone, and structure.' },
   {
     icon: <img src="/assets/Artist.png" alt="Artist palette icon" className="h-14 w-14 object-contain" />,
     title: 'Visual Design',
@@ -16,7 +16,7 @@ const Curriculum = () => {
   const weeks = [
     {
       week: "Week 1",
-      icon: "📧",
+      icon: <img src="/assets/Laptop.png" alt="Laptop icon" className="h-16 w-16 object-contain" />,
       title: "Professional Communication",
       desc: "Master professional email writing. Learn tone, structure, subject lines, and how to make a great first impression when reaching out to teachers, mentors, and future employers.",
       project: "Write emails for real scenarios (asking for a recommendation, inquiring about opportunities)."
@@ -37,7 +37,7 @@ const Curriculum = () => {
     },
     {
       week: "Week 4",
-      icon: "💼",
+      icon: <img src="/assets/Lightbulb.png" alt="Lightbulb icon" className="h-16 w-16 object-contain" />,
       title: "Career Exploration",
       desc: "Discover paths you didn't know existed. Explore different industries, job roles, and what it takes to succeed. Meet guest speakers from various fields.",
       project: "Research and present on a career that interests you."
@@ -61,7 +61,7 @@ const Curriculum = () => {
   return (
     <div className="bg-[var(--bg-cream)]">
       {/* Page Header */}
-      <section className="bg-[var(--primary-orange)] py-20 text-white text-center rounded-b-[4rem] shadow-lg relative overflow-hidden">
+      <section className="bg-[var(--primary-orange)] py-20 text-white text-center shadow-lg relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
           <h1 className="text-5xl md:text-7xl font-rammetto text-white">Curriculum</h1>
           <p className="text-xl md:text-2xl opacity-90 mt-4">Week by week breakdown. Skills for life.</p>

@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 flex flex-col items-center gap-6">
         <div className="flex flex-col items-center gap-2">
           <Link to="/" className="flex items-center gap-2 text-2xl font-rammetto text-[var(--primary-orange)]">
-            <img src="/assets/Logo.png" alt="Ignite" className="w-8 h-8" />
+            <img src="/assets/Logo.png" alt="Ignite" className="w-8 h-8 object-contain" />
             Ignite
           </Link>
           <p className="text-gray-500 text-sm max-w-xs text-center">
