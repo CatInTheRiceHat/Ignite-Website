@@ -22,7 +22,7 @@ const Apply = () => {
       `Email: ${data.parentEmail || 'N/A'}\n`
     );
 
-    window.open(`https://mail.google.com/mail/?view=cm&to=ignite.saratoga@gmail.com&su=${subject}&body=${body}`, '_blank');
+    window.open(`https://mail.google.com/mail/?view=cm&to=ignitefindyourfire@gmail.com&su=${subject}&body=${body}`, '_blank');
     alert('Thanks for applying! Gmail should open in a new tab — just hit Send!');
     (e.target as HTMLFormElement).reset();
   };
@@ -42,7 +42,7 @@ const Apply = () => {
       `Email: ${data.mentorEmail}\n`
     );
 
-    window.open(`https://mail.google.com/mail/?view=cm&to=ignite.saratoga@gmail.com&su=${subject}&body=${body}`, '_blank');
+    window.open(`https://mail.google.com/mail/?view=cm&to=ignitefindyourfire@gmail.com&su=${subject}&body=${body}`, '_blank');
     alert('Thanks for applying to be a mentor! Gmail should open in a new tab — just hit Send!');
     (e.target as HTMLFormElement).reset();
   };
