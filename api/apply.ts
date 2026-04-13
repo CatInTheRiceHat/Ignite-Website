@@ -1,16 +1,21 @@
 import { createClient } from '@supabase/supabase-js';
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 587,
+  auth: {
+    user: 'ignitefindyourfire@gmail.com',
+    pass: process.env.GMAIL_APP_PASSWORD,
+  },
+});
 
-// Update this once you verify a domain in Resend.
-// Until then, use 'onboarding@resend.dev' (works without domain verification).
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? 'onboarding@resend.dev';
+const FROM_EMAIL = 'Ignite <ignitefindyourfire@gmail.com>';
 const ADMIN_EMAIL = 'ignitefindyourfire@gmail.com';
 
 function confirmationHtml(name: string, type: 'student' | 'mentor'): string {
@@ -123,14 +128,14 @@ export default async function handler(req: any, res: any) {
 
   // Send emails — don't fail the request if email errors occur
   await Promise.allSettled([
-    resend.emails.send({
-      from: `Ignite <${FROM_EMAIL}>`,
+    transporter.sendMail({
+      from: FROM_EMAIL,
       to: email,
       subject: `Your Ignite ${type === 'student' ? 'Student' : 'Mentor'} Application — We Got It!`,
       html: confirmationHtml(name, type as 'student' | 'mentor'),
     }),
-    resend.emails.send({
-      from: `Ignite Applications <${FROM_EMAIL}>`,
+    transporter.sendMail({
+      from: FROM_EMAIL,
       to: ADMIN_EMAIL,
       subject: `New ${type} application: ${name}`,
       html: adminNotificationHtml(adminData),
