@@ -14,11 +14,13 @@ const Footer = () => {
           </p>
         </div>
         
-        <div className="flex gap-8 text-sm font-semibold text-[var(--text-light)]">
+        <div className="flex flex-wrap justify-center gap-8 text-sm font-semibold text-[var(--text-light)]">
           <Link to="/about" className="hover:text-[var(--primary-orange)] transition-colors">About</Link>
           <Link to="/mentors" className="hover:text-[var(--primary-orange)] transition-colors">Mentors</Link>
           <Link to="/program" className="hover:text-[var(--primary-orange)] transition-colors">Program</Link>
+          <Link to="/curriculum" className="hover:text-[var(--primary-orange)] transition-colors">Curriculum</Link>
           <Link to="/faq" className="hover:text-[var(--primary-orange)] transition-colors">FAQ</Link>
+          <Link to="/apply" className="hover:text-[var(--primary-orange)] transition-colors">Apply</Link>
         </div>
 
         <div className="w-full h-px bg-gray-100 max-w-lg"></div>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -45,28 +45,59 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Links */}
-        <div className={`${isOpen ? 'flex' : 'hidden md:flex'} w-full md:w-auto flex-col md:flex-row items-center gap-4 md:gap-8 pb-6 md:pb-0 font-semibold text-base md:text-lg`}>
+        {/* Desktop Links */}
+        <div className="hidden md:flex items-center gap-8 font-semibold text-lg">
           {navLinks.map((link) => (
             <NavLink
               key={link.path}
               to={link.path}
-              onClick={() => setIsOpen(false)}
-              className={({ isActive }) => 
+              className={({ isActive }) =>
                 `transition-colors hover:text-[var(--primary-orange)] ${isActive ? 'text-[var(--primary-orange)] border-b-2 border-[var(--primary-orange)]' : 'text-[var(--text-light)]'}`
               }
             >
               {link.name}
             </NavLink>
           ))}
-          <Link 
-            to="/apply" 
-            onClick={() => setIsOpen(false)}
+          <Link
+            to="/apply"
             className="bg-[var(--primary-orange)] text-white px-7 py-2.5 rounded-full hover:bg-[var(--primary-orange-dark)] transition-colors shadow-md"
           >
             Apply Now
           </Link>
         </div>
+
+        {/* Mobile Links */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2, ease: 'easeInOut' }}
+              className="md:hidden flex flex-col items-center gap-4 pb-6 font-semibold text-base overflow-hidden w-full"
+            >
+              {navLinks.map((link) => (
+                <NavLink
+                  key={link.path}
+                  to={link.path}
+                  onClick={() => setIsOpen(false)}
+                  className={({ isActive }) =>
+                    `transition-colors hover:text-[var(--primary-orange)] ${isActive ? 'text-[var(--primary-orange)] border-b-2 border-[var(--primary-orange)]' : 'text-[var(--text-light)]'}`
+                  }
+                >
+                  {link.name}
+                </NavLink>
+              ))}
+              <Link
+                to="/apply"
+                onClick={() => setIsOpen(false)}
+                className="bg-[var(--primary-orange)] text-white px-7 py-2.5 rounded-full hover:bg-[var(--primary-orange-dark)] transition-colors shadow-md"
+              >
+                Apply Now
+              </Link>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   );

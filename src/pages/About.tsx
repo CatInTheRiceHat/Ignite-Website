@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import BlurFade from '../components/ui/blur-fade';
 
 const About = () => {
@@ -21,7 +22,7 @@ const About = () => {
           loading="lazy"
         />
         <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <BlurFade className="max-w-4xl">
+          <BlurFade className="max-w-4xl mx-auto">
             <div className="bg-white/85 backdrop-blur-sm rounded-3xl p-10 md:p-14 space-y-6 shadow-xl">
             <h2 className="text-4xl font-rammetto text-[var(--primary-orange)]">Our Story</h2>
             <p className="text-2xl font-semibold text-[var(--text-charcoal)]">
@@ -152,9 +153,9 @@ const About = () => {
               <p className="text-xl opacity-90 mb-10 max-w-2xl mx-auto">
                 Applications are open for our summer program. Spots are limited!
               </p>
-              <button className="bg-white text-[var(--primary-orange)] px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-xl">
+              <Link to="/apply" className="inline-block bg-white text-[var(--primary-orange)] px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-xl">
                 Apply Now
-              </button>
+              </Link>
             </div>
           </div>
         </div>

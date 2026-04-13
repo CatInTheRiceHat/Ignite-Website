@@ -118,7 +118,7 @@ const Home = () => {
     <div className="bg-[var(--bg-cream)]">
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-24 md:pb-28 overflow-hidden flex items-center justify-center text-center px-4 min-h-screen">
+      <section className="relative pt-32 pb-24 md:pb-28 overflow-hidden flex items-center justify-center text-center px-4 min-h-[90vh]">
         <div className="absolute inset-0 z-10 pointer-events-none">
           <img
             src="/assets/Hero.png"
@@ -156,7 +156,7 @@ const Home = () => {
       {/* Impact Stats Row */}
       <section className="bg-white shadow-sm">
         <div className="max-w-4xl mx-auto px-4 py-10 md:py-12">
-          <div className="flex flex-wrap justify-center divide-x divide-orange-100">
+          <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center sm:divide-x divide-y sm:divide-y-0 divide-orange-100">
             <CountStat value={6} label="Weeks of Mentorship" />
             <CountStat value={100} label="Percent Free — Always" suffix="%" />
             <CountStat value={10} label="Expert Mentors & Growing" suffix="+" />

@@ -1,43 +1,8 @@
+import { Link } from 'react-router-dom';
 import BlurFade from '../components/ui/blur-fade';
+import { mentors } from '../data/mentors';
 
 const Mentors = () => {
-  const mentors = [
-    {
-      initial: "E",
-      name: "Elaine Che",
-      role: "Co-Founder",
-      details: "Saratoga High School · 11th Grade",
-      bio: "Passionate about education equity and making mentorship accessible to all students."
-    },
-    {
-      initial: "A",
-      name: "Austin Zhao",
-      role: "Co-Founder",
-      details: "Saratoga High School · 11th Grade",
-      bio: "Combines tech skills with a drive to create meaningful programs for younger students."
-    },
-    {
-      initial: "M",
-      name: "Michael Zhao",
-      role: "Co-Founder",
-      details: "Saratoga High School · 11th Grade",
-      bio: "Focused on program design and building partnerships to expand SkillBridge's reach."
-    },
-    {
-      initial: "I",
-      name: "Ivan Satsuta",
-      role: "Director of Operations",
-      details: "Saratoga High School · 11th Grade",
-      bio: "Keeps the program running smoothly — from scheduling to logistics to team coordination."
-    },
-    {
-      initial: "J",
-      name: "Julie Ye",
-      role: "Director of Programs",
-      details: "Saratoga High School · 11th Grade",
-      bio: "Designs engaging curriculum and activities that make each session impactful and fun."
-    }
-  ];
 
   return (
     <div className="bg-[var(--bg-cream)] min-h-screen">
@@ -90,8 +55,12 @@ const Mentors = () => {
                 </div>
 
                 <div className="mt-8 flex gap-3">
-                   <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-gray-400 hover:bg-[var(--primary-orange)] hover:text-white transition-colors cursor-pointer">💼</div>
-                   <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-gray-400 hover:bg-[var(--primary-orange)] hover:text-white transition-colors cursor-pointer">📧</div>
+                  {mentor.linkedin && (
+                    <a href={mentor.linkedin} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-gray-400 hover:bg-[var(--primary-orange)] hover:text-white transition-colors">💼</a>
+                  )}
+                  {mentor.email && (
+                    <a href={`mailto:${mentor.email}`} className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-gray-400 hover:bg-[var(--primary-orange)] hover:text-white transition-colors">📧</a>
+                  )}
                 </div>
               </div>
               </BlurFade>
@@ -108,9 +77,9 @@ const Mentors = () => {
               We are always looking for passionate high school students to join our mentorship program as volunteers. 
               Gain leadership experience and give back to your community.
             </p>
-            <button className="bg-[var(--primary-orange)] text-white px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-lg shadow-orange-200">
+            <Link to="/apply" className="inline-block bg-[var(--primary-orange)] text-white px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-lg shadow-orange-200">
               Apply to Mentor
-            </button>
+            </Link>
         </div>
       </section>
     </div>
