@@ -2,49 +2,54 @@ import React, { useState } from 'react';
 
 const Apply = () => {
   const [formType, setFormType] = useState<'student' | 'mentor'>('student');
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
+
+  async function submitApplication(payload: Record<string, string>) {
+    setLoading(true);
+    setError('');
+    try {
+      const res = await fetch('/api/apply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error ?? 'Something went wrong.');
+      setSubmitted(true);
+    } catch (err: any) {
+      setError(err.message ?? 'Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  }
 
   const handleStudentSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-    
-    const subject = encodeURIComponent(`Ignite Application: ${data.studentName}`);
-    const body = encodeURIComponent(
-      `Student Application\n` +
-      `-------------------\n` +
-      `Name: ${data.studentName}\n` +
-      `Grade: ${data.grade}\n` +
-      `School: ${data.school}\n` +
-      `Email: ${data.email}\n` +
-      `Availability: ${data.availability}\n` +
-      `\nParent/Guardian:\n` +
-      `Name: ${data.parentName || 'N/A'}\n` +
-      `Email: ${data.parentEmail || 'N/A'}\n`
-    );
-
-    window.open(`https://mail.google.com/mail/?view=cm&to=ignitefindyourfire@gmail.com&su=${subject}&body=${body}`, '_blank');
-    alert('Thanks for applying! Gmail should open in a new tab — just hit Send!');
-    (e.target as HTMLFormElement).reset();
+    const data = Object.fromEntries(new FormData(e.currentTarget).entries()) as Record<string, string>;
+    submitApplication({
+      type: 'student',
+      name: data.studentName,
+      grade: data.grade,
+      school: data.school,
+      email: data.email,
+      availability: data.availability,
+      parentName: data.parentName ?? '',
+      parentEmail: data.parentEmail ?? '',
+    });
   };
 
   const handleMentorSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-
-    const subject = encodeURIComponent(`Ignite Mentor Application: ${data.mentorName}`);
-    const body = encodeURIComponent(
-      `Mentor Application\n` +
-      `-------------------\n` +
-      `Name: ${data.mentorName}\n` +
-      `Grade: ${data.mentorGrade}\n` +
-      `School: ${data.mentorSchool}\n` +
-      `Email: ${data.mentorEmail}\n`
-    );
-
-    window.open(`https://mail.google.com/mail/?view=cm&to=ignitefindyourfire@gmail.com&su=${subject}&body=${body}`, '_blank');
-    alert('Thanks for applying to be a mentor! Gmail should open in a new tab — just hit Send!');
-    (e.target as HTMLFormElement).reset();
+    const data = Object.fromEntries(new FormData(e.currentTarget).entries()) as Record<string, string>;
+    submitApplication({
+      type: 'mentor',
+      name: data.mentorName,
+      grade: data.mentorGrade,
+      school: data.mentorSchool,
+      email: data.mentorEmail,
+    });
   };
 
   return (
@@ -68,103 +73,124 @@ const Apply = () => {
       {/* Application Form Section */}
       <section className="py-24">
         <div className="max-w-3xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-rammetto text-[var(--primary-orange)] mb-4">I am applying as a...</h2>
-            <div className="flex gap-4 justify-center mt-8">
-              <button 
-                onClick={() => setFormType('student')}
-                className={`px-10 py-4 rounded-full font-bold text-lg transition-all shadow-md ${formType === 'student' ? 'bg-[var(--primary-orange)] text-white scale-105' : 'bg-white text-[var(--primary-orange)] border-2 border-[var(--primary-orange)] hover:bg-orange-50'}`}
-              >
-                Student
-              </button>
-              <button 
-                onClick={() => setFormType('mentor')}
-                className={`px-10 py-4 rounded-full font-bold text-lg transition-all shadow-md ${formType === 'mentor' ? 'bg-[var(--primary-orange)] text-white scale-105' : 'bg-white text-[var(--primary-orange)] border-2 border-[var(--primary-orange)] hover:bg-orange-50'}`}
-              >
-                Mentor
-              </button>
-            </div>
-            <p className="text-[var(--text-light)] mt-8 max-w-lg mx-auto italic">
-              "This form takes about 5 minutes. Everyone who applies is welcome!"
-            </p>
-          </div>
 
-          <div className="bg-white rounded-[3rem] p-10 md:p-16 shadow-xl border-t-8 border-[var(--primary-orange)]">
-            {formType === 'student' ? (
-              <form onSubmit={handleStudentSubmit} className="space-y-6 text-left">
-                <div className="space-y-2">
-                  <label className="text-lg font-bold text-[var(--text-charcoal)]">Student Name *</label>
-                  <input name="studentName" type="text" placeholder="First and last name" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
+          {submitted ? (
+            <div className="bg-white rounded-[3rem] p-12 md:p-16 shadow-xl border-t-8 border-[var(--primary-orange)] text-center">
+              <div className="text-6xl mb-6">🔥</div>
+              <h2 className="text-3xl md:text-4xl font-rammetto text-[var(--primary-orange)] mb-4">You're In!</h2>
+              <p className="text-xl text-[var(--text-light)] leading-relaxed mb-6">
+                Your application was submitted successfully. Check your inbox — we sent you a confirmation email with next steps.
+              </p>
+              <p className="text-[var(--text-light)]">
+                Questions? Email us at{' '}
+                <a href="mailto:ignitefindyourfire@gmail.com" className="font-bold text-[var(--primary-orange)] hover:underline">
+                  ignitefindyourfire@gmail.com
+                </a>
+              </p>
+            </div>
+          ) : (
+            <>
+              <div className="text-center mb-12">
+                <h2 className="text-4xl font-rammetto text-[var(--primary-orange)] mb-4">I am applying as a...</h2>
+                <div className="flex gap-4 justify-center mt-8">
+                  <button
+                    onClick={() => setFormType('student')}
+                    className={`px-10 py-4 rounded-full font-bold text-lg transition-all shadow-md ${formType === 'student' ? 'bg-[var(--primary-orange)] text-white scale-105' : 'bg-white text-[var(--primary-orange)] border-2 border-[var(--primary-orange)] hover:bg-orange-50'}`}
+                  >
+                    Student
+                  </button>
+                  <button
+                    onClick={() => setFormType('mentor')}
+                    className={`px-10 py-4 rounded-full font-bold text-lg transition-all shadow-md ${formType === 'mentor' ? 'bg-[var(--primary-orange)] text-white scale-105' : 'bg-white text-[var(--primary-orange)] border-2 border-[var(--primary-orange)] hover:bg-orange-50'}`}
+                  >
+                    Mentor
+                  </button>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-lg font-bold text-[var(--text-charcoal)]">Current Grade *</label>
-                    <select name="grade" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all appearance-none cursor-pointer">
-                      <option value="">Select grade</option>
-                      <option value="6">6th Grade</option>
-                      <option value="7">7th Grade</option>
-                      <option value="8">8th Grade</option>
-                    </select>
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-lg font-bold text-[var(--text-charcoal)]">School *</label>
-                    <input name="school" type="text" placeholder="Your middle school" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-lg font-bold text-[var(--text-charcoal)]">Email Address *</label>
-                  <input name="email" type="email" placeholder="Student or parent email" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-lg font-bold text-[var(--text-charcoal)]">Dates of Availability *</label>
-                  <input name="availability" type="text" placeholder="e.g. Mid-June to August, any time" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-gray-100">
-                  <div className="space-y-2">
-                    <label className="text-lg font-bold text-[var(--text-charcoal)]">Parent Name</label>
-                    <input name="parentName" type="text" placeholder="Optional" className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-lg font-bold text-[var(--text-charcoal)]">Parent Email</label>
-                    <input name="parentEmail" type="email" placeholder="Optional" className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
-                  </div>
-                </div>
-                <button type="submit" className="w-full bg-[var(--primary-orange)] text-white py-5 rounded-3xl font-bold text-xl hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg hover:shadow-orange-200 mt-8">
-                  Submit Application
-                </button>
-              </form>
-            ) : (
-              <form onSubmit={handleMentorSubmit} className="space-y-6 text-left">
-                <div className="space-y-2">
-                  <label className="text-lg font-bold text-[var(--text-charcoal)]">Mentor Name *</label>
-                  <input name="mentorName" type="text" placeholder="First and last name" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-lg font-bold text-[var(--text-charcoal)]">Current Grade *</label>
-                    <select name="mentorGrade" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all appearance-none cursor-pointer">
-                      <option value="">Select grade</option>
-                      <option value="9">9th Grade</option>
-                      <option value="10">10th Grade</option>
-                      <option value="11">11th Grade</option>
-                      <option value="12">12th Grade</option>
-                    </select>
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-lg font-bold text-[var(--text-charcoal)]">School *</label>
-                    <input name="mentorSchool" type="text" placeholder="High school or college" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-lg font-bold text-[var(--text-charcoal)]">Email Address *</label>
-                  <input name="mentorEmail" type="email" placeholder="Preferred contact email" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
-                </div>
-                <button type="submit" className="w-full bg-[var(--primary-orange)] text-white py-5 rounded-3xl font-bold text-xl hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg hover:shadow-orange-200 mt-8">
-                  Submit Mentor Application
-                </button>
-              </form>
-            )}
-          </div>
+                <p className="text-[var(--text-light)] mt-8 max-w-lg mx-auto italic">
+                  "This form takes about 5 minutes. Everyone who applies is welcome!"
+                </p>
+              </div>
+
+              <div className="bg-white rounded-[3rem] p-10 md:p-16 shadow-xl border-t-8 border-[var(--primary-orange)]">
+                {formType === 'student' ? (
+                  <form onSubmit={handleStudentSubmit} className="space-y-6 text-left">
+                    <div className="space-y-2">
+                      <label className="text-lg font-bold text-[var(--text-charcoal)]">Student Name *</label>
+                      <input name="studentName" type="text" placeholder="First and last name" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <label className="text-lg font-bold text-[var(--text-charcoal)]">Current Grade *</label>
+                        <select name="grade" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all appearance-none cursor-pointer">
+                          <option value="">Select grade</option>
+                          <option value="6">6th Grade</option>
+                          <option value="7">7th Grade</option>
+                          <option value="8">8th Grade</option>
+                        </select>
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-lg font-bold text-[var(--text-charcoal)]">School *</label>
+                        <input name="school" type="text" placeholder="Your middle school" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-lg font-bold text-[var(--text-charcoal)]">Email Address *</label>
+                      <input name="email" type="email" placeholder="Student or parent email" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-lg font-bold text-[var(--text-charcoal)]">Dates of Availability *</label>
+                      <input name="availability" type="text" placeholder="e.g. Mid-June to August, any time" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-gray-100">
+                      <div className="space-y-2">
+                        <label className="text-lg font-bold text-[var(--text-charcoal)]">Parent Name</label>
+                        <input name="parentName" type="text" placeholder="Optional" className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-lg font-bold text-[var(--text-charcoal)]">Parent Email</label>
+                        <input name="parentEmail" type="email" placeholder="Optional" className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
+                      </div>
+                    </div>
+                    {error && <p className="text-red-500 text-sm font-semibold">{error}</p>}
+                    <button type="submit" disabled={loading} className="w-full bg-[var(--primary-orange)] text-white py-5 rounded-3xl font-bold text-xl hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg hover:shadow-orange-200 mt-8 disabled:opacity-60 disabled:scale-100 disabled:cursor-not-allowed">
+                      {loading ? 'Submitting...' : 'Submit Application'}
+                    </button>
+                  </form>
+                ) : (
+                  <form onSubmit={handleMentorSubmit} className="space-y-6 text-left">
+                    <div className="space-y-2">
+                      <label className="text-lg font-bold text-[var(--text-charcoal)]">Mentor Name *</label>
+                      <input name="mentorName" type="text" placeholder="First and last name" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <label className="text-lg font-bold text-[var(--text-charcoal)]">Current Grade *</label>
+                        <select name="mentorGrade" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all appearance-none cursor-pointer">
+                          <option value="">Select grade</option>
+                          <option value="9">9th Grade</option>
+                          <option value="10">10th Grade</option>
+                          <option value="11">11th Grade</option>
+                          <option value="12">12th Grade</option>
+                        </select>
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-lg font-bold text-[var(--text-charcoal)]">School *</label>
+                        <input name="mentorSchool" type="text" placeholder="High school or college" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-lg font-bold text-[var(--text-charcoal)]">Email Address *</label>
+                      <input name="mentorEmail" type="email" placeholder="Preferred contact email" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
+                    </div>
+                    {error && <p className="text-red-500 text-sm font-semibold">{error}</p>}
+                    <button type="submit" disabled={loading} className="w-full bg-[var(--primary-orange)] text-white py-5 rounded-3xl font-bold text-xl hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg hover:shadow-orange-200 mt-8 disabled:opacity-60 disabled:scale-100 disabled:cursor-not-allowed">
+                      {loading ? 'Submitting...' : 'Submit Mentor Application'}
+                    </button>
+                  </form>
+                )}
+              </div>
+            </>
+          )}
         </div>
       </section>
 
