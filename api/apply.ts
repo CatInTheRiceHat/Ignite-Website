@@ -86,7 +86,7 @@ export default async function handler(req: any, res: any) {
   }
 
   const body = req.body as Record<string, string>;
-  const { type, name, grade, school, email, availability, parentName, parentEmail } = body;
+  const { type, name, grade, school, email, availability, parentName, parentEmail, careerInterest, careerField, whyMentor, wishKnew } = body;
 
   if (!type || !name || !grade || !school || !email) {
     return res.status(400).json({ error: 'Missing required fields' });
@@ -106,6 +106,10 @@ export default async function handler(req: any, res: any) {
     availability: availability || null,
     parent_name: parentName || null,
     parent_email: parentEmail || null,
+    career_interest: careerInterest || null,
+    career_field: careerField || null,
+    why_mentor: whyMentor || null,
+    wish_knew: wishKnew || null,
   });
 
   if (dbError) {
@@ -123,6 +127,10 @@ export default async function handler(req: any, res: any) {
     ...(availability ? { 'Availability': availability } : {}),
     ...(parentName ? { 'Parent Name': parentName } : {}),
     ...(parentEmail ? { 'Parent Email': parentEmail } : {}),
+    ...(careerInterest ? { 'Career Interest': careerInterest } : {}),
+    ...(careerField ? { 'Career Field': careerField } : {}),
+    ...(whyMentor ? { 'Why Mentor': whyMentor } : {}),
+    ...(wishKnew ? { 'Wish I Knew': wishKnew } : {}),
     'Submitted': new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }),
   };
 

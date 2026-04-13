@@ -35,6 +35,7 @@ const Apply = () => {
       school: data.school,
       email: data.email,
       availability: data.availability,
+      careerInterest: data.careerInterest,
       parentName: data.parentName ?? '',
       parentEmail: data.parentEmail ?? '',
     });
@@ -49,6 +50,10 @@ const Apply = () => {
       grade: data.mentorGrade,
       school: data.mentorSchool,
       email: data.mentorEmail,
+      availability: data.mentorAvailability,
+      careerField: data.mentorCareerField,
+      whyMentor: data.whyMentor,
+      wishKnew: data.wishKnew,
     });
   };
 
@@ -141,6 +146,18 @@ const Apply = () => {
                       <label className="text-lg font-bold text-[var(--text-charcoal)]">Dates of Availability *</label>
                       <input name="availability" type="text" placeholder="e.g. Mid-June to August, any time" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
                     </div>
+                    <div className="space-y-2">
+                      <label className="text-lg font-bold text-[var(--text-charcoal)]">Career Interests *</label>
+                      <select name="careerInterest" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all appearance-none cursor-pointer">
+                        <option value="">What fields interest you?</option>
+                        <option value="STEM">STEM</option>
+                        <option value="Business">Business</option>
+                        <option value="Law">Law</option>
+                        <option value="Arts & Design">Arts &amp; Design</option>
+                        <option value="Entrepreneurship">Entrepreneurship</option>
+                        <option value="Not Sure Yet">Not Sure Yet</option>
+                      </select>
+                    </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-gray-100">
                       <div className="space-y-2">
                         <label className="text-lg font-bold text-[var(--text-charcoal)]">Parent Name</label>
@@ -181,6 +198,30 @@ const Apply = () => {
                     <div className="space-y-2">
                       <label className="text-lg font-bold text-[var(--text-charcoal)]">Email Address *</label>
                       <input name="mentorEmail" type="email" placeholder="Preferred contact email" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-lg font-bold text-[var(--text-charcoal)]">Dates of Availability *</label>
+                      <input name="mentorAvailability" type="text" placeholder="e.g. Mid-June to August, any time" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-lg font-bold text-[var(--text-charcoal)]">Career Field *</label>
+                      <select name="mentorCareerField" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all appearance-none cursor-pointer">
+                        <option value="">Select your field</option>
+                        <option value="STEM">STEM</option>
+                        <option value="Business">Business</option>
+                        <option value="Law">Law</option>
+                        <option value="Arts & Design">Arts &amp; Design</option>
+                        <option value="Entrepreneurship">Entrepreneurship</option>
+                        <option value="General / Multiple">General / Multiple</option>
+                      </select>
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-lg font-bold text-[var(--text-charcoal)]">Why do you want to mentor? *</label>
+                      <textarea name="whyMentor" rows={3} placeholder="Tell us in 2-3 sentences why you want to be a mentor." required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all resize-none" />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-lg font-bold text-[var(--text-charcoal)]">What's one thing you wish you knew in middle school? *</label>
+                      <textarea name="wishKnew" rows={3} placeholder="1-2 sentences is perfect." required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all resize-none" />
                     </div>
                     {error && <p className="text-red-500 text-sm font-semibold">{error}</p>}
                     <button type="submit" disabled={loading} className="w-full bg-[var(--primary-orange)] text-white py-5 rounded-3xl font-bold text-xl hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg hover:shadow-orange-200 mt-8 disabled:opacity-60 disabled:scale-100 disabled:cursor-not-allowed">
