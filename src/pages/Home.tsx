@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useInView } from 'framer-motion';
 import BlurFade from '../components/ui/blur-fade';
 import Marquee from '../components/ui/marquee';
-import FadingCarousel from '../components/ui/fading-carousel';
+
 
 // ---------------------------------------------------------------------------
 // Data
@@ -240,15 +240,23 @@ const Home = () => {
           <BlurFade>
             <h2 className="text-4xl md:text-6xl font-rammetto text-center text-white mb-14 md:mb-16 px-4 drop-shadow-[0_3px_10px_rgba(0,0,0,0.45)]">Who Is Ignite For?</h2>
           </BlurFade>
-          <FadingCarousel
-            variant="light"
-            imageStyle="open"
-            items={[
-              { image: '/assets/Grades.png',  title: 'Grades 6–8',    desc: "Currently in middle school and ready to explore what's beyond the classroom." },
-              { image: '/assets/Zoom.png',    title: 'Online & Zoom', desc: "Fully remote and accessible on Zoom. Open to motivated students from anywhere!" },
-              { image: '/assets/Curious.png', title: 'Curious Minds', desc: "You don't need to know your future — just bring curiosity and willingness to learn." },
-            ]}
-          />
+          <div className="max-w-5xl mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { image: '/assets/Grades.png',  title: 'Grades 6–8',    desc: "Currently in middle school and ready to explore what's beyond the classroom." },
+                { image: '/assets/Zoom.png',    title: 'Online & Zoom', desc: "Fully remote and accessible on Zoom. Open to motivated students from anywhere!" },
+                { image: '/assets/Curious.png', title: 'Curious Minds', desc: "You don't need to know your future — just bring curiosity and willingness to learn." },
+              ].map((item, i) => (
+                <BlurFade key={i} delay={i * 0.08}>
+                  <div className="bg-white/20 backdrop-blur-sm rounded-3xl px-6 py-8 text-center border border-white/30">
+                    <img src={item.image} alt={item.title} className="h-24 w-24 object-contain mx-auto mb-5 drop-shadow-xl" />
+                    <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+                    <p className="text-white/80 text-base leading-relaxed">{item.desc}</p>
+                  </div>
+                </BlurFade>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
