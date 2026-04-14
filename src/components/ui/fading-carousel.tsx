@@ -10,6 +10,7 @@ interface CarouselItem {
 interface FadingCarouselProps {
   items: CarouselItem[];
   intervalMs?: number;
+  autoPlay?: boolean;
   variant?: 'light' | 'dark'; // light = white text (for dark/image backgrounds), dark = dark text (default)
   imageStyle?: 'boxed' | 'open'; // boxed = rounded container, open = no box
 }
@@ -17,6 +18,7 @@ interface FadingCarouselProps {
 const FadingCarousel = ({
   items,
   intervalMs = 4000,
+  autoPlay = true,
   variant = 'dark',
   imageStyle = 'boxed',
 }: FadingCarouselProps) => {
@@ -28,10 +30,10 @@ const FadingCarousel = ({
   }, [items.length]);
 
   useEffect(() => {
-    if (paused) return;
+    if (!autoPlay || paused) return;
     const id = setInterval(next, intervalMs);
     return () => clearInterval(id);
-  }, [paused, next, intervalMs]);
+  }, [autoPlay, paused, next, intervalMs]);
 
   const isLight = variant === 'light';
 
