@@ -1,69 +1,57 @@
 const programStructure = [
-  { icon: '📅', title: '6 Weeks', desc: 'Summer program with flexible scheduling.' },
-  {
-    icon: <img src="/assets/Mentors.png" alt="Mentors icon" className="h-14 w-14 object-contain" />,
-    title: 'Open Cohorts',
-    desc: 'Online virtual cohorts where everyone is welcome.'
-  },
-  { icon: '⏱️', title: '2-3 Hours/Week', desc: 'Live sessions + independent projects.' },
-  { icon: '🎯', title: 'Project-Based', desc: 'Learn by doing, not just listening.' }
+  { icon: '📅', title: '5 Weeks', desc: '2 elective skill weeks, 1 project anchor week, a work week, and showcase day.' },
+  { icon: '👥', title: '10–15 Students', desc: 'Small cohorts with interactive sessions and required Slido participation each week.' },
+  { icon: '🎯', title: 'Choose Your Path', desc: 'Pick one module each elective week, then choose your project anchor — Science Research or Nonprofit Building.' },
+  { icon: '🏆', title: 'Real Deliverable', desc: 'Every student presents a research project or nonprofit pitch at the final showcase.' }
 ];
 
 const studentActivities = [
   {
     icon: <img src="/assets/Laptop.png" alt="Laptop icon" className="h-16 w-16 object-contain" />,
-    title: 'Write Professional Emails',
-    desc: 'Learn to communicate with teachers, mentors, and future employers in a professional tone.'
+    title: 'Master Professional Communication',
+    desc: 'Write emails, ask for opportunities, and communicate with teachers and mentors like a pro.'
   },
   {
-    icon: <img src="/assets/Artist.png" alt="Artist palette icon" className="h-16 w-16 object-contain" />,
-    title: 'Design with Canva',
-    desc: 'Create stunning presentations, social media graphics, and personal branding materials.'
+    icon: '🤖',
+    title: 'Use AI as a Multiplier',
+    desc: 'Learn to prompt, evaluate, and apply AI tools for writing, studying, and productivity — ethically and critically.'
   },
   {
-    icon: <img src="/assets/Microphone.png" alt="Microphone icon" className="h-16 w-16 object-contain" />,
-    title: 'Practice Public Speaking',
-    desc: 'Build confidence presenting in front of peers. Learn breathing, posture, and voice projection.'
+    icon: '⚡',
+    title: 'Build Real Productivity Systems',
+    desc: 'Stop procrastinating for real. Learn time blocking, decision-making frameworks, and how to set goals that stick.'
   },
   {
-    icon: <img src="/assets/Lightbulb.png" alt="Lightbulb icon" className="h-16 w-16 object-contain" />,
-    title: 'Develop an Elevator Pitch',
-    desc: 'Craft and deliver a compelling 60-second pitch about themselves or an idea.'
+    icon: '💰',
+    title: 'Take Control of Personal Finance',
+    desc: 'Understand budgeting, saving, and the basics of investing — before most adults do.'
   },
   {
-    icon: <img src="/assets/Graduation.png" alt="Graduation cap icon" className="h-16 w-16 object-contain" />,
-    title: 'Meet Guest Speakers',
-    desc: 'Hear from professionals in STEM, business, law, and entrepreneurship.'
+    icon: '🔬',
+    title: 'Run a Research Project or Build Something',
+    desc: 'Choose your anchor: design and present a real science study, or pitch a nonprofit / startup idea.'
   },
   {
     icon: <img src="/assets/Trophy.png" alt="Trophy icon" className="h-16 w-16 object-contain" />,
-    title: 'Pitch at Showcase',
-    desc: 'Present final projects at our Shark Tank-style finale event.'
+    title: 'Present at Showcase',
+    desc: 'Deliver a research presentation or a Shark Tank-style pitch to mentors and guest judges.'
   }
 ];
 
 const sampleActivities = [
-  { icon: '📝', title: 'Email Makeover Challenge', desc: 'Transform casual texts into professional emails. Learn subject lines, greetings, and sign-offs.' },
-  {
-    icon: <img src="/assets/Artist.png" alt="Artist palette icon" className="h-14 w-14 object-contain" />,
-    title: 'Personal Brand Board',
-    desc: 'Design a visual representation of your interests, goals, and unique strengths using Canva.'
-  },
-  {
-    icon: <img src="/assets/Microphone.png" alt="Microphone icon" className="h-14 w-14 object-contain" />,
-    title: '2-Minute Talk',
-    desc: "Prepare and deliver a short presentation on something you're passionate about."
-  },
+  { icon: '📝', title: 'Email Makeover Challenge', desc: 'Edit a bad example email into a polished professional one. Learn subject lines, greetings, tone, and sign-offs.' },
+  { icon: '🔥', title: 'Hot Take: Agree or Disagree', desc: 'Drop a controversial statement on screen — students vote instantly on Slido and defend their position live.' },
+  { icon: '💰', title: 'Budget for a Month', desc: 'Given a hypothetical student income, allocate funds across needs, wants, and savings — then defend your choices.' },
+  { icon: '🤖', title: 'AI Writing Workshop', desc: 'Improve a piece of your own writing using AI, then reflect on what changed, why it matters, and where AI fell short.' },
   {
     icon: <img src="/assets/Lightbulb.png" alt="Lightbulb icon" className="h-14 w-14 object-contain" />,
-    title: 'Career Speed Networking',
-    desc: 'Rotate through stations meeting professionals and asking questions about their paths.'
+    title: 'Prioritize Under Pressure',
+    desc: 'Given a list of tasks, money, or competing goals — rank them and justify every trade-off you make.'
   },
-  { icon: '🚀', title: 'Pitch Drafting Workshop', desc: 'Write, revise, and practice your personal elevator pitch with peer feedback.' },
   {
     icon: <img src="/assets/Trophy.png" alt="Trophy icon" className="h-14 w-14 object-contain" />,
     title: 'Final Showcase',
-    desc: 'Present your pitch to mentors, peers, and guest speakers at our celebration event.'
+    desc: 'Present your research or pitch to mentors, peers, and guest judges at our celebration event.'
   }
 ];
 
@@ -74,7 +62,7 @@ const Program = () => {
       <section className="bg-[var(--primary-orange)] py-20 text-white text-center shadow-lg relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
           <h1 className="text-5xl md:text-7xl font-rammetto text-white">Program Overview</h1>
-          <p className="text-xl md:text-2xl opacity-90 mt-4">6 weeks. Life-changing skills.</p>
+          <p className="text-xl md:text-2xl opacity-90 mt-4">5 weeks. You choose the skills.</p>
         </div>
       </section>
 
