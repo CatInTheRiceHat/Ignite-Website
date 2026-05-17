@@ -9,6 +9,14 @@ const Mentors = () => {
     <div className="bg-[var(--bg-cream)] min-h-screen">
       {/* Page Header */}
       <section className="bg-[var(--primary-orange)] py-20 text-white text-center shadow-lg relative overflow-hidden">
+        <div className="absolute inset-y-0 right-0 w-full md:w-[46%] pointer-events-none opacity-20 sm:opacity-25 md:opacity-30">
+          <img
+            src="/assets/Mentors.png"
+            alt=""
+            className="h-full w-full object-contain object-right-bottom"
+            loading="lazy"
+          />
+        </div>
         <div className="container mx-auto px-4 relative z-10">
           <h1 className="text-5xl md:text-7xl font-rammetto text-white">Our Mentors</h1>
           <p className="text-xl md:text-2xl opacity-90 mt-4 leading-relaxed">High school students who want to help.</p>

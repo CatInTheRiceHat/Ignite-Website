@@ -1,9 +1,9 @@
 import { APPLY_FORM_URL } from '../lib/links';
 
-const atAGlance = [
-  { icon: '/assets/Graduation.png', title: '3 Weeks', desc: 'Short summer courses with different time commitments by track.' },
-  { icon: '/assets/Zoom.png', title: 'Featured: 12-1 pm PST', desc: 'Featured courses meet midday for students who want the main track.' },
-  { icon: '/assets/Trophy.png', title: 'Regular: 7-8 pm PST', desc: 'Regular courses meet in the evening for students across time zones.' },
+const programDetails = [
+  { icon: '/assets/Graduation.png', title: '3 Weeks', desc: 'The program runs for 3 weeks during the summer.' },
+  { icon: '/assets/Mentors.png', title: 'Choose Your Courses', desc: 'Students can sign up for 1 course, 2 courses, 3 courses, or whatever fits their schedule.' },
+  { icon: '/assets/Zoom.png', title: 'Online Classes', desc: 'All classes are online, so students can join from home.' },
 ];
 
 const timeCommitments = [
@@ -107,52 +107,54 @@ const Program = () => {
 
       {/* Hero */}
       <section className="bg-[var(--primary-orange)] py-20 text-white text-center shadow-lg relative overflow-hidden">
+        <div className="absolute inset-y-0 right-0 w-full md:w-[46%] pointer-events-none opacity-20 sm:opacity-25 md:opacity-30">
+          <img
+            src="/assets/Graduation.png"
+            alt=""
+            className="h-full w-full object-contain object-right-bottom"
+            loading="lazy"
+          />
+        </div>
         <div className="container mx-auto px-4 relative z-10">
           <h1 className="text-5xl md:text-7xl font-rammetto text-white">The Program</h1>
           <p className="text-xl md:text-2xl opacity-90 mt-4">3 weeks. Pick the classes that fit.</p>
         </div>
       </section>
 
-      {/* At a Glance */}
-      <section className="py-24 md:py-32 relative overflow-hidden">
+      {/* Program Details and Time Commitments */}
+      <section className="py-28 md:py-40 relative overflow-hidden min-h-[72vw]">
         <img
           src="/assets/Program%20Overview.png"
           alt=""
-          className="absolute inset-0 h-full w-full object-cover object-top"
+          className="absolute inset-0 h-full w-full object-cover object-center"
           loading="lazy"
         />
         <div className="absolute inset-0 bg-black/35"></div>
         <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <h2 className="text-4xl font-rammetto text-center text-white mb-16 drop-shadow-[0_3px_10px_rgba(0,0,0,0.35)]">At a Glance</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {atAGlance.map((item, i) => (
-              <div key={i} className="bg-[rgba(26,26,46,0.72)] backdrop-blur-md p-8 rounded-[2rem] shadow-lg text-center hover:scale-105 transition-all border border-white/30">
-                <div className="mb-6 flex h-16 items-center justify-center">
-                  <img src={item.icon} alt="" className="h-14 w-14 object-contain" />
+          <h2 className="text-4xl md:text-5xl font-rammetto text-center text-white mb-4 drop-shadow-[0_3px_10px_rgba(0,0,0,0.35)]">Time Commitments</h2>
+          <p className="text-center text-white text-lg mb-16 drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">Different classes meet at different times, so students can choose what fits their schedule.</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            {programDetails.map((item, i) => (
+              <div key={i} className="bg-[rgba(26,26,46,0.72)] backdrop-blur-md rounded-[2rem] p-8 text-center flex flex-col gap-3 shadow-lg border border-white/30">
+                <div className="mb-2 flex h-14 items-center justify-center">
+                  <img src={item.icon} alt="" className="h-12 w-12 object-contain" />
                 </div>
-                <h3 className="text-2xl font-bold mb-4 text-white">{item.title}</h3>
-                <p className="text-white/90 text-sm leading-relaxed">{item.desc}</p>
+                <h3 className="text-2xl font-bold text-white">{item.title}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* Time Commitments */}
-      <section className="py-24 bg-white rounded-[4rem]">
-        <div className="max-w-5xl mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-rammetto text-center text-[var(--primary-orange)] mb-4">Time Commitments</h2>
-          <p className="text-center text-[var(--text-light)] text-lg mb-16">Different classes meet at different times, so students can choose what fits their schedule.</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch max-w-5xl mx-auto">
             {timeCommitments.map((item, i) => (
-              <div key={i} className="bg-[var(--bg-cream)] rounded-[2rem] p-8 text-center flex flex-col gap-3">
-                <span className="text-xs font-bold uppercase tracking-widest text-[var(--primary-orange)]">{item.track}</span>
-                <span className="text-3xl font-bold text-[var(--text-charcoal)]">{item.time}</span>
-                <span className="text-sm text-[var(--text-light)]">{item.desc}</span>
+              <div key={i} className="bg-[rgba(26,26,46,0.72)] backdrop-blur-md rounded-[2rem] p-8 text-center flex flex-col gap-3 shadow-lg border border-white/30">
+                <span className="text-xs font-bold uppercase tracking-widest text-white/80">{item.track}</span>
+                <span className="text-3xl font-bold text-white">{item.time}</span>
+                <span className="text-sm text-white/90 leading-relaxed">{item.desc}</span>
               </div>
             ))}
           </div>
-          <p className="text-center text-[var(--text-light)] text-sm mt-10 italic">
+          <p className="text-center text-white/90 text-sm mt-10 italic drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">
             All times are listed in Pacific Time to keep the schedule clear for students joining from different locations.
           </p>
         </div>
