@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useInView } from 'framer-motion';
 import BlurFade from '../components/ui/blur-fade';
 import FadingCarousel from '../components/ui/fading-carousel';
+import { APPLY_FORM_URL } from '../lib/links';
 
 
 // ---------------------------------------------------------------------------
@@ -10,10 +11,10 @@ import FadingCarousel from '../components/ui/fading-carousel';
 // ---------------------------------------------------------------------------
 
 const programStructurePreview = [
-  { icon: '📅', title: '3 Weeks', desc: 'A focused summer sprint — real skills, real outcomes.' },
+  { icon: <img src="/assets/Graduation.png" alt="Calendar icon" className="h-14 w-14 object-contain" />, title: '3 Weeks', desc: 'A focused summer sprint — real skills, real outcomes.' },
   { icon: <img src="/assets/Mentors.png" alt="Mentors icon" className="h-14 w-14 object-contain" />, title: 'Open Cohorts', desc: 'Online learning circles where every student can participate and belong.' },
-  { icon: '⏱️', title: 'Daily Sessions', desc: '12–1 pm and 3–4 pm, Monday through Thursday.' },
-  { icon: '🎯', title: 'Project-Based', desc: 'Students build confidence by making and presenting real work.' },
+  { icon: <img src="/assets/Zoom.png" alt="Daily sessions icon" className="h-14 w-14 object-contain" />, title: 'Daily Sessions', desc: '12–1 pm and 3–4 pm, Monday through Thursday.' },
+  { icon: <img src="/assets/Project.png" alt="Project icon" className="h-14 w-14 object-contain" />, title: 'Project-Based', desc: 'Students build confidence by making and presenting real work.' },
 ];
 
 const programExperiencePreview = [
@@ -101,9 +102,9 @@ const Home = () => {
           </BlurFade>
           <BlurFade delay={0.25}>
             <div className="flex flex-wrap gap-4 justify-center">
-              <Link to="/apply" className="bg-[var(--primary-orange)] text-white px-10 py-5 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-lg">
+              <a href={APPLY_FORM_URL} target="_blank" rel="noopener noreferrer" className="bg-[var(--primary-orange)] text-white px-10 py-5 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-lg">
                 Apply Now
-              </Link>
+              </a>
               <Link to="/program" className="bg-white text-[var(--primary-orange)] border-2 border-[var(--primary-orange)] px-10 py-5 rounded-full font-bold text-xl hover:bg-orange-50 transition-all">
                 Learn More
               </Link>
@@ -285,12 +286,14 @@ const Home = () => {
                 <p className="text-xl md:text-2xl opacity-90 mb-12 max-w-3xl mx-auto text-white">
                   Applications are open for our completely online summer program. Everyone is accepted!
                 </p>
-                <Link
-                  to="/apply"
+                <a
+                  href={APPLY_FORM_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-block bg-white text-[var(--primary-orange)] px-12 py-6 rounded-full font-bold text-2xl hover:scale-110 active:scale-95 transition-all shadow-xl"
                 >
                   Apply Now
-                </Link>
+                </a>
               </div>
             </div>
           </BlurFade>

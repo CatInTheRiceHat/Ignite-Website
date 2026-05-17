@@ -20,7 +20,6 @@ const Footer = () => {
           <Link to="/program" className="hover:text-[var(--primary-orange)] transition-colors">Program</Link>
           <Link to="/curriculum" className="hover:text-[var(--primary-orange)] transition-colors">Curriculum</Link>
           <Link to="/faq" className="hover:text-[var(--primary-orange)] transition-colors">FAQ</Link>
-          <Link to="/apply" className="hover:text-[var(--primary-orange)] transition-colors">Apply</Link>
         </div>
 
         <div className="w-full h-px bg-gray-100 max-w-lg"></div>

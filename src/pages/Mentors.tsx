@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Briefcase, Mail, MapPin } from 'lucide-react';
 import BlurFade from '../components/ui/blur-fade';
 import { mentors } from '../data/mentors';
+import { APPLY_FORM_URL } from '../lib/links';
 
 const Mentors = () => {
 
@@ -52,7 +53,7 @@ const Mentors = () => {
                 
                 <div className="space-y-4">
                   <div className="flex items-center gap-2 text-sm text-[var(--text-light)] font-semibold bg-[var(--bg-cream)] px-4 py-2 rounded-xl">
-                    <span>📍</span> {mentor.details}
+                    <MapPin className="h-4 w-4 text-[var(--primary-orange)] flex-shrink-0" /> {mentor.details}
                   </div>
                   <p className="text-[var(--text-light)] leading-relaxed italic">
                     "{mentor.bio}"
@@ -61,10 +62,14 @@ const Mentors = () => {
 
                 <div className="mt-8 flex gap-3">
                   {mentor.linkedin && (
-                    <a href={mentor.linkedin} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-gray-400 hover:bg-[var(--primary-orange)] hover:text-white transition-colors">💼</a>
+                    <a href={mentor.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${mentor.name} LinkedIn`} className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-gray-400 hover:bg-[var(--primary-orange)] hover:text-white transition-colors">
+                      <Briefcase className="h-4 w-4" />
+                    </a>
                   )}
                   {mentor.email && (
-                    <a href={`mailto:${mentor.email}`} className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-gray-400 hover:bg-[var(--primary-orange)] hover:text-white transition-colors">📧</a>
+                    <a href={`mailto:${mentor.email}`} aria-label={`Email ${mentor.name}`} className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-gray-400 hover:bg-[var(--primary-orange)] hover:text-white transition-colors">
+                      <Mail className="h-4 w-4" />
+                    </a>
                   )}
                 </div>
               </div>
@@ -82,9 +87,9 @@ const Mentors = () => {
               We are always looking for passionate high school students to join our mentorship program as volunteers. 
               Gain leadership experience and give back to your community.
             </p>
-            <Link to="/apply" className="inline-block bg-[var(--primary-orange)] text-white px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-lg shadow-orange-200">
+            <a href={APPLY_FORM_URL} target="_blank" rel="noopener noreferrer" className="inline-block bg-[var(--primary-orange)] text-white px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-lg shadow-orange-200">
               Apply to Mentor
-            </Link>
+            </a>
         </div>
       </section>
     </div>

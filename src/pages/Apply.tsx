@@ -81,7 +81,7 @@ const Apply = () => {
 
           {submitted ? (
             <div className="bg-white rounded-[3rem] p-12 md:p-16 shadow-xl border-t-8 border-[var(--primary-orange)] text-center">
-              <div className="text-6xl mb-6">🔥</div>
+              <img src="/assets/Celebrate.png" alt="" className="h-20 w-20 object-contain mx-auto mb-6" />
               <h2 className="text-3xl md:text-4xl font-rammetto text-[var(--primary-orange)] mb-4">You're In!</h2>
               <p className="text-xl text-[var(--text-light)] leading-relaxed mb-6">
                 Your application was submitted successfully. Check your inbox — we sent you a confirmation email with next steps.

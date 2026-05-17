@@ -5,7 +5,6 @@ import About from './pages/About';
 import Mentors from './pages/Mentors';
 import Program from './pages/Program';
 import FAQ from './pages/FAQ';
-import Apply from './pages/Apply';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -18,7 +17,6 @@ function App() {
           <Route path="/mentors" element={<Mentors />} />
           <Route path="/program" element={<Program />} />
           <Route path="/faq" element={<FAQ />} />
-          <Route path="/apply" element={<Apply />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>

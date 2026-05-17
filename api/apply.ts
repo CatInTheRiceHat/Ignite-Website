@@ -23,7 +23,7 @@ function confirmationHtml(name: string, type: 'student' | 'mentor'): string {
   return `
     <div style="font-family:sans-serif;max-width:560px;margin:0 auto;background:#FFF8F0;border-radius:16px;overflow:hidden;">
       <div style="background:#F07B2A;padding:32px 40px;text-align:center;">
-        <h1 style="color:#fff;margin:0;font-size:28px;font-weight:900;">🔥 Ignite</h1>
+        <h1 style="color:#fff;margin:0;font-size:28px;font-weight:900;">Ignite</h1>
       </div>
       <div style="padding:40px;">
         <h2 style="color:#1A1A2E;margin-top:0;">Hey ${name}, we got your application!</h2>
@@ -36,7 +36,7 @@ function confirmationHtml(name: string, type: 'student' | 'mentor'): string {
         <ol style="color:#4A4A5E;font-size:16px;line-height:2;">
           <li>We'll review your application within a few days.</li>
           <li>You'll receive a follow-up email with Zoom details and the program schedule.</li>
-          <li>All applicants are welcome — so get ready to find your fire! 🚀</li>
+          <li>All applicants are welcome — so get ready to find your fire!</li>
         </ol>
         <p style="color:#4A4A5E;font-size:16px;line-height:1.6;">
           Questions? Reply to this email or reach us at

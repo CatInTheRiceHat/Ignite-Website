@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
+import { Check, Handshake, Rocket, Sparkles } from 'lucide-react';
 import BlurFade from '../components/ui/blur-fade';
+import { APPLY_FORM_URL } from '../lib/links';
 
 const About = () => {
   return (
@@ -65,12 +66,12 @@ const About = () => {
                 desc: "We believe every student deserves access to career mentorship — regardless of background or budget. That's why Ignite is 100% free."
               },
               {
-                icon: '🤝',
+                icon: <Handshake className="w-12 h-12 text-[var(--primary-orange)]" />,
                 title: 'Connection',
                 desc: "We connect younger students with high school mentors who understand their challenges and can guide them forward."
               },
               {
-                icon: '🚀',
+                icon: <Rocket className="w-12 h-12 text-[var(--primary-orange)]" />,
                 title: 'Empowerment',
                 desc: "We teach practical skills that students can use immediately — from professional communication to public speaking."
               }
@@ -110,7 +111,9 @@ const About = () => {
               ].map((item, i) => (
                 <BlurFade key={i} delay={i * 0.08}>
                   <div className="flex items-center gap-6 p-6 bg-white rounded-2xl shadow-sm border-l-8 border-[var(--primary-orange)] hover:translate-x-2 transition-transform">
-                    <div className="bg-orange-100 text-[var(--primary-orange)] p-2 rounded-lg font-bold">✓</div>
+                    <div className="bg-orange-100 text-[var(--primary-orange)] p-2 rounded-lg">
+                      <Check className="w-5 h-5" />
+                    </div>
                     <p className="text-lg font-semibold text-[var(--text-charcoal)]">{item.text}</p>
                   </div>
                 </BlurFade>
@@ -126,10 +129,10 @@ const About = () => {
           <h2 className="text-4xl md:text-5xl font-rammetto text-center text-[var(--primary-orange)] mb-16">Our Values</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { icon: '🌟', title: 'Inclusion', desc: "Every voice matters. Every background is valued." },
+              { icon: <Sparkles className="w-12 h-12 text-[var(--primary-orange)]" />, title: 'Inclusion', desc: "Every voice matters. Every background is valued." },
               { icon: <img src="/assets/Lightbulb.png" alt="Lightbulb icon" className="w-12 h-12 object-contain" />, title: 'Curiosity', desc: "Questions are welcome. Exploration is encouraged." },
-              { icon: '🤝', title: 'Community', desc: "We lift each other up. No one gets left behind." },
-              { icon: '🚀', title: 'Growth', desc: "Mistakes are part of learning. Keep going." }
+              { icon: <Handshake className="w-12 h-12 text-[var(--primary-orange)]" />, title: 'Community', desc: "We lift each other up. No one gets left behind." },
+              { icon: <Rocket className="w-12 h-12 text-[var(--primary-orange)]" />, title: 'Growth', desc: "Mistakes are part of learning. Keep going." }
             ].map((item, i) => (
               <BlurFade key={i} delay={i * 0.08}>
                 <div className="text-center p-8 bg-[var(--bg-cream)] rounded-3xl hover:-translate-y-2 transition-transform shadow-sm h-full">
@@ -152,9 +155,9 @@ const About = () => {
               <p className="text-xl opacity-90 mb-10 max-w-2xl mx-auto">
                 Applications are open for our completely free summer program. Everyone who applies is welcome.
               </p>
-              <Link to="/apply" className="inline-block bg-white text-[var(--primary-orange)] px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-xl">
+              <a href={APPLY_FORM_URL} target="_blank" rel="noopener noreferrer" className="inline-block bg-white text-[var(--primary-orange)] px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-xl">
                 Apply Now
-              </Link>
+              </a>
             </div>
           </div>
         </div>
