@@ -1,4 +1,4 @@
-import { Check, Handshake, Rocket, Sparkles } from 'lucide-react';
+import { Check, Handshake, Rocket } from 'lucide-react';
 import BlurFade from '../components/ui/blur-fade';
 import { APPLY_FORM_URL } from '../lib/links';
 
@@ -119,29 +119,6 @@ const About = () => {
                 </BlurFade>
               ))}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Values Section */}
-      <section className="py-24 bg-white rounded-[4rem]">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-rammetto text-center text-[var(--primary-orange)] mb-16">Our Values</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              { icon: <Sparkles className="w-12 h-12 text-[var(--primary-orange)]" />, title: 'Inclusion', desc: "Every voice matters. Every background is valued." },
-              { icon: <img src="/assets/Lightbulb.png" alt="Lightbulb icon" className="w-12 h-12 object-contain" />, title: 'Curiosity', desc: "Questions are welcome. Exploration is encouraged." },
-              { icon: <Handshake className="w-12 h-12 text-[var(--primary-orange)]" />, title: 'Community', desc: "We lift each other up. No one gets left behind." },
-              { icon: <Rocket className="w-12 h-12 text-[var(--primary-orange)]" />, title: 'Growth', desc: "Mistakes are part of learning. Keep going." }
-            ].map((item, i) => (
-              <BlurFade key={i} delay={i * 0.08}>
-                <div className="text-center p-8 bg-[var(--bg-cream)] rounded-3xl hover:-translate-y-2 transition-transform shadow-sm h-full">
-                  <div className="text-4xl mb-6">{item.icon}</div>
-                  <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                  <p className="text-sm text-[var(--text-light)]">{item.desc}</p>
-                </div>
-              </BlurFade>
-            ))}
           </div>
         </div>
       </section>

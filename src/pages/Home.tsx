@@ -13,7 +13,7 @@ import { APPLY_FORM_URL } from '../lib/links';
 const programStructurePreview = [
   { icon: <img src="/assets/Graduation.png" alt="Calendar icon" className="h-14 w-14 object-contain" />, title: '3 Weeks', desc: 'A focused summer sprint — real skills, real outcomes.' },
   { icon: <img src="/assets/Mentors.png" alt="Mentors icon" className="h-14 w-14 object-contain" />, title: 'Open Cohorts', desc: 'Online learning circles where every student can participate and belong.' },
-  { icon: <img src="/assets/Zoom.png" alt="Daily sessions icon" className="h-14 w-14 object-contain" />, title: 'Daily Sessions', desc: '12–1 pm and 3–4 pm, Monday through Thursday.' },
+  { icon: <img src="/assets/Zoom.png" alt="Course times icon" className="h-14 w-14 object-contain" />, title: 'Flexible Class Times', desc: 'Featured courses meet 12-1 pm PST; regular courses meet 7-8 pm PST.' },
   { icon: <img src="/assets/Project.png" alt="Project icon" className="h-14 w-14 object-contain" />, title: 'Project-Based', desc: 'Students build confidence by making and presenting real work.' },
 ];
 
@@ -34,6 +34,9 @@ const programExperiencePreview = [
     desc: 'Wrap up the program by presenting your work and celebrating everything you created.'
   }
 ];
+
+const darkOverviewCardClass =
+  'h-full rounded-[2rem] border border-white/30 bg-[rgba(26,26,46,0.74)] backdrop-blur-md p-8 text-left shadow-lg';
 
 
 // ---------------------------------------------------------------------------
@@ -91,8 +94,8 @@ const Home = () => {
           <BlurFade delay={0}>
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-rammetto text-white mb-6 drop-shadow-[0_3px_10px_rgba(0,0,0,0.35)]">
               <span className="block">Free Mentorship</span>
-              <span className="block mt-[20px] md:mt-[28px]">Program for Middle</span>
-              <span className="block mt-[20px] md:mt-[28px]">School Students</span>
+              <span className="block mt-[20px] md:mt-[28px]">Program for</span>
+              <span className="block mt-[20px] md:mt-[28px]">Students</span>
             </h1>
           </BlurFade>
           <BlurFade delay={0.15}>
@@ -119,7 +122,7 @@ const Home = () => {
           <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center sm:divide-x divide-y sm:divide-y-0 divide-orange-100">
             <CountStat value={3} label="Weeks" />
             <CountStat value={100} label="Percent Free — Always" suffix="%" />
-            <CountStat value={10} label="Expert Mentors & Growing" suffix="+" />
+            <CountStat value={7} label="Mentors" />
             <div className="text-center px-6 md:px-8 py-4">
               <p className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)]">K–8</p>
               <p className="text-sm md:text-base text-[var(--text-light)] font-semibold mt-1">Grade Levels Welcome</p>
@@ -144,14 +147,12 @@ const Home = () => {
               <p className="text-xl md:text-2xl text-white font-semibold leading-relaxed max-w-3xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">Real skills. Real mentors. Zero cost.</p>
             </div>
           </BlurFade>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
             {[
               { img: '/assets/Career%20Skills.png',   title: 'Career Skills',       desc: "Professional email, presentations, visual design — skills you'll use for life." },
-              { img: '/assets/Career%20Exposure.png', title: 'Career Exposure',     desc: "Meet professionals from STEM, business, law, and entrepreneurship." },
-              { img: '/assets/Mentorship.png',        title: '1-on-1 Mentorship',   desc: "High school mentors who've been in your shoes and want to help." },
+              { img: '/assets/Mentorship.png',        title: 'High School Mentorship', desc: "Learn from high school mentors who've been in your shoes and want to help." },
               { img: '/assets/Free.png',              title: '100% Free',           desc: "No tuition, no fees, no hidden costs. Just bring your curiosity." },
-              { img: '/assets/No%20Experience.png',   title: 'No Experience Needed',desc: "We welcome all students — no prior skills or grades required." },
-              { img: '/assets/Shark.png',             title: 'Shark Tank Finale',   desc: "End the summer pitching your ideas at our showcase event." }
+              { img: '/assets/No%20Experience.png',   title: 'No Experience Needed',desc: "We welcome all students — no prior skills or grades required." }
             ].map((feature, i) => (
               <BlurFade key={i} delay={i * 0.08}>
                 <div className="bg-white/90 backdrop-blur-md p-10 md:p-12 rounded-3xl border border-orange-50 hover:bg-white hover:shadow-xl transition-all duration-300 group h-full">
@@ -221,7 +222,7 @@ const Home = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
             {programExperiencePreview.map((item, i) => (
               <BlurFade key={i} delay={i * 0.1}>
-                <div className="rounded-[2rem] border border-white/30 bg-[rgba(26,26,46,0.74)] backdrop-blur-md p-8 text-left shadow-lg">
+                <div className={darkOverviewCardClass}>
                   <div className="mb-5 flex h-14 items-center">{item.icon}</div>
                   <h3 className="text-2xl font-bold text-white mb-3">{item.title}</h3>
                   <p className="text-lg text-white leading-relaxed">{item.desc}</p>

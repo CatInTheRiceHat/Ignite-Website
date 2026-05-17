@@ -1,16 +1,14 @@
 import { APPLY_FORM_URL } from '../lib/links';
 
 const atAGlance = [
-  { icon: '/assets/Graduation.png', title: '3 Weeks', desc: 'Two skill courses per day — 12–1 pm and 3–4 pm — across 3 weeks.' },
-  { icon: '/assets/Zoom.png', title: '1 Session', desc: 'One cohort this summer. Apply early — spots fill up.' },
-  { icon: '/assets/Trophy.png', title: 'Friday Presentations', desc: 'Each class presents on Friday from 12–1 pm, 20 minutes per class.' },
+  { icon: '/assets/Graduation.png', title: '3 Weeks', desc: 'Short summer courses with different time commitments by track.' },
+  { icon: '/assets/Zoom.png', title: 'Featured: 12-1 pm PST', desc: 'Featured courses meet midday for students who want the main track.' },
+  { icon: '/assets/Trophy.png', title: 'Regular: 7-8 pm PST', desc: 'Regular courses meet in the evening for students across time zones.' },
 ];
 
-const weeklyRhythm = [
-  { day: 'Mon – Wed', label: '12–1 pm', desc: 'Skill course (one of six)' },
-  { day: 'Mon – Wed', label: '3–4 pm', desc: 'Skill course (one of six)' },
-  { day: 'Thursday', label: 'Workshop day', desc: 'Class time, project work, and presentation prep' },
-  { day: 'Friday', label: '12–1 pm', desc: '20-minute presentations per class' },
+const timeCommitments = [
+  { track: 'Featured Courses', time: '12-1 pm PST', desc: 'Best for students who want the main midday track and a slightly deeper commitment.' },
+  { track: 'Regular Courses', time: '7-8 pm PST', desc: 'Best for students who want an evening class with a lighter schedule.' },
 ];
 
 const skillCourses = [
@@ -19,78 +17,42 @@ const skillCourses = [
     title: 'Project / Nonprofit Building',
     instructor: 'Elaine',
     highlighted: true,
-    topics: [
-      'Identifying a real problem or idea',
-      'Defining a target audience',
-      'Value proposition (why it matters)',
-      'Planning (goals, timeline, roles)',
-      'Building and pitching a project',
-    ],
+    description: 'Students learn how to turn a real problem or idea into a simple project plan, define who it helps, explain why it matters, and build toward a final pitch.',
   },
   {
     icon: '/assets/Research.png',
     title: 'Science Research',
     instructor: 'Michael',
     highlighted: true,
-    topics: [
-      'What research actually is',
-      'Finding real-world problems',
-      'Writing testable research questions',
-      'Designing fair experiments',
-      'Presenting evidence clearly',
-    ],
+    description: 'Students explore what research actually looks like, practice finding real-world questions, design fair experiments, and learn how to present evidence clearly.',
   },
   {
     icon: '/assets/Artist.png',
     title: 'Marketing & Digital Design',
     instructor: 'Austin',
     highlighted: true,
-    topics: [
-      'Principles of good design',
-      'Visual storytelling',
-      'Using Canva and basic design tools',
-      'Choosing fonts, colors, and layouts',
-      'Presenting with confidence',
-    ],
+    description: 'Students build a stronger eye for design by learning visual storytelling, Canva basics, fonts, colors, layouts, and how to present polished work with confidence.',
   },
   {
     icon: '/assets/Productivity.png',
     title: 'Productivity, Goal Setting & Decision Making',
     instructor: 'Austin',
     highlighted: false,
-    topics: [
-      'Why people procrastinate',
-      'Prioritization (important vs urgent)',
-      'Time blocking and scheduling',
-      'SMART goals and action steps',
-      'Making better trade-offs',
-    ],
+    description: 'Students learn practical ways to beat procrastination, prioritize what matters, plan their time, set SMART goals, and make better trade-offs.',
   },
   {
     icon: '/assets/Mentors.png',
     title: 'Professional Communication',
     instructor: 'Ivan',
     highlighted: false,
-    topics: [
-      'Writing clear messages',
-      'Professional email structure',
-      'Asking for help and opportunities',
-      'Following up properly',
-      'Communicating with adults',
-    ],
+    description: 'Students practice writing clear messages, structuring professional emails, asking for help or opportunities, following up, and communicating with adults.',
   },
   {
     icon: '/assets/AI.png',
     title: 'AI Literacy',
     instructor: 'Achyut Karthikeyan',
     highlighted: false,
-    topics: [
-      'What AI actually is',
-      'When to use AI vs not use it',
-      'Writing better prompts',
-      'Checking AI outputs',
-      'Using AI ethically',
-    ],
+    description: 'Students learn what AI is, when it is useful, how to write better prompts, how to check AI outputs, and how to use AI ethically.',
   },
 ];
 
@@ -135,14 +97,7 @@ const CourseCard = ({ course }: { course: (typeof skillCourses)[number] }) => (
         <span className="text-sm font-semibold text-[var(--primary-orange)] hidden sm:block">{course.instructor}</span>
       </div>
     </div>
-    <ul className="space-y-1.5">
-      {course.topics.map((topic, j) => (
-        <li key={j} className="flex items-start gap-2 text-sm text-[var(--text-light)]">
-          <span className="text-[var(--primary-orange)] mt-0.5 flex-shrink-0">·</span>
-          {topic}
-        </li>
-      ))}
-    </ul>
+    <p className="text-sm text-[var(--text-light)] leading-relaxed">{course.description}</p>
   </div>
 );
 
@@ -176,22 +131,22 @@ const Program = () => {
         </div>
       </section>
 
-      {/* How It Works */}
+      {/* Time Commitments */}
       <section className="py-24 bg-white rounded-[4rem]">
         <div className="max-w-5xl mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-rammetto text-center text-[var(--primary-orange)] mb-4">How It Works</h2>
-          <p className="text-center text-[var(--text-light)] text-lg mb-16">Every week has a clear rhythm. Show up, learn, and present on Fridays.</p>
-          <div className="flex flex-col md:flex-row gap-4 items-stretch">
-            {weeklyRhythm.map((item, i) => (
-              <div key={i} className="flex-1 bg-[var(--bg-cream)] rounded-[2rem] p-6 text-center flex flex-col gap-2">
-                <span className="text-xs font-bold uppercase tracking-widest text-[var(--primary-orange)]">{item.day}</span>
-                <span className="text-lg font-bold text-[var(--text-charcoal)]">{item.label}</span>
+          <h2 className="text-4xl md:text-5xl font-rammetto text-center text-[var(--primary-orange)] mb-4">Time Commitments</h2>
+          <p className="text-center text-[var(--text-light)] text-lg mb-16">Different classes meet at different times, so students can choose what fits their schedule.</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+            {timeCommitments.map((item, i) => (
+              <div key={i} className="bg-[var(--bg-cream)] rounded-[2rem] p-8 text-center flex flex-col gap-3">
+                <span className="text-xs font-bold uppercase tracking-widest text-[var(--primary-orange)]">{item.track}</span>
+                <span className="text-3xl font-bold text-[var(--text-charcoal)]">{item.time}</span>
                 <span className="text-sm text-[var(--text-light)]">{item.desc}</span>
               </div>
             ))}
           </div>
           <p className="text-center text-[var(--text-light)] text-sm mt-10 italic">
-            Thursday sessions are flexible so each class has time for hands-on work and Friday presentation prep.
+            All times are listed in Pacific Time to keep the schedule clear for students joining from different locations.
           </p>
         </div>
       </section>
@@ -202,7 +157,7 @@ const Program = () => {
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)]">Courses</h2>
             <p className="text-[var(--text-light)] text-lg mt-4 max-w-2xl mx-auto">
-              6 courses across 3 weeks. Classes meet daily at 12–1 pm and 3–4 pm.
+              6 courses across 3 weeks. Featured courses meet 12-1 pm PST, and regular courses meet 7-8 pm PST.
             </p>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
@@ -213,7 +168,7 @@ const Program = () => {
               ))}
             </div>
             <div className="space-y-5">
-              <h3 className="text-2xl font-bold text-[var(--text-charcoal)] px-2">More Courses</h3>
+              <h3 className="text-2xl font-bold text-[var(--text-charcoal)] px-2">Regular Courses</h3>
               {additionalCourses.map((course) => (
                 <CourseCard key={course.title} course={course} />
               ))}
