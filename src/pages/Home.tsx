@@ -10,7 +10,7 @@ import { APPLY_FORM_URL } from '../lib/links';
 // ---------------------------------------------------------------------------
 
 
-function CountStat({ value, label, suffix = '' }: { value: number; label: string; suffix?: string }) {
+function CountStat({ value, label, prefix = '', suffix = '' }: { value: number; label: string; prefix?: string; suffix?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true });
   const [display, setDisplay] = useState(0);
@@ -30,8 +30,8 @@ function CountStat({ value, label, suffix = '' }: { value: number; label: string
 
   return (
     <div ref={ref} className="text-center px-6 md:px-8 py-4">
-      <p className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)]">
-        {display}{suffix}
+      <p className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)] whitespace-nowrap">
+        {prefix}{display}{suffix}
       </p>
       <p className="text-sm md:text-base text-[var(--text-light)] font-semibold mt-1">{label}</p>
     </div>
@@ -84,9 +84,9 @@ const Home = () => {
 
       {/* Impact Stats Row */}
       <section className="bg-white shadow-sm">
-        <div className="max-w-4xl mx-auto px-4 py-10 md:py-12">
-          <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center sm:divide-x divide-y sm:divide-y-0 divide-orange-100">
-            <CountStat value={3} label="Weeks" />
+        <div className="max-w-7xl mx-auto px-4 py-10 md:py-12">
+          <div className="flex flex-col md:flex-row md:flex-wrap justify-center md:divide-x divide-y md:divide-y-0 divide-orange-100">
+            <CountStat value={3} label="Weeks" prefix="Up to " />
             <CountStat value={100} label="Free" suffix="%" />
             <CountStat value={7} label="Mentors" />
             <div className="text-center px-6 md:px-8 py-4">

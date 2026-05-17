@@ -1,4 +1,4 @@
-import { Check, Handshake, Rocket } from 'lucide-react';
+import { Check } from 'lucide-react';
 import BlurFade from '../components/ui/blur-fade';
 import { APPLY_FORM_URL } from '../lib/links';
 
@@ -69,24 +69,20 @@ const About = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                icon: <img src="/assets/Lightbulb.png" alt="Access" className="w-12 h-12" />,
                 title: 'Access',
                 desc: "We keep Ignite free so more students can try these classes without worrying about cost."
               },
               {
-                icon: <Handshake className="w-12 h-12 text-[var(--primary-orange)]" />,
                 title: 'Connection',
                 desc: "We connect younger students with high school mentors who can answer questions and help them practice."
               },
               {
-                icon: <Rocket className="w-12 h-12 text-[var(--primary-orange)]" />,
                 title: 'Practice',
                 desc: "We teach skills students can use right away, from professional communication to public speaking."
               }
             ].map((item, i) => (
               <BlurFade key={i} delay={i * 0.1}>
                 <div className="bg-[var(--bg-cream)] p-10 rounded-3xl border-2 border-orange-50 hover:border-[var(--primary-orange)] transition-colors shadow-sm group h-full">
-                  <div className="text-4xl mb-6 group-hover:scale-110 transition-transform">{item.icon}</div>
                   <h3 className="text-2xl font-bold mb-4 text-[var(--text-charcoal)]">{item.title}</h3>
                   <p className="text-[var(--text-light)] text-lg leading-relaxed">{item.desc}</p>
                 </div>
