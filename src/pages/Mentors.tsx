@@ -12,7 +12,6 @@ const Mentors = () => {
           <h1 className="text-5xl md:text-7xl font-rammetto text-white">Our Mentors</h1>
           <p className="text-xl md:text-2xl opacity-90 mt-4 leading-relaxed">High schoolers who've been there. Ready to guide you.</p>
         </div>
-        <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black/10 to-transparent"></div>
       </section>
 
       {/* Intro Section */}
@@ -36,8 +35,14 @@ const Mentors = () => {
               <BlurFade key={index} delay={index * 0.08}>
               <div className="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border-b-8 border-[var(--primary-orange)] hover:-translate-y-2 group h-full">
                 <div className="flex items-center gap-6 mb-8">
-                  <div className="w-20 h-20 bg-orange-100 rounded-2xl flex items-center justify-center text-4xl font-rammetto text-[var(--primary-orange)] shadow-inner transform group-hover:rotate-6 transition-transform">
-                    {mentor.initial}
+                  <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-inner transform group-hover:rotate-6 transition-transform flex-shrink-0">
+                    {mentor.image ? (
+                      <img src={mentor.image} alt={mentor.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full bg-orange-100 flex items-center justify-center text-4xl font-rammetto text-[var(--primary-orange)]">
+                        {mentor.initial}
+                      </div>
+                    )}
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold text-[var(--text-charcoal)] mb-1">{mentor.name}</h3>

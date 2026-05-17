@@ -6,7 +6,6 @@ const About = () => {
     <div className="bg-[var(--bg-cream)]">
       {/* Page Header */}
       <section className="bg-[var(--primary-orange)] py-20 text-white text-center shadow-lg relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
         <div className="container mx-auto px-4 relative z-10">
           <h1 className="text-5xl md:text-7xl font-rammetto text-white">About Ignite</h1>
           <p className="text-xl md:text-2xl opacity-90 mt-4">Our story. Our mission. Our why.</p>
@@ -41,7 +40,7 @@ const About = () => {
                 it sounds, and most school curriculums aren't built for it.
               </p>
               <p>
-                Ignite is a free summer program where high schoolers mentor 6th through 8th graders on
+                Ignite is a free summer program where high schoolers mentor elementary to middle school students on
                 exactly that. They're close enough in age to remember what middle school actually felt like.
                 That proximity matters more than any lesson plan.
               </p>
@@ -68,7 +67,7 @@ const About = () => {
               {
                 icon: '🤝',
                 title: 'Connection',
-                desc: "We connect middle schoolers with high school mentors who understand their challenges and can guide them forward."
+                desc: "We connect younger students with high school mentors who understand their challenges and can guide them forward."
               },
               {
                 icon: '🚀',
@@ -151,7 +150,7 @@ const About = () => {
             <div className="relative z-10">
               <h2 className="text-4xl md:text-5xl font-rammetto mb-6">Ready to Join Ignite?</h2>
               <p className="text-xl opacity-90 mb-10 max-w-2xl mx-auto">
-                Applications are open for our summer program. Spots are limited!
+                Applications are open for our completely free summer program. Everyone who applies is welcome.
               </p>
               <Link to="/apply" className="inline-block bg-white text-[var(--primary-orange)] px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-xl">
                 Apply Now

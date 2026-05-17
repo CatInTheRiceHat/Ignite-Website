@@ -1,14 +1,14 @@
 const FAQ = () => {
   const faqs = [
     { question: 'Is it free?', answer: 'Yes! Ignite is 100% free. No tuition, no materials fees, no hidden costs. We believe every student deserves access to mentorship regardless of budget.', icon: '💸' },
-    { question: 'How long is the program?', answer: '6 weeks during the summer. We design activities to fit around family vacations and other summer commitments.', icon: '📅' },
-    { question: 'What\'s the time commitment?', answer: 'About 2-3 hours per week, including live sessions and independent projects. We keep it manageable so students can enjoy their summer.', icon: '⏱️' },
+    { question: 'How long is the program?', answer: '3 weeks during the summer, offered as one session. We keep it short so it actually fits in your summer.', icon: '📅' },
+    { question: 'What\'s the time commitment?', answer: 'Classes meet Monday through Thursday, 12–1 pm and 3–4 pm. Fridays are 12–1 pm for presentations. It\'s consistent and easy to plan around.', icon: '⏱️' },
     { question: 'Is experience required?', answer: 'Not at all! We welcome all students regardless of prior skills or grades. Just bring curiosity and willingness to learn.', icon: '📚' },
     { question: 'Who are the mentors?', answer: 'High school students from local schools who have been trained to mentor. They\'re relatable, approachable, and genuinely care about helping you succeed.', icon: '👥' },
-    { question: 'Who can apply?', answer: 'Any student currently in grades 6-8. We especially encourage underrepresented students to apply, but all curious minds are welcome.', icon: '🎓' },
+    { question: 'Who can apply?', answer: 'Any student from elementary through middle school. We especially encourage underrepresented students to apply, but all curious minds are welcome.', icon: '🎓' },
     { question: 'Where is it held?', answer: 'The program is entirely online and on Zoom. You can join from anywhere!', icon: '📍' },
     { question: 'How do I get accepted?', answer: 'Our application is completely open! Since the program is online, we don\'t select people—everyone who applies is welcome.', icon: '📋' },
-    { question: 'What do students get at the end?', answer: 'Students receive a certificate of completion, a portfolio of work they can showcase, mentor connections, and most importantly — new skills and confidence.', icon: '🏆' },
+    { question: 'What do students get at the end?', answer: 'Students receive a certificate of completion, mentor connections, and new skills and confidence they can use right away.', icon: '🏆' },
     { question: 'How do I contact you?', answer: 'Email us at ignite.saratoga@gmail.com with any questions not answered here. We typically respond within 24-48 hours.', icon: '📧' },
   ];
 

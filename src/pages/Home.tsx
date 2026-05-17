@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useInView } from 'framer-motion';
 import BlurFade from '../components/ui/blur-fade';
-import Marquee from '../components/ui/marquee';
 import FadingCarousel from '../components/ui/fading-carousel';
 
 
@@ -11,9 +10,9 @@ import FadingCarousel from '../components/ui/fading-carousel';
 // ---------------------------------------------------------------------------
 
 const programStructurePreview = [
-  { icon: '📅', title: '6 Weeks', desc: 'A focused summer experience with flexible scheduling for families.' },
+  { icon: '📅', title: '3 Weeks', desc: 'A focused summer sprint — real skills, real outcomes.' },
   { icon: <img src="/assets/Mentors.png" alt="Mentors icon" className="h-14 w-14 object-contain" />, title: 'Open Cohorts', desc: 'Online learning circles where every student can participate and belong.' },
-  { icon: '⏱️', title: '2-3 Hours/Week', desc: 'Live sessions plus independent projects that stay manageable.' },
+  { icon: '⏱️', title: 'Daily Sessions', desc: '12–1 pm and 3–4 pm, Monday through Thursday.' },
   { icon: '🎯', title: 'Project-Based', desc: 'Students build confidence by making and presenting real work.' },
 ];
 
@@ -35,52 +34,11 @@ const programExperiencePreview = [
   }
 ];
 
-// TODO: replace with real quotes from students/parents
-const testimonials = [
-  { quote: "I had no idea what a 'professional email' was. Now I write them all the time — even to my teachers!", name: 'Maya S.', role: '7th Grader' },
-  { quote: "My mentor was so chill. We talked about their job and now I actually want to try engineering.", name: 'Aiden L.', role: '6th Grader' },
-  { quote: "The elevator pitch week was my favorite. I practiced so many times and wasn't even scared to present.", name: 'Priya K.', role: '8th Grader' },
-  { quote: "My daughter came home after the first session SO excited. She wanted to tell me everything she learned.", name: 'Parent', role: 'Parent of 7th Grader' },
-  { quote: "I thought it would be boring like school but it was way more fun. We actually got to DO things.", name: 'Jordan T.', role: '6th Grader' },
-  { quote: "Being a mentor was just as valuable for me as it was for the students. I learned how to teach.", name: 'Lily R.', role: 'Mentor, 11th Grade' },
-  { quote: "The finale showcase gave me real confidence presenting in front of people I don't know.", name: 'Camille W.', role: '7th Grader' },
-  { quote: "It's free which was huge for our family. The quality is honestly better than paid programs we've tried.", name: 'Parent', role: 'Parent of 8th Grader' },
-  { quote: "I want to be a lawyer someday and talking to someone actually in pre-law was so inspiring.", name: 'Marcus B.', role: '8th Grader' },
-  { quote: "Ignite helped me realize I love design. I didn't even know graphic design was a real career.", name: 'Sofia H.', role: '6th Grader' },
-];
-
-const testimonialRow1 = testimonials.slice(0, 5);
-const testimonialRow2 = testimonials.slice(5);
-
-const avatarColors = [
-  'bg-[var(--primary-orange)]',
-  'bg-[var(--accent-yellow)]',
-  'bg-[var(--success-green)]',
-  'bg-[var(--primary-orange-dark)]',
-  'bg-[var(--accent-yellow-dark)]',
-];
 
 // ---------------------------------------------------------------------------
 // Sub-components
 // ---------------------------------------------------------------------------
 
-function TestimonialCard({ quote, name, role, index }: { quote: string; name: string; role: string; index: number }) {
-  const color = avatarColors[index % avatarColors.length];
-  return (
-    <div className="w-72 shrink-0 rounded-2xl bg-white border border-orange-100 p-6 shadow-sm">
-      <p className="text-sm text-[var(--text-light)] leading-relaxed mb-4">"{quote}"</p>
-      <div className="flex items-center gap-3">
-        <div className={`${color} w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0`}>
-          {name[0]}
-        </div>
-        <div>
-          <p className="text-sm font-bold text-[var(--text-charcoal)]">{name}</p>
-          <p className="text-xs text-[var(--text-light)]">{role}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function CountStat({ value, label, suffix = '' }: { value: number; label: string; suffix?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -138,7 +96,7 @@ const Home = () => {
           </BlurFade>
           <BlurFade delay={0.15}>
             <p className="text-lg sm:text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto font-medium leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
-              A 6-week summer program for grades 6-8 to learn real-world skills and explore careers.
+              A 3-week summer program for elementary to middle school students to learn real-world skills and explore careers.
             </p>
           </BlurFade>
           <BlurFade delay={0.25}>
@@ -158,11 +116,11 @@ const Home = () => {
       <section className="bg-white shadow-sm">
         <div className="max-w-4xl mx-auto px-4 py-10 md:py-12">
           <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center sm:divide-x divide-y sm:divide-y-0 divide-orange-100">
-            <CountStat value={6} label="Weeks of Mentorship" />
+            <CountStat value={3} label="Weeks" />
             <CountStat value={100} label="Percent Free — Always" suffix="%" />
             <CountStat value={10} label="Expert Mentors & Growing" suffix="+" />
             <div className="text-center px-6 md:px-8 py-4">
-              <p className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)]">6–8</p>
+              <p className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)]">K–8</p>
               <p className="text-sm md:text-base text-[var(--text-light)] font-semibold mt-1">Grade Levels Welcome</p>
             </div>
           </div>
@@ -206,27 +164,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Testimonial Marquee */}
-      <section className="py-16 md:py-20 bg-[var(--bg-cream)] overflow-hidden">
-        <BlurFade>
-          <div className="text-center mb-10 px-4">
-            <h2 className="text-3xl md:text-4xl font-rammetto text-[var(--text-charcoal)] mb-3">What Students Are Saying</h2>
-            <p className="text-[var(--text-light)] text-lg">From the students and families who've been through it.</p>
-          </div>
-        </BlurFade>
-        <div className="flex flex-col gap-4">
-          <Marquee>
-            {testimonialRow1.map((t, i) => (
-              <TestimonialCard key={i} {...t} index={i} />
-            ))}
-          </Marquee>
-          <Marquee reverse>
-            {testimonialRow2.map((t, i) => (
-              <TestimonialCard key={i} {...t} index={i + 5} />
-            ))}
-          </Marquee>
-        </div>
-      </section>
 
       {/* Who Is Ignite For? */}
       <section className="py-24 md:py-32 min-h-[54vw] relative overflow-hidden">
@@ -246,7 +183,7 @@ const Home = () => {
             imageStyle="open"
             autoPlay={false}
             items={[
-              { image: '/assets/Grades.png',  title: 'Grades 6–8',    desc: "Currently in middle school and ready to explore what's beyond the classroom." },
+              { image: '/assets/Grades.png',  title: 'Elementary to Middle School',    desc: "From 3rd grade through 8th — just bring curiosity and a willingness to learn." },
               { image: '/assets/Zoom.png',    title: 'Online & Zoom', desc: "Fully remote and accessible on Zoom. Open to motivated students from anywhere!" },
               { image: '/assets/Curious.png', title: 'Curious Minds', desc: "You don't need to know your future — just bring curiosity and willingness to learn." },
             ]}
