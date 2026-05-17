@@ -1,7 +1,7 @@
 import { Briefcase, Mail, MapPin } from 'lucide-react';
 import BlurFade from '../components/ui/blur-fade';
 import { mentors } from '../data/mentors';
-import { APPLY_FORM_URL } from '../lib/links';
+import { MENTOR_FORM_URL } from '../lib/links';
 
 const Mentors = () => {
 
@@ -94,7 +94,7 @@ const Mentors = () => {
               We are looking for high school students who want to teach, help organize, or support younger students.
               It is a simple way to lead and give back.
             </p>
-            <a href={APPLY_FORM_URL} target="_blank" rel="noopener noreferrer" className="inline-block bg-[var(--primary-orange)] text-white px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-lg shadow-orange-200">
+            <a href={MENTOR_FORM_URL} target="_blank" rel="noopener noreferrer" className="inline-block bg-[var(--primary-orange)] text-white px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-lg shadow-orange-200">
               Apply to Mentor
             </a>
         </div>
