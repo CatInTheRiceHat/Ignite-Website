@@ -66,7 +66,7 @@ const Home = () => {
           </BlurFade>
           <BlurFade delay={0.15}>
             <p className="text-lg sm:text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto font-medium leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
-              A free 3-week online program where students learn useful skills with high school mentors.
+              A free online program where students learn useful skills with high school mentors.
             </p>
           </BlurFade>
           <BlurFade delay={0.25}>
