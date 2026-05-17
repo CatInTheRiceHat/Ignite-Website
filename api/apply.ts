@@ -26,17 +26,17 @@ function confirmationHtml(name: string, type: 'student' | 'mentor'): string {
         <h1 style="color:#fff;margin:0;font-size:28px;font-weight:900;">Ignite</h1>
       </div>
       <div style="padding:40px;">
-        <h2 style="color:#1A1A2E;margin-top:0;">Hey ${name}, we got your application!</h2>
+        <h2 style="color:#1A1A2E;margin-top:0;">Hi ${name}, we got your application.</h2>
         <p style="color:#4A4A5E;font-size:16px;line-height:1.6;">
-          Thanks for applying to Ignite as a <strong>${role}</strong>. We're excited to have you interested in the program!
+          Thanks for applying to Ignite as a <strong>${role}</strong>. We are glad you are interested.
         </p>
         <p style="color:#4A4A5E;font-size:16px;line-height:1.6;">
-          Here's what happens next:
+          Here is what happens next:
         </p>
         <ol style="color:#4A4A5E;font-size:16px;line-height:2;">
-          <li>We'll review your application within a few days.</li>
-          <li>You'll receive a follow-up email with Zoom details and the program schedule.</li>
-          <li>All applicants are welcome — so get ready to find your fire!</li>
+          <li>We will review your application within a few days.</li>
+          <li>You will receive a follow-up email with Zoom details and the program schedule.</li>
+          <li>All applicants are welcome.</li>
         </ol>
         <p style="color:#4A4A5E;font-size:16px;line-height:1.6;">
           Questions? Reply to this email or reach us at
@@ -134,12 +134,12 @@ export default async function handler(req: any, res: any) {
     'Submitted': new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }),
   };
 
-  // Send emails — don't fail the request if email errors occur
+  // Send emails, but do not fail the request if email errors occur.
   await Promise.allSettled([
     transporter.sendMail({
       from: FROM_EMAIL,
       to: email,
-      subject: `Your Ignite ${type === 'student' ? 'Student' : 'Mentor'} Application — We Got It!`,
+      subject: `Your Ignite ${type === 'student' ? 'Student' : 'Mentor'} Application`,
       html: confirmationHtml(name, type as 'student' | 'mentor'),
     }),
     transporter.sendMail({

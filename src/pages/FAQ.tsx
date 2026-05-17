@@ -1,14 +1,14 @@
 const FAQ = () => {
   const faqs = [
-    { question: 'Is it free?', answer: 'Yes! Ignite is 100% free. No tuition, no materials fees, no hidden costs. We believe every student deserves access to mentorship regardless of budget.' },
+    { question: 'Is it free?', answer: 'Yes. Ignite is free. There is no tuition or materials fee.' },
     { question: 'How long is the program?', answer: 'The program runs for 3 weeks during the summer. You can sign up for 1 course, 2 courses, 3 courses, or whatever fits your schedule.' },
     { question: 'What\'s the time commitment?', answer: 'Different classes have different time commitments. Featured courses meet 12-1 pm PST, while regular courses meet 7-8 pm PST.' },
-    { question: 'Is experience required?', answer: 'Not at all! We welcome all students regardless of prior skills or grades. Just bring curiosity and willingness to learn.' },
-    { question: 'Who are the mentors?', answer: 'High school students from local schools who have been trained to mentor. They\'re relatable, approachable, and genuinely care about helping you succeed.' },
-    { question: 'Who can apply?', answer: 'Any student from elementary through middle school. We especially encourage underrepresented students to apply, but all curious minds are welcome.' },
+    { question: 'Is experience required?', answer: 'No. Students do not need prior experience or perfect grades.' },
+    { question: 'Who are the mentors?', answer: 'High school students from local schools. They lead sessions, answer questions, and help students practice.' },
+    { question: 'Who can apply?', answer: 'Any student from elementary through middle school can apply.' },
     { question: 'Where is it held?', answer: 'The program is entirely online and on Zoom. You can join from anywhere!' },
-    { question: 'How do I get accepted?', answer: 'Our application is completely open! Since the program is online, we don\'t select people—everyone who applies is welcome.' },
-    { question: 'What do students get at the end?', answer: 'Students receive a certificate of completion, mentor connections, and new skills and confidence they can use right away.' },
+    { question: 'How do I get accepted?', answer: 'The application is open. Since the program is online, everyone who applies is welcome.' },
+    { question: 'What do students get at the end?', answer: 'Students receive a certificate of completion and practice with skills they can keep using.' },
     { question: 'How do I contact you?', answer: 'Email us at ignitefindyourfire@gmail.com with any questions not answered here. We typically respond within 24-48 hours.' },
   ];
 
@@ -45,7 +45,7 @@ const FAQ = () => {
         <div className="max-w-4xl mx-auto px-4 text-center">
             <h2 className="text-4xl md:text-5xl font-display font-extrabold text-[var(--primary-orange)] mb-6">Still Have Questions?</h2>
             <p className="text-xl text-[var(--text-light)] mb-10 max-w-2xl mx-auto">
-              We're here to help! Reach out and we'll get back to you as soon as possible.
+              Send us an email and we will get back to you as soon as we can.
             </p>
             <a 
               href="mailto:ignitefindyourfire@gmail.com" 

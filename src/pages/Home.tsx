@@ -5,40 +5,6 @@ import BlurFade from '../components/ui/blur-fade';
 import FadingCarousel from '../components/ui/fading-carousel';
 import { APPLY_FORM_URL } from '../lib/links';
 
-
-// ---------------------------------------------------------------------------
-// Data
-// ---------------------------------------------------------------------------
-
-const programStructurePreview = [
-  { icon: <img src="/assets/Graduation.png" alt="Calendar icon" className="h-14 w-14 object-contain" />, title: '3 Weeks', desc: 'A focused summer sprint — real skills, real outcomes.' },
-  { icon: <img src="/assets/Mentors.png" alt="Mentors icon" className="h-14 w-14 object-contain" />, title: 'Open Cohorts', desc: 'Online learning circles where every student can participate and belong.' },
-  { icon: <img src="/assets/Zoom.png" alt="Course times icon" className="h-14 w-14 object-contain" />, title: 'Flexible Class Times', desc: 'Featured courses meet 12-1 pm PST; regular courses meet 7-8 pm PST.' },
-  { icon: <img src="/assets/Project.png" alt="Project icon" className="h-14 w-14 object-contain" />, title: 'Project-Based', desc: 'Students build confidence by making and presenting real work.' },
-];
-
-const programExperiencePreview = [
-  {
-    icon: <img src="/assets/Laptop.png" alt="Laptop icon" className="h-14 w-14 object-contain" />,
-    title: 'Professional Communication',
-    desc: 'Learn how to write emails, introduce yourself, and communicate clearly with mentors.'
-  },
-  {
-    icon: <img src="/assets/Microphone.png" alt="Microphone icon" className="h-14 w-14 object-contain" />,
-    title: 'Public Speaking',
-    desc: 'Practice presenting ideas with confidence, structure, and a strong speaking voice.'
-  },
-  {
-    icon: <img src="/assets/Trophy.png" alt="Trophy icon" className="h-14 w-14 object-contain" />,
-    title: 'Final Showcase',
-    desc: 'Wrap up the program by presenting your work and celebrating everything you created.'
-  }
-];
-
-const darkOverviewCardClass =
-  'h-full rounded-[2rem] border border-white/30 bg-[rgba(26,26,46,0.74)] backdrop-blur-md p-8 text-left shadow-lg';
-
-
 // ---------------------------------------------------------------------------
 // Sub-components
 // ---------------------------------------------------------------------------
@@ -100,7 +66,7 @@ const Home = () => {
           </BlurFade>
           <BlurFade delay={0.15}>
             <p className="text-lg sm:text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto font-medium leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
-              A 3-week summer program for elementary to middle school students to learn real-world skills and explore careers.
+              A free 3-week online program where students learn useful skills with high school mentors.
             </p>
           </BlurFade>
           <BlurFade delay={0.25}>
@@ -121,10 +87,10 @@ const Home = () => {
         <div className="max-w-4xl mx-auto px-4 py-10 md:py-12">
           <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center sm:divide-x divide-y sm:divide-y-0 divide-orange-100">
             <CountStat value={3} label="Weeks" />
-            <CountStat value={100} label="Percent Free — Always" suffix="%" />
+            <CountStat value={100} label="Free" suffix="%" />
             <CountStat value={7} label="Mentors" />
             <div className="text-center px-6 md:px-8 py-4">
-              <p className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)]">K–8</p>
+              <p className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)]">K-8</p>
               <p className="text-sm md:text-base text-[var(--text-light)] font-semibold mt-1">Grade Levels Welcome</p>
             </div>
           </div>
@@ -144,15 +110,15 @@ const Home = () => {
           <BlurFade>
             <div className="text-center mb-16 md:mb-20">
               <h2 className="text-4xl md:text-6xl font-rammetto text-white mb-6 drop-shadow-[0_3px_10px_rgba(0,0,0,0.35)]">What You'll Get</h2>
-              <p className="text-xl md:text-2xl text-white font-semibold leading-relaxed max-w-3xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">Real skills. Real mentors. Zero cost.</p>
+              <p className="text-xl md:text-2xl text-white font-semibold leading-relaxed max-w-3xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">Useful classes. High school mentors. No cost.</p>
             </div>
           </BlurFade>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
             {[
-              { img: '/assets/Career%20Skills.png',   title: 'Career Skills',       desc: "Professional email, presentations, visual design — skills you'll use for life." },
+              { img: '/assets/Career%20Skills.png',   title: 'Useful Skills',       desc: "Practice email, presentations, design, planning, and more." },
               { img: '/assets/Mentorship.png',        title: 'High School Mentorship', desc: "Learn from high school mentors who've been in your shoes and want to help." },
-              { img: '/assets/Free.png',              title: '100% Free',           desc: "No tuition, no fees, no hidden costs. Just bring your curiosity." },
-              { img: '/assets/No%20Experience.png',   title: 'No Experience Needed',desc: "We welcome all students — no prior skills or grades required." }
+              { img: '/assets/Free.png',              title: '100% Free',           desc: "No tuition or fees." },
+              { img: '/assets/No%20Experience.png',   title: 'No Experience Needed',desc: "You do not need prior experience or perfect grades." }
             ].map((feature, i) => (
               <BlurFade key={i} delay={i * 0.08}>
                 <div className="bg-white/90 backdrop-blur-md p-10 md:p-12 rounded-3xl border border-orange-50 hover:bg-white hover:shadow-xl transition-all duration-300 group h-full">
@@ -185,61 +151,11 @@ const Home = () => {
             imageStyle="open"
             autoPlay={false}
             items={[
-              { image: '/assets/Grades.png',  title: 'Elementary to Middle School',    desc: "From 3rd grade through 8th — just bring curiosity and a willingness to learn." },
-              { image: '/assets/Zoom.png',    title: 'Online & Zoom', desc: "Fully remote and accessible on Zoom. Open to motivated students from anywhere!" },
-              { image: '/assets/Curious.png', title: 'Curious Minds', desc: "You don't need to know your future — just bring curiosity and willingness to learn." },
+              { image: '/assets/Grades.png',  title: 'Elementary to Middle School',    desc: "Best for upper elementary and middle school students." },
+              { image: '/assets/Zoom.png',    title: 'Online & Zoom', desc: "Classes are on Zoom, so students can join from home." },
+              { image: '/assets/Curious.png', title: 'Curious Students', desc: "You do not need to know what you want to do yet." },
             ]}
           />
-        </div>
-      </section>
-
-      {/* Program Overview */}
-      <section className="py-24 md:py-32 min-h-[57vw] relative overflow-hidden">
-        <img
-          src="/assets/Program%20Overview.png"
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover object-top"
-          loading="lazy"
-        />
-        <div className="relative z-10 max-w-7xl mx-auto px-4">
-          <BlurFade>
-            <div className="text-center mb-12 md:mb-14">
-              <h2 className="text-4xl md:text-6xl font-rammetto text-white mb-6 drop-shadow-[0_3px_10px_rgba(0,0,0,0.4)]">Program Overview</h2>
-              <p className="text-xl md:text-2xl text-white leading-relaxed max-w-3xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">A real preview of what students build, practice, and present.</p>
-            </div>
-          </BlurFade>
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 md:gap-8 mb-10 md:mb-12">
-            {programStructurePreview.map((item, i) => (
-              <BlurFade key={i} delay={i * 0.08}>
-                <div className="rounded-[2rem] border border-white/30 bg-white/85 backdrop-blur-md p-8 text-center shadow-lg">
-                  <div className="mb-5 flex h-16 items-center justify-center text-4xl">{item.icon}</div>
-                  <h3 className="text-2xl font-bold text-[var(--text-charcoal)] mb-3">{item.title}</h3>
-                  <p className="text-base text-[var(--text-light)] leading-relaxed">{item.desc}</p>
-                </div>
-              </BlurFade>
-            ))}
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
-            {programExperiencePreview.map((item, i) => (
-              <BlurFade key={i} delay={i * 0.1}>
-                <div className={darkOverviewCardClass}>
-                  <div className="mb-5 flex h-14 items-center">{item.icon}</div>
-                  <h3 className="text-2xl font-bold text-white mb-3">{item.title}</h3>
-                  <p className="text-lg text-white leading-relaxed">{item.desc}</p>
-                </div>
-              </BlurFade>
-            ))}
-          </div>
-          <BlurFade delay={0.2}>
-            <div className="mt-10 md:mt-12 flex justify-center">
-              <Link
-                to="/program"
-                className="inline-flex items-center justify-center rounded-full bg-white px-12 py-5 text-xl font-bold text-[var(--primary-orange)] transition-all hover:scale-105"
-              >
-                See Full Program
-              </Link>
-            </div>
-          </BlurFade>
         </div>
       </section>
 
@@ -255,7 +171,7 @@ const Home = () => {
         <BlurFade className="relative z-10 max-w-7xl mx-auto px-4 text-center">
           <h2 className="text-4xl md:text-6xl font-rammetto text-white mb-6 drop-shadow-[0_3px_10px_rgba(0,0,0,0.4)]">Meet Your Mentors</h2>
           <p className="text-xl md:text-2xl text-white mb-14 max-w-3xl mx-auto font-medium leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">
-            High school students who have been in your shoes and want to help you find your professional fire.
+            High school students who remember what it is like to be in your spot.
           </p>
           <div className="flex justify-center">
             <Link to="/mentors" className="bg-[var(--primary-orange)] text-white px-12 py-5 rounded-full font-bold text-2xl hover:scale-105 transition-all shadow-xl">
@@ -281,8 +197,8 @@ const Home = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-[var(--primary-orange)] via-[var(--primary-orange)] to-[rgba(240,123,42,0.88)]"></div>
               <div className="relative z-10">
                 <h2 className="text-4xl md:text-6xl font-rammetto mb-6 text-white">
-                  <span className="block">Ready to Find</span>
-                  <span className="block mt-[16px] md:mt-[24px]">Your Fire?</span>
+                  <span className="block">Ready to</span>
+                  <span className="block mt-[16px] md:mt-[24px]">Sign Up?</span>
                 </h2>
                 <p className="text-xl md:text-2xl opacity-90 mb-12 max-w-3xl mx-auto text-white">
                   Applications are open for our completely online summer program. Everyone is accepted!

@@ -11,7 +11,7 @@ const Mentors = () => {
       <section className="bg-[var(--primary-orange)] py-20 text-white text-center shadow-lg relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
           <h1 className="text-5xl md:text-7xl font-rammetto text-white">Our Mentors</h1>
-          <p className="text-xl md:text-2xl opacity-90 mt-4 leading-relaxed">High schoolers who've been there. Ready to guide you.</p>
+          <p className="text-xl md:text-2xl opacity-90 mt-4 leading-relaxed">High school students who want to help.</p>
         </div>
       </section>
 
@@ -20,9 +20,8 @@ const Mentors = () => {
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-rammetto text-[var(--primary-orange)] mb-6">Learn from Students Like You</h2>
           <p className="text-xl text-[var(--text-light)] leading-relaxed">
-            We believe that mentorship is most effective when it comes from people who understand your current journey. 
-            Our mentors are high-achieving high school students who are passionate about sharing their knowledge, 
-            experiences, and the "real-world" skills they wish they had learned in middle school.
+            Our mentors are high school students who remember what it felt like to be younger and unsure where to start.
+            They help students practice skills they wish they had learned earlier.
           </p>
         </div>
       </section>
@@ -84,8 +83,8 @@ const Mentors = () => {
         <div className="max-w-4xl mx-auto px-4 text-center">
             <h2 className="text-4xl font-rammetto text-[var(--primary-orange)] mb-6">Want to Join the Team?</h2>
             <p className="text-lg text-[var(--text-light)] mb-10">
-              We are always looking for passionate high school students to join our mentorship program as volunteers. 
-              Gain leadership experience and give back to your community.
+              We are looking for high school students who want to teach, help organize, or support younger students.
+              It is a simple way to lead and give back.
             </p>
             <a href={APPLY_FORM_URL} target="_blank" rel="noopener noreferrer" className="inline-block bg-[var(--primary-orange)] text-white px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-lg shadow-orange-200">
               Apply to Mentor

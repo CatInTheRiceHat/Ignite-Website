@@ -10,7 +10,7 @@ const Footer = () => {
             Ignite
           </Link>
           <p className="text-gray-500 text-sm max-w-xs text-center">
-            Ignite your future with world-class mentorship and real-world skills.
+            Free online courses led by high school mentors.
           </p>
         </div>
         
@@ -24,7 +24,7 @@ const Footer = () => {
 
         <div className="w-full h-px bg-gray-100 max-w-lg"></div>
 
-        <p className="text-gray-400 text-xs">Find your fire. © 2026 Ignite. All rights reserved.</p>
+        <p className="text-gray-400 text-xs">© 2026 Ignite. All rights reserved.</p>
       </div>
     </footer>
   );

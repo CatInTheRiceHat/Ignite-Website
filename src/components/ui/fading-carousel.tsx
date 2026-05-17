@@ -41,7 +41,7 @@ const FadingCarousel = ({
     <div className="max-w-5xl mx-auto px-4">
       <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-center">
 
-        {/* Left — fading image */}
+        {/* Left - fading image */}
         <div
           className="w-full md:w-1/2 shrink-0"
           onMouseEnter={() => setPaused(true)}
@@ -108,7 +108,7 @@ const FadingCarousel = ({
           )}
         </div>
 
-        {/* Right — descriptions */}
+        {/* Right - descriptions */}
         <div className="w-full md:w-1/2 flex flex-col gap-4">
           {items.map((item, i) => (
             <button

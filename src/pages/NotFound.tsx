@@ -9,10 +9,10 @@ const NotFound = () => {
       
       <div className="mt-12 space-y-6">
         <h1 className="text-4xl md:text-6xl font-rammetto text-[var(--primary-orange)] leading-[1.24]">
-          Whoops! Your fire went out.
+          This page is not here.
         </h1>
         <p className="text-xl text-[var(--text-light)] max-w-lg mx-auto leading-relaxed">
-          The page you're looking for doesn't exist or has been moved. Let's get you back on track!
+          The link may be old, or the page may have moved. You can head back home from here.
         </p>
         
         <div className="pt-8">
@@ -20,7 +20,7 @@ const NotFound = () => {
             to="/" 
             className="inline-block bg-[var(--primary-orange)] text-white px-12 py-5 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-orange-200"
           >
-            Back to Safety
+            Back Home
           </Link>
         </div>
       </div>

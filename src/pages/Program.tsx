@@ -24,7 +24,7 @@ const skillCourses = [
     title: 'Science Research',
     instructor: 'Michael',
     highlighted: true,
-    description: 'Students explore what research actually looks like, practice finding real-world questions, design fair experiments, and learn how to present evidence clearly.',
+    description: 'Students learn what research looks like, practice finding good questions, design fair experiments, and present evidence clearly.',
   },
   {
     icon: '/assets/Artist.png',
@@ -109,22 +109,29 @@ const Program = () => {
       <section className="bg-[var(--primary-orange)] py-20 text-white text-center shadow-lg relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
           <h1 className="text-5xl md:text-7xl font-rammetto text-white">The Program</h1>
-          <p className="text-xl md:text-2xl opacity-90 mt-4">3 weeks. Real skills. Your choice.</p>
+          <p className="text-xl md:text-2xl opacity-90 mt-4">3 weeks. Pick the classes that fit.</p>
         </div>
       </section>
 
       {/* At a Glance */}
-      <section className="py-24">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-4xl font-rammetto text-center text-[var(--primary-orange)] mb-16">At a Glance</h2>
+      <section className="py-24 md:py-32 relative overflow-hidden">
+        <img
+          src="/assets/Program%20Overview.png"
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover object-top"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-black/35"></div>
+        <div className="max-w-7xl mx-auto px-4 relative z-10">
+          <h2 className="text-4xl font-rammetto text-center text-white mb-16 drop-shadow-[0_3px_10px_rgba(0,0,0,0.35)]">At a Glance</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {atAGlance.map((item, i) => (
-              <div key={i} className="bg-white p-8 rounded-[2rem] shadow-sm text-center hover:scale-105 transition-all border-2 border-transparent hover:border-orange-200">
+              <div key={i} className="bg-[rgba(26,26,46,0.72)] backdrop-blur-md p-8 rounded-[2rem] shadow-lg text-center hover:scale-105 transition-all border border-white/30">
                 <div className="mb-6 flex h-16 items-center justify-center">
                   <img src={item.icon} alt="" className="h-14 w-14 object-contain" />
                 </div>
-                <h3 className="text-2xl font-bold mb-4 text-[var(--text-charcoal)]">{item.title}</h3>
-                <p className="text-[var(--text-light)] text-sm">{item.desc}</p>
+                <h3 className="text-2xl font-bold mb-4 text-white">{item.title}</h3>
+                <p className="text-white/90 text-sm leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>

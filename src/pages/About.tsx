@@ -9,7 +9,7 @@ const About = () => {
       <section className="bg-[var(--primary-orange)] py-20 text-white text-center shadow-lg relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
           <h1 className="text-5xl md:text-7xl font-rammetto text-white">About Ignite</h1>
-          <p className="text-xl md:text-2xl opacity-90 mt-4">Our story. Our mission. Our why.</p>
+          <p className="text-xl md:text-2xl opacity-90 mt-4">Why we started and what we do.</p>
         </div>
       </section>
 
@@ -32,7 +32,7 @@ const About = () => {
               <p>
                 You've probably been asked that since you were five. Nobody really updates the answer though.
                 By the time you graduate college, a lot of the careers you're being pointed toward today will
-                look different — some might not exist the same way at all. That's not doom and gloom, it's
+                look different. Some might not exist the same way at all. That is not meant to scare anyone. It is
                 just where things are heading.
               </p>
               <p>
@@ -63,17 +63,17 @@ const About = () => {
               {
                 icon: <img src="/assets/Lightbulb.png" alt="Access" className="w-12 h-12" />,
                 title: 'Access',
-                desc: "We believe every student deserves access to career mentorship — regardless of background or budget. That's why Ignite is 100% free."
+                desc: "We keep Ignite free so more students can try these classes without worrying about cost."
               },
               {
                 icon: <Handshake className="w-12 h-12 text-[var(--primary-orange)]" />,
                 title: 'Connection',
-                desc: "We connect younger students with high school mentors who understand their challenges and can guide them forward."
+                desc: "We connect younger students with high school mentors who can answer questions and help them practice."
               },
               {
                 icon: <Rocket className="w-12 h-12 text-[var(--primary-orange)]" />,
-                title: 'Empowerment',
-                desc: "We teach practical skills that students can use immediately — from professional communication to public speaking."
+                title: 'Practice',
+                desc: "We teach skills students can use right away, from professional communication to public speaking."
               }
             ].map((item, i) => (
               <BlurFade key={i} delay={i * 0.1}>
@@ -104,10 +104,10 @@ const About = () => {
             </div>
             <div className="grid gap-6">
               {[
-                { text: "Underrepresented students often lack access to career mentorship" },
-                { text: "Early exposure to careers changes trajectories" },
-                { text: "Near-peer mentorship (high school → middle school) is uniquely effective" },
-                { text: "Practical skills build confidence that lasts through high school and beyond" }
+                { text: "Many students do not get early access to this kind of support" },
+                { text: "Trying new skills early can make school feel less confusing" },
+                { text: "High school mentors can explain things in a way younger students understand" },
+                { text: "Small wins help students feel more ready for what comes next" }
               ].map((item, i) => (
                 <BlurFade key={i} delay={i * 0.08}>
                   <div className="flex items-center gap-6 p-6 bg-white rounded-2xl shadow-sm border-l-8 border-[var(--primary-orange)] hover:translate-x-2 transition-transform">
