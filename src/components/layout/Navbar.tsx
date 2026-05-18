@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
-import { APPLY_FORM_URL } from '../../lib/links';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,14 +57,6 @@ const Navbar = () => {
               {link.name}
             </NavLink>
           ))}
-          <a
-            href={APPLY_FORM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-[var(--primary-orange)] text-white px-7 py-2.5 rounded-full hover:bg-[var(--primary-orange-dark)] transition-colors shadow-md"
-          >
-            Apply Now
-          </a>
         </div>
 
         {/* Mobile Links */}
@@ -90,15 +81,6 @@ const Navbar = () => {
                   {link.name}
                 </NavLink>
               ))}
-              <a
-                href={APPLY_FORM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setIsOpen(false)}
-                className="bg-[var(--primary-orange)] text-white px-7 py-2.5 rounded-full hover:bg-[var(--primary-orange-dark)] transition-colors shadow-md"
-              >
-                Apply Now
-              </a>
             </motion.div>
           )}
         </AnimatePresence>

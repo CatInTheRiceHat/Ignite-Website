@@ -1,6 +1,5 @@
 import { Check } from 'lucide-react';
 import BlurFade from '../components/ui/blur-fade';
-import { APPLY_FORM_URL } from '../lib/links';
 
 const About = () => {
   return (
