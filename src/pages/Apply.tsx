@@ -128,6 +128,8 @@ const Apply = () => {
                         <label className="text-lg font-bold text-[var(--text-charcoal)]">Current Grade *</label>
                         <select name="grade" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all appearance-none cursor-pointer">
                           <option value="">Select grade</option>
+                          <option value="4">4th Grade</option>
+                          <option value="5">5th Grade</option>
                           <option value="6">6th Grade</option>
                           <option value="7">7th Grade</option>
                           <option value="8">8th Grade</option>
@@ -135,7 +137,7 @@ const Apply = () => {
                       </div>
                       <div className="space-y-2">
                         <label className="text-lg font-bold text-[var(--text-charcoal)]">School *</label>
-                        <input name="school" type="text" placeholder="Your middle school" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
+                        <input name="school" type="text" placeholder="Your school" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
                       </div>
                     </div>
                     <div className="space-y-2">

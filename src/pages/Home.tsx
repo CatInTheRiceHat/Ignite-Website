@@ -90,7 +90,7 @@ const Home = () => {
             <CountStat value={100} label="Free" suffix="%" />
             <CountStat value={7} label="Mentors" />
             <div className="text-center px-6 md:px-8 py-4">
-              <p className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)]">K-8</p>
+              <p className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)]">4–8</p>
               <p className="text-sm md:text-base text-[var(--text-light)] font-semibold mt-1">Grade Levels Welcome</p>
             </div>
           </div>
@@ -151,7 +151,7 @@ const Home = () => {
             imageStyle="open"
             autoPlay={false}
             items={[
-              { image: '/assets/Grades.png',  title: 'Elementary to Middle School',    desc: "Best for upper elementary and middle school students." },
+              { image: '/assets/Grades.png',  title: '4th to 8th Grade',    desc: "Open to students in 4th through 8th grade." },
               { image: '/assets/Zoom.png',    title: 'Online & Zoom', desc: "Classes are on Zoom, so students can join from home." },
               { image: '/assets/Curious.png', title: 'Curious Students', desc: "You do not need to know what you want to do yet." },
             ]}
@@ -183,9 +183,9 @@ const Home = () => {
 
       {/* CTA Section */}
       <section className="py-24 bg-[var(--bg-cream)]">
-        <div className="max-w-4xl mx-auto px-4">
+        <div className="max-w-6xl mx-auto px-4">
           <BlurFade>
-            <div className="bg-[var(--primary-orange)] rounded-[3rem] p-12 md:p-14 text-center text-white shadow-2xl relative overflow-hidden min-h-[24rem] flex items-center justify-center">
+            <div className="bg-[var(--primary-orange)] rounded-[3rem] p-10 md:p-14 text-center text-white shadow-2xl relative overflow-hidden flex items-center justify-center">
               <div className="absolute inset-y-0 right-0 w-full md:w-1/2 pointer-events-none opacity-20 sm:opacity-25 md:opacity-30">
                 <img
                   src="/assets/Celebrate.png"
@@ -194,13 +194,12 @@ const Home = () => {
                   loading="lazy"
                 />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-r from-[var(--primary-orange)] via-[var(--primary-orange)] to-[rgba(240,123,42,0.88)]"></div>
               <div className="relative z-10">
                 <h2 className="text-4xl md:text-6xl font-rammetto mb-6 text-white">
                   <span className="block">Ready to</span>
                   <span className="block mt-[16px] md:mt-[24px]">Sign Up?</span>
                 </h2>
-                <p className="text-xl md:text-2xl opacity-90 mb-12 max-w-3xl mx-auto text-white">
+                <p className="text-xl md:text-2xl opacity-90 mb-12 text-white">
                   Applications are open for our completely online summer program. Everyone is accepted!
                 </p>
                 <a

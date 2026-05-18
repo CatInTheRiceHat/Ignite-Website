@@ -6,6 +6,33 @@ const programDetails = [
   { icon: '/assets/Zoom.png', title: 'Online Classes', desc: 'All classes are online, so students can join from home.' },
 ];
 
+const weeklySchedule = [
+  {
+    week: 'Week 1',
+    dates: 'June 8–12 (Mon–Fri)',
+    courses: [
+      { title: 'Project / Nonprofit Building', instructor: 'Elaine' },
+      { title: 'Marketing & Digital Design', instructor: 'Austin' },
+    ],
+  },
+  {
+    week: 'Week 2',
+    dates: 'June 15–19 (Mon–Fri)',
+    courses: [
+      { title: 'Productivity, Goal Setting & Decision Making', instructor: 'Austin' },
+      { title: 'Professional Communication', instructor: 'Ivan' },
+    ],
+  },
+  {
+    week: 'Week 3',
+    dates: 'June 22–26 (Mon–Fri)',
+    courses: [
+      { title: 'Science Research', instructor: 'Michael' },
+      { title: 'AI Literacy', instructor: 'Achyut' },
+    ],
+  },
+];
+
 const timeCommitments = [
   { track: 'Featured Courses', time: '12-1 pm PST', desc: 'Best for students who want the main midday track and a slightly deeper commitment.' },
   { track: 'Regular Courses', time: '7-8 pm PST', desc: 'Best for students who want an evening class with a lighter schedule.' },
@@ -118,6 +145,36 @@ const Program = () => {
         <div className="container mx-auto px-4 relative z-10">
           <h1 className="text-5xl md:text-7xl font-rammetto text-white">The Program</h1>
           <p className="text-xl md:text-2xl opacity-90 mt-4">3 weeks. Pick the classes that fit.</p>
+        </div>
+      </section>
+
+      {/* Schedule */}
+      <section className="py-24">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)]">Schedule</h2>
+            <p className="text-[var(--text-light)] text-lg mt-4 max-w-2xl mx-auto">
+              Two courses run each week. Pick the ones that fit your schedule.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {weeklySchedule.map((week, i) => (
+              <div key={i} className="bg-white rounded-[2rem] overflow-hidden shadow-md border-2 border-transparent hover:border-orange-100 hover:shadow-lg transition-shadow">
+                <div className="bg-[var(--primary-orange)] px-8 py-5">
+                  <span className="text-xs font-bold uppercase tracking-widest text-white/80">{week.week}</span>
+                  <h3 className="text-xl font-bold text-white mt-1">{week.dates}</h3>
+                </div>
+                <ul className="px-8 py-6 flex flex-col gap-4">
+                  {week.courses.map((course, j) => (
+                    <li key={j} className="flex flex-col gap-0.5">
+                      <span className="text-[var(--text-charcoal)] font-semibold text-sm leading-snug">{course.title}</span>
+                      <span className="text-[var(--primary-orange)] text-xs font-semibold">{course.instructor}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

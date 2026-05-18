@@ -49,7 +49,7 @@ const About = () => {
                 it sounds, and most school curriculums aren't built for it.
               </p>
               <p>
-                Ignite is a free summer program where high schoolers mentor elementary to middle school students on
+                Ignite is a free summer program where high schoolers mentor 4th to 8th grade students on
                 exactly that. They're close enough in age to remember what middle school actually felt like.
                 That proximity matters more than any lesson plan.
               </p>
@@ -127,22 +127,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="py-24">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="bg-[var(--primary-orange)] rounded-[3rem] p-12 text-center text-white shadow-2xl relative overflow-hidden group">
-            <div className="relative z-10">
-              <h2 className="text-4xl md:text-5xl font-rammetto mb-6">Ready to Join Ignite?</h2>
-              <p className="text-xl opacity-90 mb-10 max-w-2xl mx-auto">
-                Applications are open for our completely free summer program. Everyone who applies is welcome.
-              </p>
-              <a href={APPLY_FORM_URL} target="_blank" rel="noopener noreferrer" className="inline-block bg-white text-[var(--primary-orange)] px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-xl">
-                Apply Now
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 };
