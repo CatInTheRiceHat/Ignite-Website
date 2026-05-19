@@ -181,40 +181,24 @@ const Home = () => {
         </BlurFade>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 bg-[var(--bg-cream)]">
-        <div className="max-w-6xl mx-auto px-4">
-          <BlurFade>
-            <div className="bg-[var(--primary-orange)] rounded-[3rem] p-10 md:p-14 text-center text-white shadow-2xl relative overflow-hidden flex items-center justify-center">
-              <div className="absolute inset-y-0 right-0 w-full md:w-1/2 pointer-events-none opacity-20 sm:opacity-25 md:opacity-30">
-                <img
-                  src="/assets/Celebrate.png"
-                  alt=""
-                  className="h-full w-full object-contain object-right-bottom"
-                  loading="lazy"
-                />
-              </div>
-              <div className="relative z-10">
-                <h2 className="text-4xl md:text-6xl font-rammetto mb-6 text-white">
-                  <span className="block">Ready to</span>
-                  <span className="block mt-[16px] md:mt-[24px]">Sign Up?</span>
-                </h2>
-                <p className="text-xl md:text-2xl opacity-90 mb-12 text-white">
-                  Applications are open for our completely online summer program. Everyone is accepted!
-                </p>
-                <a
-                  href={APPLY_FORM_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block bg-white text-[var(--primary-orange)] px-12 py-6 rounded-full font-bold text-2xl hover:scale-110 active:scale-95 transition-all shadow-xl"
-                >
-                  Apply Now
-                </a>
-              </div>
-            </div>
-          </BlurFade>
+      {/* Apply */}
+      <section className="py-24 bg-white rounded-t-[4rem]">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-rammetto text-[var(--primary-orange)] mb-6">Apply Now!</h2>
+          <p className="text-lg text-[var(--text-light)] max-w-2xl mx-auto leading-relaxed mb-10">
+            Applications are open for our online summer program. Students can apply for free and choose the courses that fit their schedule.
+          </p>
+          <a
+            href={APPLY_FORM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-[var(--primary-orange)] text-white px-10 py-5 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-orange-200"
+          >
+            Apply Now
+          </a>
         </div>
       </section>
+
     </div>
   );
 };

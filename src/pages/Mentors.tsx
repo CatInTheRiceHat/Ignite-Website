@@ -1,7 +1,6 @@
 import { Briefcase, Mail, MapPin } from 'lucide-react';
 import BlurFade from '../components/ui/blur-fade';
 import { mentors } from '../data/mentors';
-import { MENTOR_FORM_URL } from '../lib/links';
 
 const Mentors = () => {
 
@@ -86,17 +85,17 @@ const Mentors = () => {
         </div>
       </section>
 
-      {/* Call to Action */}
+      {/* Contact */}
       <section className="py-24 bg-white rounded-t-[4rem]">
         <div className="max-w-4xl mx-auto px-4 text-center">
-            <h2 className="text-4xl font-rammetto text-[var(--primary-orange)] mb-6">Want to Join the Team?</h2>
-            <p className="text-lg text-[var(--text-light)] mb-10">
-              We are looking for high school students who want to teach, help organize, or support younger students.
-              It is a simple way to lead and give back.
+            <h2 className="text-4xl font-rammetto text-[var(--primary-orange)] mb-6">Email Us</h2>
+            <p className="text-lg text-[var(--text-light)] max-w-2xl mx-auto leading-relaxed">
+              Interested in joining the mentor team? Email us at{' '}
+              <a href="mailto:ignitefindyourfire@gmail.com" className="font-bold text-[var(--primary-orange)] hover:text-[var(--primary-orange-dark)] transition-colors">
+                ignitefindyourfire@gmail.com
+              </a>
+              {' '}to apply or ask questions.
             </p>
-            <a href={MENTOR_FORM_URL} target="_blank" rel="noopener noreferrer" className="inline-block bg-[var(--primary-orange)] text-white px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-lg shadow-orange-200">
-              Apply to Mentor
-            </a>
         </div>
       </section>
     </div>

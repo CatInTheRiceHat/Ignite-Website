@@ -243,16 +243,18 @@ const Program = () => {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24 bg-[var(--primary-orange)] rounded-[4rem] mx-4 mb-12 text-white text-center">
-        <div className="max-w-2xl mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-rammetto mb-6">Ready to join?</h2>
-          <p className="text-xl opacity-90 mb-10">No prerequisites. Just show up and learn.</p>
+      {/* Apply */}
+      <section className="py-24 bg-white rounded-t-[4rem]">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-rammetto text-[var(--primary-orange)] mb-6">Apply Now!</h2>
+          <p className="text-lg text-[var(--text-light)] max-w-2xl mx-auto leading-relaxed mb-10">
+            Ready to join Ignite? Apply for free and pick the courses that work best for your summer schedule.
+          </p>
           <a
             href={APPLY_FORM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block bg-white text-[var(--primary-orange)] font-bold text-lg px-12 py-4 rounded-full hover:bg-orange-50 transition-colors shadow-md"
+            className="inline-block bg-[var(--primary-orange)] text-white px-10 py-5 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-orange-200"
           >
             Apply Now
           </a>

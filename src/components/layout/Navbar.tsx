@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
+import { APPLY_FORM_URL } from '../../lib/links';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -64,7 +65,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-8 font-semibold text-lg">
+        <div className="hidden md:flex items-center gap-4 lg:gap-8 font-semibold text-base lg:text-lg">
           {navLinks.map((link) => (
             <NavLink
               key={link.path}
@@ -76,6 +77,14 @@ const Navbar = () => {
               {link.name}
             </NavLink>
           ))}
+          <a
+            href={APPLY_FORM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-full bg-[var(--primary-orange)] px-5 py-3 font-bold text-white shadow-md shadow-orange-100 transition-all hover:scale-105 hover:bg-[var(--primary-orange-dark)] active:scale-95"
+          >
+            Apply Now
+          </a>
         </div>
 
       </div>
@@ -103,6 +112,15 @@ const Navbar = () => {
                   {link.name}
                 </NavLink>
               ))}
+              <a
+                href={APPLY_FORM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsOpen(false)}
+                className="mt-2 rounded-full bg-[var(--primary-orange)] px-6 py-3 text-center font-bold text-white shadow-md shadow-orange-100 transition-all active:scale-95"
+              >
+                Apply Now
+              </a>
             </div>
           </motion.div>
         )}
