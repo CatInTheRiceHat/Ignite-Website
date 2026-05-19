@@ -54,7 +54,7 @@ export const mentors: Mentor[] = [
     initial: "J",
     name: "Julie Ye",
     role: "Mentor",
-    details: "Saratoga High School, 11th Grade",
+    details: "Saratoga High School, 10th Grade",
     bio: "Designs engaging curriculum and activities that make each session impactful and fun.",
     image: "/staff/Ye_Julie.png",
     email: "",
