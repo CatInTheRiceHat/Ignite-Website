@@ -53,7 +53,7 @@ export const mentors: Mentor[] = [
   {
     initial: "J",
     name: "Julie Ye",
-    role: "Director of Programs",
+    role: "Director of Programs / AI Literacy Instructor",
     details: "Saratoga High School, 11th Grade",
     bio: "Designs engaging curriculum and activities that make each session impactful and fun.",
     image: "/staff/Ye_Julie.png",
@@ -73,9 +73,10 @@ export const mentors: Mentor[] = [
   {
     initial: "Ac",
     name: "Achyut Karthikeyan",
-    role: "Instructor - AI Literacy",
+    role: "Mentor",
     details: "Saratoga High School",
-    bio: "Explains AI in a way students can actually use.",
+    bio: "Supports students as they build confidence, explore new skills, and ask better questions.",
+    image: "/staff/Karthikeyan_Achyut.png",
     email: "",
     linkedin: "",
   },

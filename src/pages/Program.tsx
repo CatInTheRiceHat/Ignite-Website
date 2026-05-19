@@ -11,24 +11,24 @@ const weeklySchedule = [
     week: 'Week 1',
     dates: 'June 8–12 (Mon–Fri)',
     courses: [
-      { title: 'Project / Nonprofit Building', instructor: 'Elaine' },
-      { title: 'Marketing & Digital Design', instructor: 'Austin' },
+      { title: 'Project / Nonprofit Building', instructor: 'Elaine Che' },
+      { title: 'Marketing & Digital Design', instructor: 'Austin Zhao' },
     ],
   },
   {
     week: 'Week 2',
     dates: 'June 15–19 (Mon–Fri)',
     courses: [
-      { title: 'Productivity, Goal Setting & Decision Making', instructor: 'Austin' },
-      { title: 'Professional Communication', instructor: 'Ivan' },
+      { title: 'Productivity, Goal Setting & Decision Making', instructor: 'Austin Zhao' },
+      { title: 'Professional Communication', instructor: 'Ivan Satsuta' },
     ],
   },
   {
     week: 'Week 3',
     dates: 'June 22–26 (Mon–Fri)',
     courses: [
-      { title: 'Science Research', instructor: 'Michael' },
-      { title: 'AI Literacy', instructor: 'Achyut' },
+      { title: 'Science Research', instructor: 'Michael Zhao' },
+      { title: 'AI Literacy', instructor: 'Julie Ye' },
     ],
   },
 ];
@@ -77,7 +77,7 @@ const skillCourses = [
   {
     icon: '/assets/AI.png',
     title: 'AI Literacy',
-    instructor: 'Achyut Karthikeyan',
+    instructor: 'Julie Ye',
     highlighted: false,
     description: 'Students learn what AI is, when it is useful, how to write better prompts, how to check AI outputs, and how to use AI ethically.',
   },
