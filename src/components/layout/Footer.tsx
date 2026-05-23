@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { ExternalLink, Mail } from 'lucide-react';
-import { APPLY_FORM_URL } from '../../lib/links';
+import { ExternalLink } from 'lucide-react';
+import { APPLY_FORM_URL, MENTOR_FORM_URL } from '../../lib/links';
 
 const Footer = () => {
   const navLinks = [
@@ -33,7 +33,7 @@ const Footer = () => {
               Free online mentorship that helps students practice useful skills, ask better questions, and find their fire.
             </p>
 
-            <div className="mt-8 flex flex-col sm:flex-row gap-4">
+            <div className="mt-8 flex flex-col sm:flex-row sm:flex-wrap gap-4">
               <a
                 href={APPLY_FORM_URL}
                 target="_blank"
@@ -44,11 +44,13 @@ const Footer = () => {
                 <ExternalLink className="h-5 w-5" />
               </a>
               <a
-                href="mailto:ignitefindyourfire@gmail.com"
-                className="inline-flex items-center justify-center gap-2 border-2 border-white/70 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-[var(--primary-orange)] transition-colors"
+                href={MENTOR_FORM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 border-2 border-white bg-transparent px-8 py-4 rounded-full font-bold text-lg text-white hover:bg-white hover:text-[var(--primary-orange)] active:scale-95 transition-all"
               >
-                Email Us
-                <Mail className="h-5 w-5" />
+                Apply as a Mentor
+                <ExternalLink className="h-5 w-5" />
               </a>
             </div>
           </div>

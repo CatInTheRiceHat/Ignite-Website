@@ -1,6 +1,7 @@
-import { Briefcase, Mail, MapPin } from 'lucide-react';
+import { Briefcase, ExternalLink, Mail, MapPin } from 'lucide-react';
 import BlurFade from '../components/ui/blur-fade';
 import { mentors } from '../data/mentors';
+import { MENTOR_FORM_URL } from '../lib/links';
 
 const Mentors = () => {
 
@@ -88,14 +89,19 @@ const Mentors = () => {
       {/* Contact */}
       <section className="py-24 bg-white rounded-t-[4rem]">
         <div className="max-w-4xl mx-auto px-4 text-center">
-            <h2 className="text-4xl font-rammetto text-[var(--primary-orange)] mb-6">Email Us</h2>
-            <p className="text-lg text-[var(--text-light)] max-w-2xl mx-auto leading-relaxed">
-              Interested in joining the mentor team? Email us at{' '}
-              <a href="mailto:ignitefindyourfire@gmail.com" className="font-bold text-[var(--primary-orange)] hover:text-[var(--primary-orange-dark)] transition-colors">
-                ignitefindyourfire@gmail.com
-              </a>
-              {' '}to apply or ask questions.
-            </p>
+          <h2 className="text-4xl font-rammetto text-[var(--primary-orange)] mb-6">Apply to Be a Mentor!</h2>
+          <p className="text-lg text-[var(--text-light)] max-w-2xl mx-auto leading-relaxed">
+            Want to help younger students build confidence and explore new interests? Apply to join the Ignite mentor team.
+          </p>
+          <a
+            href={MENTOR_FORM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 inline-flex items-center justify-center gap-2 bg-[var(--primary-orange)] text-white px-10 py-4 rounded-full font-bold text-lg hover:scale-105 hover:bg-[var(--primary-orange-dark)] active:scale-95 transition-all shadow-lg"
+          >
+            Apply as a Mentor
+            <ExternalLink className="h-5 w-5" />
+          </a>
         </div>
       </section>
     </div>
