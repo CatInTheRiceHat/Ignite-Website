@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
+import { ArrowRight, Megaphone, Menu, X } from 'lucide-react';
 import { APPLY_FORM_URL } from '../../lib/links';
 
 const Navbar = () => {
@@ -33,7 +34,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/85 backdrop-blur-md shadow-sm">
       <motion.div
         style={{ scaleX }}
         className="absolute bottom-0 left-0 right-0 h-[3px] bg-[var(--primary-orange)] origin-left z-50"
@@ -51,16 +52,14 @@ const Navbar = () => {
           </Link>
           
           <button 
-            className="md:hidden flex h-11 w-11 flex-col items-center justify-center gap-1.5 rounded-full"
+            className="md:hidden flex h-11 w-11 items-center justify-center rounded-full text-[var(--primary-orange)] transition-colors hover:bg-orange-50"
             onClick={() => setIsOpen((open) => !open)}
             aria-label="Toggle menu"
             aria-expanded={isOpen}
             aria-controls="mobile-menu"
             type="button"
           >
-            <span className={`w-6 h-0.5 bg-[var(--primary-orange)] transition-transform ${isOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
-            <span className={`w-6 h-0.5 bg-[var(--primary-orange)] ${isOpen ? 'opacity-0' : ''}`}></span>
-            <span className={`w-6 h-0.5 bg-[var(--primary-orange)] transition-transform ${isOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+            {isOpen ? <X className="h-7 w-7" aria-hidden="true" /> : <Menu className="h-7 w-7" aria-hidden="true" />}
           </button>
         </div>
 
@@ -88,6 +87,22 @@ const Navbar = () => {
         </div>
 
       </div>
+      <a
+        href={APPLY_FORM_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="We've received 50+ applications received and spots are filling quickly. Apply soon for Summer 2026!"
+        className="group flex min-h-12 items-center justify-center bg-[var(--text-charcoal)] px-4 py-2 text-center text-white transition-colors hover:bg-[var(--primary-orange-dark)]"
+      >
+        <span className="flex w-full min-w-0 max-w-7xl items-center justify-center gap-2 text-xs font-bold leading-tight sm:text-base md:text-lg">
+          <Megaphone className="h-4 w-4 flex-none text-white sm:h-5 sm:w-5" aria-hidden="true" />
+          <span className="min-w-0 flex-1 sm:flex-none">
+            <span className="sm:hidden">50+ applications. Spots filling fast.</span>
+            <span className="hidden sm:inline">We've received 50+ applications received and spots are filling quickly. Apply soon for Summer 2026!</span>
+          </span>
+          <ArrowRight className="hidden h-4 w-4 flex-none transition-transform group-hover:translate-x-1 sm:block" aria-hidden="true" />
+        </span>
+      </a>
       {/* Mobile Links */}
       <AnimatePresence>
         {isOpen && (

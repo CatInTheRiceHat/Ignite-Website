@@ -58,8 +58,9 @@ const Home = () => {
         </div>
         <div className="max-w-5xl mx-auto relative z-20">
           <BlurFade delay={0}>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-rammetto text-white mb-6 drop-shadow-[0_3px_10px_rgba(0,0,0,0.35)]">
-              <span className="block">Free Mentorship</span>
+            <h1 className="text-[2.35rem] sm:text-5xl md:text-6xl lg:text-7xl font-rammetto text-white mb-6 drop-shadow-[0_3px_10px_rgba(0,0,0,0.35)]">
+              <span className="block">Free<span className="hidden sm:inline"> Mentorship</span></span>
+              <span className="block mt-[14px] sm:hidden">Mentorship</span>
               <span className="block mt-[20px] md:mt-[28px]">Program for</span>
               <span className="block mt-[20px] md:mt-[28px]">Students</span>
             </h1>
@@ -71,10 +72,10 @@ const Home = () => {
           </BlurFade>
           <BlurFade delay={0.25}>
             <div className="flex flex-wrap gap-4 justify-center">
-              <a href={APPLY_FORM_URL} target="_blank" rel="noopener noreferrer" className="bg-[var(--primary-orange)] text-white px-10 py-5 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-lg">
+              <a href={APPLY_FORM_URL} target="_blank" rel="noopener noreferrer" className="w-full max-w-xs bg-[var(--primary-orange)] text-white px-8 py-5 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-lg sm:w-auto sm:px-10">
                 Apply Now
               </a>
-              <Link to="/program" className="bg-white text-[var(--primary-orange)] border-2 border-[var(--primary-orange)] px-10 py-5 rounded-full font-bold text-xl hover:bg-orange-50 transition-all">
+              <Link to="/program" className="w-full max-w-xs bg-white text-[var(--primary-orange)] border-2 border-[var(--primary-orange)] px-8 py-5 rounded-full font-bold text-xl hover:bg-orange-50 transition-all sm:w-auto sm:px-10">
                 Learn More
               </Link>
             </div>
