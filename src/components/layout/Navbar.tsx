@@ -4,7 +4,7 @@ import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { ArrowRight, Megaphone, Menu, X } from 'lucide-react';
 import { APPLY_FORM_URL } from '../../lib/links';
 
-const announcementText = "We've received 60+ applications and spots are filling quickly. Apply soon for Summer 2026!";
+const announcementText = "We've received 70+ applications and spots are filling quickly. Apply soon for Summer 2026!";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
