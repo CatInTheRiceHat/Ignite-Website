@@ -91,14 +91,14 @@ const Navbar = () => {
         href={APPLY_FORM_URL}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="We've received 50+ applications received and spots are filling quickly. Apply soon for Summer 2026!"
+        aria-label="We've received 50+ applications and spots are filling quickly. Apply soon for Summer 2026!"
         className="group flex min-h-12 items-center justify-center bg-[var(--text-charcoal)] px-4 py-2 text-center text-white transition-colors hover:bg-[var(--primary-orange-dark)]"
       >
         <span className="flex w-full min-w-0 max-w-7xl items-center justify-center gap-2 text-xs font-bold leading-tight sm:text-base md:text-lg">
           <Megaphone className="h-4 w-4 flex-none text-white sm:h-5 sm:w-5" aria-hidden="true" />
           <span className="min-w-0 flex-1 sm:flex-none">
             <span className="sm:hidden">50+ applications. Spots filling fast.</span>
-            <span className="hidden sm:inline">We've received 50+ applications received and spots are filling quickly. Apply soon for Summer 2026!</span>
+            <span className="hidden sm:inline">We've received 50+ applications and spots are filling quickly. Apply soon for Summer 2026!</span>
           </span>
           <ArrowRight className="hidden h-4 w-4 flex-none transition-transform group-hover:translate-x-1 sm:block" aria-hidden="true" />
         </span>
