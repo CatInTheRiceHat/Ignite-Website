@@ -4,7 +4,7 @@ import { motion, AnimatePresence, useInView, useScroll, useSpring } from 'framer
 import { ArrowRight, Megaphone, Menu, X } from 'lucide-react';
 import { APPLY_FORM_URL } from '../../lib/links';
 
-const announcementText = "We've received 90+ applications and spots are filling quickly. Apply soon for Summer 2026!";
+const announcementText = "We've received 100+ applications and spots are filling quickly. Apply soon for Summer 2026!";
 
 function AnnouncementCount({ value }: { value: number }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -132,7 +132,7 @@ const Navbar = () => {
         <span className="flex w-full min-w-0 max-w-7xl items-center justify-center gap-2 text-[0.7rem] font-bold leading-tight sm:text-base md:text-lg">
           <Megaphone className="h-4 w-4 flex-none text-white sm:h-5 sm:w-5" aria-hidden="true" />
           <span className="block min-w-0 max-w-[38ch] flex-1 whitespace-normal text-center sm:max-w-none sm:flex-none">
-            We've received <AnnouncementCount value={90} />+ applications and spots are filling quickly. Apply soon for Summer 2026!
+            We've received <AnnouncementCount value={100} />+ applications and spots are filling quickly. Apply soon for Summer 2026!
           </span>
           <ArrowRight className="hidden h-4 w-4 flex-none transition-transform group-hover:translate-x-1 sm:block" aria-hidden="true" />
         </span>
