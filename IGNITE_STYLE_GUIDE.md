@@ -17,6 +17,7 @@ The current website palette is the source of truth for Ignite digital materials.
 | --- | --- | --- |
 | Primary Background | `#FFF8F0` | Default page background and soft section backgrounds. |
 | Primary Orange | `#F07B2A` | Main brand color, CTAs, hero sections, active nav states, icons, mentor accents, and key headings. |
+| Dark Orange | `#D46A20` | Hover states, button depth, darker orange accents, and stronger emphasis when primary orange needs contrast. |
 | Text Charcoal | `#1A1A2E` | Main headings, high-contrast text, dark announcement bar, and important labels. |
 | Text Light | `#4A4A5E` | Body copy, descriptions, secondary text, and card details. |
 | Card White | `#FFFFFF` | Cards, nav surfaces, form panels, and content blocks. |
@@ -83,6 +84,7 @@ Style Reference:
 Brand: Ignite Summer Program
 Background: #FFF8F0
 Primary Accent: #F07B2A
+Secondary Accent: #D46A20
 Text: #1A1A2E for headings, #4A4A5E for body text
 Fonts: Rammetto One for display titles, Poppins for headings, Nunito for body text
 Layout: Modern, rounded shapes, minimalist, playful, student-friendly
