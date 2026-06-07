@@ -2,11 +2,10 @@ export interface Mentor {
   initial: string;
   name: string;
   role: string;
-  details: string;
-  bio: string;
+  school: string;
+  subjects?: string;
   image?: string;
   email?: string;
-  linkedin?: string;
 }
 
 export const mentors: Mentor[] = [
@@ -14,70 +13,79 @@ export const mentors: Mentor[] = [
     initial: "E",
     name: "Elaine Che",
     role: "Co-Founder",
-    details: "Saratoga High School, 11th Grade",
-    bio: "Works on making free learning support easier for students to find.",
+    school: "Saratoga High School, 11th Grade",
+    subjects: "Project / Nonprofit Building",
     image: "/staff/Che_Elaine.png",
-    email: "", // e.g. "elaine@example.com"
-    linkedin: "", // e.g. "https://linkedin.com/in/elaine-che"
+    email: "elaineyouyuanche@gmail.com",
   },
   {
     initial: "A",
     name: "Austin Zhao",
     role: "Co-Founder",
-    details: "Saratoga High School, 11th Grade",
-    bio: "Combines tech skills with a drive to create meaningful programs for younger students.",
+    school: "Saratoga High School, 11th Grade",
+    subjects: "Marketing & Digital Design; Productivity & Goal Setting",
     image: "/staff/Zhao_Austin.png",
-    email: "",
-    linkedin: "",
+    email: "AustinZhao986@gmail.com",
   },
   {
     initial: "M",
     name: "Michael Zhao",
     role: "Co-Founder",
-    details: "Saratoga High School, 11th Grade",
-    bio: "Helps shape the program and keep the team moving in the same direction.",
+    school: "Saratoga High School, 11th Grade",
+    subjects: "Science Research",
     image: "/staff/Zhao_Michael.png",
-    email: "",
-    linkedin: "",
+    email: "mmzhao819@gmail.com",
   },
   {
     initial: "I",
     name: "Ivan Satsuta",
     role: "Advisor / Mentor",
-    details: "Saratoga High School, 12th Grade",
-    bio: "Keeps scheduling, logistics, and team coordination organized.",
+    school: "Saratoga High School, 12th Grade",
+    subjects: "Professional Communication",
     image: "/staff/Satsuta_Ivan.png",
-    email: "",
-    linkedin: "",
+    email: "sa23chippy@gmail.com",
   },
   {
     initial: "J",
     name: "Julie Ye",
     role: "Mentor",
-    details: "Saratoga High School, 10th Grade",
-    bio: "Designs engaging curriculum and activities that make each session impactful and fun.",
+    school: "Saratoga High School, 10th Grade",
+    subjects: "AI Literacy",
     image: "/staff/Ye_Julie.png",
-    email: "",
-    linkedin: "",
+    email: "julieyixuanye@gmail.com",
   },
   {
     initial: "E",
     name: "Edwin Wu",
     role: "Mentor",
-    details: "Saratoga High School, 11th Grade",
-    bio: "Supports students as they build confidence, explore new skills, and ask better questions.",
+    school: "Saratoga High School, 11th Grade",
     image: "/staff/Wu_Edwin.png",
-    email: "",
-    linkedin: "",
+    email: "wue0085@lgsstudent.org",
   },
   {
     initial: "Ac",
     name: "Achyut Karthikeyan",
     role: "Mentor",
-    details: "Saratoga High School, 11th Grade",
-    bio: "Supports students as they build confidence, explore new skills, and ask better questions.",
+    school: "Saratoga High School, 11th Grade",
     image: "/staff/Karthikeyan_Achyut.png",
+    email: "sabrus444@gmail.com",
+  },
+  {
+    initial: "E",
+    name: "Emma Zhou",
+    role: "Mentor",
+    school: "Saratoga High School",
+    subjects: "Productivity, Goal Setting & Decision Making",
+    image: "/staff/Zhou_Emma.png",
     email: "",
-    linkedin: "",
+  },
+  {
+    initial: "D",
+    name: "David He",
+    role: "Mentor",
+    school: "Saratoga High School",
+    subjects: "AI Literacy; Marketing & Digital Design",
+    image: "/staff/Default.png",
+    email: "David.yifan.he@gmail.com",
   },
 ];

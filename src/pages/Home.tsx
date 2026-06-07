@@ -89,7 +89,7 @@ const Home = () => {
           <div className="flex flex-col md:flex-row md:flex-wrap justify-center md:divide-x divide-y md:divide-y-0 divide-orange-100">
             <CountStat value={3} label="Weeks" prefix="Up to " />
             <CountStat value={100} label="Free" suffix="%" />
-            <CountStat value={7} label="Mentors" />
+            <CountStat value={9} label="Mentors" />
             <div className="text-center px-6 md:px-8 py-4">
               <p className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)]">4–8</p>
               <p className="text-sm md:text-base text-[var(--text-light)] font-semibold mt-1">Grade Levels Welcome</p>

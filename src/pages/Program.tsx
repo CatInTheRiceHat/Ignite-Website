@@ -11,24 +11,24 @@ const weeklySchedule = [
     week: 'Week 1',
     dates: 'June 8–12 (Mon–Fri)',
     courses: [
-      { title: 'Project / Nonprofit Building', instructor: 'Elaine Che' },
-      { title: 'Marketing & Digital Design', instructor: 'Austin Zhao' },
+      { title: 'Project / Nonprofit Building', instructors: ['Elaine Che'] },
+      { title: 'Marketing & Digital Design', instructors: ['Austin Zhao', 'David He'] },
     ],
   },
   {
     week: 'Week 2',
     dates: 'June 15–19 (Mon–Fri)',
     courses: [
-      { title: 'Productivity, Goal Setting & Decision Making', instructor: 'Austin Zhao' },
-      { title: 'Professional Communication', instructor: 'Ivan Satsuta' },
+      { title: 'Productivity, Goal Setting & Decision Making', instructors: ['Austin Zhao', 'Emma Zhou'] },
+      { title: 'Professional Communication', instructors: ['Ivan Satsuta'] },
     ],
   },
   {
     week: 'Week 3',
     dates: 'June 22–26 (Mon–Fri)',
     courses: [
-      { title: 'Science Research', instructor: 'Michael Zhao' },
-      { title: 'AI Literacy', instructor: 'Julie Ye' },
+      { title: 'Science Research', instructors: ['Michael Zhao'] },
+      { title: 'AI Literacy', instructors: ['Julie Ye', 'David He'] },
     ],
   },
 ];
@@ -40,44 +40,52 @@ const timeCommitments = [
 
 const skillCourses = [
   {
+    headerImage: '/courses/Project%20and%20Nonprofit%20Building.jpeg',
     icon: '/assets/Project.png',
     title: 'Project / Nonprofit Building',
-    instructor: 'Elaine',
+    instructors: ['Elaine'],
     highlighted: true,
     description: 'Students learn how to turn a real problem or idea into a simple project plan, define who it helps, explain why it matters, and build toward a final pitch.',
   },
   {
+    headerImage: '/courses/Science%20Research.jpeg',
     icon: '/assets/Research.png',
     title: 'Science Research',
-    instructor: 'Michael',
+    instructors: ['Michael'],
     highlighted: true,
     description: 'Students learn what research looks like, practice finding good questions, design fair experiments, and present evidence clearly.',
   },
   {
+    headerImage: '/courses/Digital%20Design.jpeg',
     icon: '/assets/Artist.png',
     title: 'Marketing & Digital Design',
-    instructor: 'Austin',
+    instructors: ['Austin', 'David'],
     highlighted: true,
     description: 'Students build a stronger eye for design by learning visual storytelling, Canva basics, fonts, colors, layouts, and how to present polished work with confidence.',
   },
   {
+    headerImage: '/courses/Productivity.jpeg',
+    headerPosition: 'center 25%',
     icon: '/assets/Productivity.png',
     title: 'Productivity, Goal Setting & Decision Making',
-    instructor: 'Austin',
+    instructors: ['Austin', 'Emma'],
     highlighted: false,
     description: 'Students learn practical ways to beat procrastination, prioritize what matters, plan their time, set SMART goals, and make better trade-offs.',
   },
   {
+    headerImage: '/courses/Communication.jpeg',
+    headerPosition: 'center top',
     icon: '/assets/Mentors.png',
     title: 'Professional Communication',
-    instructor: 'Ivan',
+    instructors: ['Ivan'],
     highlighted: false,
     description: 'Students practice writing clear messages, structuring professional emails, asking for help or opportunities, following up, and communicating with adults.',
   },
   {
+    headerImage: '/courses/AI%20Literacy.jpeg',
     icon: '/assets/AI.png',
     title: 'AI Literacy',
-    instructor: 'Julie Ye',
+    instructors: ['Julie Ye', 'David'],
     highlighted: false,
     description: 'Students learn what AI is, when it is useful, how to write better prompts, how to check AI outputs, and how to use AI ethically.',
   },
@@ -90,6 +98,8 @@ const instructorImages: Record<string, string> = {
   Ivan: '/staff/Satsuta_Ivan.png',
   Julie: '/staff/Ye_Julie.png',
   Edwin: '/staff/Wu_Edwin.png',
+  Emma: '/staff/Zhou_Emma.png',
+  David: '/staff/Default.png',
 };
 
 const featuredCourses = skillCourses.filter((course) => course.highlighted);
@@ -103,28 +113,49 @@ const InstructorAvatar = ({ name }: { name: string }) => {
     <img
       src={image}
       alt={name}
-      className="w-11 h-11 rounded-xl object-cover object-top flex-shrink-0 border-2 border-orange-100"
+      className="w-11 h-11 rounded-xl object-cover object-top flex-shrink-0 border-2 border-white"
     />
   ) : (
-    <div className="w-11 h-11 rounded-xl bg-orange-100 flex items-center justify-center text-base font-bold text-[var(--primary-orange)] flex-shrink-0">
+    <div className="w-11 h-11 rounded-xl bg-orange-100 flex items-center justify-center text-base font-bold text-[var(--primary-orange)] flex-shrink-0 border-2 border-white">
       {firstName.charAt(0).toUpperCase()}
     </div>
   );
 };
 
-const CourseCard = ({ course }: { course: (typeof skillCourses)[number] }) => (
-  <div className="bg-white rounded-[2rem] p-8 hover:shadow-lg transition-shadow border-2 border-transparent hover:border-orange-100">
-    <div className="flex items-center gap-4 mb-5">
-      <img src={course.icon} alt="" className="w-10 h-10 object-contain flex-shrink-0" />
-      <div className="flex-1 min-w-0">
-        <h3 className="text-xl font-bold text-[var(--text-charcoal)] leading-tight">{course.title}</h3>
-      </div>
-      <div className="flex items-center gap-2 flex-shrink-0">
-        <InstructorAvatar name={course.instructor} />
-        <span className="text-sm font-semibold text-[var(--primary-orange)] hidden sm:block">{course.instructor}</span>
-      </div>
+const InstructorGroup = ({ instructors }: { instructors: string[] }) => (
+  <div className="flex flex-col items-end gap-2 flex-shrink-0 sm:max-w-[15rem]">
+    <div className="flex -space-x-2">
+      {instructors.map((instructor) => (
+        <InstructorAvatar key={instructor} name={instructor} />
+      ))}
     </div>
-    <p className="text-sm text-[var(--text-light)] leading-relaxed">{course.description}</p>
+    <span className="text-right text-xs sm:text-sm font-semibold text-[var(--primary-orange)] leading-snug">
+      {instructors.join(' + ')}
+    </span>
+  </div>
+);
+
+const CourseCard = ({ course }: { course: (typeof skillCourses)[number] }) => (
+  <div className="bg-white rounded-[2rem] overflow-hidden hover:shadow-lg transition-shadow border-2 border-transparent hover:border-orange-100">
+    <div className="h-32 sm:h-36 md:h-40 overflow-hidden bg-orange-50">
+      <img
+        src={course.headerImage}
+        alt=""
+        className="h-full w-full object-cover object-center"
+        style={{ objectPosition: course.headerPosition ?? 'center' }}
+        loading="lazy"
+      />
+    </div>
+    <div className="p-7 sm:p-8">
+      <div className="flex flex-col gap-5 mb-5 sm:flex-row sm:items-center sm:gap-4">
+        <img src={course.icon} alt="" className="w-10 h-10 object-contain flex-shrink-0" />
+        <div className="flex-1 min-w-0">
+          <h3 className="text-xl font-bold text-[var(--text-charcoal)] leading-tight">{course.title}</h3>
+        </div>
+        <InstructorGroup instructors={course.instructors} />
+      </div>
+      <p className="text-sm text-[var(--text-light)] leading-relaxed">{course.description}</p>
+    </div>
   </div>
 );
 
@@ -168,7 +199,7 @@ const Program = () => {
                   {week.courses.map((course, j) => (
                     <li key={j} className="flex flex-col gap-0.5">
                       <span className="text-[var(--text-charcoal)] font-semibold text-sm leading-snug">{course.title}</span>
-                      <span className="text-[var(--primary-orange)] text-xs font-semibold">{course.instructor}</span>
+                      <span className="text-[var(--primary-orange)] text-xs font-semibold">{course.instructors.join(' + ')}</span>
                     </li>
                   ))}
                 </ul>

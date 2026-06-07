@@ -1,4 +1,4 @@
-import { Briefcase, ExternalLink, Mail, MapPin } from 'lucide-react';
+import { BookOpen, ExternalLink, Mail, MapPin } from 'lucide-react';
 import BlurFade from '../components/ui/blur-fade';
 import { mentors } from '../data/mentors';
 import { MENTOR_FORM_URL } from '../lib/links';
@@ -41,8 +41,11 @@ const Mentors = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {mentors.map((mentor, index) => (
               <BlurFade key={index} delay={index * 0.08}>
-              <div className="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border-b-8 border-[var(--primary-orange)] hover:-translate-y-2 group h-full">
-                <div className="flex items-center gap-6 mb-8">
+              <div
+                className={`${mentor.role === 'Co-Founder' ? 'border-white text-white shadow-orange-200/70' : 'bg-white border-[var(--primary-orange)]'} rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border-b-8 hover:-translate-y-2 group h-full`}
+                style={mentor.role === 'Co-Founder' ? { background: 'linear-gradient(135deg, var(--primary-orange) 0%, #E87324 55%, var(--primary-orange-dark) 100%)' } : undefined}
+              >
+                <div className="flex items-center gap-5 mb-8">
                   <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-inner transform group-hover:rotate-6 transition-transform flex-shrink-0">
                     {mentor.image ? (
                       <img src={mentor.image} alt={mentor.name} className="w-full h-full object-cover" />
@@ -52,31 +55,32 @@ const Mentors = () => {
                       </div>
                     )}
                   </div>
-                  <div>
-                    <h3 className="text-2xl font-bold text-[var(--text-charcoal)] mb-1">{mentor.name}</h3>
-                    <p className="text-[var(--primary-orange)] font-bold text-sm tracking-uppercase">{mentor.role}</p>
+                  <div className="min-w-0 flex-1">
+                    <h3 className={`text-2xl font-bold mb-1 ${mentor.role === 'Co-Founder' ? 'text-white' : 'text-[var(--text-charcoal)]'}`}>{mentor.name}</h3>
+                    <p className={`font-bold text-sm tracking-uppercase ${mentor.role === 'Co-Founder' ? 'text-white/90' : 'text-[var(--primary-orange)]'}`}>{mentor.role}</p>
                   </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2 text-sm text-[var(--text-light)] font-semibold bg-[var(--bg-cream)] px-4 py-2 rounded-xl">
-                    <MapPin className="h-4 w-4 text-[var(--primary-orange)] flex-shrink-0" /> {mentor.details}
-                  </div>
-                  <p className="text-[var(--text-light)] leading-relaxed italic">
-                    "{mentor.bio}"
-                  </p>
-                </div>
-
-                <div className="mt-8 flex gap-3">
-                  {mentor.linkedin && (
-                    <a href={mentor.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${mentor.name} LinkedIn`} className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-gray-400 hover:bg-[var(--primary-orange)] hover:text-white transition-colors">
-                      <Briefcase className="h-4 w-4" />
-                    </a>
-                  )}
                   {mentor.email && (
-                    <a href={`mailto:${mentor.email}`} aria-label={`Email ${mentor.name}`} className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-gray-400 hover:bg-[var(--primary-orange)] hover:text-white transition-colors">
+                    <a
+                      href={`mailto:${mentor.email}`}
+                      aria-label={`Email ${mentor.name}`}
+                      className={`w-10 h-10 rounded-full border-2 flex items-center justify-center transition-colors flex-shrink-0 ${
+                        mentor.role === 'Co-Founder'
+                          ? 'border-white text-white hover:bg-white hover:text-[var(--primary-orange)]'
+                          : 'border-[var(--primary-orange)] text-[var(--primary-orange)] hover:bg-[var(--primary-orange)] hover:text-white'
+                      }`}
+                    >
                       <Mail className="h-4 w-4" />
                     </a>
+                  )}
+                </div>
+                <div className="space-y-3">
+                  <div className={`flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl ${mentor.role === 'Co-Founder' ? 'bg-white/15 text-white shadow-inner' : 'bg-[var(--bg-cream)] text-[var(--text-light)]'}`}>
+                    <MapPin className={`h-4 w-4 flex-shrink-0 ${mentor.role === 'Co-Founder' ? 'text-white' : 'text-[var(--primary-orange)]'}`} /> {mentor.school}
+                  </div>
+                  {mentor.subjects && (
+                    <div className={`flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl ${mentor.role === 'Co-Founder' ? 'bg-white/15 text-white shadow-inner' : 'bg-[var(--bg-cream)] text-[var(--text-light)]'}`}>
+                      <BookOpen className={`h-4 w-4 flex-shrink-0 ${mentor.role === 'Co-Founder' ? 'text-white' : 'text-[var(--primary-orange)]'}`} /> {mentor.subjects}
+                    </div>
                   )}
                 </div>
               </div>
