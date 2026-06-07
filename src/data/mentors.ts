@@ -23,7 +23,7 @@ export const mentors: Mentor[] = [
     name: "Austin Zhao",
     role: "Co-Founder",
     school: "Saratoga High School, 11th Grade",
-    subjects: "Marketing & Digital Design; Productivity & Goal Setting",
+    subjects: "Marketing & Digital Design; Productivity, Goal Setting & Decision Making",
     image: "/staff/Zhao_Austin.png",
     email: "AustinZhao986@gmail.com",
   },
