@@ -99,7 +99,7 @@ const instructorImages: Record<string, string> = {
   Julie: '/staff/Ye_Julie.png',
   Edwin: '/staff/Wu_Edwin.png',
   Emma: '/staff/Zhou_Emma.png',
-  David: '/staff/Default.png',
+  David: '/staff/He_David.png',
 };
 
 const featuredCourses = skillCourses.filter((course) => course.highlighted);
