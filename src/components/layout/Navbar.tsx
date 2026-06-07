@@ -1,43 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence, useInView, useScroll, useSpring } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { ArrowRight, Megaphone, Menu, X } from 'lucide-react';
 import { APPLY_FORM_URL } from '../../lib/links';
 
-const announcementText = "We've received 100+ applications and spots are filling quickly. Apply soon for Summer 2026!";
-
-function AnnouncementCount({ value }: { value: number }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true });
-  const [display, setDisplay] = useState(0);
-
-  useEffect(() => {
-    if (!isInView) return;
-
-    const duration = 1400;
-    const start = performance.now();
-    let frame = 0;
-
-    const tick = (now: number) => {
-      const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setDisplay(Math.round(eased * value));
-
-      if (progress < 1) {
-        frame = requestAnimationFrame(tick);
-      }
-    };
-
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [isInView, value]);
-
-  return (
-    <span ref={ref} className="inline-block min-w-[2ch] tabular-nums">
-      {display}
-    </span>
-  );
-}
+const announcementText = 'Applications have closed for Summer 2026. Thank you for your interest!';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -132,7 +99,7 @@ const Navbar = () => {
         <span className="flex w-full min-w-0 max-w-7xl items-center justify-center gap-2 text-[0.7rem] font-bold leading-tight sm:text-base md:text-lg">
           <Megaphone className="h-4 w-4 flex-none text-white sm:h-5 sm:w-5" aria-hidden="true" />
           <span className="block min-w-0 max-w-[38ch] flex-1 whitespace-normal text-center sm:max-w-none sm:flex-none">
-            We've received <AnnouncementCount value={100} />+ applications and spots are filling quickly. Apply soon for Summer 2026!
+            {announcementText}
           </span>
           <ArrowRight className="hidden h-4 w-4 flex-none transition-transform group-hover:translate-x-1 sm:block" aria-hidden="true" />
         </span>

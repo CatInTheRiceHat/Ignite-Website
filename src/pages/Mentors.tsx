@@ -42,7 +42,7 @@ const Mentors = () => {
             {mentors.map((mentor, index) => (
               <BlurFade key={index} delay={index * 0.08}>
               <div
-                className={`${mentor.role === 'Co-Founder' ? 'border-white text-white shadow-orange-200/70' : 'bg-white border-[var(--primary-orange)]'} rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border-b-8 hover:-translate-y-2 group h-full`}
+                className={`${mentor.role === 'Co-Founder' ? 'border-0 text-white shadow-orange-200/70' : 'bg-white border-b-8 border-[var(--primary-orange)]'} rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group h-full`}
                 style={mentor.role === 'Co-Founder' ? { background: 'linear-gradient(135deg, var(--primary-orange) 0%, #E87324 55%, var(--primary-orange-dark) 100%)' } : undefined}
               >
                 <div className="flex items-center gap-5 mb-8">
