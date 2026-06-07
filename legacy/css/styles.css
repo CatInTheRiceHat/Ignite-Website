@@ -46,15 +46,13 @@
    ============================================
    COLOR PALETTE
    ============================================
-   Orange is the hero. Yellow supports energy. Cream adds warmth.
+   Orange is the hero. Cream adds warmth.
    Charcoal anchors. Never use blue, purple, or "techy" palettes —
    Ignite is warm and human.
 
    Primary Colors:
    • Ignite Orange (#FF6B35) — Primary buttons, section titles, links, logo
-   • Orange Dark (#E55A2B) — Button hover & active states
-   • Spark Yellow (#FFD166) — Secondary buttons, active nav, CTA gradient
-   • Yellow Dark (#E5B852) — Yellow hover state
+   • Orange Dark (#F07B2A) — Button hover & active states
 
    Neutrals & Semantic:
    • Warm Cream (#FFF8F0) — Page background, input default bg
@@ -64,9 +62,9 @@
    • Success Green (#58CC02) — Checkmarks, success states, highlight items
 
    Gradients:
-   • CTA: 135deg, orange → yellow (high energy, draws attention)
+   • CTA: solid orange (high energy, draws attention)
    • Page Header: 180deg, white → cream (subtle, welcoming)
-   • Divider: orange → yellow → transparent (decorative accent)
+   • Divider: orange → transparent (decorative accent)
 
    ============================================
    TYPOGRAPHY
@@ -129,7 +127,7 @@
 
    Variants:
    • Primary (orange bg) — Use for main CTAs (Apply Now, Submit). One per screen max.
-   • Secondary (yellow bg) — Use for supporting actions (Learn More, Meet All Mentors)
+   • Secondary (orange bg) — Use for supporting actions (Learn More, Meet All Mentors)
    • Ghost (transparent, orange border) — Tertiary actions on white bg only
 
    Sizes:
@@ -157,7 +155,7 @@
    • Accent: Week number in orange
 
    Team/Mentor Cards:
-   • 120×120px circular gradient avatar (orange → yellow)
+   • 120×120px circular orange avatar
    • Hover: translateY(-8px) scale(1.05)
    • Shows: Avatar, name, role, bio
 
@@ -246,9 +244,7 @@
   /* Colors */
   --bg-cream: #FFF8F0;
   --primary-orange: #F07B2A;
-  --primary-orange-dark: #D46A20;
-  --accent-yellow: #FFD166;
-  --accent-yellow-dark: #E5B852;
+  --primary-orange-dark: #F07B2A;
   --text-charcoal: #1A1A2E;
   --text-light: #4A4A5E;
   --card-white: #FFFFFF;
@@ -417,7 +413,7 @@ a:hover {
 
 .nav-links a:hover,
 .nav-links a.active {
-  background: var(--accent-yellow);
+  background: var(--primary-orange);
   color: var(--text-charcoal);
 }
 
@@ -547,16 +543,16 @@ a:hover {
 }
 
 .btn-secondary {
-  background: var(--accent-yellow);
+  background: var(--primary-orange);
   color: var(--text-charcoal);
   box-shadow: none;
 }
 
 .btn-secondary:hover {
-  background: var(--accent-yellow);
+  background: var(--primary-orange);
   color: var(--text-charcoal);
   transform: translateY(-4px);
-  box-shadow: 0 4px 0 0 var(--accent-yellow-dark);
+  box-shadow: 0 4px 0 0 var(--primary-orange-dark);
 }
 
 .btn-secondary:active {
@@ -599,7 +595,7 @@ a:hover {
   padding: var(--spacing-2xl) 0;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, var(--primary-orange) 0%, var(--accent-yellow) 100%);
+  background: linear-gradient(135deg, var(--primary-orange) 0%, var(--primary-orange) 100%);
 }
 
 .hero::before {
@@ -787,7 +783,7 @@ a:hover {
   width: 120px;
   height: 120px;
   border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--primary-orange), var(--accent-yellow));
+  background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange));
   margin: 0 auto var(--spacing-md);
   display: flex;
   align-items: center;
@@ -1087,7 +1083,7 @@ a:hover {
 
 /* --- CTA Section --- */
 .cta-section {
-  background: linear-gradient(135deg, var(--primary-orange), var(--accent-yellow));
+  background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange));
   padding: var(--spacing-2xl) 0;
   text-align: center;
   border-radius: var(--radius-xl);

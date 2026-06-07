@@ -1,6 +1,6 @@
 # Ignite Website — Image Prompts for Whisk
 
-**Brand colors to reference:** warm orange (#F07B2A), soft cream/peach (#FFF8F0), golden yellow (#FFD166), deep charcoal navy (#1A1A2E)  
+**Brand colors to reference:** warm orange (#F07B2A), soft cream/peach (#FFF8F0), soft cream (#FFF8F0), deep charcoal navy (#1A1A2E)  
 **Vibe:** energetic, warm, youthful, inclusive, inspiring — NOT corporate or stock-photo-generic  
 **Style tip:** illustrated/graphic style works better than photorealistic for these sections
 
@@ -16,7 +16,7 @@ These go behind text with a light white/cream overlay on top, so they need to be
 **Where it's used:** The very first thing visitors see. Full-screen background behind the headline "Free Mentorship Program for Middle School Students."
 
 **Whisk prompt:**
-> Wide landscape illustration of a vibrant spark or flame bursting upward at the center, surrounded by floating icons of laptops, lightbulbs, microphones, and stars. Warm orange and golden yellow color palette on a deep charcoal navy background. Energetic and youthful — feels like potential and excitement. Left and right sides should be slightly darker so white text in the center reads clearly. No people, just visual energy and symbolic icons.
+> Wide landscape illustration of a vibrant spark or flame bursting upward at the center, surrounded by floating icons of laptops, lightbulbs, microphones, and stars. Warm orange and soft cream color palette on a deep charcoal navy background. Energetic and youthful — feels like potential and excitement. Left and right sides should be slightly darker so white text in the center reads clearly. No people, just visual energy and symbolic icons.
 
 ---
 
@@ -40,7 +40,7 @@ These go behind text with a light white/cream overlay on top, so they need to be
 **Where it's used:** Background behind program structure cards (6 Weeks, Open Cohorts, 2–3 Hours/Week, Project-Based) and experience cards (Communication, Public Speaking, Final Showcase).
 
 **Whisk prompt:**
-> Wide landscape illustration showing a 6-week journey timeline as a visual path or road, with small illustrated scenes along the way — a student writing an email, a student holding a microphone, a student presenting to a crowd. Warm orange and golden yellow color palette. Birds-eye or slightly elevated perspective. The path should curve through the image from left to right. Illustrated, slightly whimsical. Top area should be lighter/more open for text.
+> Wide landscape illustration showing a 6-week journey timeline as a visual path or road, with small illustrated scenes along the way — a student writing an email, a student holding a microphone, a student presenting to a crowd. Warm orange and soft cream color palette. Birds-eye or slightly elevated perspective. The path should curve through the image from left to right. Illustrated, slightly whimsical. Top area should be lighter/more open for text.
 
 ---
 
@@ -62,7 +62,7 @@ These appear as semi-transparent decorative elements (30–50% opacity), positio
 **Where it's used:** Right side of the big orange CTA box at the bottom of the home page. Semi-transparent (30% opacity). Visible on desktop only.
 
 **Whisk prompt:**
-> A friendly illustrated flame character or mascot — stylized fire shape with a cute expressive face (big eyes, small smile). Orange and yellow gradient body, warm glow around it. Transparent background (PNG). Facing slightly left toward center. Tall portrait orientation. Fun and approachable — like a friendly school mascot. Not scary or intense. Could be holding a small diploma or star.
+> A friendly illustrated flame character or mascot — stylized fire shape with a cute expressive face (big eyes, small smile). Orange and cream gradient body, warm glow around it. Transparent background (PNG). Facing slightly left toward center. Tall portrait orientation. Fun and approachable — like a friendly school mascot. Not scary or intense. Could be holding a small diploma or star.
 
 ---
 
@@ -100,7 +100,7 @@ These are small square icons used inside cards and activity sections. **Transpar
 **Where it's used:** "Final Showcase" cards and Week 6 Shark Tank sections.
 
 **Whisk prompt:**
-> Illustrated golden trophy cup with orange and yellow gradient shine. Small star sparks floating around it. Clean flat illustration style. Transparent background. Square composition. Celebratory and exciting vibe.
+> Illustrated golden trophy cup with orange and cream gradient shine. Small star sparks floating around it. Clean flat illustration style. Transparent background. Square composition. Celebratory and exciting vibe.
 
 ---
 
@@ -108,7 +108,7 @@ These are small square icons used inside cards and activity sections. **Transpar
 **Where it's used:** "Visual Design" and "Digital Branding" cards across Curriculum and Program pages.
 
 **Whisk prompt:**
-> Illustrated artist palette and paintbrush with warm orange, yellow, and cream color blobs on the palette. Clean flat illustration style. Transparent background. Square composition. Creative and playful energy.
+> Illustrated artist palette and paintbrush with warm orange, cream, and cream color blobs on the palette. Clean flat illustration style. Transparent background. Square composition. Creative and playful energy.
 
 ---
 
@@ -132,7 +132,7 @@ These are small square icons used inside cards and activity sections. **Transpar
 **Where it's used:** Top-left of the navbar and footer, shown at 32–40px square.
 
 **Whisk prompt:**
-> A small square logo mark for "Ignite" — a stylized flame or spark symbol in warm orange (#F07B2A) and golden yellow (#FFD166). Clean, bold, minimal — must be readable at 32px. Transparent background. No text, just the icon mark. The flame should feel energetic and upward-moving.
+> A small square logo mark for "Ignite" — a stylized flame or spark symbol in warm orange (#F07B2A) and soft cream (#FFF8F0). Clean, bold, minimal — must be readable at 32px. Transparent background. No text, just the icon mark. The flame should feel energetic and upward-moving.
 
 ---
 
