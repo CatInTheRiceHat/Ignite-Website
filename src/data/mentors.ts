@@ -84,7 +84,7 @@ export const mentors: Mentor[] = [
     name: "David He",
     role: "Mentor",
     school: "The Harker School, 10th Grade",
-    subjects: "AI Literacy; Marketing & Digital Design",
+    subjects: "AI Literacy; Marketing & Digital Design; Professional Communication",
     image: "/staff/He_David.png",
     email: "David.yifan.he@gmail.com",
   },

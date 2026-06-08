@@ -20,7 +20,7 @@ const weeklySchedule = [
     dates: 'June 15–19 (Mon–Fri)',
     courses: [
       { title: 'Productivity, Goal Setting & Decision Making', instructors: ['Austin Zhao', 'Emma Zhou'] },
-      { title: 'Professional Communication', instructors: ['Ivan Satsuta'] },
+      { title: 'Professional Communication', instructors: ['Ivan Satsuta', 'David He'] },
     ],
   },
   {
@@ -77,7 +77,7 @@ const skillCourses = [
     headerPosition: 'center top',
     icon: '/assets/Mentors.png',
     title: 'Professional Communication',
-    instructors: ['Ivan'],
+    instructors: ['Ivan', 'David'],
     highlighted: false,
     description: 'Students practice writing clear messages, structuring professional emails, asking for help or opportunities, following up, and communicating with adults.',
   },
