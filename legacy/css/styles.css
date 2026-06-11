@@ -1144,10 +1144,10 @@ main.no-nav-padding {
   z-index: -1;
 }
 
-.bg-what-you-get { background-image: url('../assets/What%20You\'ll%20Get.png'); }
-.bg-who-is-ignite { background-image: url('../assets/Who%20is%20Ignite%20For.png'); }
-.bg-program-overview { background-image: url('../assets/Program%20Overview.png'); }
-.bg-meet-mentors { background-image: url('../assets/Meet%20Your%20Mentors.png'); }
+.bg-what-you-get { background-image: url('/backgrounds/What%20You%27ll%20Get.png'); }
+.bg-who-is-ignite { background-image: url('/backgrounds/Who%20is%20Ignite%20For.png'); }
+.bg-program-overview { background-image: url('/backgrounds/Program%20Overview.png'); }
+.bg-meet-mentors { background-image: url('/backgrounds/Meet%20Your%20Mentors.png'); }
 
 /* Chalkboard Layout */
 .chalkboard-layout {

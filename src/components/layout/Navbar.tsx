@@ -46,7 +46,7 @@ const Navbar = () => {
         <div className="w-full md:w-auto flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3 text-[1.7rem] md:text-[1.95rem] font-rammetto text-[var(--primary-orange)] group">
             <img
-              src="/assets/Logo.png"
+              src="/mascots/Logo.png"
               alt="Ignite"
               className="w-10 h-10 object-contain transition-transform group-hover:scale-105"
             />

@@ -18,8 +18,8 @@ const Apply = () => {
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? 'Something went wrong.');
       setSubmitted(true);
-    } catch (err: any) {
-      setError(err.message ?? 'Something went wrong. Please try again.');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -63,7 +63,7 @@ const Apply = () => {
       <section className="bg-[var(--primary-orange)] py-24 md:py-28 text-white text-center shadow-lg relative overflow-hidden min-h-[20rem] flex items-center">
         <div className="absolute inset-y-0 right-0 w-full md:w-1/2 opacity-20 sm:opacity-25 pointer-events-none">
           <img
-            src="/assets/Graduation.png"
+            src="/mascots/Graduation.png"
             alt=""
             className="h-full w-full object-contain object-right-bottom"
             loading="lazy"
@@ -81,7 +81,7 @@ const Apply = () => {
 
           {submitted ? (
             <div className="bg-white rounded-[3rem] p-12 md:p-16 shadow-xl border-t-8 border-[var(--primary-orange)] text-center">
-              <img src="/assets/Celebrate.png" alt="" className="h-20 w-20 object-contain mx-auto mb-6" />
+              <img src="/mascots/Celebrate.png" alt="" className="h-20 w-20 object-contain mx-auto mb-6" />
               <h2 className="text-3xl md:text-4xl font-rammetto text-[var(--primary-orange)] mb-4">You're In!</h2>
               <p className="text-xl text-[var(--text-light)] leading-relaxed mb-6">
                 Your application was submitted successfully. Check your inbox — we sent you a confirmation email with next steps.
@@ -243,9 +243,9 @@ const Apply = () => {
           <h2 className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)] mb-16">What Happens Next?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {[
-              { icon: <img src="/assets/Confirmation Email.png" alt="Confirmation email" className="h-12 w-12 object-contain" />, title: '1. Confirmation', desc: 'You\'ll receive a confirmation email within 48 hours.' },
-              { icon: <img src="/assets/Zoom.png" alt="Zoom" className="h-12 w-12 object-contain" />, title: '2. Zoom Details', desc: 'We\'ll send you the Zoom links and program schedule.' },
-              { icon: <img src="/assets/Celebrate.png" alt="Celebrate" className="h-12 w-12 object-contain" />, title: '3. Get Ready!', desc: 'All applicants are welcome. Get ready to start learning!' }
+              { icon: <img src="/mascots/Confirmation%20Email.png" alt="Confirmation email" className="h-12 w-12 object-contain" />, title: '1. Confirmation', desc: 'You\'ll receive a confirmation email within 48 hours.' },
+              { icon: <img src="/mascots/Zoom.png" alt="Zoom" className="h-12 w-12 object-contain" />, title: '2. Zoom Details', desc: 'We\'ll send you the Zoom links and program schedule.' },
+              { icon: <img src="/mascots/Celebrate.png" alt="Celebrate" className="h-12 w-12 object-contain" />, title: '3. Get Ready!', desc: 'All applicants are welcome. Get ready to start learning!' }
             ].map((step, i) => (
               <div key={i} className="group">
                 <div className="bg-[var(--bg-cream)] w-24 h-24 rounded-full flex items-center justify-center text-4xl mx-auto mb-6 shadow-lg border-2 border-transparent group-hover:border-[var(--primary-orange)] group-hover:rotate-12 transition-all">

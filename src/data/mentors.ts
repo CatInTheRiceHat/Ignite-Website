@@ -55,6 +55,14 @@ export const mentors: Mentor[] = [
     email: "julieyixuanye@gmail.com",
   },
   {
+    initial: "V",
+    name: "Vivaan Gupta",
+    role: "Mentor",
+    school: "Saratoga High School, 11th Grade",
+    subjects: "AI Literacy",
+    image: "/staff/Gupta_Vivaan.png",
+  },
+  {
     initial: "E",
     name: "Edwin Wu",
     role: "Mentor",

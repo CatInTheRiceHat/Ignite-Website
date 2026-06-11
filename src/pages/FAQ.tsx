@@ -18,7 +18,7 @@ const FAQ = () => {
       <section className="bg-[var(--primary-orange)] py-20 text-white text-center shadow-lg relative overflow-hidden">
         <div className="absolute inset-y-0 right-0 w-full md:w-[46%] pointer-events-none opacity-20 sm:opacity-25 md:opacity-30">
           <img
-            src="/assets/Puzzled.png"
+            src="/mascots/Puzzled.png"
             alt=""
             className="h-full w-full object-contain object-right-bottom"
             loading="lazy"

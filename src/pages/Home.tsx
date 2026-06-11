@@ -50,7 +50,7 @@ const Home = () => {
       <section className="relative pt-32 pb-24 md:pb-28 overflow-hidden flex items-center justify-center text-center px-4 min-h-[90vh]">
         <div className="absolute inset-0 z-10 pointer-events-none">
           <img
-            src="/assets/Hero.png"
+            src="/backgrounds/Hero.png"
             alt=""
             className="h-full w-full object-cover object-[center_52%] md:object-[center_50%] lg:object-center"
             loading="eager"
@@ -101,7 +101,7 @@ const Home = () => {
       {/* Key Benefits Section */}
       <section className="py-24 md:py-32 min-h-[64vw] relative overflow-hidden">
         <img
-          src="/assets/What%20You%27ll%20Get.png"
+          src="/backgrounds/What%20You%27ll%20Get.png"
           alt=""
           className="absolute inset-0 h-full w-full object-cover object-top"
           loading="lazy"
@@ -137,7 +137,7 @@ const Home = () => {
       {/* Who Is Ignite For? */}
       <section className="py-24 md:py-32 min-h-[54vw] relative overflow-hidden">
         <img
-          src="/assets/Who%20is%20Ignite%20For.png"
+          src="/backgrounds/Who%20is%20Ignite%20For.png"
           alt=""
           className="absolute inset-0 h-full w-full object-cover object-[center_30%]"
           loading="lazy"
@@ -152,9 +152,9 @@ const Home = () => {
             imageStyle="open"
             autoPlay={false}
             items={[
-              { image: '/assets/Grades.png',  title: '4th to 8th Grade',    desc: "Open to students in 4th through 8th grade." },
-              { image: '/assets/Zoom.png',    title: 'Online & Zoom', desc: "Classes are on Zoom, so students can join from home." },
-              { image: '/assets/Curious.png', title: 'Curious Students', desc: "You do not need to know what you want to do yet." },
+              { image: '/mascots/Grades.png',  title: '4th to 8th Grade',    desc: "Open to students in 4th through 8th grade." },
+              { image: '/mascots/Zoom.png',    title: 'Online & Zoom', desc: "Classes are on Zoom, so students can join from home." },
+              { image: '/mascots/Curious.png', title: 'Curious Students', desc: "You do not need to know what you want to do yet." },
             ]}
           />
         </div>
@@ -163,7 +163,7 @@ const Home = () => {
       {/* Meet Your Mentors Section */}
       <section className="py-24 md:py-32 min-h-[57vw] relative overflow-hidden">
         <img
-          src="/assets/Meet%20Your%20Mentors.png"
+          src="/backgrounds/Meet%20Your%20Mentors.png"
           alt=""
           className="absolute inset-0 h-full w-full object-cover object-top"
           loading="lazy"

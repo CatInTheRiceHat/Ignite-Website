@@ -18,6 +18,17 @@ const transporter = nodemailer.createTransport({
 const FROM_EMAIL = 'Ignite <ignitefindyourfire@gmail.com>';
 const ADMIN_EMAIL = 'ignitefindyourfire@gmail.com';
 
+type ApiRequest = {
+  method?: string;
+  body?: Partial<Record<string, string>>;
+};
+
+type ApiResponse = {
+  status: (code: number) => {
+    json: (body: { error: string }) => unknown;
+  };
+};
+
 function confirmationHtml(name: string, type: 'student' | 'mentor'): string {
   const role = type === 'student' ? 'student' : 'mentor';
   return `
@@ -80,12 +91,12 @@ function adminNotificationHtml(data: Record<string, string>): string {
   `;
 }
 
-export default async function handler(req: any, res: any) {
+export default async function handler(req: ApiRequest, res: ApiResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const body = req.body as Record<string, string>;
+  const body = req.body ?? {};
   const { type, name, grade, school, email, availability, parentName, parentEmail, careerInterest, careerField, whyMentor, wishKnew } = body;
 
   if (!type || !name || !grade || !school || !email) {

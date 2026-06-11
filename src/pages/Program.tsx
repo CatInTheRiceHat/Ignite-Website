@@ -1,9 +1,9 @@
 import { APPLY_FORM_URL } from '../lib/links';
 
 const programDetails = [
-  { icon: '/assets/Graduation.png', title: '3 Weeks', desc: 'The program runs for 3 weeks during the summer.' },
-  { icon: '/assets/Mentors.png', title: 'Choose Your Courses', desc: 'Students can sign up for 1 course, 2 courses, 3 courses, or whatever fits their schedule.' },
-  { icon: '/assets/Zoom.png', title: 'Online Classes', desc: 'All classes are online, so students can join from home.' },
+  { icon: '/mascots/Graduation.png', title: '3 Weeks', desc: 'The program runs for 3 weeks during the summer.' },
+  { icon: '/mascots/Mentors.png', title: 'Choose Your Courses', desc: 'Students can sign up for 1 course, 2 courses, 3 courses, or whatever fits their schedule.' },
+  { icon: '/mascots/Zoom.png', title: 'Online Classes', desc: 'All classes are online, so students can join from home.' },
 ];
 
 const weeklySchedule = [
@@ -28,7 +28,7 @@ const weeklySchedule = [
     dates: 'June 22–26 (Mon–Fri)',
     courses: [
       { title: 'Science Research', instructors: ['Michael Zhao'] },
-      { title: 'AI Literacy', instructors: ['Julie Ye', 'David He'] },
+      { title: 'AI Literacy', instructors: ['Julie Ye', 'David He', 'Vivaan Gupta'] },
     ],
   },
 ];
@@ -41,7 +41,7 @@ const timeCommitments = [
 const skillCourses = [
   {
     headerImage: '/courses/Project%20and%20Nonprofit%20Building.jpeg',
-    icon: '/assets/Project.png',
+    icon: '/mascots/Project.png',
     title: 'Project / Nonprofit Building',
     instructors: ['Elaine'],
     highlighted: true,
@@ -49,7 +49,7 @@ const skillCourses = [
   },
   {
     headerImage: '/courses/Science%20Research.jpeg',
-    icon: '/assets/Research.png',
+    icon: '/mascots/Research.png',
     title: 'Science Research',
     instructors: ['Michael'],
     highlighted: true,
@@ -57,7 +57,7 @@ const skillCourses = [
   },
   {
     headerImage: '/courses/Digital%20Design.jpeg',
-    icon: '/assets/Artist.png',
+    icon: '/mascots/Artist.png',
     title: 'Marketing & Digital Design',
     instructors: ['Austin', 'David'],
     highlighted: true,
@@ -66,7 +66,7 @@ const skillCourses = [
   {
     headerImage: '/courses/Productivity.jpeg',
     headerPosition: 'center 25%',
-    icon: '/assets/Productivity.png',
+    icon: '/mascots/Productivity.png',
     title: 'Productivity, Goal Setting & Decision Making',
     instructors: ['Austin', 'Emma'],
     highlighted: false,
@@ -75,7 +75,7 @@ const skillCourses = [
   {
     headerImage: '/courses/Communication.jpeg',
     headerPosition: 'center top',
-    icon: '/assets/Mentors.png',
+    icon: '/mascots/Mentors.png',
     title: 'Professional Communication',
     instructors: ['Ivan', 'David'],
     highlighted: false,
@@ -83,9 +83,9 @@ const skillCourses = [
   },
   {
     headerImage: '/courses/AI%20Literacy.jpeg',
-    icon: '/assets/AI.png',
+    icon: '/mascots/AI.png',
     title: 'AI Literacy',
-    instructors: ['Julie Ye', 'David'],
+    instructors: ['Julie', 'David', 'Vivaan'],
     highlighted: false,
     description: 'Students learn what AI is, when it is useful, how to write better prompts, how to check AI outputs, and how to use AI ethically.',
   },
@@ -100,6 +100,7 @@ const instructorImages: Record<string, string> = {
   Edwin: '/staff/Wu_Edwin.png',
   Emma: '/staff/Zhou_Emma.png',
   David: '/staff/He_David.png',
+  Vivaan: '/staff/Gupta_Vivaan.png',
 };
 
 const featuredCourses = skillCourses.filter((course) => course.highlighted);
@@ -167,7 +168,7 @@ const Program = () => {
       <section className="bg-[var(--primary-orange)] py-20 text-white text-center shadow-lg relative overflow-hidden">
         <div className="absolute inset-y-0 right-0 w-full md:w-[46%] pointer-events-none opacity-20 sm:opacity-25 md:opacity-30">
           <img
-            src="/assets/Graduation.png"
+            src="/mascots/Graduation.png"
             alt=""
             className="h-full w-full object-contain object-right-bottom"
             loading="lazy"
@@ -212,7 +213,7 @@ const Program = () => {
       {/* Program Details and Time Commitments */}
       <section className="py-28 md:py-40 relative overflow-hidden min-h-[72vw]">
         <img
-          src="/assets/Program%20Overview.png"
+          src="/backgrounds/Program%20Overview.png"
           alt=""
           className="absolute inset-0 h-full w-full object-cover object-center"
           loading="lazy"
