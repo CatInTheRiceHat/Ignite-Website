@@ -4,7 +4,7 @@ const FAQ = () => {
     { question: 'How long is the program?', answer: 'The program runs for 3 weeks during the summer. You can sign up for 1 course, 2 courses, 3 courses, or whatever fits your schedule.' },
     { question: 'What\'s the time commitment?', answer: 'Different classes have different time commitments. Featured courses meet 12-1 pm PST, while regular courses meet 7-8 pm PST.' },
     { question: 'Is experience required?', answer: 'No. Students do not need prior experience or perfect grades.' },
-    { question: 'Who are the mentors?', answer: 'High school students from local schools. They lead sessions, answer questions, and help students practice.' },
+    { question: 'Who are the interns?', answer: 'High school students from local schools. They lead sessions, answer questions, and help students practice.' },
     { question: 'Who can apply?', answer: 'Any student in 4th through 8th grade can apply.' },
     { question: 'Where is it held?', answer: 'The program is entirely online and on Zoom. You can join from anywhere!' },
     { question: 'How do I get accepted?', answer: 'The application is open. Since the program is online, everyone who applies is welcome.' },

@@ -1,7 +1,7 @@
 import { BookOpen, ExternalLink, Mail, MapPin } from 'lucide-react';
 import BlurFade from '../components/ui/blur-fade';
 import { mentors } from '../data/mentors';
-import { MENTOR_FORM_URL } from '../lib/links';
+import { INTERN_FORM_URL } from '../lib/links';
 
 const Mentors = () => {
 
@@ -18,7 +18,7 @@ const Mentors = () => {
           />
         </div>
         <div className="container mx-auto px-4 relative z-10">
-          <h1 className="text-5xl md:text-7xl font-rammetto text-white">Our Mentors</h1>
+          <h1 className="text-5xl md:text-7xl font-rammetto text-white">Our Team</h1>
           <p className="text-xl md:text-2xl opacity-90 mt-4 leading-relaxed">High school students who want to help.</p>
         </div>
       </section>
@@ -28,7 +28,7 @@ const Mentors = () => {
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-rammetto text-[var(--primary-orange)] mb-6">Learn from Students Like You</h2>
           <p className="text-xl text-[var(--text-light)] leading-relaxed">
-            Our mentors are high school students who remember what it felt like to be younger and unsure where to start.
+            Our interns are high school students who remember what it felt like to be younger and unsure where to start.
             They help students practice skills they wish they had learned earlier.
           </p>
         </div>
@@ -93,17 +93,17 @@ const Mentors = () => {
       {/* Contact */}
       <section className="py-24 bg-white rounded-t-[4rem]">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-4xl font-rammetto text-[var(--primary-orange)] mb-6">Apply to Be a Mentor!</h2>
+          <h2 className="text-4xl font-rammetto text-[var(--primary-orange)] mb-6">Apply to Be an Intern!</h2>
           <p className="text-lg text-[var(--text-light)] max-w-2xl mx-auto leading-relaxed">
-            Want to help younger students build confidence and explore new interests? Apply to join the Ignite mentor team.
+            Want to help younger students build confidence and explore new interests? Apply to join the Ignite intern team.
           </p>
           <a
-            href={MENTOR_FORM_URL}
+            href={INTERN_FORM_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-8 inline-flex items-center justify-center gap-2 bg-[var(--primary-orange)] text-white px-10 py-4 rounded-full font-bold text-lg hover:scale-105 hover:bg-[var(--primary-orange-dark)] active:scale-95 transition-all shadow-lg"
           >
-            Apply as a Mentor
+            Apply as an Intern
             <ExternalLink className="h-5 w-5" />
           </a>
         </div>

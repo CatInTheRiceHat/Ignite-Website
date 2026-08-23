@@ -3,8 +3,9 @@ import { NavLink, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { ArrowRight, Megaphone, Menu, X } from 'lucide-react';
 import { APPLY_FORM_URL } from '../../lib/links';
+import { RECORDS_PAGE } from '../../config/records';
 
-const announcementText = 'Applications have closed for Summer 2026. Thank you for your interest!';
+const announcementText = "Winter 2026 applications are now open! We're looking for interns to support Ignite.";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,9 +16,11 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
-    { name: 'Mentors', path: '/mentors' },
+    { name: 'Team', path: '/team' },
     { name: 'Program', path: '/program' },
     { name: 'FAQ', path: '/faq' },
+    { name: RECORDS_PAGE.label, path: RECORDS_PAGE.path },
+    { name: 'Hiring', path: '/hiring' },
   ];
 
   useEffect(() => {
@@ -66,7 +69,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-4 lg:gap-8 font-semibold text-base lg:text-lg">
+        <div className="hidden md:flex items-center gap-2 font-semibold text-sm lg:gap-8 lg:text-lg">
           {navLinks.map((link) => (
             <NavLink
               key={link.path}
@@ -89,10 +92,8 @@ const Navbar = () => {
         </div>
 
       </div>
-      <a
-        href={APPLY_FORM_URL}
-        target="_blank"
-        rel="noopener noreferrer"
+      <Link
+        to="/hiring"
         aria-label={announcementText}
         className="group flex min-h-12 items-center justify-center bg-[var(--text-charcoal)] px-4 py-2 text-center text-white transition-colors hover:bg-[var(--primary-orange-dark)]"
       >
@@ -103,7 +104,7 @@ const Navbar = () => {
           </span>
           <ArrowRight className="hidden h-4 w-4 flex-none transition-transform group-hover:translate-x-1 sm:block" aria-hidden="true" />
         </span>
-      </a>
+      </Link>
       {/* Mobile Links */}
       <AnimatePresence>
         {isOpen && (

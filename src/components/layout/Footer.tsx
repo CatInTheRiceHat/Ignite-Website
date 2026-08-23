@@ -1,14 +1,17 @@
 import { Link } from 'react-router-dom';
-import { ExternalLink } from 'lucide-react';
-import { APPLY_FORM_URL, MENTOR_FORM_URL } from '../../lib/links';
+import { ArrowRight, ExternalLink } from 'lucide-react';
+import { APPLY_FORM_URL, INTERN_FORM_URL } from '../../lib/links';
+import { RECORDS_PAGE } from '../../config/records';
 
 const Footer = () => {
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
-    { name: 'Mentors', path: '/mentors' },
+    { name: 'Our Team', path: '/team' },
     { name: 'Program', path: '/program' },
     { name: 'FAQ', path: '/faq' },
+    { name: RECORDS_PAGE.label, path: RECORDS_PAGE.path },
+    { name: 'Hiring', path: '/hiring' },
   ];
 
   return (
@@ -30,7 +33,7 @@ const Footer = () => {
               Ignite
             </Link>
             <p className="mt-5 text-xl md:text-2xl font-semibold leading-relaxed text-white/90">
-              Free online mentorship that helps students practice useful skills, ask better questions, and find their fire.
+              Free online learning that helps students practice useful skills, ask better questions, and find their fire.
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row sm:flex-wrap gap-4">
@@ -44,13 +47,13 @@ const Footer = () => {
                 <ExternalLink className="h-5 w-5" />
               </a>
               <a
-                href={MENTOR_FORM_URL}
+                href={INTERN_FORM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 border-2 border-white bg-transparent px-8 py-4 rounded-full font-bold text-lg text-white hover:bg-white hover:text-[var(--primary-orange)] active:scale-95 transition-all"
               >
-                Apply as a Mentor
-                <ExternalLink className="h-5 w-5" />
+                Apply as an Intern
+                <ArrowRight className="h-5 w-5" />
               </a>
             </div>
           </div>
@@ -85,7 +88,7 @@ const Footer = () => {
 
         <div className="mt-12 border-t border-white/20 pt-6 flex flex-col gap-3 text-sm font-semibold text-white/70 sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 Ignite. All rights reserved.</p>
-          <p>Student-led. Mentor-powered. Free for every student.</p>
+          <p>Student-led. Intern-powered. Free for every student.</p>
         </div>
       </div>
     </footer>

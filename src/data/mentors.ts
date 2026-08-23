@@ -39,7 +39,7 @@ export const mentors: Mentor[] = [
   {
     initial: "I",
     name: "Ivan Satsuta",
-    role: "Advisor / Mentor",
+    role: "Advisor / Intern",
     school: "Saratoga High School, 12th Grade",
     subjects: "Professional Communication",
     image: "/staff/Satsuta_Ivan.png",
@@ -48,7 +48,7 @@ export const mentors: Mentor[] = [
   {
     initial: "J",
     name: "Julie Ye",
-    role: "Mentor",
+    role: "Intern",
     school: "Saratoga High School, 10th Grade",
     subjects: "AI Literacy",
     image: "/staff/Ye_Julie.png",
@@ -57,7 +57,7 @@ export const mentors: Mentor[] = [
   {
     initial: "V",
     name: "Vivaan Gupta",
-    role: "Mentor",
+    role: "Intern",
     school: "Saratoga High School, 11th Grade",
     subjects: "AI Literacy",
     image: "/staff/Gupta_Vivaan.png",
@@ -65,7 +65,7 @@ export const mentors: Mentor[] = [
   {
     initial: "E",
     name: "Edwin Wu",
-    role: "Mentor",
+    role: "Intern",
     school: "Saratoga High School, 11th Grade",
     image: "/staff/Wu_Edwin.png",
     email: "wue0085@lgsstudent.org",
@@ -73,7 +73,7 @@ export const mentors: Mentor[] = [
   {
     initial: "Ac",
     name: "Achyut Karthikeyan",
-    role: "Mentor",
+    role: "Intern",
     school: "Saratoga High School, 11th Grade",
     image: "/staff/Karthikeyan_Achyut.png",
     email: "sabrus444@gmail.com",
@@ -81,7 +81,7 @@ export const mentors: Mentor[] = [
   {
     initial: "E",
     name: "Emma Zhou",
-    role: "Mentor",
+    role: "Intern",
     school: "The Harker School, 11th Grade",
     subjects: "Productivity, Goal Setting & Decision Making",
     image: "/staff/Zhou_Emma.png",
@@ -90,7 +90,7 @@ export const mentors: Mentor[] = [
   {
     initial: "D",
     name: "David He",
-    role: "Mentor",
+    role: "Intern",
     school: "The Harker School, 10th Grade",
     subjects: "AI Literacy; Marketing & Digital Design; Professional Communication",
     image: "/staff/He_David.png",
