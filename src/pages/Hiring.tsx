@@ -1,4 +1,4 @@
-import { ExternalLink, Mail } from 'lucide-react';
+import { ArrowRight, Mail } from 'lucide-react';
 import { INTERN_FORM_URL } from '../lib/links';
 
 const Hiring = () => {
@@ -45,7 +45,7 @@ const Hiring = () => {
             className="mt-8 inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-6 py-4 text-[1.1875rem] font-bold text-white shadow-lg shadow-orange-100 transition-all hover:scale-105 hover:bg-[var(--primary-orange-dark)] active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 sm:w-auto sm:px-10 sm:text-xl"
           >
             Open Intern Application
-            <ExternalLink className="h-5 w-5 flex-none" aria-hidden="true" />
+            <ArrowRight className="h-5 w-5 flex-none" aria-hidden="true" />
           </a>
 
           <div className="mx-auto mt-10 max-w-2xl border-t border-orange-100 pt-8">

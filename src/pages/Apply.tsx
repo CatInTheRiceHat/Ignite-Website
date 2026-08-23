@@ -108,7 +108,7 @@ const Apply = () => {
                     onClick={() => setFormType('mentor')}
                     className={`px-10 py-4 rounded-full font-bold text-lg transition-all shadow-md ${formType === 'mentor' ? 'bg-[var(--primary-orange)] text-white scale-105' : 'bg-white text-[var(--primary-orange)] border-2 border-[var(--primary-orange)] hover:bg-orange-50'}`}
                   >
-                    Intern
+                    Mentor
                   </button>
                 </div>
                 <p className="text-[var(--text-light)] mt-8 max-w-lg mx-auto italic">
@@ -178,7 +178,7 @@ const Apply = () => {
                 ) : (
                   <form onSubmit={handleMentorSubmit} className="space-y-6 text-left">
                     <div className="space-y-2">
-                      <label className="text-lg font-bold text-[var(--text-charcoal)]">Intern Name *</label>
+                      <label className="text-lg font-bold text-[var(--text-charcoal)]">Mentor Name *</label>
                       <input name="mentorName" type="text" placeholder="First and last name" required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all" />
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -218,8 +218,8 @@ const Apply = () => {
                       </select>
                     </div>
                     <div className="space-y-2">
-                      <label className="text-lg font-bold text-[var(--text-charcoal)]">Why do you want to intern? *</label>
-                      <textarea name="whyMentor" rows={3} placeholder="Tell us in 2-3 sentences why you want to be an intern." required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all resize-none" />
+                      <label className="text-lg font-bold text-[var(--text-charcoal)]">Why do you want to mentor? *</label>
+                      <textarea name="whyMentor" rows={3} placeholder="Tell us in 2-3 sentences why you want to be a mentor." required className="w-full p-4 rounded-2xl bg-[var(--bg-cream)] border-2 border-transparent focus:border-[var(--primary-orange)] outline-none transition-all resize-none" />
                     </div>
                     <div className="space-y-2">
                       <label className="text-lg font-bold text-[var(--text-charcoal)]">What's one thing you wish you knew in middle school? *</label>
@@ -227,7 +227,7 @@ const Apply = () => {
                     </div>
                     {error && <p className="text-red-500 text-sm font-semibold">{error}</p>}
                     <button type="submit" disabled={loading} className="w-full bg-[var(--primary-orange)] text-white py-5 rounded-3xl font-bold text-xl hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg hover:shadow-orange-200 mt-8 disabled:opacity-60 disabled:scale-100 disabled:cursor-not-allowed">
-                      {loading ? 'Submitting...' : 'Submit Intern Application'}
+                      {loading ? 'Submitting...' : 'Submit Mentor Application'}
                     </button>
                   </form>
                 )}

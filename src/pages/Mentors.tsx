@@ -1,4 +1,4 @@
-import { BookOpen, ExternalLink, Mail, MapPin } from 'lucide-react';
+import { ArrowRight, BookOpen, Mail, MapPin } from 'lucide-react';
 import BlurFade from '../components/ui/blur-fade';
 import { mentors } from '../data/mentors';
 import { INTERN_FORM_URL } from '../lib/links';
@@ -28,7 +28,7 @@ const Mentors = () => {
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-rammetto text-[var(--primary-orange)] mb-6">Learn from Students Like You</h2>
           <p className="text-xl text-[var(--text-light)] leading-relaxed">
-            Our interns are high school students who remember what it felt like to be younger and unsure where to start.
+            Our mentors are high school students who remember what it felt like to be younger and unsure where to start.
             They help students practice skills they wish they had learned earlier.
           </p>
         </div>
@@ -104,7 +104,7 @@ const Mentors = () => {
             className="mt-8 inline-flex items-center justify-center gap-2 bg-[var(--primary-orange)] text-white px-10 py-4 rounded-full font-bold text-lg hover:scale-105 hover:bg-[var(--primary-orange-dark)] active:scale-95 transition-all shadow-lg"
           >
             Apply as an Intern
-            <ExternalLink className="h-5 w-5" />
+            <ArrowRight className="h-5 w-5 flex-none" aria-hidden="true" />
           </a>
         </div>
       </section>

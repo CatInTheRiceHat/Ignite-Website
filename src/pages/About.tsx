@@ -48,7 +48,7 @@ const About = () => {
                 it sounds, and most school curriculums aren't built for it.
               </p>
               <p>
-                Ignite is a free summer program where high school interns support 4th to 8th grade students on
+                Ignite is a free summer program where high schoolers mentor 4th to 8th grade students on
                 exactly that. They're close enough in age to remember what middle school actually felt like.
                 That proximity matters more than any lesson plan.
               </p>
@@ -73,7 +73,7 @@ const About = () => {
               },
               {
                 title: 'Connection',
-                desc: "We connect younger students with high school interns who can answer questions and help them practice."
+                desc: "We connect younger students with high school mentors who can answer questions and help them practice."
               },
               {
                 title: 'Practice',
@@ -109,7 +109,7 @@ const About = () => {
               {[
                 { text: "Many students do not get early access to this kind of support" },
                 { text: "Trying new skills early can make school feel less confusing" },
-                { text: "High school interns can explain things in a way younger students understand" },
+                { text: "High school mentors can explain things in a way younger students understand" },
                 { text: "Small wins help students feel more ready for what comes next" }
               ].map((item, i) => (
                 <BlurFade key={i} delay={i * 0.08}>

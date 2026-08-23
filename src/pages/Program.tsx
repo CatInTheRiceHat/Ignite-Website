@@ -1,3 +1,4 @@
+import { ArrowRight } from 'lucide-react';
 import { APPLY_FORM_URL } from '../lib/links';
 
 const programDetails = [
@@ -286,9 +287,10 @@ const Program = () => {
             href={APPLY_FORM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block bg-[var(--primary-orange)] text-white px-10 py-5 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-orange-200"
+            className="inline-flex items-center justify-center gap-2 bg-[var(--primary-orange)] text-white px-10 py-5 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-orange-200"
           >
             Apply Now
+            <ArrowRight className="h-5 w-5 flex-none" aria-hidden="true" />
           </a>
         </div>
       </section>

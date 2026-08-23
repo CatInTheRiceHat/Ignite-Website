@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useInView, useReducedMotion } from 'framer-motion';
 import {
+  ArrowRight,
   BookOpenCheck,
   CalendarDays,
   Globe2,
@@ -112,7 +113,7 @@ const programStatistics = [
   { value: 5, label: 'Countries / regions', icon: Globe2 },
   { value: 10, label: 'Live cohorts', icon: Presentation },
   { value: 3, label: 'Weeks', icon: CalendarDays },
-  { value: 10, label: 'Interns trained', icon: GraduationCap },
+  { value: 10, label: 'Mentors trained', icon: GraduationCap },
 ];
 
 // ---------------------------------------------------------------------------
@@ -136,22 +137,22 @@ const Home = () => {
         <div className="relative z-20 mx-auto w-full min-w-0 max-w-5xl">
           <BlurFade delay={0}>
             <h1 className="break-words text-[2.1rem] sm:text-5xl md:text-6xl lg:text-7xl font-rammetto text-white mb-6 drop-shadow-[0_3px_10px_rgba(0,0,0,0.35)]">
-              <span className="block">Free<span className="hidden sm:inline"> Intern-led Learning</span></span>
-              <span className="block mt-[14px] sm:hidden">Intern-led</span>
-              <span className="block mt-[14px] sm:hidden">Learning</span>
+              <span className="block">Free<span className="hidden sm:inline"> Mentorship</span></span>
+              <span className="block mt-[14px] sm:hidden">Mentorship</span>
               <span className="block mt-[20px] md:mt-[28px]">Program for</span>
               <span className="block mt-[20px] md:mt-[28px]">Students</span>
             </h1>
           </BlurFade>
           <BlurFade delay={0.15}>
             <p className="text-lg sm:text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto font-medium leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
-              A free online program where students learn useful skills with high school interns.
+              A free online program where students learn useful skills with high school mentors.
             </p>
           </BlurFade>
           <BlurFade delay={0.25}>
             <div className="flex flex-wrap gap-4 justify-center">
-              <a href={APPLY_FORM_URL} target="_blank" rel="noopener noreferrer" className="w-full max-w-xs bg-[var(--primary-orange)] text-white px-8 py-5 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-lg sm:w-auto sm:px-10">
+              <a href={APPLY_FORM_URL} target="_blank" rel="noopener noreferrer" className="inline-flex w-full max-w-xs items-center justify-center gap-2 bg-[var(--primary-orange)] text-white px-8 py-5 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-lg sm:w-auto sm:px-10">
                 Apply Now
+                <ArrowRight className="h-5 w-5 flex-none" aria-hidden="true" />
               </a>
               <Link to="/program" className="w-full max-w-xs bg-white text-[var(--primary-orange)] border-2 border-[var(--primary-orange)] px-8 py-5 rounded-full font-bold text-xl hover:bg-orange-50 transition-all sm:w-auto sm:px-10">
                 Learn More
@@ -202,13 +203,13 @@ const Home = () => {
           <BlurFade>
             <div className="text-center mb-16 md:mb-20">
               <h2 className="text-4xl md:text-6xl font-rammetto text-white mb-6 drop-shadow-[0_3px_10px_rgba(0,0,0,0.35)]">What You'll Get</h2>
-              <p className="text-xl md:text-2xl text-white font-semibold leading-relaxed max-w-3xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">Useful classes. High school interns. No cost.</p>
+              <p className="text-xl md:text-2xl text-white font-semibold leading-relaxed max-w-3xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">Useful classes. High school mentors. No cost.</p>
             </div>
           </BlurFade>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
             {[
               { img: '/assets/Career%20Skills.png',   title: 'Useful Skills',       desc: "Practice email, presentations, design, planning, and more." },
-              { img: '/assets/Mentorship.png',        title: 'High School Interns', desc: "Learn from high school interns who've been in your shoes and want to help." },
+              { img: '/assets/Mentorship.png',        title: 'High School Mentorship', desc: "Learn from high school mentors who've been in your shoes and want to help." },
               { img: '/assets/Free.png',              title: '100% Free',           desc: "No tuition or fees." },
               { img: '/assets/No%20Experience.png',   title: 'No Experience Needed',desc: "You do not need prior experience or perfect grades." }
             ].map((feature, i) => (
@@ -284,9 +285,10 @@ const Home = () => {
             href={APPLY_FORM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block bg-[var(--primary-orange)] text-white px-10 py-5 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-orange-200"
+            className="inline-flex items-center justify-center gap-2 bg-[var(--primary-orange)] text-white px-10 py-5 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-orange-200"
           >
             Apply Now
+            <ArrowRight className="h-5 w-5 flex-none" aria-hidden="true" />
           </a>
         </div>
       </section>

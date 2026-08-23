@@ -224,7 +224,7 @@ const Records = () => {
             <article className="relative overflow-hidden rounded-[2.5rem] bg-[var(--text-charcoal)] p-7 text-white shadow-xl sm:p-9 md:p-10">
               <GraduationCap className="absolute -right-8 -top-10 h-48 w-48 text-white/5" aria-hidden="true" />
               <div className="relative z-10">
-                <p className="text-sm font-extrabold uppercase tracking-[0.16em] text-orange-300">Intern-powered</p>
+                <p className="text-sm font-extrabold uppercase tracking-[0.16em] text-orange-300">Mentor-powered</p>
                 <div className="mt-3 flex items-end gap-4">
                   <span className="font-rammetto text-6xl leading-none text-white">{statistics.mentorsTrained}</span>
                   <h3 className="max-w-48 pb-1 text-2xl font-bold leading-tight text-white">High-schoolers trained</h3>
@@ -235,7 +235,7 @@ const Records = () => {
                       {mentor.image ? (
                         <img
                           src={mentor.image}
-                          alt={`${mentor.name}, Ignite intern`}
+                          alt={`${mentor.name}, Ignite mentor`}
                           title={mentor.name}
                           className="h-full w-full object-cover object-top"
                           loading="lazy"
@@ -317,9 +317,10 @@ const Records = () => {
             href={APPLY_FORM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block rounded-full bg-[var(--primary-orange)] px-10 py-5 text-xl font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-orange-200 active:scale-95"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-10 py-5 text-xl font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-orange-200 active:scale-95"
           >
             Apply Now
+            <ArrowRight className="h-5 w-5 flex-none" aria-hidden="true" />
           </a>
         </div>
       </section>
