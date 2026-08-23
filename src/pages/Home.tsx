@@ -172,9 +172,6 @@ const Home = () => {
               >
                 2026 Summer Statistics
               </h2>
-              <p className="mt-4 text-lg font-bold text-[var(--text-charcoal)] md:text-xl">
-                Reached intern capacity
-              </p>
             </div>
           </BlurFade>
 

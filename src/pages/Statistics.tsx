@@ -93,11 +93,8 @@ const Statistics = () => {
               >
                 Program Delivery
               </h2>
-              <p className="mt-6 text-xl font-bold leading-relaxed text-[var(--text-charcoal)] md:text-2xl">
-                Reached intern capacity
-              </p>
 
-              <dl className="mt-10 grid grid-cols-2 gap-4 sm:gap-6">
+              <dl className="mt-8 grid grid-cols-2 gap-4 sm:gap-6">
                 <div className="flex flex-col rounded-3xl bg-[var(--bg-cream)] px-4 py-8 text-center sm:px-6">
                   <dt className="order-2 mt-3 font-bold text-[var(--text-charcoal)]">Live cohorts</dt>
                   <dd className="order-1 font-rammetto text-4xl text-[var(--primary-orange)] sm:text-5xl">10</dd>
