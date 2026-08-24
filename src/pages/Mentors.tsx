@@ -59,7 +59,13 @@ const Mentors = () => {
                   </div>
                   <div className="min-w-0 flex-1">
                     <h3 className={`text-2xl font-bold mb-1 ${isCoFounder(mentor.role) ? 'text-white' : 'text-[var(--text-charcoal)]'}`}>{mentor.name}</h3>
-                    <p className={`font-bold text-sm tracking-uppercase ${isCoFounder(mentor.role) ? 'text-white/90' : 'text-[var(--primary-orange)]'}`}>{mentor.role}</p>
+                    <p className={`font-bold text-sm tracking-uppercase ${isCoFounder(mentor.role) ? 'text-white/90' : 'text-[var(--primary-orange)]'}`}>
+                      {mentor.role.split(', ').map((roleLine, roleLineIndex, roleLines) => (
+                        <span key={roleLine} className="block">
+                          {roleLine}{roleLineIndex < roleLines.length - 1 ? ',' : ''}
+                        </span>
+                      ))}
+                    </p>
                   </div>
                   {mentor.email && (
                     <a
