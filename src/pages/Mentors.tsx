@@ -3,6 +3,8 @@ import BlurFade from '../components/ui/blur-fade';
 import { mentors } from '../data/mentors';
 import { INTERN_FORM_URL } from '../lib/links';
 
+const isCoFounder = (role: string) => role.toLowerCase().startsWith('co-founder');
+
 const Mentors = () => {
 
   return (
@@ -42,8 +44,8 @@ const Mentors = () => {
             {mentors.map((mentor, index) => (
               <BlurFade key={index} delay={index * 0.08}>
               <div
-                className={`${mentor.role === 'Co-Founder' ? 'border-0 text-white shadow-orange-200/70' : 'bg-white border-b-8 border-[var(--primary-orange)]'} rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group h-full`}
-                style={mentor.role === 'Co-Founder' ? { background: 'linear-gradient(135deg, var(--primary-orange) 0%, #E87324 55%, var(--primary-orange-dark) 100%)' } : undefined}
+                className={`${isCoFounder(mentor.role) ? 'border-0 text-white shadow-orange-200/70' : 'bg-white border-b-8 border-[var(--primary-orange)]'} rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group h-full`}
+                style={isCoFounder(mentor.role) ? { background: 'linear-gradient(135deg, var(--primary-orange) 0%, #E87324 55%, var(--primary-orange-dark) 100%)' } : undefined}
               >
                 <div className="flex items-center gap-5 mb-8">
                   <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-inner transform group-hover:rotate-6 transition-transform flex-shrink-0">
@@ -56,15 +58,15 @@ const Mentors = () => {
                     )}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h3 className={`text-2xl font-bold mb-1 ${mentor.role === 'Co-Founder' ? 'text-white' : 'text-[var(--text-charcoal)]'}`}>{mentor.name}</h3>
-                    <p className={`font-bold text-sm tracking-uppercase ${mentor.role === 'Co-Founder' ? 'text-white/90' : 'text-[var(--primary-orange)]'}`}>{mentor.role}</p>
+                    <h3 className={`text-2xl font-bold mb-1 ${isCoFounder(mentor.role) ? 'text-white' : 'text-[var(--text-charcoal)]'}`}>{mentor.name}</h3>
+                    <p className={`font-bold text-sm tracking-uppercase ${isCoFounder(mentor.role) ? 'text-white/90' : 'text-[var(--primary-orange)]'}`}>{mentor.role}</p>
                   </div>
                   {mentor.email && (
                     <a
                       href={`mailto:${mentor.email}`}
                       aria-label={`Email ${mentor.name}`}
                       className={`w-10 h-10 rounded-full border-2 flex items-center justify-center transition-colors flex-shrink-0 ${
-                        mentor.role === 'Co-Founder'
+                        isCoFounder(mentor.role)
                           ? 'border-white text-white hover:bg-white hover:text-[var(--primary-orange)]'
                           : 'border-[var(--primary-orange)] text-[var(--primary-orange)] hover:bg-[var(--primary-orange)] hover:text-white'
                       }`}
@@ -74,12 +76,12 @@ const Mentors = () => {
                   )}
                 </div>
                 <div className="space-y-3">
-                  <div className={`flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl ${mentor.role === 'Co-Founder' ? 'bg-white/15 text-white shadow-inner' : 'bg-[var(--bg-cream)] text-[var(--text-light)]'}`}>
-                    <MapPin className={`h-4 w-4 flex-shrink-0 ${mentor.role === 'Co-Founder' ? 'text-white' : 'text-[var(--primary-orange)]'}`} /> {mentor.school}
+                  <div className={`flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl ${isCoFounder(mentor.role) ? 'bg-white/15 text-white shadow-inner' : 'bg-[var(--bg-cream)] text-[var(--text-light)]'}`}>
+                    <MapPin className={`h-4 w-4 flex-shrink-0 ${isCoFounder(mentor.role) ? 'text-white' : 'text-[var(--primary-orange)]'}`} /> {mentor.school}
                   </div>
                   {mentor.subjects && (
-                    <div className={`flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl ${mentor.role === 'Co-Founder' ? 'bg-white/15 text-white shadow-inner' : 'bg-[var(--bg-cream)] text-[var(--text-light)]'}`}>
-                      <BookOpen className={`h-4 w-4 flex-shrink-0 ${mentor.role === 'Co-Founder' ? 'text-white' : 'text-[var(--primary-orange)]'}`} /> {mentor.subjects}
+                    <div className={`flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl ${isCoFounder(mentor.role) ? 'bg-white/15 text-white shadow-inner' : 'bg-[var(--bg-cream)] text-[var(--text-light)]'}`}>
+                      <BookOpen className={`h-4 w-4 flex-shrink-0 ${isCoFounder(mentor.role) ? 'text-white' : 'text-[var(--primary-orange)]'}`} /> {mentor.subjects}
                     </div>
                   )}
                 </div>

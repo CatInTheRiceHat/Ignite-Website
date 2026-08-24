@@ -12,7 +12,7 @@ export const mentors: Mentor[] = [
   {
     initial: "E",
     name: "Elaine Che",
-    role: "Co-Founder",
+    role: "Co-founder, Chief Technology Officer",
     school: "Saratoga High School, 11th Grade",
     subjects: "Project / Nonprofit Building",
     image: "/staff/Che_Elaine.png",
@@ -21,7 +21,7 @@ export const mentors: Mentor[] = [
   {
     initial: "A",
     name: "Austin Zhao",
-    role: "Co-Founder",
+    role: "Co-founder, Chief Executive Officer",
     school: "Saratoga High School, 11th Grade",
     subjects: "Marketing & Digital Design; Productivity, Goal Setting & Decision Making",
     image: "/staff/Zhao_Austin.png",
@@ -30,7 +30,7 @@ export const mentors: Mentor[] = [
   {
     initial: "M",
     name: "Michael Zhao",
-    role: "Co-Founder",
+    role: "Co-founder, Chief Outreach Officer",
     school: "Saratoga High School, 11th Grade",
     subjects: "Science Research",
     image: "/staff/Zhao_Michael.png",
