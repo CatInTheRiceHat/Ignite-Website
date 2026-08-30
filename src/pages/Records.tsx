@@ -19,7 +19,7 @@ const statistics = {
   countriesAndRegions: 5,
   liveCohorts: 10,
   programWeeks: 3,
-  teamMembers: '10+',
+  teamMembers: 12,
 } as const;
 
 const recordTeam = [...mentors, ...interns];

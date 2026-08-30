@@ -115,7 +115,7 @@ const programStatistics = [
   { value: 5, label: 'Countries / regions', icon: Globe2 },
   { value: 10, label: 'Live cohorts', icon: Presentation },
   { value: 3, label: 'Weeks', icon: CalendarDays },
-  { value: 10, suffix: '+', label: 'Team members', icon: GraduationCap },
+  { value: 12, label: 'Team members', icon: GraduationCap },
 ];
 
 // ---------------------------------------------------------------------------
