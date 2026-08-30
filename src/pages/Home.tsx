@@ -26,12 +26,14 @@ function CountStat({
   label,
   icon: Icon,
   mascot,
+  suffix = '',
   featured = false,
 }: {
   value: number;
   label: string;
   icon: LucideIcon;
   mascot?: string;
+  suffix?: string;
   featured?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -86,14 +88,14 @@ function CountStat({
         <Icon className="h-6 w-6" aria-hidden="true" />
       </div>
       <div className="relative z-10 mt-8">
-        <span className="sr-only">{value} </span>
+        <span className="sr-only">{value}{suffix} </span>
         <p
           aria-hidden="true"
           className={`whitespace-nowrap font-rammetto text-5xl leading-none md:text-6xl ${
             featured ? 'text-white' : 'text-[var(--primary-orange)]'
           }`}
         >
-          {display}
+          {display}{suffix}
         </p>
         <p className={`mt-3 text-base font-extrabold leading-snug md:text-lg ${featured ? 'text-white/95' : 'text-[var(--text-charcoal)]'}`}>
           {label}
@@ -113,7 +115,7 @@ const programStatistics = [
   { value: 5, label: 'Countries / regions', icon: Globe2 },
   { value: 10, label: 'Live cohorts', icon: Presentation },
   { value: 3, label: 'Weeks', icon: CalendarDays },
-  { value: 10, label: 'Mentors trained', icon: GraduationCap },
+  { value: 10, suffix: '+', label: 'Team members', icon: GraduationCap },
 ];
 
 // ---------------------------------------------------------------------------

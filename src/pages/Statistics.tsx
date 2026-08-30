@@ -123,9 +123,9 @@ const Statistics = () => {
                 Team
               </h2>
               <div className="mt-8 flex items-center justify-center gap-5 lg:justify-start">
-                <span className="font-rammetto text-6xl leading-none text-[var(--text-charcoal)] md:text-7xl">10</span>
+                <span className="font-rammetto text-6xl leading-none text-[var(--text-charcoal)] md:text-7xl">10+</span>
                 <span className="max-w-40 text-left text-xl font-bold leading-snug text-[var(--text-charcoal)] md:text-2xl">
-                  Mentors trained
+                  Team members
                 </span>
               </div>
             </div>

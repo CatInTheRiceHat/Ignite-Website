@@ -9,7 +9,7 @@ import {
   UsersRound,
 } from 'lucide-react';
 import { RECORDS_PAGE } from '../config/records';
-import { mentors } from '../data/mentors';
+import { interns, mentors } from '../data/mentors';
 import { APPLY_FORM_URL, INTERN_FORM_URL } from '../lib/links';
 
 const statistics = {
@@ -19,8 +19,10 @@ const statistics = {
   countriesAndRegions: 5,
   liveCohorts: 10,
   programWeeks: 3,
-  mentorsTrained: 10,
+  teamMembers: '10+',
 } as const;
+
+const recordTeam = [...mentors, ...interns];
 
 const studentWork = [
   {
@@ -224,25 +226,25 @@ const Records = () => {
             <article className="relative overflow-hidden rounded-[2.5rem] bg-[var(--text-charcoal)] p-7 text-white shadow-xl sm:p-9 md:p-10">
               <GraduationCap className="absolute -right-8 -top-10 h-48 w-48 text-white/5" aria-hidden="true" />
               <div className="relative z-10">
-                <p className="text-sm font-extrabold uppercase tracking-[0.16em] text-orange-300">Mentor-powered</p>
+                <p className="text-sm font-extrabold uppercase tracking-[0.16em] text-orange-300">Team-powered</p>
                 <div className="mt-3 flex items-end gap-4">
-                  <span className="font-rammetto text-6xl leading-none text-white">{statistics.mentorsTrained}</span>
-                  <h3 className="max-w-48 pb-1 text-2xl font-bold leading-tight text-white">High-schoolers trained</h3>
+                  <span className="font-rammetto text-6xl leading-none text-white">{statistics.teamMembers}</span>
+                  <h3 className="max-w-48 pb-1 text-2xl font-bold leading-tight text-white">Team members</h3>
                 </div>
-                <div className="mt-8 grid grid-cols-5 gap-2">
-                  {mentors.map((mentor) => (
-                    <div key={mentor.name} className="aspect-square overflow-hidden rounded-xl bg-white/10 ring-2 ring-white/10">
-                      {mentor.image ? (
+                <div className="mt-8 grid grid-cols-4 gap-2">
+                  {recordTeam.map((member) => (
+                    <div key={member.name} className="aspect-square overflow-hidden rounded-xl bg-white/10 ring-2 ring-white/10">
+                      {member.image ? (
                         <img
-                          src={mentor.image}
-                          alt={`${mentor.name}, Ignite mentor`}
-                          title={mentor.name}
+                          src={member.image}
+                          alt={`${member.name}, Ignite team member`}
+                          title={member.name}
                           className="h-full w-full object-cover object-top"
                           loading="lazy"
                         />
                       ) : (
                         <span className="flex h-full w-full items-center justify-center font-bold text-orange-300">
-                          {mentor.initial}
+                          {member.initial}
                         </span>
                       )}
                     </div>
