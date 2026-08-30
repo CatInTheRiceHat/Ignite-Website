@@ -149,7 +149,7 @@ export const interns: Intern[] = [
     educationLevel: "University",
     graduatingClass: "Class of 2027",
     email: "damilolaolanrewaju111@gmail.com",
-    image: "/staff/Default.png",
+    image: "/staff/Ashiru_Ridwanullah.png",
   },
   {
     initial: "D",
@@ -160,6 +160,6 @@ export const interns: Intern[] = [
     educationLevel: "High School",
     graduatingClass: "Class of 2027",
     email: "tungkhue1999@gmail.com",
-    image: "/staff/Default.png",
+    image: "/staff/Tung_Dang.png",
   },
 ];
