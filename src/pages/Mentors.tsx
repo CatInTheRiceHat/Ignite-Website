@@ -1,6 +1,6 @@
 import { ArrowRight, BookOpen, GraduationCap, Mail, MapPin } from 'lucide-react';
 import BlurFade from '../components/ui/blur-fade';
-import { interns, mentors } from '../data/mentors';
+import { DEFAULT_STAFF_IMAGE, interns, mentors } from '../data/mentors';
 import { INTERN_FORM_URL } from '../lib/links';
 
 const isCoFounder = (role: string) => role.toLowerCase().startsWith('co-founder');
@@ -49,13 +49,11 @@ const Mentors = () => {
                 >
                   <div className="flex items-center gap-5 mb-8">
                     <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-inner transform group-hover:rotate-6 transition-transform flex-shrink-0">
-                      {member.image ? (
-                        <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
-                      ) : (
-                        <div className="w-full h-full bg-orange-100 flex items-center justify-center text-4xl font-rammetto text-[var(--primary-orange)]">
-                          {member.initial}
-                        </div>
-                      )}
+                      <img
+                        src={member.image ?? DEFAULT_STAFF_IMAGE}
+                        alt={member.name}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div className="min-w-0 flex-1">
                       <h3 className={`text-2xl font-bold mb-1 ${isCoFounder(member.role) ? 'text-white' : 'text-[var(--text-charcoal)]'}`}>{member.name}</h3>

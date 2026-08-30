@@ -18,6 +18,8 @@ export interface Intern extends Mentor {
   email: string;
 }
 
+export const DEFAULT_STAFF_IMAGE = "/staff/Default.png";
+
 export const mentors: Mentor[] = [
   {
     initial: "E",

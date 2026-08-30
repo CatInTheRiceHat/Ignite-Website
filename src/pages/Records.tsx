@@ -9,7 +9,7 @@ import {
   UsersRound,
 } from 'lucide-react';
 import { RECORDS_PAGE } from '../config/records';
-import { interns, mentors } from '../data/mentors';
+import { DEFAULT_STAFF_IMAGE, interns, mentors } from '../data/mentors';
 import { APPLY_FORM_URL, INTERN_FORM_URL } from '../lib/links';
 
 const statistics = {
@@ -234,19 +234,13 @@ const Records = () => {
                 <div className="mt-8 grid grid-cols-4 gap-2">
                   {recordTeam.map((member) => (
                     <div key={member.name} className="aspect-square overflow-hidden rounded-xl bg-white/10 ring-2 ring-white/10">
-                      {member.image ? (
-                        <img
-                          src={member.image}
-                          alt={`${member.name}, Ignite team member`}
-                          title={member.name}
-                          className="h-full w-full object-cover object-top"
-                          loading="lazy"
-                        />
-                      ) : (
-                        <span className="flex h-full w-full items-center justify-center font-bold text-orange-300">
-                          {member.initial}
-                        </span>
-                      )}
+                      <img
+                        src={member.image ?? DEFAULT_STAFF_IMAGE}
+                        alt={`${member.name}, Ignite team member`}
+                        title={member.name}
+                        className="h-full w-full object-cover object-top"
+                        loading="lazy"
+                      />
                     </div>
                   ))}
                 </div>
