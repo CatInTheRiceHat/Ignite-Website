@@ -29,7 +29,7 @@ export const mentors: Mentor[] = [
     email: "elaineyouyuanche@gmail.com",
     country: "USA",
     educationLevel: "High School",
-    graduatingClass: "Class of 2027",
+    graduatingClass: "Class of 2028",
   },
   {
     initial: "A",
@@ -41,7 +41,7 @@ export const mentors: Mentor[] = [
     email: "AustinZhao986@gmail.com",
     country: "USA",
     educationLevel: "High School",
-    graduatingClass: "Class of 2027",
+    graduatingClass: "Class of 2028",
   },
   {
     initial: "M",
@@ -53,7 +53,7 @@ export const mentors: Mentor[] = [
     email: "mmzhao819@gmail.com",
     country: "USA",
     educationLevel: "High School",
-    graduatingClass: "Class of 2027",
+    graduatingClass: "Class of 2028",
   },
   {
     initial: "I",
@@ -65,7 +65,7 @@ export const mentors: Mentor[] = [
     email: "sa23chippy@gmail.com",
     country: "USA",
     educationLevel: "High School",
-    graduatingClass: "Class of 2026",
+    graduatingClass: "Class of 2027",
   },
   {
     initial: "J",
@@ -77,7 +77,7 @@ export const mentors: Mentor[] = [
     email: "julieyixuanye@gmail.com",
     country: "USA",
     educationLevel: "High School",
-    graduatingClass: "Class of 2028",
+    graduatingClass: "Class of 2029",
   },
   {
     initial: "V",
@@ -89,7 +89,7 @@ export const mentors: Mentor[] = [
     email: "gupta.vg2010@gmail.com",
     country: "USA",
     educationLevel: "High School",
-    graduatingClass: "Class of 2027",
+    graduatingClass: "Class of 2028",
   },
   {
     initial: "E",
@@ -100,7 +100,7 @@ export const mentors: Mentor[] = [
     email: "wue0085@lgsstudent.org",
     country: "USA",
     educationLevel: "High School",
-    graduatingClass: "Class of 2027",
+    graduatingClass: "Class of 2028",
   },
   {
     initial: "Ac",
@@ -111,7 +111,7 @@ export const mentors: Mentor[] = [
     email: "sabrus444@gmail.com",
     country: "USA",
     educationLevel: "High School",
-    graduatingClass: "Class of 2027",
+    graduatingClass: "Class of 2028",
   },
   {
     initial: "E",
@@ -123,7 +123,7 @@ export const mentors: Mentor[] = [
     email: "emmazhou585@gmail.com",
     country: "USA",
     educationLevel: "High School",
-    graduatingClass: "Class of 2027",
+    graduatingClass: "Class of 2028",
   },
   {
     initial: "D",
@@ -135,7 +135,7 @@ export const mentors: Mentor[] = [
     email: "David.yifan.he@gmail.com",
     country: "USA",
     educationLevel: "High School",
-    graduatingClass: "Class of 2028",
+    graduatingClass: "Class of 2029",
   },
 ];
 
