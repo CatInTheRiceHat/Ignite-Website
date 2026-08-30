@@ -154,7 +154,7 @@ export const interns: Intern[] = [
   {
     initial: "D",
     name: "Dang Quang Tung",
-    role: "Miscellaneous Projects",
+    role: "Course Developer",
     school: "Chu Van An High School for the Gifted",
     country: "Vietnam",
     educationLevel: "High School",
