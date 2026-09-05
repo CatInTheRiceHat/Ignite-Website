@@ -10,10 +10,10 @@ import {
 } from 'lucide-react';
 import StaffImage from '../components/ui/staff-image';
 import { RECORDS_PAGE } from '../config/records';
-import { interns, mentors } from '../data/mentors';
+import { mentors } from '../data/mentors';
 import { APPLY_FORM_URL, INTERN_FORM_URL } from '../lib/links';
 
-const recordTeam = [...mentors, ...interns];
+const recordTeam = mentors;
 
 const statistics = {
   applications: 110,
@@ -22,7 +22,7 @@ const statistics = {
   countriesAndRegions: 5,
   liveCohorts: 10,
   programWeeks: 3,
-  teamMembers: '15+',
+  mentors: 10,
 } as const;
 
 const studentWork = [
@@ -229,8 +229,8 @@ const Records = () => {
               <div className="relative z-10">
                 <p className="text-sm font-extrabold uppercase tracking-[0.16em] text-orange-300">Team-powered</p>
                 <div className="mt-3 flex items-end gap-4">
-                  <span className="font-rammetto text-6xl leading-none text-white">{statistics.teamMembers}</span>
-                  <h3 className="max-w-48 pb-1 text-2xl font-bold leading-tight text-white">Team members</h3>
+                  <span className="font-rammetto text-6xl leading-none text-white">{statistics.mentors}</span>
+                  <h3 className="max-w-48 pb-1 text-2xl font-bold leading-tight text-white">Mentors</h3>
                 </div>
                 <div className="mt-8 grid grid-cols-4 gap-2">
                   {recordTeam.map((member) => (
