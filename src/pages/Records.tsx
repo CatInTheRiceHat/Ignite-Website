@@ -8,9 +8,12 @@ import {
   School,
   UsersRound,
 } from 'lucide-react';
+import StaffImage from '../components/ui/staff-image';
 import { RECORDS_PAGE } from '../config/records';
-import { DEFAULT_STAFF_IMAGE, interns, mentors } from '../data/mentors';
+import { interns, mentors } from '../data/mentors';
 import { APPLY_FORM_URL, INTERN_FORM_URL } from '../lib/links';
+
+const recordTeam = [...mentors, ...interns];
 
 const statistics = {
   applications: 110,
@@ -19,10 +22,8 @@ const statistics = {
   countriesAndRegions: 5,
   liveCohorts: 10,
   programWeeks: 3,
-  teamMembers: 12,
+  teamMembers: '15+',
 } as const;
-
-const recordTeam = [...mentors, ...interns];
 
 const studentWork = [
   {
@@ -234,8 +235,8 @@ const Records = () => {
                 <div className="mt-8 grid grid-cols-4 gap-2">
                   {recordTeam.map((member) => (
                     <div key={member.name} className="aspect-square overflow-hidden rounded-xl bg-white/10 ring-2 ring-white/10">
-                      <img
-                        src={member.image ?? DEFAULT_STAFF_IMAGE}
+                      <StaffImage
+                        src={member.image}
                         alt={`${member.name}, Ignite team member`}
                         title={member.name}
                         className="h-full w-full object-cover object-top"

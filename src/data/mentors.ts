@@ -15,7 +15,7 @@ export interface Intern extends Mentor {
   country: string;
   educationLevel: "University" | "High School";
   graduatingClass: string;
-  email: string;
+  email?: string;
 }
 
 export const DEFAULT_STAFF_IMAGE = "/staff/Default.png";
@@ -143,6 +143,17 @@ export const mentors: Mentor[] = [
 
 export const interns: Intern[] = [
   {
+    initial: "D",
+    name: "Dang Quang Tung",
+    role: "Course Developer",
+    school: "Chu Van An High School for the Gifted",
+    country: "Vietnam",
+    educationLevel: "High School",
+    graduatingClass: "Class of 2027",
+    email: "tungkhue1999@gmail.com",
+    image: "/staff/Tung_Dang.png",
+  },
+  {
     initial: "R",
     name: "Ridwanullah Ashiru",
     role: "Course Developer",
@@ -154,14 +165,63 @@ export const interns: Intern[] = [
     image: "/staff/Ashiru_Ridwanullah.png",
   },
   {
-    initial: "D",
-    name: "Dang Quang Tung",
-    role: "Course Developer",
-    school: "Chu Van An High School for the Gifted",
-    country: "Vietnam",
+    initial: "M",
+    name: "Mario Meraja",
+    role: "Intern",
+    school: "West End Secondary School",
+    country: "United States",
     educationLevel: "High School",
     graduatingClass: "Class of 2027",
-    email: "tungkhue1999@gmail.com",
-    image: "/staff/Tung_Dang.png",
+    image: DEFAULT_STAFF_IMAGE,
+  },
+  {
+    initial: "H",
+    name: "Haila Aboubaker",
+    role: "Intern",
+    school: "Interlake High School",
+    country: "United States",
+    educationLevel: "High School",
+    graduatingClass: "Class of 2029",
+    image: DEFAULT_STAFF_IMAGE,
+  },
+  {
+    initial: "S",
+    name: "Siyona Banerjee",
+    role: "Intern",
+    school: "Saratoga High School",
+    country: "United States",
+    educationLevel: "High School",
+    graduatingClass: "Class of 2029",
+    image: DEFAULT_STAFF_IMAGE,
+  },
+  {
+    initial: "G",
+    name: "Gary He",
+    role: "Intern",
+    school: "Lynbrook High School",
+    country: "United States",
+    educationLevel: "High School",
+    graduatingClass: "Class of 2030",
+    image: DEFAULT_STAFF_IMAGE,
+  },
+  {
+    initial: "S",
+    name: "Simran Ahuja",
+    role: "Intern",
+    school: "Saratoga High School",
+    country: "United States",
+    educationLevel: "High School",
+    graduatingClass: "Class of 2029",
+    image: DEFAULT_STAFF_IMAGE,
+  },
+  {
+    initial: "N",
+    name: "Neil Anand",
+    role: "Intern",
+    school: "Saratoga High School",
+    country: "United States",
+    educationLevel: "High School",
+    graduatingClass: "Class of 2028",
+    image: "/staff/Aand_Neil.png",
   },
 ];
