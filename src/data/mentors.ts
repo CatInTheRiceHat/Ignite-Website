@@ -172,7 +172,7 @@ export const interns: Intern[] = [
     country: "United States",
     educationLevel: "High School",
     graduatingClass: "Class of 2027",
-    image: DEFAULT_STAFF_IMAGE,
+    image: "/staff/Meraja_Mario.png",
   },
   {
     initial: "H",
