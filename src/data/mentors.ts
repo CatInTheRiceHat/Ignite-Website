@@ -172,7 +172,7 @@ export const interns: Intern[] = [
     educationLevel: "High School",
     graduatingClass: "Class of 2027",
     email: "mariomeraja@gmail.com",
-    image: "/staff/Meraja_Mario.png",
+    image: "/staff/mario_meraja.png",
   },
   {
     initial: "H",
