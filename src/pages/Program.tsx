@@ -93,15 +93,15 @@ const skillCourses = [
 ];
 
 const instructorImages: Record<string, string> = {
-  Elaine: '/staff/Che_Elaine.png',
-  Austin: '/staff/Zhao_Austin.png',
-  Michael: '/staff/Zhao_Michael.png',
+  Elaine: '/staff/elaine_che.png',
+  Austin: '/staff/austin_zhao.png',
+  Michael: '/staff/michael_zhao.png',
   Ivan: '/staff/Satsuta_Ivan.png',
   Julie: '/staff/Ye_Julie.png',
   Edwin: '/staff/Wu_Edwin.png',
   Emma: '/staff/Zhou_Emma.png',
   David: '/staff/He_David.png',
-  Vivaan: '/staff/Gupta_Vivaan.png',
+  Vivaan: '/staff/vivaan_gupta.png',
 };
 
 const featuredCourses = skillCourses.filter((course) => course.highlighted);
