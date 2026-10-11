@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist', '.claude/**']),
+  globalIgnores(['dist', '.claude/**', '.reference/**', 'test-results/**', 'playwright-report/**']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -24,5 +24,9 @@ export default defineConfig([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+  },
+  {
+    files: ['api/**/*.ts', 'server/**/*.ts', 'scripts/**/*.ts', 'config/**/*.ts', 'tests/**/*.ts'],
+    languageOptions: { globals: globals.node },
   },
 ])

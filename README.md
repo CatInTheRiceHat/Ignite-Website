@@ -1,4 +1,8 @@
-# React + TypeScript + Vite
+# Ignite Website
+
+Ignite's website and Sol chatbot share this repository and one Vercel project. See [Sol setup, migration and maintenance](docs/SOL.md) for server configuration and validation. Use Node 22.x, then `npm install` and `npm run dev` for the local website and chatbot. Changes to Sol now live in `src/sol/` and `server/sol/`.
+
+## React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
