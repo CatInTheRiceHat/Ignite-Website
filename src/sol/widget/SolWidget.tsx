@@ -221,7 +221,7 @@ export function SolWidget({ config, host }: { config: WidgetConfig; host: HTMLEl
           <button type="submit" className="sol-send" aria-label="Send message" disabled={ready !== 'ready' || busy || !!failure || !draft.trim() || draft.length > MAX_INPUT_LENGTH}><Send size={18} /></button>
         </form>
         {draft.length > 800 && <p id="sol-input-hint" className="sol-input-hint">{draft.length}/{MAX_INPUT_LENGTH}</p>}
-        <p className="sol-privacy">AI replies can be imperfect. Please keep personal details private.<br />Questions go to OpenAI. History resets when you reload.</p>
+        <p className="sol-privacy">AI replies can be imperfect. Please keep personal details private.</p>
       </div>
     </section>}
     <div className="sol-sr" role="status" aria-live="polite" aria-atomic="true">{open ? announcement : ''}</div>
