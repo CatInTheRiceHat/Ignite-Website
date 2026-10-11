@@ -14,7 +14,9 @@ import {
 } from 'lucide-react';
 import BlurFade from '../components/ui/blur-fade';
 import FadingCarousel from '../components/ui/fading-carousel';
-import { APPLY_FORM_URL } from '../lib/links';
+import { programCopy } from '../data/program';
+import Expansion from '../components/program/Expansion';
+import ProgramNextSteps from '../components/program/ProgramNextSteps';
 
 // ---------------------------------------------------------------------------
 // Sub-components
@@ -139,32 +141,31 @@ const Home = () => {
         <div className="relative z-20 mx-auto w-full min-w-0 max-w-5xl">
           <BlurFade delay={0}>
             <h1 className="break-words text-[2.1rem] sm:text-5xl md:text-6xl lg:text-7xl font-rammetto text-white mb-6 drop-shadow-[0_3px_10px_rgba(0,0,0,0.35)]">
-              <span className="block">Free<span className="hidden sm:inline"> Mentorship</span></span>
-              <span className="block mt-[14px] sm:hidden">Mentorship</span>
-              <span className="block mt-[20px] md:mt-[28px]">Program for</span>
-              <span className="block mt-[20px] md:mt-[28px]">Students</span>
+              <span className="block">Find Your Fire.</span>
+              <span className="block mt-[20px] md:mt-[28px]">Build Skills</span>
+              <span className="block mt-[20px] md:mt-[28px]">for Life.</span>
             </h1>
           </BlurFade>
           <BlurFade delay={0.15}>
             <p className="text-lg sm:text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto font-medium leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
-              A free online program where students learn useful skills with high school mentors.
+              Ignite is building free live and independent courses in practical life skills. Explore the plans and find what sparks your curiosity.
             </p>
           </BlurFade>
           <BlurFade delay={0.25}>
             <div className="flex flex-wrap gap-4 justify-center">
-              <a href={APPLY_FORM_URL} target="_blank" rel="noopener noreferrer" className="inline-flex w-full max-w-xs items-center justify-center gap-2 bg-[var(--primary-orange)] text-white px-8 py-5 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-lg sm:w-auto sm:px-10">
-                Apply Now
+              <Link to="/program" className="inline-flex w-full max-w-xs items-center justify-center gap-2 bg-[var(--primary-orange)] text-white px-8 py-5 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-lg sm:w-auto sm:px-10">
+                Explore Course Plans
                 <ArrowRight className="h-5 w-5 flex-none" aria-hidden="true" />
-              </a>
-              <Link to="/program" className="w-full max-w-xs bg-white text-[var(--primary-orange)] border-2 border-[var(--primary-orange)] px-8 py-5 rounded-full font-bold text-xl hover:bg-orange-50 transition-all sm:w-auto sm:px-10">
-                Learn More
+              </Link>
+              <Link to="/faq" className="w-full max-w-xs bg-white text-[var(--primary-orange)] border-2 border-[var(--primary-orange)] px-8 py-5 rounded-full font-bold text-xl hover:bg-orange-50 transition-all sm:w-auto sm:px-10">
+                Program FAQ
               </Link>
             </div>
           </BlurFade>
         </div>
       </section>
 
-      {/* 2026 Summer Statistics */}
+      {/* Summer 2026 Results */}
       <section className="bg-white py-16 shadow-sm md:py-20" aria-labelledby="home-statistics-heading">
         <div className="mx-auto max-w-7xl px-4">
           <BlurFade>
@@ -173,7 +174,7 @@ const Home = () => {
                 id="home-statistics-heading"
                 className="font-rammetto text-4xl text-[var(--primary-orange)] md:text-5xl"
               >
-                2026 Summer Statistics
+                Summer 2026 Results
               </h2>
             </div>
           </BlurFade>
@@ -204,16 +205,16 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 relative z-10 w-full">
           <BlurFade>
             <div className="text-center mb-16 md:mb-20">
-              <h2 className="text-4xl md:text-6xl font-rammetto text-white mb-6 drop-shadow-[0_3px_10px_rgba(0,0,0,0.35)]">What You'll Get</h2>
-              <p className="text-xl md:text-2xl text-white font-semibold leading-relaxed max-w-3xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">Useful classes. High school mentors. No cost.</p>
+              <h2 className="text-4xl md:text-6xl font-rammetto text-white mb-6 drop-shadow-[0_3px_10px_rgba(0,0,0,0.35)]">Skills for Everyday Life</h2>
+              <p className="text-xl md:text-2xl text-white font-semibold leading-relaxed max-w-3xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">{programCopy.direction}</p>
             </div>
           </BlurFade>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
             {[
-              { img: '/assets/Career%20Skills.png',   title: 'Useful Skills',       desc: "Practice email, presentations, design, planning, and more." },
-              { img: '/assets/Mentorship.png',        title: 'High School Mentorship', desc: "Learn from high school mentors who've been in your shoes and want to help." },
-              { img: '/assets/Free.png',              title: '100% Free',           desc: "No tuition or fees." },
-              { img: '/assets/No%20Experience.png',   title: 'No Experience Needed',desc: "You do not need prior experience or perfect grades." }
+              { img: '/assets/Career%20Skills.png',   title: 'Useful Skills',       desc: "Build habits for managing time, communicating, staying safe online, and understanding money." },
+              { img: '/assets/Mentorship.png',        title: 'Student-led Learning', desc: "Students help shape practical courses, building on our Summer 2026 mentorship program." },
+              { img: '/assets/Free.png',              title: 'Free Learning',       desc: "Our mission is free learning. Both developing formats are planned to stay free." },
+              { img: '/assets/No%20Experience.png',   title: 'Stay Curious',       desc: "Start with what interests you. Course-specific prerequisites are still to be confirmed." }
             ].map((feature, i) => (
               <BlurFade key={i} delay={i * 0.08}>
                 <div className="bg-white/90 backdrop-blur-md p-10 md:p-12 rounded-3xl border border-orange-50 hover:bg-white hover:shadow-xl transition-all duration-300 group h-full">
@@ -246,8 +247,8 @@ const Home = () => {
             imageStyle="open"
             autoPlay={false}
             items={[
-              { image: '/mascots/Grades.png',  title: '4th to 8th Grade',    desc: "Open to students in 4th through 8th grade." },
-              { image: '/mascots/Zoom.png',    title: 'Online & Zoom', desc: "Classes are on Zoom, so students can join from home." },
+              { image: '/mascots/Grades.png',  title: 'Eligibility to Confirm', desc: programCopy.eligibility },
+              { image: '/mascots/Zoom.png',    title: 'Online Learning Plans', desc: "We are developing live and independent online courses. Dates and enrollment details are not yet confirmed." },
               { image: '/mascots/Curious.png', title: 'Curious Students', desc: "You do not need to know what you want to do yet." },
             ]}
           />
@@ -276,24 +277,8 @@ const Home = () => {
         </BlurFade>
       </section>
 
-      {/* Apply */}
-      <section className="py-24 bg-white rounded-t-[4rem]">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-4xl font-rammetto text-[var(--primary-orange)] mb-6">Apply Now!</h2>
-          <p className="text-lg text-[var(--text-light)] max-w-2xl mx-auto leading-relaxed mb-10">
-            Applications are open for our online summer program. Students can apply for free and choose the courses that fit their schedule.
-          </p>
-          <a
-            href={APPLY_FORM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 bg-[var(--primary-orange)] text-white px-10 py-5 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-orange-200"
-          >
-            Apply Now
-            <ArrowRight className="h-5 w-5 flex-none" aria-hidden="true" />
-          </a>
-        </div>
-      </section>
+      <Expansion />
+      <ProgramNextSteps />
 
     </div>
   );

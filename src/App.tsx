@@ -5,6 +5,7 @@ import About from './pages/About';
 import Mentors from './pages/Mentors';
 import Program from './pages/Program';
 import FAQ from './pages/FAQ';
+import Apply from './pages/Apply';
 import Statistics from './pages/Statistics';
 import Hiring from './pages/Hiring';
 import Records from './pages/Records';
@@ -22,6 +23,7 @@ function App() {
           <Route path="/mentors" element={<Navigate to="/team" replace />} />
           <Route path="/program" element={<Program />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/apply" element={<Apply />} />
           <Route path="/statistics" element={<Statistics />} />
           <Route path="/hiring" element={<Hiring />} />
           <Route path={RECORDS_PAGE.path} element={<Records />} />

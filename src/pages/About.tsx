@@ -1,5 +1,6 @@
 import { Check } from 'lucide-react';
 import BlurFade from '../components/ui/blur-fade';
+import { programCopy } from '../data/program';
 
 const About = () => {
   return (
@@ -48,10 +49,12 @@ const About = () => {
                 it sounds, and most school curriculums aren't built for it.
               </p>
               <p>
-                Ignite is a free summer program where high schoolers mentor 4th to 8th grade students on
-                exactly that. They're close enough in age to remember what middle school actually felt like.
-                That proximity matters more than any lesson plan.
+                Ignite is a student-led education initiative building free courses in practical life skills.
+                Our Summer 2026 program brought students and high school mentors together. Now we’re
+                developing live and independent learning so students can keep exploring and practicing.
               </p>
+              <p>{programCopy.direction}</p>
+              <p>{programCopy.eligibility}</p>
               <p className="text-xl font-bold text-[var(--text-charcoal)]">
                 Right now, knowing yourself is more useful than knowing what job to aim for.
               </p>
@@ -73,11 +76,11 @@ const About = () => {
               },
               {
                 title: 'Connection',
-                desc: "We connect younger students with high school mentors who can answer questions and help them practice."
+                desc: "We build on student mentorship as we develop live and independent courses with practice and feedback."
               },
               {
                 title: 'Practice',
-                desc: "We teach skills students can use right away, from professional communication to public speaking."
+                desc: "Our course plans focus on skills students can use in daily life, from managing time and money to communication and online safety."
               }
             ].map((item, i) => (
               <BlurFade key={i} delay={i * 0.1}>

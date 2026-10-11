@@ -29,7 +29,7 @@ const Statistics = () => {
         </div>
         <div className="relative z-10 mx-auto max-w-7xl px-4">
           <h1 className="font-rammetto text-[2.7rem] text-white sm:text-5xl md:text-7xl">
-            <span className="block">2026 Summer</span>
+            <span className="block">Summer 2026</span>
             <span className="mt-3 block md:mt-5"> Statistics</span>
           </h1>
         </div>

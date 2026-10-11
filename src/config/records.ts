@@ -3,5 +3,5 @@ export const RECORDS_PAGE = {
   path: '/records',
   metaTitle: 'Records | Ignite',
   metaDescription:
-    'Explore verified Ignite statistics, a look inside classes, and space for approved student-work examples.',
+    'Explore Ignite’s Summer 2026 results, a look inside past classes, and student-work examples.',
 } as const;

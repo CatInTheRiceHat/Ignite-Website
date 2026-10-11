@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import {
   ArrowRight,
   BookOpenCheck,
@@ -11,7 +11,8 @@ import {
 import StaffImage from '../components/ui/staff-image';
 import { RECORDS_PAGE } from '../config/records';
 import { mentors } from '../data/mentors';
-import { APPLY_FORM_URL, INTERN_FORM_URL } from '../lib/links';
+import { INTERN_FORM_URL } from '../lib/links';
+import ProgramNextSteps from '../components/program/ProgramNextSteps';
 
 const recordTeam = mentors;
 
@@ -77,20 +78,6 @@ const SectionHeading = ({
 );
 
 const Records = () => {
-  useEffect(() => {
-    const previousTitle = document.title;
-    const description = document.querySelector<HTMLMetaElement>('meta[name="description"]');
-    const previousDescription = description?.content;
-
-    document.title = RECORDS_PAGE.metaTitle;
-    if (description) description.content = RECORDS_PAGE.metaDescription;
-
-    return () => {
-      document.title = previousTitle;
-      if (description && previousDescription) description.content = previousDescription;
-    };
-  }, []);
-
   return (
     <div className="overflow-hidden bg-[var(--bg-cream)]">
       <section className="relative overflow-hidden bg-[var(--primary-orange)] py-20 text-white shadow-lg">
@@ -115,7 +102,7 @@ const Records = () => {
         aria-labelledby="records-statistics-heading"
       >
         <div className="mx-auto max-w-7xl px-4">
-          <SectionHeading eyebrow="2026 summer" title="The story behind the numbers" id="records-statistics-heading">
+          <SectionHeading eyebrow="Summer 2026" title="The story behind the numbers" id="records-statistics-heading">
             A visual snapshot of how far Ignite reached and what it took to bring the program to life.
           </SectionHeading>
 
@@ -259,7 +246,7 @@ const Records = () => {
           </div>
 
           <p className="mt-8 text-center text-sm font-semibold text-[var(--text-light)]">
-            Source: Ignite 2026 Summer Statistics
+            Source: Ignite Summer 2026 Statistics
           </p>
         </div>
       </section>
@@ -269,7 +256,7 @@ const Records = () => {
         aria-labelledby="student-work-heading"
       >
         <div className="mx-auto max-w-7xl px-4">
-          <SectionHeading eyebrow="Projects and capstones" title="Student work" id="student-work-heading">
+          <SectionHeading eyebrow="Summer 2026 projects and capstones" title="Student work" id="student-work-heading">
             A selection of student-created projects showing how course skills become meaningful final work.
           </SectionHeading>
 
@@ -303,24 +290,7 @@ const Records = () => {
         </div>
       </section>
 
-      <section className="rounded-t-[4rem] bg-white py-24">
-        <div className="mx-auto max-w-4xl px-4 text-center">
-          <h2 className="mb-6 font-rammetto text-4xl text-[var(--primary-orange)]">Apply Now!</h2>
-          <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-[var(--text-light)]">
-            Applications are open for our online summer program. Students can apply for free and choose the courses
-            that fit their schedule.
-          </p>
-          <a
-            href={APPLY_FORM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-10 py-5 text-xl font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-orange-200 active:scale-95"
-          >
-            Apply Now
-            <ArrowRight className="h-5 w-5 flex-none" aria-hidden="true" />
-          </a>
-        </div>
-      </section>
+      <ProgramNextSteps />
     </div>
   );
 };
