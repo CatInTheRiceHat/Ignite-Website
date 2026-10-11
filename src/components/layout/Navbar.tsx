@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { ArrowRight, Megaphone, Menu, X } from 'lucide-react';
-import { APPLY_FORM_URL } from '../../lib/links';
+import { LEARNING_HUB_URL } from '../../lib/links';
 import { RECORDS_PAGE } from '../../config/records';
 
-const announcementText = "Winter 2026 applications are now open! We're looking for interns to support Ignite.";
+const announcementText = "Help build Ignite’s next chapter. Explore student internship opportunities.";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -82,12 +82,12 @@ const Navbar = () => {
             </NavLink>
           ))}
           <a
-            href={APPLY_FORM_URL}
+            href={LEARNING_HUB_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-full bg-[var(--primary-orange)] px-5 py-3 font-bold text-white shadow-md shadow-orange-100 transition-all hover:scale-105 hover:bg-[var(--primary-orange-dark)] active:scale-95"
           >
-            Apply Now
+            Learning Hub
             <ArrowRight className="h-5 w-5 flex-none" aria-hidden="true" />
           </a>
         </div>
@@ -131,13 +131,13 @@ const Navbar = () => {
                 </NavLink>
               ))}
               <a
-                href={APPLY_FORM_URL}
+                href={LEARNING_HUB_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsOpen(false)}
                 className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-6 py-3 text-center font-bold text-white shadow-md shadow-orange-100 transition-all active:scale-95"
               >
-                Apply Now
+                Learning Hub
                 <ArrowRight className="h-5 w-5 flex-none" aria-hidden="true" />
               </a>
             </div>

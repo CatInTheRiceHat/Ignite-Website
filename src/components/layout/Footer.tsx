@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { APPLY_FORM_URL, INTERN_FORM_URL } from '../../lib/links';
+import { LEARNING_HUB_URL, INTERN_FORM_URL } from '../../lib/links';
 import { RECORDS_PAGE } from '../../config/records';
 
 const Footer = () => {
@@ -33,17 +33,17 @@ const Footer = () => {
               Ignite
             </Link>
             <p className="mt-5 text-xl md:text-2xl font-semibold leading-relaxed text-white/90">
-              Free online mentorship that helps students practice useful skills, ask better questions, and find their fire.
+              Free practical-skills learning that helps students explore interests, build confidence, and find their fire.
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row sm:flex-wrap gap-4">
               <a
-                href={APPLY_FORM_URL}
+                href={LEARNING_HUB_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 bg-white text-[var(--primary-orange)] px-8 py-4 rounded-full font-bold text-lg hover:scale-105 active:scale-95 transition-all shadow-lg"
               >
-                Apply Now
+                Learning Hub
                 <ArrowRight className="h-5 w-5" aria-hidden="true" />
               </a>
               <a
@@ -77,10 +77,10 @@ const Footer = () => {
             <div>
               <h2 className="text-sm font-bold uppercase tracking-[0.18em] text-white/70">Program</h2>
               <div className="mt-5 grid gap-3 text-lg font-semibold text-white/90">
-                <p>4th to 8th grade</p>
-                <p>Online on Zoom</p>
+                <p>Practical life skills</p>
+                <p>Independent &amp; live courses</p>
                 <p>100% free</p>
-                <p>Summer sessions</p>
+                <p>Student-led learning</p>
               </div>
             </div>
           </div>

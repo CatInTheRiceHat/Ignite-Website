@@ -48,9 +48,9 @@ const About = () => {
                 it sounds, and most school curriculums aren't built for it.
               </p>
               <p>
-                Ignite is a free summer program where high schoolers mentor 4th to 8th grade students on
-                exactly that. They're close enough in age to remember what middle school actually felt like.
-                That proximity matters more than any lesson plan.
+                Ignite began with free live courses in Summer 2026. We’re now building a broader platform
+                for practical life skills, with independent online courses alongside live learning. Student
+                creators and mentors help make those skills approachable, useful, and worth practicing.
               </p>
               <p className="text-xl font-bold text-[var(--text-charcoal)]">
                 Right now, knowing yourself is more useful than knowing what job to aim for.
@@ -73,7 +73,7 @@ const About = () => {
               },
               {
                 title: 'Connection',
-                desc: "We connect younger students with high school mentors who can answer questions and help them practice."
+                desc: "We bring student creators and mentors together to make learning approachable and help students practice."
               },
               {
                 title: 'Practice',
@@ -103,13 +103,13 @@ const About = () => {
           <div className="bg-white/85 backdrop-blur-sm rounded-3xl p-10 md:p-14 shadow-xl">
             <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)] mb-4">Why This Matters</h2>
-              <p className="text-xl text-[var(--text-light)]">Middle school is when students start asking: "What am I good at? What could I become?"</p>
+              <p className="text-xl text-[var(--text-light)]">Students deserve room to ask: "What am I good at? What could I become?"</p>
             </div>
             <div className="grid gap-6">
               {[
                 { text: "Many students do not get early access to this kind of support" },
                 { text: "Trying new skills early can make school feel less confusing" },
-                { text: "High school mentors can explain things in a way younger students understand" },
+                { text: "Student mentors can share relatable examples and help others practice" },
                 { text: "Small wins help students feel more ready for what comes next" }
               ].map((item, i) => (
                 <BlurFade key={i} delay={i * 0.08}>
