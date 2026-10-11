@@ -4,10 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "tsx --env-file-if-exists=.env.local scripts/dev-sol.ts",
+    "build": "tsc -b && npm run typecheck:sol && vite build && npm run build:sol",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:sol": "vite build --config config/vite.sol.config.ts",
+    "typecheck:sol": "tsc --project config/tsconfig.sol-server.json && tsc --project config/tsconfig.sol-tools.json",
+    "test": "vitest run --config config/vitest.sol.config.ts",
+    "test:browser": "playwright test --config config/playwright.sol.config.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.103.0",
@@ -39,6 +43,13 @@
     "tailwindcss": "^3.4.13",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
-    "vite": "^5.4.1"
+    "vite": "^6.4.4",
+    "tsx": "^4.20.0",
+    "vitest": "^5.0.3",
+    "@playwright/test": "^1.56.0",
+    "@axe-core/playwright": "^4.11.0"
+  },
+  "engines": {
+    "node": "22.x"
   }
 }
