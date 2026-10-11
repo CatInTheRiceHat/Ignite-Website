@@ -215,12 +215,12 @@ export function SolWidget({ config, host }: { config: WidgetConfig; host: HTMLEl
         <p className="sol-help-line">Need a person? <a href={destinations.contact.url}>Email Ignite <ArrowUpRight size={12} /></a></p>
         <form onSubmit={submit} className="sol-composer">
           <label htmlFor="sol-question" className="sol-sr">Your question for Sol</label>
-          <textarea id="sol-question" ref={input} rows={1} value={draft} onChange={event => setDraft(event.target.value)} maxLength={MAX_INPUT_LENGTH} placeholder={ready === 'ready' ? 'What are you curious about?' : 'Chat is currently unavailable'} disabled={ready !== 'ready' || !!failure} aria-describedby="sol-input-hint" onKeyDown={event => {
+          <textarea id="sol-question" ref={input} rows={1} value={draft} onChange={event => setDraft(event.target.value)} maxLength={MAX_INPUT_LENGTH} placeholder={ready === 'ready' ? 'What are you curious about?' : 'Chat is currently unavailable'} disabled={ready !== 'ready' || !!failure} aria-describedby={draft.length > 800 ? 'sol-input-hint' : undefined} onKeyDown={event => {
             if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); event.currentTarget.form?.requestSubmit(); }
           }} />
           <button type="submit" className="sol-send" aria-label="Send message" disabled={ready !== 'ready' || busy || !!failure || !draft.trim() || draft.length > MAX_INPUT_LENGTH}><Send size={18} /></button>
         </form>
-        <p id="sol-input-hint" className="sol-input-hint">{draft.length > 800 ? `${draft.length}/${MAX_INPUT_LENGTH} · ` : ''}Enter to send · Shift + Enter for a new line</p>
+        {draft.length > 800 && <p id="sol-input-hint" className="sol-input-hint">{draft.length}/{MAX_INPUT_LENGTH}</p>}
         <p className="sol-privacy">AI replies can be imperfect. Please keep personal details private.<br />Questions go to OpenAI. History resets when you reload.</p>
       </div>
     </section>}

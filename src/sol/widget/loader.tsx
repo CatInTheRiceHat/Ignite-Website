@@ -23,7 +23,7 @@ export function mount(options: Partial<WidgetConfig> = {}, container: HTMLElemen
     // Font definitions only: no host element selectors or theme overrides.
     const fonts = document.createElement('link');
     fonts.rel = 'stylesheet'; fonts.dataset.solFonts = '';
-    fonts.href = 'https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@500;600;700&display=swap';
+    fonts.href = 'https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@500;600;700&family=Rammetto+One&display=swap';
     document.head.append(fonts);
   }
   const host = document.createElement('sol-widget');
