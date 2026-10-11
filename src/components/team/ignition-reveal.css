@@ -2,6 +2,7 @@
   position: relative;
   /* Rotate the whole card, including its background, inside a stable grid slot. */
   --ignition-delay: 0ms;
+  --ignition-angle: -88deg;
   transform-origin: center;
   backface-visibility: hidden;
 }
@@ -18,7 +19,7 @@
 }
 
 @keyframes ignite-card-flip {
-  from { transform: perspective(1200px) rotateY(-88deg); }
+  from { transform: perspective(1200px) rotateY(var(--ignition-angle)); }
   to { transform: perspective(1200px) rotateY(0deg); }
 }
 

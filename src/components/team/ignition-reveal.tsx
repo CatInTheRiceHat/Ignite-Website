@@ -41,15 +41,34 @@ export function IgnitionGroup({ children, className }: { children: ReactNode; cl
           showAll();
           return;
         }
-        // Only this visible batch is staggered, in responsive DOM reading order.
-        // Mobile rows share the same capped clock; offscreen cards never queue.
-        let visibleIndex = 0;
-        for (const card of cards) {
-          if (!pending.has(card) || revealed.current.has(card.dataset.ignitionId!)) continue;
-          pending.delete(card);
+        // Follow each grid's current column count without changing DOM/tab order.
+        const orderedCards: HTMLElement[] = [];
+        for (const grid of new Set(cards.map((card) => card.parentElement))) {
+          if (!grid) continue;
+          const columns = Math.max(1, getComputedStyle(grid).gridTemplateColumns.split(/\s+/).length);
+          const gridCards = cards.filter((card) => card.parentElement === grid);
+          for (let start = 0; start < gridCards.length; start += columns) {
+            const row = gridCards.slice(start, start + columns);
+            const reverse = columns > 1 && (start / columns) % 2 === 1;
+            if (reverse) row.reverse();
+            for (const card of row) {
+              if (!revealed.current.has(card.dataset.ignitionId!)) {
+                card.style.setProperty('--ignition-angle', reverse ? '88deg' : '-88deg');
+              }
+              orderedCards.push(card);
+            }
+          }
+        }
+        // Only visible, unrevealed cards share this clock; cap the whole stagger.
+        const visibleCards = orderedCards.filter((card) => {
+          if (!pending.has(card) || revealed.current.has(card.dataset.ignitionId!)) return false;
           const bounds = card.getBoundingClientRect();
-          if (bounds.bottom <= 0 || bounds.top >= window.innerHeight - 32) continue;
-          card.style.setProperty('--ignition-delay', `${Math.min(visibleIndex++ * 80, 240)}ms`);
+          return bounds.bottom > 0 && bounds.top < window.innerHeight - 32;
+        });
+        const staggerMs = Math.min(80, 480 / Math.max(visibleCards.length - 1, 1));
+        for (const [index, card] of visibleCards.entries()) {
+          pending.delete(card);
+          card.style.setProperty('--ignition-delay', `${index * staggerMs}ms`);
           revealed.current.add(card.dataset.ignitionId!);
           card.dataset.ignitionState = 'playing';
           observer?.unobserve(card);
