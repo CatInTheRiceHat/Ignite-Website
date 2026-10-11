@@ -34,7 +34,7 @@ export function IgnitionGroup({ children, className }: { children: ReactNode; cl
     }
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const playVisibleRows = () => {
+    const playVisibleCards = () => {
       frame = 0;
       try {
         if (reducedMotion.matches) {
@@ -60,7 +60,7 @@ export function IgnitionGroup({ children, className }: { children: ReactNode; cl
     };
 
     const finish = (event: AnimationEvent) => {
-      if (event.animationName !== 'ignite-content' || !(event.target instanceof Element)) return;
+      if (event.animationName !== 'ignite-card-flip' || !(event.target instanceof Element)) return;
       const card = event.target.closest<HTMLElement>('[data-ignition-id]');
       if (card) complete(card);
     };
@@ -83,8 +83,8 @@ export function IgnitionGroup({ children, className }: { children: ReactNode; cl
             if (entry.isIntersecting) pending.add(card);
             else pending.delete(card);
           }
-          if (pending.size && !frame) frame = requestAnimationFrame(playVisibleRows);
-        }, { rootMargin: '0px 0px -32px 0px', threshold: 0 });
+          if (pending.size && !frame) frame = requestAnimationFrame(playVisibleCards);
+        }, { rootMargin: '0px 0px -32px 0px', threshold: 0.12 });
         for (const card of cards) {
           if (revealed.current.has(card.dataset.ignitionId!)) complete(card);
           else observer.observe(card);
@@ -118,16 +118,6 @@ export function IgnitionCard({ children, revealId, className, style }: {
   return (
     <div className={`ignition-card ${className ?? ''}`} style={style} data-ignition-id={revealId}>
       <div className="ignition-card-content">{children}</div>
-      <span className="ignition-edge" aria-hidden="true">
-        <span className="ignition-flame-travel">
-          <svg className="ignition-flame" viewBox="0 0 24 30" focusable="false" aria-hidden="true">
-            {/* Three soft tips and a cream center echo Ignite's flame mascot. */}
-            <path className="ignition-flame-body" d="M12 28C4 28 1 23 2 17c.5-3 2-6 4-8 1-1 1 4 3 3C10 6 14 3 17 1c1-1 1 1 1 3 0 4 1 7 3 10 1 1 1-3 2-2 2 3 3 6 2 10-1 4-5 6-13 6Z" transform="translate(-1 0)" />
-            <path className="ignition-flame-center" d="M12 25c-5 0-7-3-6-6 .5-2 1-3 2-4 1 3 2 2 3 0 1-3 3-5 4-6 0 5 2 7 3 9 2 4-1 7-6 7Z" />
-            <path className="ignition-flame-core" d="M12 24c-3 0-4-2-3-4l3-4c0 3 3 4 3 6 0 1-1 2-3 2Z" />
-          </svg>
-        </span>
-      </span>
     </div>
   );
 }
