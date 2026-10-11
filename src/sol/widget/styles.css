@@ -16,12 +16,12 @@
 .sol-launcher > span:last-child { display: flex; align-items: center; gap: 10px; }
 .sol-launcher-art { display: grid; place-items: center; width: 56px; height: 56px; }
 .sol-launcher img { width: 52px; height: 52px; object-fit: contain; }
-.sol-panel { position: fixed; z-index: 2147483000; right: max(24px, env(safe-area-inset-right)); bottom: calc(max(24px, env(safe-area-inset-bottom)) + var(--sol-keyboard-inset, 0px)); width: 398px; height: min(660px, calc(var(--sol-visible-height, 100dvh) - 48px)); display: flex; flex-direction: column; overflow: hidden; border-radius: 26px; border: 1px solid #EDD4BC; background: #FFF8F0; box-shadow: 0 16px 70px #1A1A2E26, 0 2px 8px #1A1A2E0d; animation: sol-appear .16s ease-out; }
+.sol-panel { position: fixed; z-index: 2147483000; right: max(24px, env(safe-area-inset-right)); bottom: calc(max(24px, env(safe-area-inset-bottom)) + var(--sol-keyboard-inset, 0px)); width: 398px; height: min(660px, calc(var(--sol-visible-height, 100dvh) - 48px)); display: flex; flex-direction: column; overflow: hidden; border-radius: 26px; border: 0; background: #FFF8F0; box-shadow: 0 16px 70px #1A1A2E26, 0 2px 8px #1A1A2E0d; animation: sol-appear .16s ease-out; }
 .sol-header { display: grid; grid-template-columns: 48px minmax(0, 1fr) 48px; gap: 10px; align-items: center; background: var(--sol-orange); color: #fff; padding: 17px 16px; flex: none; }
 .sol-header > img { width: 45px; height: 48px; object-fit: contain; }
-.sol-header-copy { min-width: 0; text-align: center; text-shadow: 0 0 1px #1A1A2E, 0 0 1px #1A1A2E; }
-.sol-header h2 { font-size: 21px; font-weight: 700; line-height: 1.2; }
-.sol-header p { font-size: 12px; margin-top: 4px; }
+.sol-header-copy { min-width: 0; display: flex; flex-direction: column; justify-content: center; text-align: left; color: #fff; }
+.sol-header h2 { font-family: 'Rammetto One', cursive; font-size: 21px; font-weight: 400; line-height: 1.2; }
+.sol-header p { font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 700; margin-top: 4px; }
 .sol-header .sol-icon-button { color: #fff; }
 .sol-header :focus-visible { outline-color: #fff; }
 .sol-icon-button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: #1A1A2E; flex: none; }
@@ -29,8 +29,8 @@
 .sol-scroll { min-height: 0; flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 24px 20px 18px; scrollbar-width: thin; scrollbar-color: #D9B99A transparent; }
 .sol-scroll:focus-visible { outline-offset: -4px; }
 .sol-welcome { text-align: center; }
-.sol-eyebrow { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 10px; letter-spacing: 1.3px; font-weight: 800; color: #78400F; }
-.sol-welcome h3 { font-size: 25px; margin: 7px 0; font-weight: 700; letter-spacing: -.7px; }
+.sol-eyebrow { display: flex; align-items: center; justify-content: center; gap: 6px; font-family: 'Poppins', sans-serif; font-size: 10px; letter-spacing: 1.3px; font-weight: 700; color: #78400F; }
+.sol-welcome h3 { font-family: 'Rammetto One', cursive; font-size: 25px; margin: 7px 0; font-weight: 400; letter-spacing: -.7px; }
 .sol-welcome > p { color: #4A4A5E; font-size: 15px; line-height: 1.6; }
 .sol-quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin: 18px 0 8px; }
 .sol-quick { display: flex; align-items: center; gap: 7px; min-height: 52px; border: 1px solid #EFDBC9; border-radius: 13px; background: #fff; text-decoration: none; padding: 10px; font-size: 11px !important; font-weight: 600; transition: border-color .15s, background .15s; }
@@ -60,7 +60,7 @@
 .sol-help-line a { display: inline-flex; align-items: center; gap: 3px; text-underline-offset: 3px; font-weight: 800; }
 .sol-composer { display: flex; align-items: center; gap: 8px; border: 1px solid #BFA58E; border-radius: 16px; padding: 6px; background: #FFF8F0; }
 .sol-composer:focus-within { border-color: #D46A20; box-shadow: 0 0 0 2px #F07B2A30; }
-.sol-composer textarea { width: 100%; min-width: 0; min-height: 44px; max-height: 90px; resize: none; field-sizing: content; border: 0; outline: 0; padding: 11px 0; background: transparent; color: #1A1A2E; font-size: 16px; line-height: 1.4; text-align: center; }
+.sol-composer textarea { width: 100%; min-width: 0; min-height: 44px; max-height: 90px; resize: none; field-sizing: content; border: 0; outline: 0; padding: 11px 12px; background: transparent; color: #1A1A2E; font-size: 16px; line-height: 22px; text-align: left; }
 .sol-composer textarea:focus-visible { outline: 0; }
 .sol-composer textarea::placeholder { color: #626271; opacity: 1; font-size: 13px; }
 .sol-send { flex: none; display: grid; place-items: center; height: 44px; width: 44px; border: 0; border-radius: 12px; background: #F07B2A; color: #1A1A2E; }
