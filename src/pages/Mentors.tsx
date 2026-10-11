@@ -116,13 +116,12 @@ const Mentors = () => {
                             <span className="min-w-0 break-words leading-relaxed">{member.school}{member.country ? `, ${member.country}` : ''}</span>
                           </div>
                         )}
-                        {member.coursesInDevelopment && member.coursesInDevelopment.length > 0 && (
+                        {member.courses && member.courses.length > 0 && (
                           <div className={`flex items-start gap-2 rounded-xl px-4 py-2 text-sm font-semibold ${isCoFounder(member.role) ? 'bg-white/15 text-white shadow-inner' : 'bg-[var(--bg-cream)] text-[var(--text-light)]'}`}>
                             <BookOpen className={`mt-0.5 h-4 w-4 flex-shrink-0 ${isCoFounder(member.role) ? 'text-white' : 'text-[var(--primary-orange)]'}`} />
                             <div className="min-w-0 flex-1 break-words leading-relaxed">
-                              <p className={`mb-1 font-bold ${isCoFounder(member.role) ? 'text-white' : 'text-[var(--text-charcoal)]'}`}>Courses in development</p>
                               <ul className="space-y-1">
-                                {member.coursesInDevelopment.map((course) => (
+                                {member.courses.map((course) => (
                                   <li key={course}>{course}</li>
                                 ))}
                               </ul>
