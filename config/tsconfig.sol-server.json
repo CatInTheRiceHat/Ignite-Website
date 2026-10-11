@@ -12,6 +12,7 @@
     ]
   },
   "include": [
+    "../api/apply.ts",
     "../api/chat.ts",
     "../api/status.ts",
     "../server/sol",

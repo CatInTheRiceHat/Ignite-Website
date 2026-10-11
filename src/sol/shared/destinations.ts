@@ -18,7 +18,7 @@ export const quickActions: DestinationId[] = ['program', 'hiring', 'about', 'faq
 export const DEFAULT_WEBSITE_URL = 'https://ignitefindyourfire.org';
 
 export function isDestinationId(value: unknown): value is DestinationId {
-  return typeof value === 'string' && Object.hasOwn(destinations, value);
+  return typeof value === 'string' && Object.prototype.hasOwnProperty.call(destinations, value);
 }
 
 export function safeHttpUrl(value: string): string {

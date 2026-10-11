@@ -25,7 +25,7 @@ type ApiRequest = {
 
 type ApiResponse = {
   status: (code: number) => {
-    json: (body: { error: string }) => unknown;
+    json: (body: { error: string } | { success: true }) => unknown;
   };
 };
 
