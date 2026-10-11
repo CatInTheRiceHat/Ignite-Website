@@ -1,10 +1,6 @@
 .ignition-card {
   position: relative;
-  /* Rotate the whole card, including its background, inside a stable grid slot. */
   --ignition-delay: 0ms;
-  --ignition-angle: -88deg;
-  transform-origin: center;
-  backface-visibility: hidden;
 }
 
 .ignition-card-content {
@@ -12,24 +8,22 @@
   opacity: 1;
 }
 
-/* A successful viewport callback enables the flip and fade; the default stays readable. */
+/* Page entry enables the fade; the default stays readable if initialization fails. */
 .ignition-card[data-ignition-state='playing'] {
-  animation: ignite-card-flip 1250ms cubic-bezier(0.25, 0.1, 0.25, 1) var(--ignition-delay) both;
-  will-change: transform, opacity;
+  animation: ignite-card-fade 1250ms cubic-bezier(0.25, 0.1, 0.25, 1) var(--ignition-delay) both;
+  will-change: opacity;
 }
 
-@keyframes ignite-card-flip {
+@keyframes ignite-card-fade {
   from {
-    transform: perspective(1200px) rotateY(var(--ignition-angle));
     opacity: 0;
   }
   to {
-    transform: perspective(1200px) rotateY(0deg);
     opacity: 1;
   }
 }
 
-/* Keyboard focus turns a card face-on immediately, even during its stagger. */
+/* Keyboard focus shows a card immediately, even during its stagger. */
 .ignition-card:focus-within {
   animation: none;
   transform: none;
