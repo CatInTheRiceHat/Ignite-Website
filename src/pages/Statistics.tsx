@@ -18,7 +18,7 @@ const reachStatistics = [
 const Statistics = () => {
   return (
     <div className="overflow-hidden bg-[var(--bg-cream)]">
-      <section className="relative overflow-hidden bg-[var(--primary-orange)] py-20 text-center text-[var(--text-charcoal)] shadow-lg">
+      <section className="relative overflow-hidden bg-[var(--primary-orange)] py-20 text-center text-white shadow-lg">
         <div className="pointer-events-none absolute inset-y-0 right-0 w-full opacity-20 sm:opacity-25 md:w-[46%] md:opacity-30">
           <img
             src="/mascots/Trophy.png"
@@ -28,7 +28,7 @@ const Statistics = () => {
           />
         </div>
         <div className="relative z-10 mx-auto max-w-7xl px-4">
-          <h1 className="font-rammetto text-[2.7rem] text-[var(--text-charcoal)] sm:text-5xl md:text-7xl">
+          <h1 className="font-rammetto text-[2.7rem] text-white sm:text-5xl md:text-7xl">
             <span className="block">2026 Summer</span>
             <span className="mt-3 block md:mt-5"> Statistics</span>
           </h1>
@@ -41,7 +41,7 @@ const Statistics = () => {
             <div className="mx-auto mb-12 max-w-3xl text-center md:mb-16">
               <h2
                 id="reach-heading"
-                className="font-rammetto text-4xl text-[var(--text-charcoal)] md:text-5xl"
+                className="font-rammetto text-4xl text-[var(--primary-orange)] md:text-5xl"
               >
                 Applications &amp; Reach
               </h2>
@@ -54,14 +54,14 @@ const Statistics = () => {
 
               return (
                 <BlurFade key={stat.label} delay={index * 0.07}>
-                  <div className="flex h-full min-h-64 flex-col items-center justify-center rounded-[2rem] border-2 border-orange-50 bg-white px-6 py-10 text-center shadow-sm transition-all duration-300 hover:border-orange-200 hover:shadow-xl">
+                  <div className="flex h-full min-h-64 flex-col items-center justify-center rounded-[2rem] border-2 border-orange-50 bg-white px-6 py-10 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-orange-200 hover:shadow-xl">
                     <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-100 text-[var(--primary-orange)]">
                       <Icon className="h-7 w-7" aria-hidden="true" />
                     </div>
                     <p className="order-2 mt-4 text-lg font-bold text-[var(--text-charcoal)]">
                       {stat.label}
                     </p>
-                    <p className="order-1 font-rammetto text-5xl leading-none text-[var(--text-charcoal)] lg:text-[3.35rem]">
+                    <p className="order-1 font-rammetto text-5xl leading-none text-[var(--primary-orange)] lg:text-[3.35rem]">
                       {stat.value}
                     </p>
                   </div>
@@ -89,7 +89,7 @@ const Statistics = () => {
             <div className="text-center lg:text-left">
               <h2
                 id="delivery-heading"
-                className="font-rammetto text-4xl text-[var(--text-charcoal)] md:text-5xl"
+                className="font-rammetto text-4xl text-[var(--primary-orange)] md:text-5xl"
               >
                 Program Delivery
               </h2>
@@ -97,11 +97,11 @@ const Statistics = () => {
               <dl className="mt-8 grid grid-cols-2 gap-4 sm:gap-6">
                 <div className="flex flex-col rounded-3xl bg-[var(--bg-cream)] px-4 py-8 text-center sm:px-6">
                   <dt className="order-2 mt-3 font-bold text-[var(--text-charcoal)]">Live cohorts</dt>
-                  <dd className="order-1 font-rammetto text-4xl text-[var(--text-charcoal)] sm:text-5xl">10</dd>
+                  <dd className="order-1 font-rammetto text-4xl text-[var(--primary-orange)] sm:text-5xl">10</dd>
                 </div>
                 <div className="flex flex-col rounded-3xl bg-[var(--bg-cream)] px-4 py-8 text-center sm:px-6">
                   <dt className="order-2 mt-3 font-bold text-[var(--text-charcoal)]">Weeks</dt>
-                  <dd className="order-1 font-rammetto text-4xl text-[var(--text-charcoal)] sm:text-5xl">Three</dd>
+                  <dd className="order-1 font-rammetto text-4xl text-[var(--primary-orange)] sm:text-5xl">Three</dd>
                 </div>
               </dl>
             </div>
@@ -118,7 +118,7 @@ const Statistics = () => {
               </div>
               <h2
                 id="mentors-heading"
-                className="font-rammetto text-4xl text-[var(--text-charcoal)] md:text-5xl"
+                className="font-rammetto text-4xl text-[var(--primary-orange)] md:text-5xl"
               >
                 Team
               </h2>
@@ -145,7 +145,7 @@ const Statistics = () => {
       </section>
 
       <section className="bg-[var(--primary-orange)] py-8" aria-label="2026 summer statistics summary">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-center gap-3 px-4 text-center text-[var(--text-charcoal)] sm:flex-row sm:gap-5">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-center gap-3 px-4 text-center text-white sm:flex-row sm:gap-5">
           <CalendarDays className="h-7 w-7 flex-none" aria-hidden="true" />
           <p className="text-lg font-bold sm:text-xl">
             10 live cohorts over three weeks

@@ -1,4 +1,3 @@
-import StudentApplicationButton from '../components/ui/student-application-button';
 import { useEffect, type ReactNode } from 'react';
 import {
   ArrowRight,
@@ -12,7 +11,7 @@ import {
 import StaffImage from '../components/ui/staff-image';
 import { RECORDS_PAGE } from '../config/records';
 import { mentors } from '../data/mentors';
-import { INTERN_FORM_URL } from '../lib/links';
+import { APPLY_FORM_URL, INTERN_FORM_URL } from '../lib/links';
 
 const recordTeam = mentors;
 
@@ -67,7 +66,7 @@ const SectionHeading = ({
     </p>
     <h2
       id={id}
-      className="mt-3 font-rammetto text-[2rem] text-[var(--text-charcoal)] sm:text-4xl md:text-5xl"
+      className="mt-3 font-rammetto text-[2rem] text-[var(--primary-orange)] sm:text-4xl md:text-5xl"
     >
       {title}
     </h2>
@@ -94,7 +93,7 @@ const Records = () => {
 
   return (
     <div className="overflow-hidden bg-[var(--bg-cream)]">
-      <section className="relative overflow-hidden bg-[var(--primary-orange)] py-20 text-[var(--text-charcoal)] shadow-lg">
+      <section className="relative overflow-hidden bg-[var(--primary-orange)] py-20 text-white shadow-lg">
         <div className="pointer-events-none absolute inset-y-0 right-0 w-full opacity-20 sm:opacity-25 md:w-[46%] md:opacity-30">
           <img
             src="/mascots/Trophy.png"
@@ -104,8 +103,8 @@ const Records = () => {
           />
         </div>
         <div className="relative z-10 mx-auto max-w-7xl px-4 text-center">
-          <h1 className="font-rammetto text-5xl text-[var(--text-charcoal)] md:text-7xl">{RECORDS_PAGE.label}</h1>
-          <p className="mx-auto mt-5 max-w-3xl text-xl font-semibold leading-relaxed text-[var(--text-charcoal)] md:text-2xl">
+          <h1 className="font-rammetto text-5xl text-white md:text-7xl">{RECORDS_PAGE.label}</h1>
+          <p className="mx-auto mt-5 max-w-3xl text-xl font-semibold leading-relaxed text-white/90 md:text-2xl">
             A look inside Ignite&apos;s student-led learning environment.
           </p>
         </div>
@@ -121,23 +120,23 @@ const Records = () => {
           </SectionHeading>
 
           <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
-            <article className="relative overflow-hidden rounded-[2.5rem] bg-[var(--primary-orange)] p-7 text-[var(--text-charcoal)] shadow-xl shadow-orange-100 sm:p-9 md:p-10">
+            <article className="relative overflow-hidden rounded-[2.5rem] bg-[var(--primary-orange)] p-7 text-white shadow-xl shadow-orange-100 sm:p-9 md:p-10">
               <div className="relative z-10">
-                <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-[var(--text-charcoal)]">Interest &amp; choice</p>
-                <h3 className="mt-3 max-w-2xl text-2xl font-bold text-[var(--text-charcoal)] sm:text-3xl">
+                <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-white/75">Interest &amp; choice</p>
+                <h3 className="mt-3 max-w-2xl text-2xl font-bold text-white sm:text-3xl">
                   Students came ready to explore.
                 </h3>
                 <dl className="mt-8 grid grid-cols-2 gap-3 sm:gap-5">
-                  <div className="rounded-3xl bg-white/30 p-5 backdrop-blur-sm sm:p-6">
+                  <div className="rounded-3xl bg-white/15 p-5 backdrop-blur-sm sm:p-6">
                     <UsersRound className="h-7 w-7" aria-hidden="true" />
-                    <dd className="mt-5 font-rammetto text-4xl leading-none text-[var(--text-charcoal)] sm:text-5xl md:text-6xl">
+                    <dd className="mt-5 font-rammetto text-4xl leading-none text-white sm:text-5xl md:text-6xl">
                       {statistics.applications}
                     </dd>
-                    <dt className="mt-3 font-bold text-[var(--text-charcoal)]">Applications</dt>
+                    <dt className="mt-3 font-bold text-white/90">Applications</dt>
                   </div>
                   <div className="rounded-3xl bg-white p-5 text-[var(--text-charcoal)] shadow-lg sm:p-6">
                     <BookOpenCheck className="h-7 w-7 text-[var(--primary-orange)]" aria-hidden="true" />
-                    <dd className="mt-5 font-rammetto text-4xl leading-none text-[var(--text-charcoal)] sm:text-5xl md:text-6xl">
+                    <dd className="mt-5 font-rammetto text-4xl leading-none text-[var(--primary-orange)] sm:text-5xl md:text-6xl">
                       {statistics.courseSelections}
                     </dd>
                     <dt className="mt-3 font-bold">Course selections</dt>
@@ -148,11 +147,11 @@ const Records = () => {
 
             <article className="relative overflow-hidden rounded-[2.5rem] border-2 border-orange-100 bg-[var(--bg-cream)] p-7 shadow-sm sm:p-9 md:p-10">
               <div className="flex items-center gap-4">
-                <span className="flex h-14 w-14 flex-none items-center justify-center rounded-2xl bg-orange-100 text-[var(--text-charcoal)]">
+                <span className="flex h-14 w-14 flex-none items-center justify-center rounded-2xl bg-orange-100 text-[var(--primary-orange)]">
                   <Globe2 className="h-7 w-7" aria-hidden="true" />
                 </span>
                 <div>
-                  <p className="text-sm font-extrabold uppercase tracking-[0.16em] text-[var(--text-charcoal)]">Program reach</p>
+                  <p className="text-sm font-extrabold uppercase tracking-[0.16em] text-[var(--primary-orange)]">Program reach</p>
                   <h3 className="mt-1 text-2xl font-bold text-[var(--text-charcoal)]">A wide Ignite community</h3>
                 </div>
               </div>
@@ -162,13 +161,13 @@ const Records = () => {
                     <School className="h-6 w-6 text-[var(--primary-orange)]" aria-hidden="true" />
                     Schools
                   </dt>
-                  <dd className="font-rammetto text-5xl leading-none text-[var(--text-charcoal)]">
+                  <dd className="font-rammetto text-5xl leading-none text-[var(--primary-orange)]">
                     {statistics.schools}
                   </dd>
                 </div>
                 <div className="flex items-end justify-between gap-4">
                   <dt className="max-w-36 font-bold leading-snug text-[var(--text-charcoal)]">Countries / regions</dt>
-                  <dd className="font-rammetto text-5xl leading-none text-[var(--text-charcoal)]">
+                  <dd className="font-rammetto text-5xl leading-none text-[var(--primary-orange)]">
                     {statistics.countriesAndRegions}
                   </dd>
                 </div>
@@ -188,20 +187,20 @@ const Records = () => {
             <article className="rounded-[2.5rem] border-2 border-orange-100 bg-[var(--bg-cream)] p-7 shadow-sm sm:p-9 md:p-10">
               <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
                 <div>
-                  <p className="text-sm font-extrabold uppercase tracking-[0.16em] text-[var(--text-charcoal)]">Live learning</p>
+                  <p className="text-sm font-extrabold uppercase tracking-[0.16em] text-[var(--primary-orange)]">Live learning</p>
                   <h3 className="mt-2 text-2xl font-bold text-[var(--text-charcoal)] sm:text-3xl">Built around real-time connection</h3>
                 </div>
                 <CalendarDays className="h-10 w-10 flex-none text-[var(--primary-orange)]" aria-hidden="true" />
               </div>
               <dl className="mt-8 grid grid-cols-2 gap-4">
                 <div>
-                  <dd className="font-rammetto text-5xl leading-none text-[var(--text-charcoal)]">
+                  <dd className="font-rammetto text-5xl leading-none text-[var(--primary-orange)]">
                     {statistics.liveCohorts}
                   </dd>
                   <dt className="mt-3 font-bold text-[var(--text-charcoal)]">Live cohorts</dt>
                 </div>
                 <div className="border-l-2 border-orange-100 pl-5">
-                  <dd className="font-rammetto text-5xl leading-none text-[var(--text-charcoal)]">
+                  <dd className="font-rammetto text-5xl leading-none text-[var(--primary-orange)]">
                     {statistics.programWeeks}
                   </dd>
                   <dt className="mt-3 font-bold text-[var(--text-charcoal)]">Program weeks</dt>
@@ -250,7 +249,7 @@ const Records = () => {
                   href={INTERN_FORM_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="ignite-button mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 font-bold text-[var(--text-charcoal)] shadow-lg transition-all hover:text-[var(--text-charcoal)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300"
+                  className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 font-bold text-[var(--text-charcoal)] shadow-lg transition-all hover:scale-105 hover:text-[var(--primary-orange)] active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300"
                 >
                   Apply as an Intern
                   <ArrowRight className="h-5 w-5" aria-hidden="true" />
@@ -278,7 +277,7 @@ const Records = () => {
             {studentWork.map((item) => (
               <article
                 key={item.course}
-                className="flex h-full flex-col overflow-hidden rounded-[2rem] border-2 border-orange-50 bg-white shadow-sm transition-all duration-300 hover:border-orange-200 hover:shadow-xl"
+                className="flex h-full flex-col overflow-hidden rounded-[2rem] border-2 border-orange-50 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-orange-200 hover:shadow-xl"
               >
                 <div className="aspect-[16/10] overflow-hidden bg-white">
                   <img
@@ -289,7 +288,7 @@ const Records = () => {
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-6">
-                  <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-[var(--text-charcoal)]">
+                  <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-[var(--primary-orange)]">
                     {item.course}
                   </p>
                   <h3 className="mt-2 text-xl font-bold leading-snug text-[var(--text-charcoal)]">
@@ -306,11 +305,20 @@ const Records = () => {
 
       <section className="rounded-t-[4rem] bg-white py-24">
         <div className="mx-auto max-w-4xl px-4 text-center">
-          <h2 className="mb-6 font-rammetto text-4xl text-[var(--text-charcoal)]">Explore What’s Next</h2>
+          <h2 className="mb-6 font-rammetto text-4xl text-[var(--primary-orange)]">Apply Now!</h2>
           <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-[var(--text-light)]">
-            These records look back at Summer 2026. Ignite is now developing a broader curriculum in practical life skills and career exploration. Check the Program page for availability and participation details.
+            Applications are open for our online summer program. Students can apply for free and choose the courses
+            that fit their schedule.
           </p>
-          <StudentApplicationButton className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-10 py-5 text-xl font-bold text-[var(--text-charcoal)] shadow-lg transition-all hover:shadow-orange-200 " />
+          <a
+            href={APPLY_FORM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-10 py-5 text-xl font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-orange-200 active:scale-95"
+          >
+            Apply Now
+            <ArrowRight className="h-5 w-5 flex-none" aria-hidden="true" />
+          </a>
         </div>
       </section>
     </div>

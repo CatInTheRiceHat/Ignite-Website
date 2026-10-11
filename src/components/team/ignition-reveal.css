@@ -2,12 +2,12 @@
   position: relative;
   /* Rotate the whole card, including its background, inside a stable grid slot. */
   --ignition-delay: 0ms;
-  transform: none;
   transform-origin: center;
   backface-visibility: hidden;
 }
 
 .ignition-card-content {
+  height: 100%;
   opacity: 1;
 }
 
@@ -41,6 +41,11 @@
   }
 
   .ignition-card {
+    transform: none !important;
+  }
+
+  .ignition-card:hover > .ignition-card-content > div,
+  .ignition-card:hover .transform {
     transform: none !important;
   }
 }

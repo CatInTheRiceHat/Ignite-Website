@@ -8,7 +8,7 @@ const NotFound = () => {
       </div>
       
       <div className="mt-12 space-y-6">
-        <h1 className="text-4xl md:text-6xl font-rammetto text-[var(--text-charcoal)] leading-[1.24]">
+        <h1 className="text-4xl md:text-6xl font-rammetto text-[var(--primary-orange)] leading-[1.24]">
           This page is not here.
         </h1>
         <p className="text-xl text-[var(--text-light)] max-w-lg mx-auto leading-relaxed">
@@ -18,7 +18,7 @@ const NotFound = () => {
         <div className="pt-8">
           <Link 
             to="/" 
-            className="ignite-button inline-block bg-[var(--primary-orange)] text-[var(--text-charcoal)] px-12 py-5 rounded-full font-bold text-xl transition-all shadow-lg hover:shadow-orange-200"
+            className="inline-block bg-[var(--primary-orange)] text-white px-12 py-5 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-orange-200"
           >
             Back Home
           </Link>
