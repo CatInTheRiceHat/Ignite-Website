@@ -65,10 +65,10 @@ export function IgnitionGroup({ children, className }: { children: ReactNode; cl
           const bounds = card.getBoundingClientRect();
           return bounds.bottom > 0 && bounds.top < window.innerHeight - 32;
         });
-        const staggerMs = Math.min(80, 480 / Math.max(visibleCards.length - 1, 1));
+        const staggerMs = Math.min(350, 1400 / Math.max(visibleCards.length - 1, 1));
         for (const [index, card] of visibleCards.entries()) {
           pending.delete(card);
-          card.style.setProperty('--ignition-delay', `${index * staggerMs}ms`);
+          card.style.setProperty('--ignition-delay', `${250 + index * staggerMs}ms`);
           revealed.current.add(card.dataset.ignitionId!);
           card.dataset.ignitionState = 'playing';
           observer?.unobserve(card);
