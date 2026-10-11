@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
-import { type ReactNode } from 'react';
+import { useMemo, type ReactNode } from 'react';
+import { useBriefAnimation } from '../../lib/use-brief-animation';
 
 interface BlurFadeProps {
   children: ReactNode;
@@ -9,16 +9,15 @@ interface BlurFadeProps {
 }
 
 const BlurFade = ({ children, delay = 0, yOffset = 16, className }: BlurFadeProps) => {
+  const frames = useMemo(() => [
+    { opacity: 0.8, transform: `translateY(${Math.min(Math.max(yOffset, 0), 8)}px)` },
+    { opacity: 1, transform: 'translateY(0)' },
+  ], [yOffset]);
+  const ref = useBriefAnimation(frames, 420, delay * 1000);
   return (
-    <motion.div
-      initial={{ opacity: 0, y: yOffset, filter: 'blur(8px)' }}
-      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.55, delay, ease: [0.21, 0.47, 0.32, 0.98] }}
-      className={className}
-    >
+    <div ref={ref} className={className} data-brief-reveal>
       {children}
-    </motion.div>
+    </div>
   );
 };
 

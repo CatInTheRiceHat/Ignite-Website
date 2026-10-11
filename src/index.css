@@ -21,4 +21,30 @@
     @apply font-display font-bold;
     line-height: 1.25;
   }
+
+  :where(a, button, input, select, textarea):focus-visible {
+    outline: 3px solid var(--text-charcoal);
+    outline-offset: 4px;
+  }
+}
+
+.ignite-button {
+  transition: transform 120ms ease-out, background-color 120ms ease-out, box-shadow 120ms ease-out;
+}
+.ignite-button:not(:disabled):hover { transform: translateY(-1px); }
+.ignite-button:not(:disabled):active { transform: translateY(0) scale(0.98); }
+.ignite-button:disabled { transform: none !important; }
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 3px solid var(--text-charcoal);
+  outline-offset: 4px;
+  box-shadow: 0 0 0 2px white;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+  }
+  .ignite-button:hover, .ignite-button:active { transform: none !important; }
 }

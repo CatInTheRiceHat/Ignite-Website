@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useSpring, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Megaphone, Menu, X } from 'lucide-react';
-import { APPLY_FORM_URL } from '../../lib/links';
+import StudentApplicationButton from '../ui/student-application-button';
 import { RECORDS_PAGE } from '../../config/records';
 
 const announcementText = "Winter 2026 applications are now open! We're looking for interns to support Ignite.";
 
 const Navbar = () => {
+  const reduceMotion = useReducedMotion();
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const { scrollYProgress } = useScroll();
@@ -41,23 +42,23 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/85 backdrop-blur-md shadow-sm">
       <motion.div
-        style={{ scaleX }}
+        style={{ scaleX: reduceMotion ? scrollYProgress : scaleX }}
         className="absolute bottom-0 left-0 right-0 h-[3px] bg-[var(--primary-orange)] origin-left z-50"
       />
       <div className="max-w-7xl mx-auto px-4 h-24 md:h-28 flex items-center justify-between transition-all duration-300">
         {/* Mobile Header */}
         <div className="w-full md:w-auto flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3 text-[1.7rem] md:text-[1.95rem] font-rammetto text-[var(--primary-orange)] group">
+          <Link to="/" className="flex items-center gap-3 text-[1.7rem] md:text-[1.95rem] font-rammetto text-[var(--text-charcoal)] group">
             <img
               src="/mascots/Logo.png"
               alt="Ignite"
-              className="w-10 h-10 object-contain transition-transform group-hover:scale-105"
+              className="w-10 h-10 object-contain transition-transform "
             />
             Ignite
           </Link>
           
           <button 
-            className="md:hidden flex h-11 w-11 items-center justify-center rounded-full text-[var(--primary-orange)] transition-colors hover:bg-orange-50"
+            className="ignite-button md:hidden flex h-11 w-11 items-center justify-center rounded-full text-[var(--text-charcoal)] transition-colors hover:bg-orange-50"
             onClick={() => setIsOpen((open) => !open)}
             aria-label="Toggle menu"
             aria-expanded={isOpen}
@@ -75,35 +76,27 @@ const Navbar = () => {
               key={link.path}
               to={link.path}
               className={({ isActive }) =>
-                `transition-colors hover:text-[var(--primary-orange)] ${isActive ? 'text-[var(--primary-orange)] border-b-2 border-[var(--primary-orange)]' : 'text-[var(--text-light)]'}`
+                `transition-colors hover:text-[var(--text-charcoal)] ${isActive ? 'text-[var(--text-charcoal)] border-b-2 border-[var(--primary-orange)]' : 'text-[var(--text-light)]'}`
               }
             >
               {link.name}
             </NavLink>
           ))}
-          <a
-            href={APPLY_FORM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-[var(--primary-orange)] px-5 py-3 font-bold text-white shadow-md shadow-orange-100 transition-all hover:scale-105 hover:bg-[var(--primary-orange-dark)] active:scale-95"
-          >
-            Apply Now
-            <ArrowRight className="h-5 w-5 flex-none" aria-hidden="true" />
-          </a>
+          <StudentApplicationButton compact className="inline-flex items-center gap-2 rounded-full bg-[var(--primary-orange)] px-5 py-3 font-bold text-[var(--text-charcoal)] shadow-md shadow-orange-100 transition-all hover:bg-[var(--primary-orange-dark)] " />
         </div>
 
       </div>
       <Link
         to="/hiring"
         aria-label={announcementText}
-        className="group flex min-h-12 items-center justify-center bg-[var(--text-charcoal)] px-4 py-2 text-center text-white transition-colors hover:bg-[var(--primary-orange-dark)]"
+        className="group flex min-h-12 items-center justify-center bg-[var(--text-charcoal)] px-4 py-2 text-center text-white transition-colors hover:bg-[var(--primary-orange-dark)] hover:text-[var(--text-charcoal)]"
       >
         <span className="flex w-full min-w-0 max-w-7xl items-center justify-center gap-2 text-[0.7rem] font-bold leading-tight sm:text-base md:text-lg">
-          <Megaphone className="h-4 w-4 flex-none text-white sm:h-5 sm:w-5" aria-hidden="true" />
+          <Megaphone className="h-4 w-4 flex-none sm:h-5 sm:w-5" aria-hidden="true" />
           <span className="block min-w-0 max-w-[38ch] flex-1 whitespace-normal text-center sm:max-w-none sm:flex-none">
             {announcementText}
           </span>
-          <ArrowRight className="hidden h-4 w-4 flex-none transition-transform group-hover:translate-x-1 sm:block" aria-hidden="true" />
+          <ArrowRight className="hidden h-4 w-4 flex-none transition-transform sm:block" aria-hidden="true" />
         </span>
       </Link>
       {/* Mobile Links */}
@@ -111,11 +104,11 @@ const Navbar = () => {
         {isOpen && (
           <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0, y: -8 }}
+            initial={reduceMotion ? false : { opacity: 1, y: -4 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.18, ease: 'easeInOut' }}
-            className="md:hidden absolute left-0 right-0 top-full border-t border-orange-100 bg-white shadow-lg"
+            exit={reduceMotion ? { opacity: 1 } : { opacity: 0, y: -4 }}
+            transition={{ duration: reduceMotion ? 0 : 0.12, ease: 'easeInOut' }}
+            className="md:hidden absolute left-0 right-0 top-full max-h-[calc(100dvh-9rem)] overflow-y-auto overscroll-contain border-t border-orange-100 bg-white shadow-lg"
           >
             <div className="mx-auto flex max-w-7xl flex-col px-4 py-4 font-semibold text-base">
               {navLinks.map((link) => (
@@ -124,22 +117,13 @@ const Navbar = () => {
                   to={link.path}
                   onClick={() => setIsOpen(false)}
                   className={({ isActive }) =>
-                    `rounded-lg px-4 py-3 transition-colors hover:bg-orange-50 hover:text-[var(--primary-orange)] ${isActive ? 'text-[var(--primary-orange)]' : 'text-[var(--text-light)]'}`
+                    `rounded-lg px-4 py-3 transition-colors hover:bg-orange-50 hover:text-[var(--text-charcoal)] ${isActive ? 'text-[var(--text-charcoal)]' : 'text-[var(--text-light)]'}`
                   }
                 >
                   {link.name}
                 </NavLink>
               ))}
-              <a
-                href={APPLY_FORM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setIsOpen(false)}
-                className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-6 py-3 text-center font-bold text-white shadow-md shadow-orange-100 transition-all active:scale-95"
-              >
-                Apply Now
-                <ArrowRight className="h-5 w-5 flex-none" aria-hidden="true" />
-              </a>
+              <StudentApplicationButton compact className="ignite-button mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-6 py-3 text-center font-bold text-[var(--text-charcoal)] shadow-md shadow-orange-100 transition-all " />
             </div>
           </motion.div>
         )}
