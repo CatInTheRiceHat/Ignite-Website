@@ -73,7 +73,7 @@ export function IgnitionGroup({ children, className }: { children: ReactNode; cl
     };
 
     const finish = (event: AnimationEvent) => {
-      if (event.animationName !== 'ignite-card-fade' || !(event.target instanceof Element)) return;
+      if (event.animationName !== 'ignite-card-flip' || !(event.target instanceof Element)) return;
       const card = event.target.closest<HTMLElement>('[data-ignition-id]');
       if (card) complete(card);
     };
