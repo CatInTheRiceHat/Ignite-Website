@@ -7,8 +7,8 @@ import Expansion from '../components/program/Expansion';
 const CourseCard = ({ course }: { course: DevelopmentCourse }) => (
   <article className="bg-white rounded-[2rem] overflow-hidden hover:shadow-lg transition-shadow border-2 border-orange-100 h-full">
     {course.headerImage ? (
-      <div className="h-32 sm:h-36 overflow-hidden bg-orange-50">
-        <img src={course.headerImage} alt="" className="h-full w-full object-cover" style={{ objectPosition: course.headerPosition ?? 'center' }} loading="lazy" />
+      <div className="overflow-hidden bg-orange-50">
+        <img src={course.headerImage} alt="" className="block h-auto w-full" loading="lazy" />
       </div>
     ) : (
       <div className="h-32 sm:h-36 flex items-center justify-center bg-orange-50">
