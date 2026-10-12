@@ -134,7 +134,7 @@ const Statistics = () => {
           <BlurFade delay={0.08}>
             <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] bg-orange-100 shadow-xl">
               <img
-                src="/courses/Digital%20Design.jpeg"
+                src="/courses/Digital%20Design.jpeg?v=fce78e31"
                 alt="Ignite mascot displaying artwork on an easel"
                 className="h-full w-full object-cover object-center"
                 loading="lazy"
