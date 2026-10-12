@@ -1,4 +1,6 @@
 import { readFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { createRequire } from 'node:module';
 import { expect, it } from 'vitest';
 import { extractPublicText } from '../../scripts/index-sol-site';
 import { relevantSiteContent } from '../../server/sol/knowledge';
@@ -6,6 +8,18 @@ import { siteContent } from '../../server/sol/site-content';
 import { programFaqs } from '../../src/data/program';
 import { interns, mentors } from '../../src/data/mentors';
 import { RECORDS_PAGE } from '../../src/config/records';
+
+it('indexes every public page in a fresh production process without router or dependency-scan failures', () => {
+  const cli = createRequire(import.meta.url).resolve('tsx/cli');
+  const result = spawnSync(process.execPath, [cli, 'scripts/index-sol-site.ts'], {
+    cwd: process.cwd(), env: { PATH: process.env.PATH, NODE_ENV: 'production' },
+    encoding: 'utf8', timeout: 30000,
+  });
+  expect(result.error).toBeUndefined();
+  expect(result.status, result.stderr).toBe(0);
+  expect(result.stdout).toContain('Indexed 9 public website pages for Sol.');
+  expect(result.stderr).not.toMatch(/vite:dep-scan|Cannot destructure|Request is outdated/);
+}, 35000);
 
 it('extracts readable public text while excluding scripts, attributes, icons and hidden animation values', () => {
   const text = extractPublicText(`<section class="hidden decoration"><h1>Questions &amp; Answers</h1>

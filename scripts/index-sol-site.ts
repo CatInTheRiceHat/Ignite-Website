@@ -1,9 +1,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
-import { createElement, type ComponentType } from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
-import { StaticRouter } from 'react-router-dom';
+import type { ComponentType } from 'react';
 import { createServer } from 'vite';
 
 const publicPages = [
@@ -53,12 +51,17 @@ export function extractPublicText(html: string) {
 
 export async function indexPublicSite() {
   const root = fileURLToPath(new URL('../', import.meta.url));
-  const vite = await createServer({ root, logLevel: 'error', server: { middlewareMode: true, watch: null }, appType: 'custom' });
+  const vite = await createServer({
+    root, logLevel: 'error', server: { middlewareMode: true, watch: null }, appType: 'custom',
+    // This server only renders pages; scanning browser HTML entries can race with its shutdown.
+    optimizeDeps: { noDiscovery: true, include: [] },
+  });
   try {
+    const { renderPublicPage } = await vite.ssrLoadModule('/scripts/render-sol-page.ts') as typeof import('./render-sol-page.js');
     const pages = [];
     for (const page of publicPages) {
       const { default: Page } = await vite.ssrLoadModule(`/${page.source}`) as { default: ComponentType };
-      const text = extractPublicText(renderToStaticMarkup(createElement(StaticRouter, { location: page.path }, createElement(Page))));
+      const text = extractPublicText(renderPublicPage(Page, page.path));
       if (!text) throw new Error(`No public text rendered for ${page.path}`);
       pages.push({ ...page, text });
     }
