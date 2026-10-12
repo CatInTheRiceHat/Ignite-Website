@@ -36,7 +36,7 @@ export const developmentCourses: DevelopmentCourse[] = [
   { title: 'Content Creation & Digital Storytelling', format: 'live', icon: '/mascots/Artist.png', headerImage: '/courses/Content%20Creation%20&%20Digital%20Storytelling.jpg' },
   { title: 'Professional Communication & Public Speaking', format: 'live', icon: '/mascots/Microphone.png', headerImage: '/courses/Communication.jpeg', headerPosition: 'center top' },
   { title: 'Game Development (Scratch)', format: 'live', icon: '/mascots/Laptop.png', headerImage: '/courses/Game%20Development%20(Scratch).jpg' },
-  { title: 'Productivity, Time Management & Organization', format: 'independent', icon: '/mascots/Productivity.png', headerImage: '/courses/Productivity,%20Time%20Management%20&%20Organization.jpg?v=4eacf137' },
+  { title: 'Productivity, Time Management & Organization', format: 'independent', icon: '/mascots/Productivity.png', headerImage: '/courses/Productivity,%20Time%20Management%20&%20Organization.jpg?v=f3b4083f' },
   { title: 'Marketing, Branding & Digital Design', format: 'independent', icon: '/mascots/Artist.png', headerImage: '/courses/Digital%20Design.jpeg?v=fce78e31' },
   { title: 'Scientific Research & Data Analysis', format: 'independent', icon: '/mascots/Research.png', headerImage: '/courses/Science%20Research.jpeg' },
   { title: 'Social Impact & Project Development', format: 'independent', icon: '/mascots/Project.png', headerImage: '/courses/Project%20and%20Nonprofit%20Building.jpeg' },
