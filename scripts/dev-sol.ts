@@ -1,7 +1,10 @@
 import { createServer as createHttpServer } from 'node:http';
 import { once } from 'node:events';
 import { createServer as createViteServer } from 'vite';
-import { createHandler } from '../server/sol/http.js';
+import { indexPublicSite } from './index-sol-site.js';
+
+await indexPublicSite();
+const { createHandler } = await import('../server/sol/http.js');
 
 const handlers = { '/api/chat': createHandler('chat'), '/api/status': createHandler('status') };
 const api = createHttpServer((req, res) => {

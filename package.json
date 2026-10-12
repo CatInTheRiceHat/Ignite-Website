@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "prebuild": "tsx scripts/index-sol-site.ts",
     "dev": "tsx --env-file-if-exists=.env.local scripts/dev-sol.ts",
     "build": "tsc -b && npm run typecheck:sol && vite build && npm run build:sol",
     "lint": "eslint .",

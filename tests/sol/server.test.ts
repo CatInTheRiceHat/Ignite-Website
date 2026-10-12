@@ -63,6 +63,34 @@ describe('public API', () => {
     expect(relevantKnowledge('lottery').map(item => item.id)).toEqual(['about', 'help']);
   });
 
+  it('sends website founder facts to the provider and returns a direct answer with team navigation', async () => {
+    const answer = 'Ignite’s cofounders are Elaine Che (Chief Technology Officer), Austin Zhao (Chief Executive Officer), and Michael Zhao (Chief Outreach Officer).';
+    const upstream = mockFetch(provider({ answer, destinationIds: ['team'] }));
+    const response = await post(await start(upstream), { message: 'Who are the cofounders?' });
+    expect(response.status).toBe(200);
+    const reply = await response.json();
+    expect(reply.answer).toBe(answer);
+    expect(reply.navigation[0].url).toBe(`${origin}/team`);
+    const instructions = JSON.parse(upstream.mock.calls[1][1].body).instructions;
+    for (const name of ['Elaine Che', 'Austin Zhao', 'Michael Zhao']) expect(instructions).toContain(name);
+    expect(instructions).toContain('src/data/mentors.ts');
+    expect(instructions).toContain('state it directly');
+    expect(instructions).toContain('Approved website content:');
+    expect(instructions).toContain('"path":"/team"');
+    expect(instructions).not.toContain('Do not invent team names; link to the team page.');
+  });
+
+  it('includes actual page details for questions outside the curated summary keywords', async () => {
+    const upstream = mockFetch();
+    const response = await post(await start(upstream), { message: 'What is Cleanse Nonprofit?' });
+    expect(response.status).toBe(200);
+    const instructions = JSON.parse(upstream.mock.calls[1][1].body).instructions;
+    const pages = JSON.parse(instructions.split('Approved website content: ')[1].split('\nApproved destinations:')[0]);
+    expect(pages[0].path).toBe('/records');
+    expect(pages[0].source).toBe('src/pages/Records.tsx');
+    expect(pages[0].text).toContain('misinformation');
+  });
+
   it.each(['unknown', '__proto__', 'https://evil.example', 'constructor'])('rejects unapproved destination %s', async id => {
     const response = await post(await start(mockFetch(provider({ answer: 'Go here', destinationIds: [id] }))), { message: 'Where?' });
     expect(response.status).toBe(502); expect(await response.text()).not.toContain(id);
