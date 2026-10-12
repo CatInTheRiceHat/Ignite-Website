@@ -46,13 +46,13 @@ export const developmentCourses: DevelopmentCourse[] = [
   { title: 'Cybersecurity, Online Safety & Media Literacy', format: 'independent', icon: '/mascots/Laptop.png', headerImage: '/courses/Cybersecurity,%20Online%20Safety%20&%20Media%20Literacy.jpg?v=b666addf' },
   { title: 'Career Exploration & Pathway Planning', format: 'independent', icon: '/mascots/Graduation.png', headerImage: '/courses/Career%20Exploration%20&%20Pathway%20Planning.jpg' },
   { title: 'Financial Literacy & Economics', format: 'independent', icon: '/mascots/Finance.png', headerImage: '/courses/Financial%20Literacy%20&%20Economics.jpg?v=045e492c' },
-  { title: 'Entrepreneurship & Business Building', format: 'independent', icon: '/mascots/Project.png' },
-  { title: 'Leadership, Teamwork & Conflict Resolution', format: 'independent', icon: '/mascots/Mentors.png' },
-  { title: 'Civic Literacy & Community Action', format: 'independent', icon: '/mascots/Project.png' },
-  { title: 'Relationships, Boundaries & Social Skills', format: 'independent', icon: '/mascots/Mentors.png' },
-  { title: 'Emergency Preparedness & Safety', format: 'independent', icon: '/mascots/Lightbulb.png' },
-  { title: 'Introductory Physics and Astronomy', format: 'independent', icon: '/mascots/Research.png' },
-  { title: 'Intro to Computer Science (Python)', format: 'independent', icon: '/mascots/Laptop.png' },
+  { title: 'Entrepreneurship & Business Building', format: 'independent', icon: '/mascots/Project.png', headerImage: '/courses/Entrepreneurship%20&%20Business%20Building.jpg' },
+  { title: 'Leadership, Teamwork & Conflict Resolution', format: 'independent', icon: '/mascots/Mentors.png', headerImage: '/courses/Leadership,%20Teamwork%20&%20Conflict%20Resolution.jpg' },
+  { title: 'Civic Literacy & Community Action', format: 'independent', icon: '/mascots/Project.png', headerImage: '/courses/Civic%20Literacy%20&%20Community%20Action.jpg' },
+  { title: 'Relationships, Boundaries & Social Skills', format: 'independent', icon: '/mascots/Mentors.png', headerImage: '/courses/Relationships,%20Boundaries%20&%20Social%20Skills.jpg' },
+  { title: 'Emergency Preparedness & Safety', format: 'independent', icon: '/mascots/Lightbulb.png', headerImage: '/courses/Emergency%20Preparedness%20&%20Safety.jpg' },
+  { title: 'Introductory Physics and Astronomy', format: 'independent', icon: '/mascots/Research.png', headerImage: '/courses/Introductory%20Physics%20and%20Astronomy.jpg' },
+  { title: 'Intro to Computer Science (Python)', format: 'independent', icon: '/mascots/Laptop.png', headerImage: '/courses/Intro%20to%20Computer%20Science%20(Python).jpg' },
 ];
 
 export const courseCounts = {
