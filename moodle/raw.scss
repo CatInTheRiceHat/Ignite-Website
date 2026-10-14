@@ -36,7 +36,8 @@ $ignite-catalog-link: #A63B00; // Existing preset's accessible orange link shade
 $ignite-catalog-border: #F2D5BB;
 $ignite-catalog-body: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
 $ignite-catalog-heading: "Poppins", "Segoe UI", Arial, sans-serif;
-$ignite-catalog-title-height: 4.75rem;
+$ignite-catalog-image-title-gap: 1.5rem; // 24px at the default root font size.
+$ignite-catalog-title-height: 3.75rem + $ignite-catalog-image-title-gap;
 $ignite-catalog-details-height: 9.25rem;
 $ignite-catalog-extra-details-height: 11.5rem;
 $ignite-catalog-description-lines: 2;
@@ -45,10 +46,10 @@ $ignite-catalog-description-lines: 2;
 #page-course-index,
 #page-course-index-category,
 #page-course-search {
-    background-color: #fff5e8;
+    background-color: $ignite-catalog-cream;
 
     #page.drawers {
-        background-color: transparent;
+        background-color: $ignite-catalog-cream;
     }
 
     #page.drawers .main-inner {
@@ -217,7 +218,7 @@ $ignite-catalog-description-lines: 2;
                     align-items: flex-start;
                     gap: .5rem;
                     min-width: 0;
-                    margin: 1rem 1.25rem .5rem;
+                    margin: $ignite-catalog-image-title-gap 1.25rem .5rem;
                     padding-inline: .25rem;
 
                     > .coursename {
@@ -465,33 +466,8 @@ $ignite-catalog-description-lines: 2;
     }
 }
 
-// Use the image uploaded in Boost > General settings > Background image.
-// Boost supplies background-image; these properties prevent tiling and seams.
-// "cover" preserves the artwork's proportions and may crop its edges.
-// Boost 5.2 supplies the General background image only at widths >= 768px;
-// smaller screens use the fallback colour unless an image rule is configured.
-body {
-    background-color: #fff5e8;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
-}
-
-// Reveal the same background around the preset's white learner content panels.
-#page-site-index,
-#page-my-index,
-#page-my-indexsys,
-#page-my-courses {
-    background-color: #fff5e8;
-
-    #page.drawers {
-        background-color: transparent;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    body {
-        background-attachment: scroll;
-    }
+// Boost 5.2 login welcome: default title and headings entered in Instructions.
+// Keep the form heading, body copy, typography and panel layout unchanged.
+#page-login-index .login-layout-left .login-layout-left-content :is(h1, h2, h3, h4, h5, h6) {
+    color: #FFFFFF;
 }

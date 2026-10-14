@@ -9,8 +9,8 @@ export const courseFormats = {
   live: {
     label: 'Live',
     technicalLabel: 'Synchronous',
-    duration: 'One week',
-    commitment: 'Five 60-minute sessions, Monday through Friday, plus course-specific work outside class.',
+    duration: 'Two weeks',
+    commitment: 'Five 60-minute sessions per week, Monday through Friday, plus course-specific work outside class.',
     description: 'Learn together through live lessons, guided practice, discussion, and applied tasks that build toward a final project.',
     icon: '/mascots/Zoom.png',
   },
