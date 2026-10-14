@@ -1,0 +1,141 @@
+// Ignite starter preset for Moodle Boost 5.2.
+// Upload under Additional theme preset files, save, then select this preset.
+// Brand values from Ignite Program Style Guide, updated June 7, 2026.
+// Set Boost Brand colour to #F07B2A (or leave blank) to match this preset.
+// Load Google Fonts separately using Additional HTML > Within HEAD.
+// This preset uses system fallbacks until that font stylesheet is linked.
+// Boost's Brand colour setting, if populated, can override $primary below.
+// This styles existing Moodle components; it does not add dashboard content.
+
+
+$primary: #F07B2A !default;
+// Darkened link colour for readable small links on light surfaces.
+$link-color: #A63B00 !default;
+$body-color: #4A4A5E !default;
+$headings-color: #1A1A2E !default;
+$headings-font-family: "Poppins", "Segoe UI", Arial, sans-serif !default;
+$headings-font-weight: 700 !default;
+$font-family-sans-serif: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif !default;
+
+// Required Boost framework styles.
+@import "fontawesome";
+@import "bootstrap";
+@import "moodle";
+
+// Use the brand heading font for navigation and UI controls.
+.navbar .nav-link,
+.btn,
+.dashboard-card .coursename {
+    font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+    font-weight: 700;
+}
+
+// Limit larger visual changes to the learner landing screens.
+#page-site-index,
+#page-my-index,
+#page-my-indexsys,
+#page-my-courses {
+    background-color: #FFF8F0;
+
+    #page.drawers {
+        background-color: #FFF8F0;
+    }
+
+    #page.drawers .main-inner {
+        background-color: #fff;
+        border-radius: 1.25rem;
+        box-shadow: 0 6px 24px rgba(78, 42, 18, .05);
+    }
+
+    .page-header-headings h1 {
+        color: #1A1A2E;
+        font-family: "Rammetto One", "Poppins", sans-serif;
+        font-weight: 400;
+        letter-spacing: -.025em;
+    }
+
+    .block.card,
+    .dashboard-card {
+        border: 1px solid rgba(240, 123, 42, .24);
+        border-radius: 1rem;
+        box-shadow: 0 4px 16px rgba(78, 42, 18, .04);
+    }
+
+    .dashboard-card .dashboard-card-img {
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+        background-position: center;
+    }
+
+    .dashboard-card .coursename {
+        color: #1A1A2E;
+        font-weight: 700;
+    }
+
+    .block .card-title {
+        color: #1A1A2E;
+        font-weight: 700;
+    }
+
+    .btn-primary {
+        background-color: #F07B2A;
+        border-color: #F07B2A;
+        color: #1A1A2E;
+        border-radius: .75rem;
+        font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+        font-weight: 700;
+    }
+
+    .btn-primary:hover,
+    .btn-primary:active {
+        background-color: #D46A20;
+        border-color: #D46A20;
+        color: #1A1A2E;
+    }
+
+    .btn-primary:focus-visible {
+        outline: 3px solid #1A1A2E;
+        outline-offset: 3px;
+    }
+
+    .progress {
+        background-color: #f5e9de;
+        border-radius: 999px;
+    }
+
+    .progress-bar {
+        background-color: #F07B2A;
+    }
+}
+
+// Optional welcome component: add real content in a Text block or Site home.
+// Example class for the container: ignite-welcome
+.ignite-welcome {
+    padding: 1.75rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #f2d5bb;
+    border-radius: 1.25rem;
+    background-color: #FFF8F0;
+    border-left: .35rem solid #F07B2A;
+    color: #1A1A2E;
+}
+
+.ignite-welcome h2 {
+    color: #1A1A2E;
+    font-family: "Rammetto One", "Poppins", sans-serif;
+    font-weight: 400;
+    letter-spacing: -.025em;
+}
+
+@media (max-width: 767px) {
+    .ignite-welcome {
+        padding: 1.25rem;
+    }
+
+    #page-site-index #page.drawers .main-inner,
+    #page-my-index #page.drawers .main-inner,
+    #page-my-indexsys #page.drawers .main-inner,
+    #page-my-courses #page.drawers .main-inner {
+        border-radius: .75rem;
+    }
+}

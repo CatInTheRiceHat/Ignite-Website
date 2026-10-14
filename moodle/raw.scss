@@ -1,0 +1,458 @@
+// Ignite course catalog — paste this entire file into Boost > Advanced settings
+// > Raw SCSS (NOT Raw initial SCSS or Additional theme preset files), then save.
+// Keep the existing preset, moodle/theme.scss; this is its catalog companion.
+// No Sass imports, framework rebuild, HTML changes, or JavaScript are required.
+//
+// Evidence checked 2026-10-13:
+// - learn.ignitefindyourfire.org/login/index.php: M.cfg.theme = "boost";
+//   Nunito, Poppins, and Rammetto One are already loaded in the page head.
+// - /lib/UPGRADING.md matches official v5.2.3 byte-for-byte (5.2 branch).
+//   The precise installed patch/build is not exposed; confirm in Notifications.
+// - Live Boost CSS confirms .coursebox, .teachers, .courseimage, .summary,
+//   .coursecat, .customfields-container, and the existing 100px image limit.
+// - Category/search pages require login: authenticated DOM is NOT verified.
+//   Structure checked against the matching official Moodle 5.2.3 source:
+//   https://github.com/moodle/moodle/blob/v5.2.3/public/course/renderer.php
+//   https://github.com/moodle/moodle/blob/v5.2.3/public/course/index.php
+//   https://github.com/moodle/moodle/blob/v5.2.3/public/lib/templates/search_input.mustache
+//   Verify once signed in, including a manager account and collapsed categories.
+//
+// This targets category listings and /course/search.php. If global search replaces
+// course search, /search/index.php uses core_search/result without course covers
+// or teacher data: SCSS cannot supply those missing fields. It is left unchanged.
+// Moodle may omit summaries/covers above its "Courses with summaries limit".
+// Collapsed courses retain their native info/expand control; CSS cannot fetch data.
+//
+// Brand: IGNITE_STYLE_GUIDE.md, src/index.css, tailwind.config.js, theme.scss.
+// Sol is the EXISTING flame with eyes and no mouth. The optional decorative
+// missing-cover background uses our public HTTPS artwork; cream remains if offline.
+
+$ignite-catalog-cream: #FFF8F0;
+$ignite-catalog-orange: #F07B2A;
+$ignite-catalog-orange-dark: #D46A20;
+$ignite-catalog-ink: #1A1A2E;
+$ignite-catalog-text: #4A4A5E;
+$ignite-catalog-link: #A63B00; // Existing preset's accessible orange link shade.
+$ignite-catalog-border: #F2D5BB;
+$ignite-catalog-body: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+$ignite-catalog-heading: "Poppins", "Segoe UI", Arial, sans-serif;
+$ignite-catalog-title-height: 4.5rem;
+$ignite-catalog-details-height: 11.5rem;
+$ignite-catalog-description-lines: 2;
+
+// Exact body IDs exclude activities, quizzes, grades, course management and admin.
+#page-course-index,
+#page-course-index-category,
+#page-course-search {
+    background-color: $ignite-catalog-cream;
+
+    #page.drawers {
+        background-color: $ignite-catalog-cream;
+    }
+
+    #page.drawers .main-inner {
+        max-width: 80rem;
+        border-radius: 1.5rem;
+        background: #fff;
+        box-shadow: 0 6px 24px rgba(78, 42, 18, .05);
+    }
+
+    #page-header {
+        max-width: 80rem;
+        margin-inline: auto;
+    }
+
+    .page-header-headings h1 {
+        color: $ignite-catalog-ink;
+        font-family: "Rammetto One", $ignite-catalog-heading;
+        font-size: clamp(1.5rem, 3vw, 2.5rem);
+        font-weight: 400;
+        line-height: 1.35;
+        overflow-wrap: anywhere;
+    }
+
+    #region-main {
+        color: $ignite-catalog-text;
+        font-family: $ignite-catalog-body;
+        font-size: 1rem;
+        line-height: 1.65;
+
+        // Style only the course-search form, not navigation or admin forms.
+        .simplesearchform:has(input[name="q"]),
+        .simplesearchform:has(input[name="search"]) {
+            width: 100%;
+            max-width: 48rem;
+            margin-block: 1rem 1.75rem;
+        }
+
+        // The outer wrapper and nested form share .simplesearchform in core.
+        .simplesearchform form.simplesearchform {
+            margin: 0;
+        }
+
+        .simplesearchform .input-group:has(input[name="q"]),
+        .simplesearchform .input-group:has(input[name="search"]) {
+            flex-wrap: nowrap;
+            border-radius: .85rem;
+            box-shadow: 0 4px 14px rgba(78, 42, 18, .06);
+
+            input.form-control {
+                min-width: 0;
+                min-height: 3.25rem;
+                padding: .8rem 1rem;
+                border: 1px solid #83756B;
+                border-radius: .85rem 0 0 .85rem;
+                background: #fff;
+                color: $ignite-catalog-ink;
+                font-family: $ignite-catalog-body;
+                font-size: 1rem; // Prevents iOS zoom on focus.
+                line-height: 1.5;
+
+                &::placeholder {
+                    color: $ignite-catalog-text;
+                    opacity: 1;
+                }
+            }
+
+            button[type="submit"] {
+                flex: 0 0 auto;
+                min-width: 3.5rem;
+                min-height: 3.25rem;
+                padding: .75rem 1.25rem;
+                border: 1px solid $ignite-catalog-link;
+                border-radius: 0 .85rem .85rem 0;
+                background: $ignite-catalog-orange;
+                color: $ignite-catalog-ink;
+                font-family: $ignite-catalog-heading;
+                font-weight: 700;
+                transition: background-color .18s ease;
+
+                @media (prefers-reduced-motion: reduce) {
+                    transition: none;
+                }
+
+                &:hover {
+                    background: $ignite-catalog-orange-dark;
+                }
+
+                .icon {
+                    margin: 0;
+                }
+            }
+        }
+
+        // auto-fill responds to available space, including open Moodle drawers
+        // and nested categories. 1 column below 37.5rem, 2 from 37.5rem, 3 from
+        // 57rem; the 76rem cap prevents a fourth column. Short result sets keep
+        // the same card width as a full row. Paging remains full-width.
+        .course_category_tree .courses,
+        .courses.course-search-result {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+            align-items: start;
+            gap: 1.5rem;
+            max-width: 76rem;
+            margin-block: 1.25rem;
+
+            > .paging,
+            > nav,
+            > .pagination,
+            > .pagination-bar {
+                grid-column: 1 / -1;
+                min-width: 0;
+                margin: 0;
+            }
+
+            .pagination {
+                flex-wrap: wrap;
+                gap: .25rem;
+            }
+
+            > .coursebox {
+                color: $ignite-catalog-ink;
+                --bs-secondary-color: #{$ignite-catalog-ink};
+                display: grid;
+                grid-template-columns: minmax(0, 1fr);
+                // Equal text panels keep cards aligned without a large empty tail.
+                // Total height follows the responsive 16:9 cover plus these panels.
+                grid-template-rows: auto $ignite-catalog-title-height $ignite-catalog-details-height;
+                min-width: 0;
+                // Extra overview images/files stay accessible below the main panels.
+                overflow: auto;
+                margin: 0;
+                padding: 0;
+                border: 1px solid $ignite-catalog-border;
+                border-radius: 1.25rem;
+                background: #fff;
+                box-shadow: 0 5px 18px rgba(78, 42, 18, .07);
+                transition: border-color .18s ease, box-shadow .18s ease;
+
+                @media (prefers-reduced-motion: reduce) {
+                    transition: none;
+                }
+
+                // Flex/grid replaces clearfix; its pseudo-element is not a tile.
+                &::after {
+                    display: none;
+                }
+
+                &:focus-within {
+                    border-color: $ignite-catalog-link;
+                    box-shadow: 0 6px 22px rgba(78, 42, 18, .12);
+                }
+
+                > .info {
+                    grid-column: 1;
+                    grid-row: 2;
+                    display: grid;
+                    grid-template-columns: minmax(0, 1fr) auto auto;
+                    align-items: flex-start;
+                    gap: .5rem;
+                    min-width: 0;
+                    margin: .75rem 1.25rem .5rem;
+                    padding-inline: .25rem;
+
+                    > .coursename {
+                        min-width: 0;
+                        margin: 0;
+                        padding: 0;
+                        color: $ignite-catalog-ink;
+                        font-family: $ignite-catalog-heading;
+                        font-size: 1.125rem;
+                        font-weight: 700;
+                        line-height: 1.4;
+                        overflow-wrap: anywhere;
+
+                        // The full link text stays in the DOM for assistive tech.
+                        a {
+                            color: $ignite-catalog-ink;
+                            display: -webkit-box;
+                            -webkit-box-orient: vertical;
+                            -webkit-line-clamp: 2;
+                            // Reserve both lines even for a one-line title.
+                            height: 2.8em;
+                            max-height: 2.8em;
+                            overflow: hidden;
+                            text-decoration: none;
+                        }
+
+                        a:hover,
+                        a:focus-visible {
+                            text-decoration: underline;
+                        }
+                    }
+
+                    .moreinfo,
+                    .enrolmenticons {
+                        display: flex;
+                        flex-wrap: wrap;
+                        align-items: center;
+                        gap: .4rem;
+                    }
+
+                    .moreinfo a {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        min-width: 2.75rem;
+                        min-height: 2.75rem;
+                    }
+                }
+
+                // Generic wrappers only: expose cover and text to the card grid.
+                // This is the ONE necessary !important, overriding Bootstrap's
+                // .d-flex { display:flex !important }. All data/links stay in DOM.
+                &:not(.collapsed) > .content {
+                    display: contents;
+
+                    > .d-flex {
+                        display: contents !important;
+
+                        > .flex-grow-1 {
+                            display: flex;
+                            flex-direction: column;
+                            grid-column: 1;
+                            grid-row: 3;
+                            min-width: 0;
+                            min-height: 0;
+                            overflow: auto;
+                            // Room for the existing keyboard-focus outline.
+                            padding: .25rem;
+                            margin: 0 1.25rem 1rem;
+
+                            > * {
+                                flex-shrink: 0;
+                            }
+                        }
+                    }
+                }
+
+                .content .courseimage {
+                    grid-column: 1;
+                    min-width: 0;
+                    margin: 0;
+                    padding: 0;
+                    background: $ignite-catalog-cream;
+
+                    &:first-child {
+                        grid-row: 1;
+                        border-radius: 1.2rem 1.2rem 0 0;
+                        overflow: hidden;
+                        border-bottom: 3px solid $ignite-catalog-orange;
+                    }
+
+                    img {
+                        display: block;
+                        width: 100%;
+                        height: auto;
+                        max-width: none;
+                        max-height: none;
+                        aspect-ratio: 16 / 9;
+                        object-fit: cover;
+                        object-position: center;
+                    }
+                }
+
+                // Multiple overview images/files remain visible below the text.
+                .content .coursefile {
+                    grid-column: 1;
+                    display: block;
+                    max-width: none;
+                    margin: 0 1.25rem 1rem;
+                    overflow-wrap: anywhere;
+                }
+
+                // Descriptions are previews; the course title opens the course.
+                // Metadata and teacher links remain readable in the scrolling body.
+                .content .summary,
+                .content .coursecat,
+                .content .customfields-container {
+                    margin: 0 0 .75rem;
+                    padding: 0;
+                    color: $ignite-catalog-ink;
+                    line-height: 1.65;
+                    overflow-wrap: anywhere;
+                }
+
+                .summary p:last-child {
+                    margin-bottom: 0;
+                }
+
+                .content .summary {
+                    line-height: 1.6;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: $ignite-catalog-description-lines;
+                    // Short descriptions reserve the same two-line space.
+                    height: 1.6em * $ignite-catalog-description-lines;
+                    max-height: 1.6em * $ignite-catalog-description-lines;
+                    overflow: hidden;
+
+                    // Moodle summaries often contain multiple paragraph wrappers.
+                    // Flatten their visual flow so paragraph margins cannot consume
+                    // the two-line budget or leave a partially clipped third line.
+                    div,
+                    p {
+                        display: inline;
+                        margin: 0;
+                        padding: 0;
+                        overflow: visible;
+                    }
+
+                    p::after {
+                        content: " ";
+                    }
+
+                    // Don't leave a focused link hidden inside clamped rich text.
+                    &:focus-within {
+                        display: block;
+                        -webkit-line-clamp: unset;
+                        overflow: auto;
+                    }
+                }
+
+                .summary img,
+                .summary video {
+                    max-width: 100%;
+                    height: auto;
+                }
+
+                .content .teachers {
+                    display: grid;
+                    gap: .5rem;
+                    margin: .75rem 0;
+                    margin-top: auto;
+                    padding: .85rem 1rem;
+                    border-inline-start: 3px solid $ignite-catalog-orange;
+                    border-radius: .65rem;
+                    background: $ignite-catalog-cream;
+                    color: $ignite-catalog-ink;
+                    font-size: .95rem;
+                    line-height: 1.6;
+                    overflow-wrap: anywhere;
+
+                    li {
+                        margin: 0;
+                        padding: 0;
+                        list-style: none;
+                    }
+                }
+
+                a {
+                    color: $ignite-catalog-ink;
+                    text-decoration: underline;
+                    text-decoration-style: solid;
+                    text-underline-offset: .15em;
+                }
+
+                .content .flex-grow-1 > :last-child {
+                    margin-bottom: 0;
+                }
+
+                // Decorative, no generated label or new enrollment claims.
+                &:not(:has(.courseimage))::before {
+                    content: "";
+                    grid-column: 1;
+                    grid-row: 1;
+                    aspect-ratio: 16 / 9;
+                    box-sizing: content-box;
+                    border-radius: 1.2rem 1.2rem 0 0;
+                    border-bottom: 3px solid $ignite-catalog-orange;
+                    background: $ignite-catalog-cream url("https://ignitefindyourfire.org/mascots/Laptop.png") center / auto 78% no-repeat;
+                    pointer-events: none;
+                }
+
+                &.collapsed > .info {
+                    margin-bottom: 1.25rem;
+                }
+            }
+        }
+
+        // Preserve native labels, hidden-course classes and disabled semantics.
+        .courses a:focus-visible,
+        .courses button:focus-visible,
+        .simplesearchform input:focus-visible,
+        .simplesearchform button:focus-visible {
+            outline: 3px solid $ignite-catalog-ink;
+            outline-offset: 3px;
+            box-shadow: 0 0 0 3px $ignite-catalog-cream;
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+            .courses > .coursebox:hover {
+                border-color: $ignite-catalog-orange-dark;
+                box-shadow: 0 9px 26px rgba(78, 42, 18, .12);
+            }
+        }
+
+    }
+
+    @media (max-width: 575.98px) {
+        #page.drawers .main-inner {
+            padding-inline: 1rem;
+            border-radius: 1rem;
+        }
+    }
+}
