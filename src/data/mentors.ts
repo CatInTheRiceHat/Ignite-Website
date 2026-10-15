@@ -1,3 +1,5 @@
+import { developmentCourses } from './program.js';
+
 export interface Mentor {
   initial: string;
   name: string;
@@ -11,10 +13,7 @@ export interface Mentor {
   graduatingClass?: string;
 }
 
-export interface Intern extends Mentor {
-  graduatingClass: string;
-  email?: string;
-}
+export interface Intern extends Mentor { graduatingClass: string; }
 
 export const DEFAULT_STAFF_IMAGE = "/staff/Default.png";
 
@@ -60,6 +59,9 @@ export const mentors: Mentor[] = [
     name: "Nikhil Tadepalli",
     role: "Course Developer",
     courses: ["Leadership, Teamwork & Conflict Resolution"],
+    school: "Panther Creek High School",
+    graduatingClass: "Class of 2029",
+    email: "ntadepalli2@gmail.com",
     image: "/staff/nikhil_tadepalli.png",
   },
   {
@@ -67,6 +69,9 @@ export const mentors: Mentor[] = [
     name: "Akshay Kolluru",
     role: "Course Developer",
     courses: ["Career Exploration & Pathway Planning"],
+    school: "Heritage High School",
+    graduatingClass: "Class of 2028",
+    email: "akshayk12354@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -169,7 +174,6 @@ export const interns: Intern[] = [
     initial: "R",
     name: "Ridwanullah Ashiru",
     role: "Course Developer",
-    courses: ["3D Design & CAD Fundamentals (Grades 6–8)"],
     school: "Obafemi Awolowo University",
     country: "Nigeria",
     educationLevel: "University",
@@ -203,7 +207,6 @@ export const interns: Intern[] = [
     initial: "G",
     name: "Gary He",
     role: "Course Developer",
-    courses: ["Scientific Research & Data Analysis"],
     school: "Lynbrook High School",
     country: "United States",
     educationLevel: "High School",
@@ -215,7 +218,6 @@ export const interns: Intern[] = [
     initial: "N",
     name: "Neil Anand",
     role: "Course Developer",
-    courses: ["Financial Literacy & Economics"],
     school: "Saratoga High School",
     country: "United States",
     educationLevel: "High School",
@@ -249,7 +251,6 @@ export const interns: Intern[] = [
     initial: "I",
     name: "Imoleayo Babatunde",
     role: "Course Developer",
-    courses: ["3D Design & CAD Fundamentals (Grades 4–5)"],
     school: "Obafemi Awolowo University",
     country: "Nigeria",
     educationLevel: "University",
@@ -261,7 +262,6 @@ export const interns: Intern[] = [
     initial: "P",
     name: "Pragya Mahawar",
     role: "Course Developer",
-    courses: ["Productivity, Time Management & Organization"],
     school: "Eastside Preparatory School",
     country: "United States",
     educationLevel: "High School",
@@ -273,7 +273,6 @@ export const interns: Intern[] = [
     initial: "S",
     name: "Soraya Banerjee",
     role: "Course Developer",
-    courses: ["Productivity, Time Management & Organization"],
     school: "Buffalo Grove High School",
     country: "United States",
     educationLevel: "High School",
@@ -285,7 +284,6 @@ export const interns: Intern[] = [
     initial: "K",
     name: "Kireeti Kotha",
     role: "Course Developer",
-    courses: ["Civic Literacy & Community Action"],
     school: "Milpitas High School",
     country: "United States",
     educationLevel: "High School",
@@ -297,7 +295,6 @@ export const interns: Intern[] = [
     initial: "A",
     name: "Anisa Doshi Chandra",
     role: "Course Developer",
-    courses: ["Professional Communication & Public Speaking", "Social Impact & Project Development"],
     school: "Notre Dame San Jose",
     country: "United States",
     educationLevel: "High School",
@@ -309,7 +306,6 @@ export const interns: Intern[] = [
     initial: "J",
     name: "Jake Hu",
     role: "Course Developer",
-    courses: ["Game Development (Scratch)"],
     school: "Woodlands College Park High School",
     graduatingClass: "Class of 2029",
     email: "hujake2020@gmail.com",
@@ -355,7 +351,6 @@ export const interns: Intern[] = [
     initial: "D",
     name: "Daniel Yeh",
     role: "Course Developer",
-    courses: ["Intro to Computer Science (Python)"],
     school: "Saratoga High School",
     graduatingClass: "Class of 2028",
     email: "daniel.px.yeh@gmail.com",
@@ -365,7 +360,6 @@ export const interns: Intern[] = [
     initial: "M",
     name: "Michelle Thomatis",
     role: "Course Developer",
-    courses: ["Introductory Physics & Astronomy"],
     school: "University of California, Santa Cruz",
     graduatingClass: "Class of 2030",
     email: "michellethomatis@icloud.com",
@@ -375,7 +369,6 @@ export const interns: Intern[] = [
     initial: "Y",
     name: "Yuenching Shao",
     role: "Course Developer",
-    courses: ["Intro to Computer Science (Python)"],
     school: "Saratoga High School",
     graduatingClass: "Class of 2028",
     email: "yuenchingshao@gmail.com",
@@ -385,7 +378,6 @@ export const interns: Intern[] = [
     initial: "B",
     name: "Benjamin Oluwadamilare Oluyemi",
     role: "Course Developer",
-    courses: ["Entrepreneurship & Business Building"],
     school: "Federal University of Agriculture Abeokuta (FUNAAB)",
     graduatingClass: "Class of 2029",
     email: "benjaminoluyemi1@gmail.com",
@@ -395,7 +387,6 @@ export const interns: Intern[] = [
     initial: "K",
     name: "Kevin Liu",
     role: "Marketing Ambassador, Course Developer",
-    courses: ["AI Literacy & Responsible Use"],
     school: "Western University",
     graduatingClass: "Class of 2025",
     email: "liukevin907@gmail.com",
@@ -405,7 +396,6 @@ export const interns: Intern[] = [
     initial: "A",
     name: "Alliyah Battad (Lyra)",
     role: "Course Developer",
-    courses: ["Emergency Preparedness & Safety"],
     school: "J Em International WisdomEmpire Learning & Development Center",
     graduatingClass: "Class of 2027",
     email: "iitslihruh@gmail.com",
@@ -420,4 +410,91 @@ export const interns: Intern[] = [
     email: "patildarshu55@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
+  {
+    initial: "R",
+    name: "Ronit Agarwal",
+    role: "Course Developer",
+    school: "North Creek High School",
+    graduatingClass: "Class of 2028",
+    email: "ronit_agarwal@outlook.com",
+    image: "/staff/ronit_agarwal.png",
+  },
+  {
+    initial: "E",
+    name: "Ellie Kwon",
+    role: "Course Developer",
+    school: "Heritage High School",
+    graduatingClass: "Class of 2027",
+    email: "elliekwon09@gmail.com",
+    image: DEFAULT_STAFF_IMAGE,
+  },
+  {
+    initial: "G",
+    name: "Gustavo Cornejo",
+    role: "Course Developer",
+    school: "San Luis High School",
+    graduatingClass: "Class of 2028",
+    email: "gccornejo2020@gmail.com",
+    image: DEFAULT_STAFF_IMAGE,
+  },
+  {
+    initial: "A",
+    name: "Arya Pandya",
+    role: "Marketing Ambassador",
+    school: "Stockdale High School",
+    graduatingClass: "Class of 2027",
+    email: "aryabpandya@gmail.com",
+    image: DEFAULT_STAFF_IMAGE,
+  },
+  {
+    initial: "C",
+    name: "Charles Dicken Olupot",
+    role: "Marketing Ambassador",
+    school: "Teso Parents' Nursery and Primary School",
+    graduatingClass: "Class of 2027",
+    email: "tesoparents@gmail.com",
+    image: DEFAULT_STAFF_IMAGE,
+  },
+  {
+    initial: "L",
+    name: "Laeba Khan",
+    role: "Course Developer",
+    school: "Unique Public High School",
+    graduatingClass: "Class of 2030",
+    email: "laebakhan71@gmail.com",
+    image: DEFAULT_STAFF_IMAGE,
+  },
+  {
+    initial: "S",
+    name: "Shivmanas Kamarsu",
+    role: "Course Developer",
+    school: "Panther Creek High School",
+    graduatingClass: "Class of 2029",
+    email: "shivmanas.kamarsu@gmail.com",
+    image: DEFAULT_STAFF_IMAGE,
+  },
+  {
+    initial: "J",
+    name: "Janice Kim",
+    role: "Course Developer",
+    school: "Johns Hopkins University",
+    graduatingClass: "Class of 2030",
+    email: "janicejiminkim@gmail.com",
+    image: DEFAULT_STAFF_IMAGE,
+  },
 ];
+
+// Current course assignments come from the development catalog. Keep the original
+// mentor course labels above for the historical Summer 2026 records page.
+export const teamMembers: Mentor[] = [...mentors, ...interns].map((member) =>
+  member.role === "Former Staff"
+    ? member
+    : {
+        ...member,
+        courses: developmentCourses.flatMap((course) =>
+          (course.instructors ?? [])
+            .filter((instructor) => instructor.name === member.name)
+            .map((instructor) => `${course.title}${instructor.grades ? ` (Grades ${instructor.grades})` : ''}`),
+        ),
+      },
+);

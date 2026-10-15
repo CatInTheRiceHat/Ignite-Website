@@ -1,11 +1,10 @@
 import { ArrowRight, BookOpen, GraduationCap, Mail, MapPin } from 'lucide-react';
 import { IgnitionCard, IgnitionGroup } from '../components/team/ignition-reveal';
 import StaffImage from '../components/ui/staff-image';
-import { interns, mentors } from '../data/mentors';
+import { teamMembers } from '../data/mentors';
 import { INTERN_FORM_URL } from '../lib/links';
 
 const isCoFounder = (role: string) => role.toLowerCase().startsWith('co-founder');
-const teamMembers = [...mentors, ...interns];
 const staffSections = [
   {
     id: 'current-staff',

@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { expect, it } from 'vitest';
 import { courseCounts, developmentCourses, programCopy } from '../../src/data/program';
-import { interns, mentors } from '../../src/data/mentors';
+import { teamMembers } from '../../src/data/mentors';
 import { LEARNING_HUB_URL, INTERN_FORM_URL } from '../../src/lib/links';
 import { RECORDS_PAGE } from '../../src/config/records';
 import { destinations, resolveDestination } from '../../src/sol/shared/destinations';
@@ -17,13 +17,13 @@ it.each([
   expect(founders!.source).toContain('src/data/mentors.ts');
   expect(founders!.destinationIds).toContain('team');
   for (const name of ['Elaine Che', 'Austin Zhao', 'Michael Zhao']) expect(founders!.facts).toContain(name);
-  for (const member of [...mentors, ...interns].filter(member => member.role.startsWith('Co-founder'))) {
+  for (const member of teamMembers.filter(member => member.role.startsWith('Co-founder'))) {
     expect(founders!.facts).toContain(`${member.name} (${member.role})`);
   }
 });
 
 it('answers named-person questions from the website profiles and preserves former staff status', () => {
-  for (const member of [...mentors, ...interns]) {
+  for (const member of teamMembers) {
     const team = relevantKnowledge(`Who is ${member.name}?`).find(entry => entry.id === 'team');
     expect(team?.facts).toContain(`${member.name}: ${member.role}`);
     for (const course of member.courses || []) expect(team?.facts).toContain(course);

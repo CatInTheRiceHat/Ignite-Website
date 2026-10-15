@@ -1,6 +1,6 @@
 import type { DestinationId } from '../../src/sol/shared/destinations.js';
 import { courseCounts, courseFormats, developmentCourses, programCopy } from '../../src/data/program.js';
-import { interns, mentors } from '../../src/data/mentors.js';
+import { teamMembers } from '../../src/data/mentors.js';
 import { siteContent } from './site-content.js';
 
 export const knowledgeRevision = {
@@ -19,7 +19,6 @@ type KnowledgeEntry = {
   facts: string;
 };
 
-const teamMembers = [...mentors, ...interns];
 const cofounders = teamMembers.filter(member => member.role.toLowerCase().startsWith('co-founder'));
 const describeMember = (member: typeof teamMembers[number]) => [
   `${member.name}: ${member.role}`,
@@ -43,7 +42,7 @@ export const knowledge: KnowledgeEntry[] = [
   {
     id: 'courses', destinationIds: ['program'], source: 'src/pages/Program.tsx; src/data/program.ts',
     keywords: ['course', 'courses', 'classes', 'learn', 'ai', 'research', 'design', 'communication', 'productivity', 'project', 'financial', 'money', 'physics', 'astronomy', 'python', 'scratch', 'game', 'leadership', 'cybersecurity', 'safety', 'career', 'stress', 'resilience', 'storytelling', 'marketing', 'civic', 'relationships', 'emergency', 'entrepreneurship'],
-    facts: `The catalog has ${courseCounts.all} courses in development: ${courseCounts.live} live and ${courseCounts.independent} independent. Plans: ${developmentCourses.map(course => `${course.title} (${course.format})`).join('; ')}. ${programCopy.availability}`,
+    facts: `The catalog has ${courseCounts.all} courses in development: ${courseCounts.live} live and ${courseCounts.independent} independent. Plans: ${developmentCourses.map(course => `${course.title} (${course.format})${course.instructors?.length ? `; course team: ${course.instructors.map(instructor => `${instructor.name}${instructor.grades ? ` (Grades ${instructor.grades})` : ''}`).join(', ')}` : ''}`).join('; ')}. ${programCopy.availability}`,
   },
   {
     id: 'student-faq', destinationIds: ['faq', 'program', 'contact'], source: 'src/pages/FAQ.tsx; src/data/program.ts; src/lib/links.ts',

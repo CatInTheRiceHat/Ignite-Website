@@ -22,6 +22,18 @@ const CourseCard = ({ course }: { course: DevelopmentCourse }) => (
       </div>
       <h3 className="text-xl font-bold text-[var(--text-charcoal)] leading-snug">{course.title}</h3>
       <p className="mt-4 text-sm text-[var(--text-light)]">Planned format: {courseFormats[course.format].duration.toLowerCase()}</p>
+      {course.instructors && course.instructors.length > 0 && (
+        <div className="mt-5 rounded-2xl bg-[var(--bg-cream)] p-4 text-sm text-[var(--text-light)]">
+          <p className="font-bold text-[var(--text-charcoal)]">Course team</p>
+          <ul className="mt-2 space-y-2">
+            {course.instructors.map((instructor) => (
+              <li key={instructor.name} className="break-words leading-relaxed">
+                {instructor.name}{instructor.grades ? ` · Grades ${instructor.grades}` : ''}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   </article>
 );
