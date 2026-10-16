@@ -230,15 +230,15 @@ const Home = () => {
 
 
       {/* Who Is Ignite For? */}
-      <section className="py-24 md:py-32 min-h-[54vw] relative overflow-hidden">
+      <section className="flex min-h-[min(54vw,64rem)] items-center py-24 md:py-32 relative overflow-hidden">
         <img
           src="/backgrounds/Who%20is%20Ignite%20For.png"
           alt=""
-          className="absolute inset-0 h-full w-full object-cover object-[center_30%]"
+          className="absolute inset-0 h-full w-full object-cover object-bottom"
           loading="lazy"
         />
         <div className="absolute inset-0 bg-black/35 backdrop-blur-[1px]"></div>
-        <div className="relative z-10">
+        <div className="relative z-10 w-full">
           <BlurFade>
             <h2 className="text-4xl md:text-6xl font-rammetto text-center text-white mb-14 md:mb-16 px-4 drop-shadow-[0_3px_10px_rgba(0,0,0,0.45)]">Who Is Ignite For?</h2>
           </BlurFade>

@@ -34,7 +34,7 @@ const Partners = () => {
 
   return (
     <section className="group/partners rounded-[3rem] bg-white py-24 md:rounded-[4rem]" aria-labelledby="partners-heading">
-      <h2 id="partners-heading" className="px-4 text-balance text-center font-rammetto text-3xl/[1.4] text-[var(--primary-orange)] sm:text-4xl/[1.4] md:text-5xl/[1.4]">Our partners</h2>
+      <h2 id="partners-heading" className="px-4 text-balance text-center font-rammetto text-3xl/[1.4] text-[var(--primary-orange)] sm:text-4xl/[1.4] md:text-5xl/[1.4]">Current Partnerships</h2>
 
       {reducedMotion ? (
         <ul className="mx-auto mt-12 flex max-w-7xl flex-wrap items-center justify-center px-4 md:mt-16" aria-label="Ignite partners">

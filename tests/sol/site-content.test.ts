@@ -68,7 +68,7 @@ it('indexes the confirmed partners, partnership possibilities, and the applicati
   expect(partnerships).toContain('Bring practical learning to your community.');
   expect(partnerships).toContain('building free courses in practical life skills.');
   expect(partnerships).toContain('rather than confirmed services or schedules');
-  expect(partnerships).toMatch(/^Our partners$/m);
+  expect(partnerships).toMatch(/^Current Partnerships$/m);
   expect(partnerships).toContain('Doorstop Education');
   expect(partnerships).toContain('Sophie');
   expect(partnerships).not.toContain('Start small. Build together.');

@@ -1,6 +1,7 @@
 import type { DestinationId } from '../../src/sol/shared/destinations.js';
 import { courseCounts, courseFormats, developmentCourses, programCopy } from '../../src/data/program.js';
 import { teamMembers } from '../../src/data/mentors.js';
+import { internRoles } from '../../src/data/internRoles.js';
 import { siteContent } from './site-content.js';
 
 export const knowledgeRevision = {
@@ -57,7 +58,12 @@ export const knowledge: KnowledgeEntry[] = [
   {
     id: 'team', destinationIds: ['team', 'hiring', 'intern'], source: 'src/data/mentors.ts; src/pages/Mentors.tsx; src/pages/Hiring.tsx; src/lib/links.ts',
     keywords: ['team', 'mentor', 'mentors', 'staff', 'former', 'developer', 'developers', 'ambassador', 'ambassadors', 'teach', 'teaches', 'teaching', 'instructor', 'instructors', 'intern', 'interns', 'internship', 'hiring', 'join', 'volunteer', 'job', 'compensation', 'paid', ...teamMembers.flatMap(member => [member.name, member.name.split(' ')[0]])],
-    facts: `The website's current staff profiles: ${teamMembers.filter(member => member.role !== 'Former Staff').map(describeMember).join(' | ')}. Former staff profiles: ${teamMembers.filter(member => member.role === 'Former Staff').map(describeMember).join(' | ')}. Course associations are the published profile labels, not confirmed teaching schedules. Hiring invites visitors to apply as a student intern. The intern application uses INTERN_FORM_URL, whose source default can be overridden by Ignite's VITE_INTERN_FORM_URL. No compensation, intern eligibility, application deadline or hiring outcome is verified. Answer questions about listed people using these profiles and preserve the distinction between current and former staff.`,
+    facts: `The website's current staff profiles: ${teamMembers.filter(member => member.role !== 'Former Staff').map(describeMember).join(' | ')}. Former staff profiles: ${teamMembers.filter(member => member.role === 'Former Staff').map(describeMember).join(' | ')}. Course associations are the published profile labels, not confirmed teaching schedules. Hiring invites visitors to apply as a student intern. The intern application uses INTERN_FORM_URL, whose source default can be overridden by Ignite's VITE_INTERN_FORM_URL. Intern eligibility, application deadlines and hiring outcomes are unconfirmed. Answer questions about listed people using these profiles and preserve the distinction between current and former staff.`,
+  },
+  {
+    id: 'hiring', destinationIds: ['hiring', 'intern'], source: 'src/pages/Hiring.tsx; src/data/internRoles.ts',
+    keywords: ['hiring', 'intern', 'interns', 'internship', 'roles', 'developer', 'mentor', 'sponsor', 'sponsorship', 'researcher', 'marketing', 'ambassador', 'miscellaneous', 'payout', 'payment', 'paid', 'compensation', 'salary'],
+    facts: `The Hiring page lists these intern roles and their payout terms: ${internRoles.map(role => `${role.title}: ${role.desc} ${role.details.title}: ${role.details.paragraphs.join(' ')}`).join(' | ')} These are conditional payouts for completed work or outcomes, not a salary or guaranteed earnings. Preserve all approval, completion, funding and written-agreement conditions.`,
   },
   {
     id: 'records', destinationIds: ['records'], source: 'src/pages/Records.tsx; src/config/records.ts',
