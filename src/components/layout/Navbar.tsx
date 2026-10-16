@@ -69,7 +69,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Links */}
-        <div className="hidden xl:flex items-center gap-4 font-semibold text-base">
+        <div className="hidden xl:flex items-center gap-4 font-semibold text-lg">
           {navLinks.map((link) => (
             <NavLink
               key={link.path}
@@ -108,7 +108,7 @@ const Navbar = () => {
             transition={{ duration: 0.18, ease: 'easeInOut' }}
             className="xl:hidden absolute left-0 right-0 top-full max-h-[calc(100dvh-10rem)] overflow-y-auto border-t border-orange-100 bg-white shadow-lg"
           >
-            <div className="mx-auto flex max-w-7xl flex-col px-4 py-4 font-semibold text-base">
+            <div className="mx-auto flex max-w-7xl flex-col px-4 py-4 font-semibold text-lg">
               {navLinks.map((link) => (
                 <NavLink
                   key={link.path}
