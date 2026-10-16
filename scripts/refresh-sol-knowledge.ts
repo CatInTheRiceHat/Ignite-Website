@@ -8,7 +8,7 @@ const paths = [
   'IGNITE_STYLE_GUIDE.md', 'src/App.tsx', 'src/lib/links.ts', 'src/config/records.ts',
   'src/data/program.ts', 'src/data/mentors.ts', 'src/pages/About.tsx', 'src/pages/Home.tsx', 'src/pages/Program.tsx',
   'src/pages/FAQ.tsx', 'src/pages/Hiring.tsx', 'src/pages/Mentors.tsx',
-  'src/pages/Statistics.tsx', 'src/pages/Records.tsx', 'src/pages/Apply.tsx',
+  'src/pages/Records.tsx',
   'src/components/program/ProgramNextSteps.tsx',
 ];
 for (const path of paths) {

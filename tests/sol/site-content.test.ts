@@ -17,7 +17,7 @@ it('indexes every public page in a fresh production process without router or de
   });
   expect(result.error).toBeUndefined();
   expect(result.status, result.stderr).toBe(0);
-  expect(result.stdout).toContain('Indexed 9 public website pages for Sol.');
+  expect(result.stdout).toContain('Indexed 8 public website pages for Sol.');
   expect(result.stderr).not.toMatch(/vite:dep-scan|Cannot destructure|Request is outdated/);
 }, 35000);
 
@@ -33,7 +33,7 @@ it('extracts readable public text while excluding scripts, attributes, icons and
 it('covers every public page route, excluding redirects and error pages', () => {
   const routes = readFileSync('src/App.tsx', 'utf8');
   const literalPaths = [...routes.matchAll(/<Route path="([^"]+)"/g)].map(match => match[1])
-    .filter(path => path !== '/mentors' && path !== '*');
+    .filter(path => path !== '/mentors' && path !== '/statistics' && path !== '/apply' && path !== '*');
   expect(siteContent.map(page => page.path).sort()).toEqual([...literalPaths, RECORDS_PAGE.path].sort());
   expect(new Set(siteContent.map(page => page.path)).size).toBe(siteContent.length);
   for (const page of siteContent) {
@@ -63,13 +63,26 @@ it('finds student-work details from page text even when the summaries have no ma
   expect(selected.length).toBeLessThanOrEqual(3);
 });
 
+it('indexes the confirmed partners, partnership possibilities, and the application', () => {
+  const partnerships = siteContent.find(page => page.path === '/partnerships')!.text;
+  expect(partnerships).toContain('Bring practical learning to your community.');
+  expect(partnerships).toContain('building free courses in practical life skills.');
+  expect(partnerships).toContain('rather than confirmed services or schedules');
+  expect(partnerships).toMatch(/^Our partners$/m);
+  expect(partnerships).toContain('Doorstop Education');
+  expect(partnerships).toContain('Sophie');
+  expect(partnerships).not.toContain('Start small. Build together.');
+  expect(partnerships).toContain('Open partnership application');
+  expect(partnerships).not.toContain('Our partnership application will be available');
+});
+
 it.each(['Who are the cofounders?', 'Who are the co‑founders?', 'Who is the CEO?', 'Who is Elaine Che?'])('retrieves the actual team page for "%s"', question => {
   const selected = relevantSiteContent(question);
   expect(selected[0].path).toBe('/team');
   for (const name of ['Elaine Che', 'Austin Zhao', 'Michael Zhao']) expect(selected[0].text).toContain(name);
 });
 
-it('uses the statistics page for reach questions and current questions ahead of course history', () => {
-  expect(relevantSiteContent('How many schools were reached?').map(page => page.path)).toContain('/statistics');
+it('uses records for reach questions and current questions ahead of course history', () => {
+  expect(relevantSiteContent('How many schools were reached?').map(page => page.path)).toContain('/records');
   expect(relevantSiteContent('Who are the cofounders?', ['Tell me about all the courses and enrollment.'])[0].path).toBe('/team');
 });

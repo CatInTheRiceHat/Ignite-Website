@@ -106,7 +106,7 @@ const About = () => {
           <div className="bg-white/85 backdrop-blur-sm rounded-3xl p-10 md:p-14 shadow-xl">
             <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)] mb-4">Why This Matters</h2>
-              <p className="text-xl text-[var(--text-light)]">Middle school is when students start asking: "What am I good at? What could I become?"</p>
+              <p className="text-xl text-[var(--text-light)]">Students everywhere ask: "What am I good at? What could I become?"</p>
             </div>
             <div className="grid gap-6">
               {[

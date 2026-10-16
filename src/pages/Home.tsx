@@ -247,7 +247,7 @@ const Home = () => {
             imageStyle="open"
             autoPlay={false}
             items={[
-              { image: '/mascots/Grades.png',  title: 'Eligibility to Confirm', desc: programCopy.eligibility },
+              { image: '/mascots/Grades.png',  title: 'All Students', desc: programCopy.eligibility },
               { image: '/mascots/Zoom.png',    title: 'Online Learning Plans', desc: "We are developing live and independent online courses. Dates and enrollment details are not yet confirmed." },
               { image: '/mascots/Curious.png', title: 'Curious Students', desc: "You do not need to know what you want to do yet." },
             ]}
@@ -278,6 +278,21 @@ const Home = () => {
       </section>
 
       <Expansion />
+
+      <section className="px-4 pb-20 md:pb-24" aria-labelledby="home-partnerships-heading">
+        <div className="mx-auto grid max-w-5xl items-center gap-8 rounded-[2rem] border-2 border-orange-100 bg-white p-8 shadow-sm sm:grid-cols-[1fr_10rem] md:p-12">
+          <div>
+            <p className="mb-4 text-sm font-extrabold uppercase tracking-[0.18em] text-[var(--text-light)]">Partner with Ignite</p>
+            <h2 id="home-partnerships-heading" className="font-rammetto text-3xl text-[var(--primary-orange)] md:text-4xl">Learning grows through community.</h2>
+            <p className="mt-5 text-lg leading-relaxed text-[var(--text-light)]">Have a school, community, or idea in mind? Let’s explore how we can bring free practical-skills learning to more students, one small step at a time.</p>
+            <Link to="/partnerships" className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-6 py-3 text-lg font-bold text-white shadow-lg shadow-orange-100 transition-all hover:bg-[var(--primary-orange-dark)] motion-safe:hover:scale-105 motion-safe:active:scale-95">
+              Explore partnerships
+            </Link>
+          </div>
+          <img src="/mascots/Mentors.png" alt="" className="mx-auto h-40 w-40 object-contain" loading="lazy" width="1086" height="871" />
+        </div>
+      </section>
+
       <ProgramNextSteps />
 
     </div>

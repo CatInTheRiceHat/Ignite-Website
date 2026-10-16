@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { ArrowRight, Megaphone, Menu, X } from 'lucide-react';
-import { LEARNING_HUB_URL } from '../../lib/links';
 import { RECORDS_PAGE } from '../../config/records';
 
 const announcementText = "Help build Ignite’s next chapter. Explore student intern opportunities.";
@@ -18,6 +17,7 @@ const Navbar = () => {
     { name: 'About', path: '/about' },
     { name: 'Team', path: '/team' },
     { name: 'Program', path: '/program' },
+    { name: 'Partnerships', path: '/partnerships' },
     { name: 'FAQ', path: '/faq' },
     { name: RECORDS_PAGE.label, path: RECORDS_PAGE.path },
     { name: 'Hiring', path: '/hiring' },
@@ -29,7 +29,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) {
+      if (window.innerWidth >= 1280) {
         setIsOpen(false);
       }
     };
@@ -46,7 +46,7 @@ const Navbar = () => {
       />
       <div className="max-w-7xl mx-auto px-4 h-24 md:h-28 flex items-center justify-between transition-all duration-300">
         {/* Mobile Header */}
-        <div className="w-full md:w-auto flex items-center justify-between">
+        <div className="w-full xl:w-auto flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3 text-[1.7rem] md:text-[1.95rem] font-rammetto text-[var(--primary-orange)] group">
             <img
               src="/mascots/Logo.png"
@@ -57,7 +57,7 @@ const Navbar = () => {
           </Link>
           
           <button 
-            className="md:hidden flex h-11 w-11 items-center justify-center rounded-full text-[var(--primary-orange)] transition-colors hover:bg-orange-50"
+            className="xl:hidden flex h-11 w-11 items-center justify-center rounded-full text-[var(--primary-orange)] transition-colors hover:bg-orange-50"
             onClick={() => setIsOpen((open) => !open)}
             aria-label="Toggle menu"
             aria-expanded={isOpen}
@@ -69,7 +69,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-2 font-semibold text-sm lg:gap-8 lg:text-lg">
+        <div className="hidden xl:flex items-center gap-4 font-semibold text-base">
           {navLinks.map((link) => (
             <NavLink
               key={link.path}
@@ -81,15 +81,6 @@ const Navbar = () => {
               {link.name}
             </NavLink>
           ))}
-          <a
-            href={LEARNING_HUB_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-[var(--primary-orange)] px-5 py-3 font-bold text-white shadow-md shadow-orange-100 transition-all hover:scale-105 hover:bg-[var(--primary-orange-dark)] active:scale-95"
-          >
-            Moodle Sign-in
-            <ArrowRight className="h-5 w-5 flex-none" aria-hidden="true" />
-          </a>
         </div>
 
       </div>
@@ -115,7 +106,7 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.18, ease: 'easeInOut' }}
-            className="md:hidden absolute left-0 right-0 top-full border-t border-orange-100 bg-white shadow-lg"
+            className="xl:hidden absolute left-0 right-0 top-full max-h-[calc(100dvh-10rem)] overflow-y-auto border-t border-orange-100 bg-white shadow-lg"
           >
             <div className="mx-auto flex max-w-7xl flex-col px-4 py-4 font-semibold text-base">
               {navLinks.map((link) => (
@@ -130,16 +121,6 @@ const Navbar = () => {
                   {link.name}
                 </NavLink>
               ))}
-              <a
-                href={LEARNING_HUB_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setIsOpen(false)}
-                className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-6 py-3 text-center font-bold text-white shadow-md shadow-orange-100 transition-all active:scale-95"
-              >
-                Moodle Sign-in
-                <ArrowRight className="h-5 w-5 flex-none" aria-hidden="true" />
-              </a>
             </div>
           </motion.div>
         )}

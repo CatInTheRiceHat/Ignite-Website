@@ -60,14 +60,9 @@ export const knowledge: KnowledgeEntry[] = [
     facts: `The website's current staff profiles: ${teamMembers.filter(member => member.role !== 'Former Staff').map(describeMember).join(' | ')}. Former staff profiles: ${teamMembers.filter(member => member.role === 'Former Staff').map(describeMember).join(' | ')}. Course associations are the published profile labels, not confirmed teaching schedules. Hiring invites visitors to apply as a student intern. The intern application uses INTERN_FORM_URL, whose source default can be overridden by Ignite's VITE_INTERN_FORM_URL. No compensation, intern eligibility, application deadline or hiring outcome is verified. Answer questions about listed people using these profiles and preserve the distinction between current and former staff.`,
   },
   {
-    id: 'statistics', destinationIds: ['statistics'], source: 'src/pages/Statistics.tsx',
-    keywords: ['statistics', 'stats', 'numbers', 'reach', 'cohorts', 'schools', 'countries', 'impact'],
-    facts: 'The 2026 Summer Statistics page reports 110 applications, 295 course selections, 77 schools, five countries/regions, ten live cohorts over three weeks, and ten mentors. These are historical 2026 summer figures, not current enrollment or future projections.',
-  },
-  {
     id: 'records', destinationIds: ['records'], source: 'src/pages/Records.tsx; src/config/records.ts',
-    keywords: ['records', 'student work', 'projects', 'capstone', 'examples', 'results'],
-    facts: 'The records route is /records. It includes historical Summer 2026 statistics and student-work examples: a Cleanse Nonprofit pitch about misinformation, a Nice Tea campaign design, and a study comparing basil growth under red, green, blue and white light.',
+    keywords: ['records', 'student work', 'projects', 'capstone', 'examples', 'results', 'statistics', 'stats', 'numbers', 'reach', 'cohorts', 'schools', 'countries', 'impact'],
+    facts: 'The records route is /records. Its Summer 2026 statistics report 110 applications, 295 course selections, 77 schools, five countries/regions, ten live cohorts over three weeks, and ten mentors. These are historical figures, not current enrollment or future projections. Student-work examples include a Cleanse Nonprofit pitch about misinformation, a Nice Tea campaign design, and a study comparing basil growth under red, green, blue and white light.',
   },
   {
     id: 'help', destinationIds: ['contact', 'faq', 'learning'], source: 'src/pages/FAQ.tsx; src/data/program.ts; src/pages/Hiring.tsx; src/lib/links.ts; src/components/program/ProgramNextSteps.tsx',

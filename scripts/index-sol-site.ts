@@ -11,9 +11,8 @@ const publicPages = [
   { path: '/program', source: 'src/pages/Program.tsx' },
   { path: '/faq', source: 'src/pages/FAQ.tsx' },
   { path: '/hiring', source: 'src/pages/Hiring.tsx' },
-  { path: '/statistics', source: 'src/pages/Statistics.tsx' },
+  { path: '/partnerships', source: 'src/pages/Partnerships.tsx' },
   { path: '/records', source: 'src/pages/Records.tsx' },
-  { path: '/apply', source: 'src/pages/Apply.tsx' },
 ];
 
 // Read the page's public text, not attributes, scripts, icons or hidden animation counters.

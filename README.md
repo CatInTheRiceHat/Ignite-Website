@@ -2,6 +2,8 @@
 
 Ignite's website and Sol chatbot share this repository and one Vercel project. See [Sol setup, migration and maintenance](docs/SOL.md) for server configuration and validation. Use Node 22.x, then `npm install` and `npm run dev` for the local website and chatbot. Changes to Sol now live in `src/sol/` and `server/sol/`.
 
+Partnership content lives in `src/data/partnerships.ts`; add only confirmed partners with approved descriptions, logos, and verified links. The partners section stays hidden while that list is empty. The Ignite Partnership Application is configured in `src/lib/links.ts` as `https://forms.gle/6Zte2NF4fbWj2Y7W9`. It opens directly because Google's embedded version returned a cookie/sign-in access screen during verification. To replace it, optionally set `VITE_PARTNERSHIP_FORM_URL` in `.env.local` and the deployment environment, then rebuild. A full `https://docs.google.com/forms/.../viewform` URL enables the responsive embed and alternative link; verify anonymous embed access first. A `https://forms.gle/...` short link provides the application link only. An explicitly empty or unsupported URL shows an availability message without an application action.
+
 ## React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

@@ -1,4 +1,4 @@
-import { ArrowRight, Mail } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { INTERN_FORM_URL } from '../lib/links';
 
 const Hiring = () => {
@@ -48,18 +48,6 @@ const Hiring = () => {
             <ArrowRight className="h-5 w-5 flex-none" aria-hidden="true" />
           </a>
 
-          <div className="mx-auto mt-10 max-w-2xl border-t border-orange-100 pt-8">
-            <p className="text-[var(--text-light)] leading-relaxed">
-              Have a question about the application?
-            </p>
-            <a
-              href="mailto:ignitefindyourfire@gmail.com"
-              className="mt-3 inline-flex max-w-full items-center justify-center gap-2 break-all rounded-lg font-bold text-[var(--text-charcoal)] underline decoration-2 decoration-[var(--primary-orange)] underline-offset-4 hover:text-[var(--primary-orange)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200"
-            >
-              <Mail className="h-5 w-5 flex-none" aria-hidden="true" />
-              ignitefindyourfire@gmail.com
-            </a>
-          </div>
         </div>
       </section>
     </div>

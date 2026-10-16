@@ -9,6 +9,7 @@ const Footer = () => {
     { name: 'About', path: '/about' },
     { name: 'Team', path: '/team' },
     { name: 'Program', path: '/program' },
+    { name: 'Partnerships', path: '/partnerships' },
     { name: 'FAQ', path: '/faq' },
     { name: RECORDS_PAGE.label, path: RECORDS_PAGE.path },
     { name: 'Hiring', path: '/hiring' },
@@ -80,7 +81,7 @@ const Footer = () => {
                 <p>Live &amp; independent plans</p>
                 <p>Courses in development</p>
                 <p>Free learning mission</p>
-                <Link to="/program" className="underline underline-offset-4">Eligibility to be confirmed</Link>
+                <Link to="/program" className="underline underline-offset-4">For all students</Link>
               </div>
             </div>
           </div>

@@ -7,7 +7,7 @@
       "handle": "filesystem"
     },
     {
-      "src": "/(about|team|mentors|program|faq|apply|statistics|hiring|records)/?",
+      "src": "/(about|team|mentors|program|faq|apply|statistics|hiring|records|partnerships)/?",
       "dest": "/index.html"
     }
   ],

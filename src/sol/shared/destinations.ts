@@ -4,7 +4,6 @@ export const destinations = {
   team: { label: 'Meet the team', path: '/team', source: 'src/pages/Mentors.tsx' },
   program: { label: 'Explore the program', path: '/program', source: 'src/pages/Program.tsx' },
   faq: { label: 'Read FAQs', path: '/faq', source: 'src/pages/FAQ.tsx' },
-  statistics: { label: 'See summer statistics', path: '/statistics', source: 'src/pages/Statistics.tsx' },
   hiring: { label: 'Join the team', path: '/hiring', source: 'src/pages/Hiring.tsx' },
   records: { label: 'Explore records & student work', path: '/records', source: 'src/config/records.ts' },
   learning: { label: 'Learning Hub (Moodle sign-in)', url: 'https://learn.ignitefindyourfire.org', source: 'src/lib/links.ts' },

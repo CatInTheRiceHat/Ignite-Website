@@ -56,18 +56,20 @@ const SectionHeading = ({
   children,
   id,
 }: {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   children: ReactNode;
   id: string;
 }) => (
   <div className="mx-auto mb-12 max-w-3xl text-center md:mb-16">
-    <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-[var(--text-charcoal)]">
-      {eyebrow}
-    </p>
+    {eyebrow && (
+      <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-[var(--text-charcoal)]">
+        {eyebrow}
+      </p>
+    )}
     <h2
       id={id}
-      className="mt-3 font-rammetto text-[2rem] text-[var(--primary-orange)] sm:text-4xl md:text-5xl"
+      className={`${eyebrow ? 'mt-3 ' : ''}font-rammetto text-[2rem] text-[var(--primary-orange)] sm:text-4xl md:text-5xl`}
     >
       {title}
     </h2>
@@ -102,7 +104,7 @@ const Records = () => {
         aria-labelledby="records-statistics-heading"
       >
         <div className="mx-auto max-w-7xl px-4">
-          <SectionHeading eyebrow="Summer 2026" title="The story behind the numbers" id="records-statistics-heading">
+          <SectionHeading title="Summer 2026 Statistics" id="records-statistics-heading">
             A visual snapshot of how far Ignite reached and what it took to bring the program to life.
           </SectionHeading>
 

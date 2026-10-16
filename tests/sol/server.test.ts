@@ -177,7 +177,7 @@ describe('security boundaries and curated facts', () => {
     const selected = relevantKnowledge('internship compensation');
     expect(selected.length).toBeLessThanOrEqual(5);
     expect(selected.map(entry => entry.id)).toContain('team');
-    expect(selected.map(entry => entry.id)).not.toContain('statistics');
+    expect(selected.map(entry => entry.id)).not.toContain('records');
     expect(knowledge.every(entry => entry.source && entry.destinationIds.every(id => destinationIds.includes(id)))).toBe(true);
   });
 
@@ -199,7 +199,7 @@ describe('security boundaries and curated facts', () => {
     expect(parseChatInput({ message: ' Hey ' }).message).toBe('Hey');
     expect(() => parseChatInput({ message: 'Hey', history: Array(4).fill({ role: 'assistant', content: 'a'.repeat(1200) }) })).toThrow();
     expect(boundHistory(Array(10).fill({ role: 'user', content: 'a'.repeat(1000) }))).toHaveLength(4);
-    for (const id of ['about', 'team', 'program', 'faq', 'statistics', 'hiring', 'records']) expect(resolveDestination(id, origin).url).toBe(`${origin}/${id}`);
+    for (const id of ['about', 'team', 'program', 'faq', 'hiring', 'records']) expect(resolveDestination(id, origin).url).toBe(`${origin}/${id}`);
     expect(() => resolveDestination('__proto__', origin)).toThrow();
     expect(() => resolveDestination('program', 'javascript:alert(1)')).toThrow();
     expect(() => parseReply({ answer: 'hello', destinationIds: ['invented'] })).toThrow();

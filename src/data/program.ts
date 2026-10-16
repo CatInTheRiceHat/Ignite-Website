@@ -36,7 +36,7 @@ export interface DevelopmentCourse {
 
 export const developmentCourses: DevelopmentCourse[] = [
   { title: 'Content Creation & Digital Storytelling', format: 'live', icon: '/mascots/Artist.png', headerImage: '/courses/Content%20Creation%20&%20Digital%20Storytelling.jpg' },
-  { title: 'Professional Communication & Public Speaking', instructors: [{ name: 'Anisa Doshi Chandra' }], format: 'live', icon: '/mascots/Microphone.png', headerImage: '/courses/Communication.jpeg', headerPosition: 'center top' },
+  { title: 'Professional Communication & Public Speaking', instructors: [{ name: 'Anisa Doshi Chandra' }], format: 'live', icon: '/mascots/Microphone.png', headerImage: '/courses/Communication.jpg?v=59976f05', headerPosition: 'center top' },
   { title: 'Game Development (Scratch)', instructors: [{ name: 'Jake Hu' }], format: 'live', icon: '/mascots/Laptop.png', headerImage: '/courses/Game%20Development%20(Scratch).jpg' },
   { title: 'Productivity, Time Management & Organization', instructors: [{ name: 'Pragya Mahawar' }, { name: 'Soraya Banerjee' }], format: 'independent', icon: '/mascots/Productivity.png', headerImage: '/courses/Productivity,%20Time%20Management%20&%20Organization.jpg?v=f3b4083f' },
   { title: 'Marketing, Branding & Digital Design', format: 'independent', icon: '/mascots/Artist.png', headerImage: '/courses/Digital%20Design.jpeg?v=fce78e31' },
@@ -44,7 +44,7 @@ export const developmentCourses: DevelopmentCourse[] = [
   { title: 'Social Impact & Project Development', instructors: [{ name: 'Anisa Doshi Chandra' }], format: 'independent', icon: '/mascots/Project.png', headerImage: '/courses/Project%20and%20Nonprofit%20Building.jpeg' },
   { title: 'Resilience & Stress Management', instructors: [{ name: 'Emma Zhou' }], format: 'independent', icon: '/mascots/Curious.png', headerImage: '/courses/Resilience%20&%20Stress%20Management.jpg?v=2738cda3' },
   { title: 'AI Literacy and Responsible Use', instructors: [{ name: 'Kevin Liu' }], format: 'independent', icon: '/mascots/AI.png', headerImage: '/courses/AI%20Literacy.jpeg' },
-  { title: '3D Design & CAD Fundamentals', instructors: [{ name: 'Ridwanullah Ashiru', grades: '6–8' }, { name: 'Imoleayo Babatunde', grades: '4–5' }], format: 'independent', icon: '/mascots/Artist.png', headerImage: '/courses/3D%20Design%20&%20CAD%20Fundamentals.jpg' },
+  { title: '3D Design & CAD Fundamentals', instructors: [{ name: 'Ridwanullah Ashiru' }, { name: 'Imoleayo Babatunde' }], format: 'independent', icon: '/mascots/Artist.png', headerImage: '/courses/3D%20Design%20&%20CAD%20Fundamentals.jpg' },
   { title: 'Cybersecurity, Online Safety & Media Literacy', format: 'independent', icon: '/mascots/Laptop.png', headerImage: '/courses/Cybersecurity,%20Online%20Safety%20&%20Media%20Literacy.jpg?v=b666addf' },
   { title: 'Career Exploration & Pathway Planning', instructors: [{ name: 'Akshay Kolluru' }], format: 'independent', icon: '/mascots/Graduation.png', headerImage: '/courses/Career%20Exploration%20&%20Pathway%20Planning.jpg' },
   { title: 'Financial Literacy & Economics', instructors: [{ name: 'Neil Anand' }], format: 'independent', icon: '/mascots/Finance.png', headerImage: '/courses/Financial%20Literacy%20&%20Economics.jpg?v=045e492c' },
@@ -66,7 +66,7 @@ export const courseCounts = {
 export const programCopy = {
   direction: 'Practical skills for everyday life: managing your time, communicating clearly, staying safe online, understanding money, and turning ideas into projects.',
   availability: 'These courses are in development. Launch dates, class schedules, and student enrollment details have not been confirmed.',
-  eligibility: 'Existing Ignite materials describe grades 4–8. Eligibility and any prior knowledge needed for each developing course still need confirmation; the same ages may not apply to every course.',
+  eligibility: 'Ignite welcomes all students. Bring your curiosity and a willingness to learn.',
   expansion: 'After Summer 2026, Ignite is working toward free online learning that combines live classes with independent courses. The goal is to help more students build useful skills, wherever they learn.',
   proposals: 'AI learning support, professional curriculum review, new partnerships, and broader reach are proposals. Their launch, approval, and growth targets have not been confirmed.',
 };
