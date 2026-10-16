@@ -1,9 +1,11 @@
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-test('partnerships is reachable from navigation, homepage, and footer', async ({ page }) => {
+test('partnerships is reachable from header navigation and footer', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('link', { name: 'Explore partnerships', exact: true }).click();
+  const homeToggle = page.getByRole('button', { name: 'Toggle menu', exact: true });
+  if (await homeToggle.isVisible()) await homeToggle.click();
+  await page.locator('nav').getByRole('link', { name: 'Partnerships', exact: true }).filter({ visible: true }).click();
   await expect(page).toHaveURL(/\/partnerships$/);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Partnerships');
   await expect(page.getByRole('heading', { name: 'Bring practical learning to your community.', exact: true })).toBeVisible();

@@ -10,11 +10,11 @@ import {
 } from 'lucide-react';
 import StaffImage from '../components/ui/staff-image';
 import { RECORDS_PAGE } from '../config/records';
-import { mentors } from '../data/mentors';
+import { summer2026Mentors } from '../data/mentors';
 import { INTERN_FORM_URL } from '../lib/links';
 import ProgramNextSteps from '../components/program/ProgramNextSteps';
 
-const recordTeam = mentors;
+const recordTeam = summer2026Mentors;
 
 const statistics = {
   applications: 110,
@@ -23,7 +23,7 @@ const statistics = {
   countriesAndRegions: 5,
   liveCohorts: 10,
   programWeeks: 3,
-  mentors: 10,
+  mentors: recordTeam.length,
 } as const;
 
 const studentWork = [

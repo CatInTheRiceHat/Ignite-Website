@@ -158,6 +158,22 @@ export const mentors: Mentor[] = [
   },
 ];
 
+// Keep the historical roster fixed as new course developers join the team.
+const summer2026MentorNames = new Set([
+  "Elaine Che",
+  "Austin Zhao",
+  "Michael Zhao",
+  "Ivan Satsuta",
+  "Julie Ye",
+  "Vivaan Gupta",
+  "Edwin Wu",
+  "Achyut Karthikeyan",
+  "Emma Zhou",
+  "David He",
+]);
+
+export const summer2026Mentors = mentors.filter((member) => summer2026MentorNames.has(member.name));
+
 export const interns: Intern[] = [
   {
     initial: "D",

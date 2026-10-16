@@ -15,8 +15,6 @@ import {
 import BlurFade from '../components/ui/blur-fade';
 import FadingCarousel from '../components/ui/fading-carousel';
 import { programCopy } from '../data/program';
-import Expansion from '../components/program/Expansion';
-import ProgramNextSteps from '../components/program/ProgramNextSteps';
 
 // ---------------------------------------------------------------------------
 // Sub-components
@@ -256,17 +254,17 @@ const Home = () => {
       </section>
 
       {/* Meet Our Team Section */}
-      <section className="py-24 md:py-32 min-h-[57vw] relative overflow-hidden">
+      <section className="min-h-[54vw] pt-16 pb-8 md:pt-24 md:pb-6 xl:pt-[8vw] relative overflow-hidden">
         <img
           src="/backgrounds/Meet%20Your%20Mentors.png"
           alt=""
-          className="absolute inset-0 h-full w-full object-cover object-top"
+          className="absolute inset-0 h-full w-full object-cover object-bottom"
           loading="lazy"
         />
         <div className="absolute inset-0 bg-white/48"></div>
-        <BlurFade className="relative z-10 max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-6xl font-rammetto text-white mb-6 drop-shadow-[0_3px_10px_rgba(0,0,0,0.4)]">Meet Our Team</h2>
-          <p className="text-xl md:text-2xl text-white mb-14 max-w-3xl mx-auto font-medium leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">
+        <BlurFade className="relative z-10 w-full max-w-7xl mx-auto px-4 text-center">
+          <h2 className="text-4xl md:text-6xl font-rammetto text-white mb-4 drop-shadow-[0_3px_10px_rgba(0,0,0,0.4)]">Meet Our Team</h2>
+          <p className="text-xl md:text-2xl text-white mb-8 max-w-3xl mx-auto font-medium leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">
             High school students who remember what it is like to be in your spot.
           </p>
           <div className="flex justify-center">
@@ -276,24 +274,6 @@ const Home = () => {
           </div>
         </BlurFade>
       </section>
-
-      <Expansion />
-
-      <section className="px-4 pb-20 md:pb-24" aria-labelledby="home-partnerships-heading">
-        <div className="mx-auto grid max-w-5xl items-center gap-8 rounded-[2rem] border-2 border-orange-100 bg-white p-8 shadow-sm sm:grid-cols-[1fr_10rem] md:p-12">
-          <div>
-            <p className="mb-4 text-sm font-extrabold uppercase tracking-[0.18em] text-[var(--text-light)]">Partner with Ignite</p>
-            <h2 id="home-partnerships-heading" className="font-rammetto text-3xl text-[var(--primary-orange)] md:text-4xl">Learning grows through community.</h2>
-            <p className="mt-5 text-lg leading-relaxed text-[var(--text-light)]">Have a school, community, or idea in mind? Let’s explore how we can bring free practical-skills learning to more students, one small step at a time.</p>
-            <Link to="/partnerships" className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-6 py-3 text-lg font-bold text-white shadow-lg shadow-orange-100 transition-all hover:bg-[var(--primary-orange-dark)] motion-safe:hover:scale-105 motion-safe:active:scale-95">
-              Explore partnerships
-            </Link>
-          </div>
-          <img src="/mascots/Mentors.png" alt="" className="mx-auto h-40 w-40 object-contain" loading="lazy" width="1086" height="871" />
-        </div>
-      </section>
-
-      <ProgramNextSteps />
 
     </div>
   );

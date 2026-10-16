@@ -62,7 +62,7 @@ export const knowledge: KnowledgeEntry[] = [
   },
   {
     id: 'hiring', destinationIds: ['hiring', 'intern'], source: 'src/pages/Hiring.tsx; src/data/internRoles.ts',
-    keywords: ['hiring', 'intern', 'interns', 'internship', 'roles', 'developer', 'mentor', 'sponsor', 'sponsorship', 'researcher', 'marketing', 'ambassador', 'miscellaneous', 'payout', 'payment', 'paid', 'compensation', 'salary'],
+    keywords: ['hiring', 'intern', 'interns', 'internship', 'roles', 'developer', 'mentor', 'sponsor', 'sponsorship', 'researcher', 'marketing', 'ambassador', 'miscellaneous', 'payout', 'payment', 'paid', 'compensation', 'salary', 'college', 'portfolio', 'portfolios', 'résumé', 'resume', 'ownership', 'impact'],
     facts: `The Hiring page lists these intern roles and their payout terms: ${internRoles.map(role => `${role.title}: ${role.desc} ${role.details.title}: ${role.details.paragraphs.join(' ')}`).join(' | ')} These are conditional payouts for completed work or outcomes, not a salary or guaranteed earnings. Preserve all approval, completion, funding and written-agreement conditions.`,
   },
   {

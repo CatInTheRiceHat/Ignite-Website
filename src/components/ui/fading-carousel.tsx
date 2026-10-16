@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback, useId } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { useState, useEffect, useCallback, useId, useRef } from 'react';
+import { useReducedMotion } from 'framer-motion';
 
 interface CarouselItem {
   image: string;
@@ -26,9 +26,18 @@ const FadingCarousel = ({
   expandActiveOnly = false,
 }: FadingCarouselProps) => {
   const [active, setActive] = useState(0);
+  const [displayedImage, setDisplayedImage] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
+  const loadedImages = useRef(new Set<string>());
+  const activeImage = useRef(active);
   const id = useId();
   const reducedMotion = useReducedMotion();
+
+  // Keep the previous image visible until the requested image has loaded.
+  useEffect(() => {
+    activeImage.current = active;
+    if (loadedImages.current.has(items[active].image)) setDisplayedImage(active);
+  }, [active, items]);
 
   const next = useCallback(() => {
     setActive((prev) => (prev + 1) % items.length);
@@ -41,9 +50,27 @@ const FadingCarousel = ({
   }, [autoPlay, paused, next, intervalMs, reducedMotion]);
 
   const isLight = variant === 'light';
+  const images = items.map((item, index) => (
+    <img
+      key={item.image}
+      src={item.image}
+      alt={item.title}
+      aria-hidden={displayedImage !== index}
+      loading="eager"
+      decoding="async"
+      onLoad={async event => {
+        const image = event.currentTarget;
+        try { await image.decode(); } catch { /* A loaded image can still be displayed if decode is unavailable. */ }
+        loadedImages.current.add(item.image);
+        // Ignore a load that finishes after the visitor has selected another slide.
+        setDisplayedImage(current => activeImage.current === index ? index : current);
+      }}
+      className={`pointer-events-none absolute inset-0 h-full w-full transition-opacity duration-700 ease-in-out motion-reduce:transition-none ${imageStyle === 'boxed' ? 'object-cover' : 'object-contain drop-shadow-2xl'} ${displayedImage === index ? 'opacity-100' : 'opacity-0'}`}
+    />
+  ));
 
   return (
-    <div className={`${expandActiveOnly ? 'max-w-7xl' : 'max-w-5xl'} mx-auto px-4`}>
+    <div className={`${expandActiveOnly ? 'max-w-7xl' : 'max-w-5xl'} mx-auto px-4 [overflow-anchor:none]`}>
       <div className={`flex flex-col md:flex-row ${expandActiveOnly ? 'items-start gap-0' : 'items-center gap-10 md:gap-16'}`}>
 
         {/* Left - fading image */}
@@ -54,18 +81,7 @@ const FadingCarousel = ({
         >
           {imageStyle === 'boxed' ? (
             <div className="relative aspect-square rounded-3xl overflow-hidden shadow-2xl">
-              <AnimatePresence mode="sync">
-                <motion.img
-                  key={active}
-                  src={items[active].image}
-                  alt={items[active].title}
-                  className="absolute inset-0 h-full w-full object-cover"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.8, ease: 'easeInOut' }}
-                />
-              </AnimatePresence>
+              {images}
               {/* Dot indicators */}
               <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
                 {items.map((_, i) => (
@@ -76,24 +92,15 @@ const FadingCarousel = ({
                       i === active ? 'bg-white w-6 h-2.5' : 'bg-white/50 w-2.5 h-2.5 hover:bg-white/80'
                     }`}
                     aria-label={`Go to slide ${i + 1}`}
+                    aria-pressed={i === active}
+                    type="button"
                   />
                 ))}
               </div>
             </div>
           ) : (
             <div className={`relative ${expandActiveOnly ? 'h-96 sm:h-[500px] lg:h-[620px]' : 'h-[420px]'}`}>
-              <AnimatePresence>
-                <motion.img
-                  key={active}
-                  src={items[active].image}
-                  alt={items[active].title}
-                  className="absolute inset-0 h-full w-full object-contain drop-shadow-2xl"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: reducedMotion ? 0 : 0.7, ease: 'easeInOut' }}
-                />
-              </AnimatePresence>
+              {images}
               {/* Dot indicators */}
               <div className="absolute bottom-0 left-0 right-0 flex justify-center gap-2 z-10">
                 {items.map((_, i) => (
@@ -132,7 +139,9 @@ const FadingCarousel = ({
                     {item.title}
                   </button>
                 </h3>
-                <div id={`${id}-details-${i}`} role="region" aria-labelledby={`${id}-role-${i}`} hidden={i !== active} className={`space-y-5 px-6 pb-6 text-base leading-relaxed ${isLight ? 'text-white/90' : 'text-[var(--text-light)]'}`}>
+                <div aria-hidden={i !== active} className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out motion-reduce:transition-none ${i === active ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
+                <div className="min-h-0 overflow-hidden">
+                <div id={`${id}-details-${i}`} role="region" aria-labelledby={`${id}-role-${i}`} className={`space-y-5 px-6 pb-6 text-base leading-relaxed ${isLight ? 'text-white/90' : 'text-[var(--text-light)]'}`}>
                   <p>{item.desc}</p>
                   {item.details && (
                     <div className={`space-y-3 border-t pt-5 ${isLight ? 'border-white/20' : 'border-orange-100'}`}>
@@ -141,10 +150,14 @@ const FadingCarousel = ({
                     </div>
                   )}
                 </div>
+                </div>
+                </div>
               </div>
             ) : (
             <button
               key={i}
+              type="button"
+              aria-pressed={i === active}
               onClick={() => setActive(i)}
               className={`text-left rounded-2xl px-6 py-5 transition-all duration-300 border-l-4 ${
                 i === active

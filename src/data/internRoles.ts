@@ -2,7 +2,7 @@ export const internRoles = [
   {
     title: 'Course Developer',
     image: '/mascots/Course%20Developer.png',
-    desc: 'Create synchronous or asynchronous courses for Ignite students. Assignments may include developing lessons, slides, activities, videos, and other course materials.',
+    desc: 'Build a course you can put your name to. Take ownership of lessons, slides, activities, videos, and other materials for a live or independent Ignite course. Showcase what you created in college applications, résumés, and portfolios, including your course’s documented student reach and your role in making it happen.',
     details: {
       title: 'Payout',
       paragraphs: ['$250 for each approved and fully completed course.'],
