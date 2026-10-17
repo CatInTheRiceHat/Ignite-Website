@@ -1,13 +1,34 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
+
+function expectedVideo(page: Page) {
+  const mobile = page.viewportSize()!.width < 768;
+  return {
+    width: mobile ? 1080 : 1920,
+    height: mobile ? 1920 : 1080,
+    src: mobile ? '/backgrounds/Loading%20Screen%20Mobile.mp4?v=1' : '/backgrounds/Loading%20Screen.mp4?v=4',
+    poster: mobile ? '/backgrounds/Loading%20Screen%20Mobile.webp' : '/backgrounds/Loading%20Screen.webp',
+  };
+}
 
 test.beforeEach(async ({ page }) => {
   await page.route('**/api/status', route => route.fulfill({ json: { available: false } }));
 });
 
+async function startIntro(page: Page) {
+  const video = page.locator('.loading-screen__video');
+  const play = page.getByRole('button', { name: 'Play intro', exact: true });
+  await expect.poll(async () =>
+    await play.isVisible() || await video.evaluate(element => (element as HTMLVideoElement).currentTime > 0.1),
+  ).toBe(true);
+  if (await play.isVisible()) await play.click();
+  await expect.poll(() => video.evaluate(element => (element as HTMLVideoElement).currentTime)).toBeGreaterThan(0.1);
+}
+
 test('fades a captured closing frame and restores the page without a blank frame', async ({ page }) => {
   await page.goto('/');
   const video = page.locator('.loading-screen__video');
   await expect(video).toBeVisible();
+  await startIntro(page);
 
   const transition = await video.evaluate(async element => {
     const player = element as HTMLVideoElement;
@@ -22,6 +43,7 @@ test('fades a captured closing frame and restores the page without a blank frame
       ).data),
     );
     let expectedPixels: number[] = [];
+    let capturedAt = 0;
     const initialWidth = document.documentElement.clientWidth;
     await new Promise<void>(resolve => {
       const sample = () => {
@@ -31,6 +53,7 @@ test('fades a captured closing frame and restores the page without a blank frame
         }
         if (getComputedStyle(snapshot).visibility === 'visible') {
           if (!expectedPixels.length) {
+            capturedAt = player.currentTime;
             const reference = document.createElement('canvas');
             reference.width = player.videoWidth;
             reference.height = player.videoHeight;
@@ -52,9 +75,17 @@ test('fades a captured closing frame and restores the page without a blank frame
       };
       sample();
     });
-    return { frames, expectedPixels, initialWidth, finalWidth: document.documentElement.clientWidth };
+    return {
+      frames, expectedPixels, capturedAt, duration: player.duration,
+      snapshotWidth: snapshot.width, snapshotHeight: snapshot.height,
+      initialWidth, finalWidth: document.documentElement.clientWidth,
+    };
   });
 
+  expect(transition.capturedAt).toBeGreaterThan(transition.duration - 0.2);
+  expect(transition.capturedAt).toBeLessThan(transition.duration);
+  expect(transition.snapshotWidth).toBe(expectedVideo(page).width);
+  expect(transition.snapshotHeight).toBe(expectedVideo(page).height);
   const fadingFrames = transition.frames.filter(frame => frame.opacity < 1);
   expect(fadingFrames.length).toBeGreaterThan(2);
   for (const [index, frame] of fadingFrames.entries()) {
@@ -72,6 +103,93 @@ test('fades a captured closing frame and restores the page without a blank frame
   await expect(page.getByRole('link', { name: 'Explore Course Plans', exact: true })).toBeVisible();
 
   await page.reload();
+  await expect(page.locator('.loading-screen')).toHaveCount(0);
+});
+
+test('keeps the original video size and crop through the closing-frame handoff', async ({ page }) => {
+  const requestedVideos = new Set<string>();
+  page.on('request', request => {
+    if (request.url().includes('.mp4')) requestedVideos.add(new URL(request.url()).pathname);
+  });
+  await page.goto('/');
+  await startIntro(page);
+  const geometry = await page.locator('.loading-screen__video').evaluate(async element => {
+    const player = element as HTMLVideoElement;
+    const snapshot = player.closest('.loading-screen')!.querySelector('canvas')!;
+    const videoBounds = player.getBoundingClientRect().toJSON();
+    const videoFit = getComputedStyle(player).objectFit;
+    await new Promise<void>(resolve => {
+      const sample = () => {
+        if (getComputedStyle(snapshot).visibility === 'visible') resolve();
+        else requestAnimationFrame(sample);
+      };
+      sample();
+    });
+    return {
+      width: player.videoWidth, height: player.videoHeight, src: player.currentSrc,
+      videoBounds, snapshotBounds: snapshot.getBoundingClientRect().toJSON(),
+      videoFit, snapshotFit: getComputedStyle(snapshot).objectFit,
+    };
+  });
+  const expected = expectedVideo(page);
+  expect(geometry.width).toBe(expected.width);
+  expect(geometry.height).toBe(expected.height);
+  expect(geometry.src).toBe(new URL(expected.src, page.url()).href);
+  expect([...requestedVideos]).toEqual([expected.src.split('?')[0]]);
+  expect(geometry.videoBounds).toEqual(geometry.snapshotBounds);
+  expect(geometry.videoFit).toBe('cover');
+  expect(geometry.snapshotFit).toBe(geometry.videoFit);
+});
+
+test('shows a poster while buffering and plays once the video arrives', async ({ page }) => {
+  let releaseVideo!: () => void;
+  const download = new Promise<void>(resolve => { releaseVideo = resolve; });
+  await page.route('**/backgrounds/Loading*.mp4*', async route => {
+    await download;
+    await route.continue();
+  });
+  try {
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    const video = page.locator('.loading-screen__video');
+    await expect(video).toBeVisible();
+    const expected = expectedVideo(page);
+    await expect(video).toHaveAttribute('poster', expected.poster);
+    const poster = await video.evaluate(async element => {
+      const player = element as HTMLVideoElement;
+      const image = new Image();
+      image.src = player.poster;
+      await image.decode();
+      return { width: image.naturalWidth, height: image.naturalHeight, paused: player.paused };
+    });
+    expect(poster).toEqual({ width: expected.width, height: expected.height, paused: true });
+    await expect(page.locator('body')).toHaveAttribute('data-intro-loading', 'true');
+    releaseVideo();
+    await startIntro(page);
+    await page.getByRole('button', { name: 'Skip intro' }).click();
+    await expect(page.locator('.loading-screen')).toHaveCount(0);
+  } finally {
+    releaseVideo();
+  }
+});
+
+test('offers playback when autoplay is blocked without dismissing the intro', async ({ page }) => {
+  await page.addInitScript(() => {
+    const play = HTMLMediaElement.prototype.play;
+    let firstAttempt = true;
+    HTMLMediaElement.prototype.play = function () {
+      if (firstAttempt) {
+        firstAttempt = false;
+        return Promise.reject(new DOMException('Autoplay requires a gesture', 'NotAllowedError'));
+      }
+      return play.call(this);
+    };
+  });
+  await page.goto('/');
+  await expect(page.getByRole('button', { name: 'Play intro', exact: true })).toBeVisible();
+  expect(await page.evaluate(() => sessionStorage.getItem('ignite:intro-seen'))).toBeNull();
+  await startIntro(page);
+  await expect(page.getByRole('button', { name: 'Play intro', exact: true })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Skip intro' }).click();
   await expect(page.locator('.loading-screen')).toHaveCount(0);
 });
 

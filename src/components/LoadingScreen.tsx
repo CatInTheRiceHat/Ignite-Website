@@ -10,8 +10,11 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const snapshotRef = useRef<HTMLCanvasElement>(null);
   const exitFrameRef = useRef(0);
   const completionRequested = useRef(false);
+  const [playbackBlocked, setPlaybackBlocked] = useState(false);
   const [snapshotVisible, setSnapshotVisible] = useState(false);
   const [textVisible, setTextVisible] = useState(true);
+  // Keep the selected clip stable if the phone rotates during the intro.
+  const [isMobile] = useState(() => window.matchMedia('(max-width: 767px)').matches);
 
   const completeIntro = useCallback(() => {
     if (completionRequested.current) return;
@@ -37,12 +40,12 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       onComplete();
       return;
     }
+    video.pause();
     setSnapshotVisible(true);
 
-    // Let the still image paint before pausing the player and starting the fade.
+    // Let the still image paint before starting the fade.
     exitFrameRef.current = window.requestAnimationFrame(() => {
       exitFrameRef.current = window.requestAnimationFrame(() => {
-        video.pause();
         onComplete();
       });
     });
@@ -50,22 +53,57 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
   useEffect(() => {
     let active = true;
+    let playbackFrame = 0;
+    const video = videoRef.current;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     document.body.dataset.introLoading = 'true';
 
     // A failed download or stalled player should never block the website.
-    const timeout = window.setTimeout(completeIntro, 15000);
+    let timeout = window.setTimeout(completeIntro, 15000);
+    const resetTimeout = () => {
+      window.clearTimeout(timeout);
+      timeout = window.setTimeout(completeIntro, 15000);
+    };
+    video?.addEventListener('playing', resetTimeout);
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') completeIntro();
     };
     window.addEventListener('keydown', handleKeyDown);
-    void videoRef.current?.play().catch(() => {
-      if (active) completeIntro();
-    });
+    const startPlayback = () => {
+      if (!active || completionRequested.current || !video) return;
+      // Buffer before starting, keeping the original video and its dimensions.
+      video.defaultMuted = true;
+      video.muted = true;
+      void video.play().catch((error: unknown) => {
+        if (!active || completionRequested.current) return;
+        if (error instanceof DOMException && error.name === 'NotAllowedError') {
+          setPlaybackBlocked(true);
+        } else {
+          completeIntro();
+        }
+      });
+    };
+    if (video && video.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA) startPlayback();
+    else video?.addEventListener('canplaythrough', startPlayback, { once: true });
+
+    const checkClosingFrame = () => {
+      if (!video || completionRequested.current) return;
+      if (!video.seeking && video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA &&
+          Number.isFinite(video.duration) && video.currentTime >= video.duration - 0.1) {
+        // Capture before the native ended state can clear the video surface.
+        completeIntro();
+        return;
+      }
+      playbackFrame = window.requestAnimationFrame(checkClosingFrame);
+    };
+    playbackFrame = window.requestAnimationFrame(checkClosingFrame);
 
     return () => {
       active = false;
+      video?.removeEventListener('playing', resetTimeout);
+      video?.removeEventListener('canplaythrough', startPlayback);
+      window.cancelAnimationFrame(playbackFrame);
       window.cancelAnimationFrame(exitFrameRef.current);
       window.clearTimeout(timeout);
       window.removeEventListener('keydown', handleKeyDown);
@@ -88,8 +126,8 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         ref={videoRef}
         className="loading-screen__video"
         style={{ visibility: snapshotVisible ? 'hidden' : 'visible' }}
-        src="/backgrounds/Loading%20Screen.mp4?v=2"
-        autoPlay
+        src={isMobile ? '/backgrounds/Loading%20Screen%20Mobile.mp4?v=1' : '/backgrounds/Loading%20Screen.mp4?v=4'}
+        poster={isMobile ? '/backgrounds/Loading%20Screen%20Mobile.webp' : '/backgrounds/Loading%20Screen.webp'}
         muted
         playsInline
         preload="auto"
@@ -109,6 +147,17 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       <button className="loading-screen__skip" type="button" onClick={completeIntro}>
         Skip intro <span aria-hidden="true">↗</span>
       </button>
+      {playbackBlocked && (
+        <button
+          className="loading-screen__play"
+          type="button"
+          onClick={() => {
+            void videoRef.current?.play().then(() => setPlaybackBlocked(false)).catch(completeIntro);
+          }}
+        >
+          Play intro <span aria-hidden="true">▶</span>
+        </button>
+      )}
 
       <div className="loading-screen__content">
         <motion.div
