@@ -47,7 +47,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       <video
         ref={videoRef}
         className="loading-screen__video"
-        src="/backgrounds/Loading%20Screen.mp4"
+        src="/backgrounds/Loading%20Screen.mp4?v=2"
         autoPlay
         muted
         playsInline
