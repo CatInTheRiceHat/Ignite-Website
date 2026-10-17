@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
 interface LoadingScreenProps {
@@ -7,32 +7,56 @@ interface LoadingScreenProps {
 
 export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const completionRequested = useRef(false);
   const [textVisible, setTextVisible] = useState(true);
+
+  const completeIntro = useCallback(() => {
+    if (completionRequested.current) return;
+    completionRequested.current = true;
+    // Keep the closing frame on the video surface throughout the exit fade.
+    videoRef.current?.pause();
+    onComplete();
+  }, [onComplete]);
 
   useEffect(() => {
     let active = true;
+    let animationFrame = 0;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     document.body.dataset.introLoading = 'true';
 
     // A failed download or stalled player should never block the website.
-    const timeout = window.setTimeout(onComplete, 15000);
+    const timeout = window.setTimeout(completeIntro, 15000);
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onComplete();
+      if (event.key === 'Escape') completeIntro();
     };
     window.addEventListener('keydown', handleKeyDown);
     void videoRef.current?.play().catch(() => {
-      if (active) onComplete();
+      if (active) completeIntro();
     });
+
+    const checkClosingFrame = () => {
+      const video = videoRef.current;
+      // Pause just before the native ended state, which can repaint the video
+      // surface while its parent is fading out on some browsers.
+      if (video && !video.seeking && video.readyState >= 2 &&
+          Number.isFinite(video.duration) && video.currentTime >= video.duration - 0.12) {
+        completeIntro();
+        return;
+      }
+      animationFrame = window.requestAnimationFrame(checkClosingFrame);
+    };
+    animationFrame = window.requestAnimationFrame(checkClosingFrame);
 
     return () => {
       active = false;
+      window.cancelAnimationFrame(animationFrame);
       window.clearTimeout(timeout);
       window.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = previousOverflow;
       delete document.body.dataset.introLoading;
     };
-  }, [onComplete]);
+  }, [completeIntro]);
 
   return (
     <motion.div
@@ -56,10 +80,10 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         onTimeUpdate={(event) => {
           if (event.currentTarget.currentTime >= 5) setTextVisible(false);
         }}
-        onEnded={onComplete}
-        onError={onComplete}
+        onEnded={completeIntro}
+        onError={completeIntro}
       />
-      <button className="loading-screen__skip" type="button" onClick={onComplete}>
+      <button className="loading-screen__skip" type="button" onClick={completeIntro}>
         Skip intro <span aria-hidden="true">↗</span>
       </button>
 

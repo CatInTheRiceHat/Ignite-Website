@@ -71,6 +71,10 @@ body[data-intro-loading] sol-widget {
 }
 
 @layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
+
   :root {
     --bg-cream: #FFF8F0;
     --primary-orange: #F07B2A;
