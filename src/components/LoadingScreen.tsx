@@ -7,20 +7,49 @@ interface LoadingScreenProps {
 
 export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const snapshotRef = useRef<HTMLCanvasElement>(null);
+  const exitFrameRef = useRef(0);
   const completionRequested = useRef(false);
+  const [snapshotVisible, setSnapshotVisible] = useState(false);
   const [textVisible, setTextVisible] = useState(true);
 
   const completeIntro = useCallback(() => {
     if (completionRequested.current) return;
     completionRequested.current = true;
-    // Keep the closing frame on the video surface throughout the exit fade.
-    videoRef.current?.pause();
-    onComplete();
+    const video = videoRef.current;
+    const snapshot = snapshotRef.current;
+    const context = snapshot?.getContext('2d');
+    if (!video || video.readyState < 2 || !snapshot || !context) {
+      video?.pause();
+      onComplete();
+      return;
+    }
+
+    // Fade a still image, so the video compositor cannot clear or repaint the
+    // closing frame during the transition. Keep the same aspect ratio and crop.
+    snapshot.width = video.videoWidth;
+    snapshot.height = video.videoHeight;
+    try {
+      context.drawImage(video, 0, 0);
+    } catch {
+      // A player error must still allow the visitor to reach the website.
+      video.pause();
+      onComplete();
+      return;
+    }
+    setSnapshotVisible(true);
+
+    // Let the still image paint before pausing the player and starting the fade.
+    exitFrameRef.current = window.requestAnimationFrame(() => {
+      exitFrameRef.current = window.requestAnimationFrame(() => {
+        video.pause();
+        onComplete();
+      });
+    });
   }, [onComplete]);
 
   useEffect(() => {
     let active = true;
-    let animationFrame = 0;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     document.body.dataset.introLoading = 'true';
@@ -35,22 +64,9 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       if (active) completeIntro();
     });
 
-    const checkClosingFrame = () => {
-      const video = videoRef.current;
-      // Pause just before the native ended state, which can repaint the video
-      // surface while its parent is fading out on some browsers.
-      if (video && !video.seeking && video.readyState >= 2 &&
-          Number.isFinite(video.duration) && video.currentTime >= video.duration - 0.12) {
-        completeIntro();
-        return;
-      }
-      animationFrame = window.requestAnimationFrame(checkClosingFrame);
-    };
-    animationFrame = window.requestAnimationFrame(checkClosingFrame);
-
     return () => {
       active = false;
-      window.cancelAnimationFrame(animationFrame);
+      window.cancelAnimationFrame(exitFrameRef.current);
       window.clearTimeout(timeout);
       window.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = previousOverflow;
@@ -71,6 +87,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       <video
         ref={videoRef}
         className="loading-screen__video"
+        style={{ visibility: snapshotVisible ? 'hidden' : 'visible' }}
         src="/backgrounds/Loading%20Screen.mp4?v=2"
         autoPlay
         muted
@@ -82,6 +99,12 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         }}
         onEnded={completeIntro}
         onError={completeIntro}
+      />
+      <canvas
+        ref={snapshotRef}
+        className="loading-screen__snapshot"
+        style={{ visibility: snapshotVisible ? 'visible' : 'hidden' }}
+        aria-hidden="true"
       />
       <button className="loading-screen__skip" type="button" onClick={completeIntro}>
         Skip intro <span aria-hidden="true">↗</span>

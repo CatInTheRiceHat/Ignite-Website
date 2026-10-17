@@ -11,7 +11,8 @@
   color: var(--text-charcoal);
 }
 
-.loading-screen__video {
+.loading-screen__video,
+.loading-screen__snapshot {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -72,7 +73,11 @@ body[data-intro-loading] sol-widget {
 
 @layer base {
   html {
-    scrollbar-gutter: stable;
+    scrollbar-width: none;
+  }
+
+  html::-webkit-scrollbar {
+    display: none;
   }
 
   :root {
