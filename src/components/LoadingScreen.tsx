@@ -95,10 +95,12 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
     window.addEventListener('pageshow', startPlayback);
     startPlayback();
 
+    // Use the same closing-frame timing for both intro clips.
+    const fadeLeadTime = 0.1;
     const checkClosingFrame = () => {
       if (!video || completionRequested.current) return;
       if (!video.seeking && video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA &&
-          Number.isFinite(video.duration) && video.currentTime >= video.duration - 0.1) {
+          Number.isFinite(video.duration) && video.currentTime >= video.duration - fadeLeadTime) {
         // Capture before the native ended state can clear the video surface.
         completeIntro();
         return;
@@ -143,7 +145,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         preload="auto"
         aria-hidden="true"
         onTimeUpdate={(event) => {
-          if (event.currentTarget.currentTime >= 5) setTextVisible(false);
+          if (event.currentTarget.currentTime >= (isMobile ? 4 : 5)) setTextVisible(false);
         }}
         onEnded={completeIntro}
         onError={completeIntro}
