@@ -21,6 +21,15 @@
   object-fit: cover;
 }
 
+.loading-screen__snapshot {
+  z-index: 1;
+}
+
+.loading-screen__skip,
+.loading-screen__content {
+  z-index: 2;
+}
+
 .loading-screen__skip {
   position: absolute;
   top: max(1.5rem, env(safe-area-inset-top));
@@ -40,27 +49,6 @@
 }
 
 .loading-screen__skip span {
-  margin-left: 0.5rem;
-}
-
-.loading-screen__play {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  min-height: 44px;
-  padding: 0.75rem 1.5rem;
-  border-radius: 999px;
-  background: var(--primary-orange);
-  color: white;
-  font-weight: 700;
-}
-
-.loading-screen__play:hover {
-  background: var(--primary-orange-dark);
-}
-
-.loading-screen__play span {
   margin-left: 0.5rem;
 }
 

@@ -8,9 +8,7 @@ interface LoadingScreenProps {
 export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const snapshotRef = useRef<HTMLCanvasElement>(null);
-  const exitFrameRef = useRef(0);
   const completionRequested = useRef(false);
-  const [playbackBlocked, setPlaybackBlocked] = useState(false);
   const [snapshotVisible, setSnapshotVisible] = useState(false);
   const [textVisible, setTextVisible] = useState(true);
   // Keep the selected clip stable if the phone rotates during the intro.
@@ -40,16 +38,22 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       onComplete();
       return;
     }
-    video.pause();
     setSnapshotVisible(true);
+  }, [onComplete]);
 
-    // Let the still image paint before starting the fade.
-    exitFrameRef.current = window.requestAnimationFrame(() => {
-      exitFrameRef.current = window.requestAnimationFrame(() => {
+  useEffect(() => {
+    if (!snapshotVisible) return;
+    // React has now committed the opaque snapshot above the video. Keep the
+    // native surface visible until that cover has painted; pausing/hiding it
+    // earlier can expose the poster or background on mobile compositors.
+    let frame = window.requestAnimationFrame(() => {
+      frame = window.requestAnimationFrame(() => {
+        videoRef.current?.pause();
         onComplete();
       });
     });
-  }, [onComplete]);
+    return () => window.cancelAnimationFrame(frame);
+  }, [snapshotVisible, onComplete]);
 
   useEffect(() => {
     let active = true;
@@ -61,14 +65,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
     // A failed download or stalled player should never block the website.
     let timeout = window.setTimeout(completeIntro, 15000);
-    const playbackPrompt = window.setTimeout(() => {
-      if (active && !completionRequested.current && video && (video.paused || video.currentTime === 0)) {
-        setPlaybackBlocked(true);
-      }
-    }, 2000);
     const handlePlaying = () => {
-      window.clearTimeout(playbackPrompt);
-      setPlaybackBlocked(false);
       window.clearTimeout(timeout);
       timeout = window.setTimeout(completeIntro, 15000);
     };
@@ -78,20 +75,24 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
     };
     window.addEventListener('keydown', handleKeyDown);
     const startPlayback = () => {
-      if (!active || completionRequested.current || !video) return;
+      if (!active || completionRequested.current || !video || document.hidden) return;
       // play() can wait for data itself. Mobile browsers may never emit
       // canplaythrough, so waiting for that event can leave the poster frozen.
       video.defaultMuted = true;
       video.muted = true;
       void video.play().catch((error: unknown) => {
         if (!active || completionRequested.current) return;
-        if (error instanceof DOMException && error.name === 'NotAllowedError') {
-          setPlaybackBlocked(true);
-        } else {
-          completeIntro();
-        }
+        // Safari can reject an early attempt before the clip is ready or while
+        // the page is backgrounded. Readiness/visibility events retry it.
+        if (error instanceof DOMException &&
+            (error.name === 'NotAllowedError' || error.name === 'AbortError')) return;
+        completeIntro();
       });
     };
+    video?.addEventListener('loadeddata', startPlayback);
+    video?.addEventListener('canplay', startPlayback);
+    document.addEventListener('visibilitychange', startPlayback);
+    window.addEventListener('pageshow', startPlayback);
     startPlayback();
 
     const checkClosingFrame = () => {
@@ -109,10 +110,12 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
     return () => {
       active = false;
       video?.removeEventListener('playing', handlePlaying);
+      video?.removeEventListener('loadeddata', startPlayback);
+      video?.removeEventListener('canplay', startPlayback);
+      document.removeEventListener('visibilitychange', startPlayback);
+      window.removeEventListener('pageshow', startPlayback);
       window.cancelAnimationFrame(playbackFrame);
-      window.cancelAnimationFrame(exitFrameRef.current);
       window.clearTimeout(timeout);
-      window.clearTimeout(playbackPrompt);
       window.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = previousOverflow;
       delete document.body.dataset.introLoading;
@@ -132,9 +135,9 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       <video
         ref={videoRef}
         className="loading-screen__video"
-        style={{ visibility: snapshotVisible ? 'hidden' : 'visible' }}
         src={isMobile ? '/backgrounds/Loading%20Screen%20Mobile.mp4?v=1' : '/backgrounds/Loading%20Screen.mp4?v=4'}
         poster={isMobile ? '/backgrounds/Loading%20Screen%20Mobile.webp' : '/backgrounds/Loading%20Screen.webp'}
+        autoPlay
         muted
         playsInline
         preload="auto"
@@ -154,18 +157,6 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       <button className="loading-screen__skip" type="button" onClick={completeIntro}>
         Skip intro <span aria-hidden="true">↗</span>
       </button>
-      {playbackBlocked && (
-        <button
-          className="loading-screen__play"
-          type="button"
-          onClick={() => {
-            void videoRef.current?.play().then(() => setPlaybackBlocked(false)).catch(completeIntro);
-          }}
-        >
-          Play intro <span aria-hidden="true">▶</span>
-        </button>
-      )}
-
       <div className="loading-screen__content">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
