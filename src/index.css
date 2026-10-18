@@ -12,6 +12,7 @@
 }
 
 .loading-screen__video,
+.loading-screen__poster,
 .loading-screen__snapshot {
   position: absolute;
   inset: 0;
@@ -21,13 +22,17 @@
   object-fit: cover;
 }
 
-.loading-screen__snapshot {
+.loading-screen__poster {
   z-index: 1;
+}
+
+.loading-screen__snapshot {
+  z-index: 2;
 }
 
 .loading-screen__skip,
 .loading-screen__content {
-  z-index: 2;
+  z-index: 3;
 }
 
 .loading-screen__skip {

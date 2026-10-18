@@ -27,6 +27,8 @@ test('autoplays muted and inline without a Play button or any interaction', asyn
   await expect(video).toHaveAttribute('playsinline', '');
   expect(await video.evaluate(element => (element as HTMLVideoElement).muted)).toBe(true);
   await startIntro(page);
+  await expect(video).toHaveCSS('opacity', '1');
+  await expect(page.locator('.loading-screen__poster')).toBeHidden();
   await expect(page.getByRole('button', { name: 'Play intro', exact: true })).toHaveCount(0);
 });
 
@@ -188,6 +190,8 @@ test('shows a poster while buffering and plays once the video arrives', async ({
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     const video = page.locator('.loading-screen__video');
     await expect(video).toBeVisible();
+    await expect(video).toHaveCSS('opacity', '0');
+    await expect(page.locator('.loading-screen__poster')).toBeVisible();
     const expected = expectedVideo(page);
     await expect(video).toHaveAttribute('poster', expected.poster);
     const poster = await video.evaluate(async element => {
@@ -248,24 +252,30 @@ for (const earlyResult of ['rejected', 'pending'] as const) {
   });
 }
 
-test('a browser that blocks all autoplay still reveals the site without a Play prompt', async ({ page }) => {
-  await page.addInitScript(() => {
-    const setAttribute = Element.prototype.setAttribute;
-    Element.prototype.setAttribute = function (name, value) {
-      if (this instanceof HTMLVideoElement && name.toLowerCase() === 'autoplay') return;
-      setAttribute.call(this, name, value);
-    };
-    HTMLMediaElement.prototype.play = function () {
-      return Promise.reject(new DOMException('Autoplay disabled', 'NotAllowedError'));
-    };
+for (const blockedResult of ['rejected', 'pending'] as const) {
+  test(`keeps native controls covered and bypasses ${blockedResult} autoplay without a prompt`, async ({ page }) => {
+    await page.addInitScript(result => {
+      const setAttribute = Element.prototype.setAttribute;
+      Element.prototype.setAttribute = function (name, value) {
+        if (this instanceof HTMLVideoElement && name.toLowerCase() === 'autoplay') return;
+        setAttribute.call(this, name, value);
+      };
+      HTMLMediaElement.prototype.play = function () {
+        return result === 'pending'
+          ? new Promise<void>(() => {})
+          : Promise.reject(new DOMException('Autoplay disabled', 'NotAllowedError'));
+      };
+    }, blockedResult);
+    await page.goto('/');
+    await expect(page.locator('.loading-screen__video')).toBeVisible();
+    await expect(page.locator('.loading-screen__video')).toHaveCSS('opacity', '0');
+    await expect(page.locator('.loading-screen__poster')).toBeVisible();
+    await expect(page.locator('.loading-screen')).toHaveCount(0, { timeout: 6000 });
+    await expect(page.getByRole('button', { name: 'Play intro', exact: true })).toHaveCount(0);
+    await expect(page.locator('body')).not.toHaveAttribute('data-intro-loading');
+    await expect(page.getByRole('link', { name: 'Explore Course Plans', exact: true })).toBeVisible();
   });
-  await page.goto('/');
-  await expect(page.locator('.loading-screen__video')).toBeVisible();
-  await expect(page.locator('.loading-screen')).toHaveCount(0, { timeout: 20000 });
-  await expect(page.getByRole('button', { name: 'Play intro', exact: true })).toHaveCount(0);
-  await expect(page.locator('body')).not.toHaveAttribute('data-intro-loading');
-  await expect(page.getByRole('link', { name: 'Explore Course Plans', exact: true })).toBeVisible();
-});
+}
 
 test('skip and Escape dismiss the intro and unlock scrolling', async ({ page }) => {
   for (const action of ['skip', 'escape']) {

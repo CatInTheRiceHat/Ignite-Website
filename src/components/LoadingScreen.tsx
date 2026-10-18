@@ -9,10 +9,12 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const snapshotRef = useRef<HTMLCanvasElement>(null);
   const completionRequested = useRef(false);
+  const [playbackStarted, setPlaybackStarted] = useState(false);
   const [snapshotVisible, setSnapshotVisible] = useState(false);
   const [textVisible, setTextVisible] = useState(true);
   // Keep the selected clip stable if the phone rotates during the intro.
   const [isMobile] = useState(() => window.matchMedia('(max-width: 767px)').matches);
+  const poster = isMobile ? '/backgrounds/Loading%20Screen%20Mobile.webp' : '/backgrounds/Loading%20Screen.webp';
 
   const completeIntro = useCallback(() => {
     if (completionRequested.current) return;
@@ -58,6 +60,8 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   useEffect(() => {
     let active = true;
     let playbackFrame = 0;
+    let firstFrameShown = false;
+    let autoplayTimeout = 0;
     const video = videoRef.current;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -65,6 +69,12 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
     // A failed download or stalled player should never block the website.
     let timeout = window.setTimeout(completeIntro, 15000);
+    const scheduleAutoplayFallback = () => {
+      if (firstFrameShown || autoplayTimeout) return;
+      // Give readiness retries a chance, then bypass a browser policy block
+      // without asking the visitor to play a decorative intro manually.
+      autoplayTimeout = window.setTimeout(completeIntro, 2500);
+    };
     const handlePlaying = () => {
       window.clearTimeout(timeout);
       timeout = window.setTimeout(completeIntro, 15000);
@@ -80,12 +90,16 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       // canplaythrough, so waiting for that event can leave the poster frozen.
       video.defaultMuted = true;
       video.muted = true;
+      if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) scheduleAutoplayFallback();
       void video.play().catch((error: unknown) => {
         if (!active || completionRequested.current) return;
         // Safari can reject an early attempt before the clip is ready or while
         // the page is backgrounded. Readiness/visibility events retry it.
-        if (error instanceof DOMException &&
-            (error.name === 'NotAllowedError' || error.name === 'AbortError')) return;
+        if (error instanceof DOMException && error.name === 'NotAllowedError') {
+          scheduleAutoplayFallback();
+          return;
+        }
+        if (error instanceof DOMException && error.name === 'AbortError') return;
         completeIntro();
       });
     };
@@ -99,6 +113,12 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
     const fadeLeadTime = 0.1;
     const checkClosingFrame = () => {
       if (!video || completionRequested.current) return;
+      if (!firstFrameShown && video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA &&
+          video.currentTime > 0 && !video.paused) {
+        firstFrameShown = true;
+        window.clearTimeout(autoplayTimeout);
+        setPlaybackStarted(true);
+      }
       if (!video.seeking && video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA &&
           Number.isFinite(video.duration) && video.currentTime >= video.duration - fadeLeadTime) {
         // Capture before the native ended state can clear the video surface.
@@ -118,6 +138,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       window.removeEventListener('pageshow', startPlayback);
       window.cancelAnimationFrame(playbackFrame);
       window.clearTimeout(timeout);
+      window.clearTimeout(autoplayTimeout);
       window.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = previousOverflow;
       delete document.body.dataset.introLoading;
@@ -137,8 +158,9 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       <video
         ref={videoRef}
         className="loading-screen__video"
+        style={{ opacity: playbackStarted ? 1 : 0 }}
         src={isMobile ? '/backgrounds/Loading%20Screen%20Mobile.mp4?v=1' : '/backgrounds/Loading%20Screen.mp4?v=4'}
-        poster={isMobile ? '/backgrounds/Loading%20Screen%20Mobile.webp' : '/backgrounds/Loading%20Screen.webp'}
+        poster={poster}
         autoPlay
         muted
         playsInline
@@ -149,6 +171,13 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         }}
         onEnded={completeIntro}
         onError={completeIntro}
+      />
+      <img
+        className="loading-screen__poster"
+        src={poster}
+        alt=""
+        aria-hidden="true"
+        style={{ visibility: playbackStarted ? 'hidden' : 'visible' }}
       />
       <canvas
         ref={snapshotRef}
