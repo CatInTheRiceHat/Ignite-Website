@@ -61,18 +61,26 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
     // A failed download or stalled player should never block the website.
     let timeout = window.setTimeout(completeIntro, 15000);
-    const resetTimeout = () => {
+    const playbackPrompt = window.setTimeout(() => {
+      if (active && !completionRequested.current && video && (video.paused || video.currentTime === 0)) {
+        setPlaybackBlocked(true);
+      }
+    }, 2000);
+    const handlePlaying = () => {
+      window.clearTimeout(playbackPrompt);
+      setPlaybackBlocked(false);
       window.clearTimeout(timeout);
       timeout = window.setTimeout(completeIntro, 15000);
     };
-    video?.addEventListener('playing', resetTimeout);
+    video?.addEventListener('playing', handlePlaying);
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') completeIntro();
     };
     window.addEventListener('keydown', handleKeyDown);
     const startPlayback = () => {
       if (!active || completionRequested.current || !video) return;
-      // Buffer before starting, keeping the original video and its dimensions.
+      // play() can wait for data itself. Mobile browsers may never emit
+      // canplaythrough, so waiting for that event can leave the poster frozen.
       video.defaultMuted = true;
       video.muted = true;
       void video.play().catch((error: unknown) => {
@@ -84,8 +92,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         }
       });
     };
-    if (video && video.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA) startPlayback();
-    else video?.addEventListener('canplaythrough', startPlayback, { once: true });
+    startPlayback();
 
     const checkClosingFrame = () => {
       if (!video || completionRequested.current) return;
@@ -101,11 +108,11 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
     return () => {
       active = false;
-      video?.removeEventListener('playing', resetTimeout);
-      video?.removeEventListener('canplaythrough', startPlayback);
+      video?.removeEventListener('playing', handlePlaying);
       window.cancelAnimationFrame(playbackFrame);
       window.cancelAnimationFrame(exitFrameRef.current);
       window.clearTimeout(timeout);
+      window.clearTimeout(playbackPrompt);
       window.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = previousOverflow;
       delete document.body.dataset.introLoading;

@@ -24,6 +24,24 @@ async function startIntro(page: Page) {
   await expect.poll(() => video.evaluate(element => (element as HTMLVideoElement).currentTime)).toBeGreaterThan(0.1);
 }
 
+test('starts playback even when the browser never reports canplaythrough', async ({ page }) => {
+  await page.addInitScript(() => {
+    const readyState = Object.getOwnPropertyDescriptor(HTMLMediaElement.prototype, 'readyState')!;
+    Object.defineProperty(HTMLMediaElement.prototype, 'readyState', {
+      configurable: true,
+      get() { return Math.min(HTMLMediaElement.HAVE_FUTURE_DATA, readyState.get!.call(this)); },
+    });
+    document.addEventListener('canplaythrough', event => event.stopImmediatePropagation(), true);
+  });
+  await page.goto('/');
+  await startIntro(page);
+  const video = page.locator('.loading-screen__video');
+  await expect(video).toHaveAttribute('src', expectedVideo(page).src);
+  await expect.poll(() => video.evaluate(element => (element as HTMLVideoElement).currentTime)).toBeGreaterThan(0.5);
+  await page.getByRole('button', { name: 'Skip intro' }).click();
+  await expect(page.locator('.loading-screen')).toHaveCount(0);
+});
+
 test('fades a captured closing frame and restores the page without a blank frame', async ({ page }) => {
   await page.goto('/');
   const video = page.locator('.loading-screen__video');
@@ -159,9 +177,9 @@ test('shows a poster while buffering and plays once the video arrives', async ({
       const image = new Image();
       image.src = player.poster;
       await image.decode();
-      return { width: image.naturalWidth, height: image.naturalHeight, paused: player.paused };
+      return { width: image.naturalWidth, height: image.naturalHeight, currentTime: player.currentTime };
     });
-    expect(poster).toEqual({ width: expected.width, height: expected.height, paused: true });
+    expect(poster).toEqual({ width: expected.width, height: expected.height, currentTime: 0 });
     await expect(page.locator('body')).toHaveAttribute('data-intro-loading', 'true');
     releaseVideo();
     await startIntro(page);
@@ -175,10 +193,10 @@ test('shows a poster while buffering and plays once the video arrives', async ({
 test('offers playback when autoplay is blocked without dismissing the intro', async ({ page }) => {
   await page.addInitScript(() => {
     const play = HTMLMediaElement.prototype.play;
-    let firstAttempt = true;
+    let clicked = false;
+    document.addEventListener('click', event => { if (event.isTrusted) clicked = true; }, true);
     HTMLMediaElement.prototype.play = function () {
-      if (firstAttempt) {
-        firstAttempt = false;
+      if (!clicked) {
         return Promise.reject(new DOMException('Autoplay requires a gesture', 'NotAllowedError'));
       }
       return play.call(this);
@@ -187,6 +205,25 @@ test('offers playback when autoplay is blocked without dismissing the intro', as
   await page.goto('/');
   await expect(page.getByRole('button', { name: 'Play intro', exact: true })).toBeVisible();
   expect(await page.evaluate(() => sessionStorage.getItem('ignite:intro-seen'))).toBeNull();
+  await startIntro(page);
+  await expect(page.getByRole('button', { name: 'Play intro', exact: true })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Skip intro' }).click();
+  await expect(page.locator('.loading-screen')).toHaveCount(0);
+});
+
+test('offers a Play button when autoplay stays pending', async ({ page }) => {
+  await page.addInitScript(() => {
+    const play = HTMLMediaElement.prototype.play;
+    let clicked = false;
+    document.addEventListener('click', event => { if (event.isTrusted) clicked = true; }, true);
+    HTMLMediaElement.prototype.play = function () {
+      if (!clicked) return new Promise<void>(() => {});
+      return play.call(this);
+    };
+  });
+  await page.goto('/');
+  await expect(page.getByRole('button', { name: 'Play intro', exact: true })).toBeVisible();
+  expect(await page.locator('.loading-screen__video').evaluate(element => (element as HTMLVideoElement).currentTime)).toBe(0);
   await startIntro(page);
   await expect(page.getByRole('button', { name: 'Play intro', exact: true })).toHaveCount(0);
   await page.getByRole('button', { name: 'Skip intro' }).click();
