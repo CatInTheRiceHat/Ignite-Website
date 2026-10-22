@@ -36,6 +36,9 @@
 }
 
 .loading-screen__skip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   position: absolute;
   top: max(1.5rem, env(safe-area-inset-top));
   right: max(1.5rem, env(safe-area-inset-right));
@@ -51,10 +54,6 @@
 
 .loading-screen__skip:hover {
   background: var(--bg-cream);
-}
-
-.loading-screen__skip span {
-  margin-left: 0.5rem;
 }
 
 .loading-screen__content {

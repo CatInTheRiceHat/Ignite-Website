@@ -1,6 +1,6 @@
+import { RedirectArrow } from '../components/ui/redirect-arrow';
 import { type ReactNode } from 'react';
 import {
-  ArrowRight,
   BookOpenCheck,
   CalendarDays,
   Globe2,
@@ -241,7 +241,7 @@ const Records = () => {
                   className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 font-bold text-[var(--text-charcoal)] shadow-lg transition-all hover:scale-105 hover:text-[var(--primary-orange)] active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300"
                 >
                   Apply as an Intern
-                  <ArrowRight className="h-5 w-5" aria-hidden="true" />
+                  <RedirectArrow />
                 </a>
               </div>
             </article>

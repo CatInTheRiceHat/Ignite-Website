@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type FormEvent, type SyntheticEvent } from 'react';
-import { ArrowUpRight, BookOpen, ChevronRight, Info, MessageCircle, RotateCcw, Send, Users, X } from 'lucide-react';
+import { BookOpen, Info, MessageCircle, RotateCcw, Send, Users, X } from 'lucide-react';
+import { RedirectArrow } from '../../components/ui/redirect-arrow';
 import { destinations, quickActions, resolveDestination, type DestinationId } from '../shared/destinations';
 import { boundHistory, MAX_INPUT_LENGTH, parseReply, type ChatInput, type SolReply } from '../shared/protocol';
 
@@ -13,7 +14,7 @@ function NavLink({ id, quick = false, websiteBaseUrl }: { id: DestinationId; qui
   return <a className={quick ? 'sol-quick' : 'sol-nav-link'} href={destination.url} target="_blank" rel="noopener noreferrer">
     {quick && (id === 'program' ? <BookOpen size={16} /> : id === 'hiring' ? <Users size={16} /> : id === 'about' ? <Info size={16} /> : <MessageCircle size={16} />)}
     <span>{quick && id === 'faq' ? 'FAQs' : destination.label}</span>
-    {quick ? <ChevronRight size={15} /> : <ArrowUpRight size={15} />}
+    <RedirectArrow size={16} />
     <span className="sol-sr"> (opens in a new tab or email app)</span>
   </a>;
 }
@@ -212,7 +213,7 @@ export function SolWidget({ config, host }: { config: WidgetConfig; host: HTMLEl
         </div>}
       </div>
       <div className="sol-footer">
-        <p className="sol-help-line">Need a person? <a href={destinations.contact.url}>Email Ignite <ArrowUpRight size={12} /></a></p>
+        <p className="sol-help-line">Need a person? <a href={destinations.contact.url}>Email Ignite <RedirectArrow size={16} /></a></p>
         <form onSubmit={submit} className="sol-composer">
           <label htmlFor="sol-question" className="sol-sr">Your question for Sol</label>
           <textarea id="sol-question" ref={input} rows={1} value={draft} onChange={event => setDraft(event.target.value)} maxLength={MAX_INPUT_LENGTH} placeholder={ready === 'ready' ? 'What are you curious about?' : 'Chat is currently unavailable'} disabled={ready !== 'ready' || !!failure} aria-describedby={draft.length > 800 ? 'sol-input-hint' : undefined} onKeyDown={event => {

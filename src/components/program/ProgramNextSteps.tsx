@@ -1,5 +1,5 @@
+import { RedirectArrow } from '../ui/redirect-arrow';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
 import { programCopy } from '../../data/program';
 import { LEARNING_HUB_URL } from '../../lib/links';
 
@@ -14,7 +14,7 @@ const ProgramNextSteps = () => (
       <div className="flex flex-wrap justify-center gap-4">
         <a href={LEARNING_HUB_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-[var(--primary-orange)] text-white px-8 py-4 rounded-full font-bold text-lg hover:scale-105 active:scale-95 transition-all shadow-lg">
           Learning Hub (Moodle Sign-in)
-          <ArrowRight className="h-5 w-5 flex-none" aria-hidden="true" />
+          <RedirectArrow />
         </a>
         <Link to="/faq" className="inline-flex items-center justify-center bg-orange-50 text-[var(--text-charcoal)] px-8 py-4 rounded-full font-bold text-lg hover:bg-orange-100 transition-colors">Program FAQ</Link>
       </div>

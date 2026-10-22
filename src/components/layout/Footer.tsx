@@ -1,5 +1,5 @@
+import { RedirectArrow } from '../ui/redirect-arrow';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
 import { LEARNING_HUB_URL, INTERN_FORM_URL } from '../../lib/links';
 import { RECORDS_PAGE } from '../../config/records';
 
@@ -45,7 +45,7 @@ const Footer = () => {
                 className="inline-flex items-center justify-center gap-2 bg-white text-[var(--primary-orange)] px-8 py-4 rounded-full font-bold text-lg hover:scale-105 active:scale-95 transition-all shadow-lg"
               >
                 Learning Hub (Moodle Sign-in)
-                <ArrowRight className="h-5 w-5" aria-hidden="true" />
+                <RedirectArrow />
               </a>
               <a
                 href={INTERN_FORM_URL}
@@ -54,7 +54,7 @@ const Footer = () => {
                 className="inline-flex items-center justify-center gap-2 border-2 border-white bg-transparent px-8 py-4 rounded-full font-bold text-lg text-white hover:bg-white hover:text-[var(--primary-orange)] active:scale-95 transition-all"
               >
                 Apply as an Intern
-                <ArrowRight className="h-5 w-5" aria-hidden="true" />
+                <RedirectArrow />
               </a>
             </div>
           </div>

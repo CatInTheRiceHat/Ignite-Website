@@ -1,4 +1,5 @@
-import { ArrowRight, BookOpen, GraduationCap, Mail, MapPin } from 'lucide-react';
+import { RedirectArrow } from '../components/ui/redirect-arrow';
+import { BookOpen, GraduationCap, Mail, MapPin } from 'lucide-react';
 import { IgnitionCard, IgnitionGroup } from '../components/team/ignition-reveal';
 import StaffImage from '../components/ui/staff-image';
 import { teamMembers } from '../data/mentors';
@@ -157,7 +158,7 @@ const Mentors = () => {
             className="mt-8 inline-flex items-center justify-center gap-2 bg-[var(--primary-orange)] text-white px-10 py-4 rounded-full font-bold text-lg hover:scale-105 hover:bg-[var(--primary-orange-dark)] active:scale-95 transition-all shadow-lg"
           >
             Apply as an Intern
-            <ArrowRight className="h-5 w-5 flex-none" aria-hidden="true" />
+            <RedirectArrow />
           </a>
         </div>
       </section>

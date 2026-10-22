@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { RedirectArrow } from './ui/redirect-arrow';
 import { recordIntroEvent, watchIntroVideo } from '../lib/introDebug';
 
 interface LoadingScreenProps {
@@ -197,7 +198,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         aria-hidden="true"
       />
       <button className="loading-screen__skip" type="button" onClick={() => completeIntro('skip')}>
-        Skip intro <span aria-hidden="true">↗</span>
+        Skip intro <RedirectArrow size={16} />
       </button>
       <div className="loading-screen__content">
         <motion.div

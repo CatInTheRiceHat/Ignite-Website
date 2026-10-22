@@ -1,7 +1,8 @@
+import { RedirectArrow } from '../ui/redirect-arrow';
 import { useEffect, useState } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
-import { ArrowRight, Megaphone, Menu, X } from 'lucide-react';
+import { Megaphone, Menu, X } from 'lucide-react';
 import { RECORDS_PAGE } from '../../config/records';
 
 const announcementText = "Help build Ignite’s next chapter. Explore student intern opportunities.";
@@ -94,7 +95,7 @@ const Navbar = () => {
           <span className="block min-w-0 max-w-[38ch] flex-1 whitespace-normal text-center sm:max-w-none sm:flex-none">
             {announcementText}
           </span>
-          <ArrowRight className="hidden h-4 w-4 flex-none transition-transform group-hover:translate-x-1 sm:block" aria-hidden="true" />
+          <RedirectArrow size={16} className="hidden transition-transform group-hover:translate-x-1 sm:block" />
         </span>
       </Link>
       {/* Mobile Links */}

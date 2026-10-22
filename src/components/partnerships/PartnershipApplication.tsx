@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react';
+import { RedirectArrow } from '../ui/redirect-arrow';
 import { getGoogleFormLinks, PARTNERSHIP_FORM_URL } from '../../lib/links';
 
 const PartnershipApplication = () => {
@@ -23,7 +23,7 @@ const PartnershipApplication = () => {
               <div className="flex justify-center">
                 <a href={form.url} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-14 items-center justify-center gap-3 rounded-full bg-[var(--primary-orange)] px-6 py-4 text-xl font-bold text-white shadow-lg shadow-orange-100 transition-all hover:bg-[var(--primary-orange-dark)] motion-safe:hover:scale-105 motion-safe:active:scale-95 sm:px-8">
                   Open partnership application
-                  <ArrowRight className="h-5 w-5 flex-none" aria-hidden="true" />
+                  <RedirectArrow />
                   <span className="sr-only"> (opens in a new tab)</span>
                 </a>
               </div>

@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react';
+import { RedirectArrow } from '../components/ui/redirect-arrow';
 import { INTERN_FORM_URL } from '../lib/links';
 import BlurFade from '../components/ui/blur-fade';
 import FadingCarousel from '../components/ui/fading-carousel';
@@ -58,7 +58,7 @@ const Hiring = () => {
             className="inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-6 py-4 text-[1.1875rem] font-bold text-white shadow-lg transition-all hover:bg-[var(--primary-orange-dark)] motion-safe:hover:scale-105 motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 sm:w-auto sm:px-10 sm:text-xl"
           >
             Open Intern Application
-            <ArrowRight className="h-5 w-5 flex-none" aria-hidden="true" />
+            <RedirectArrow />
           </a>
         </div>
       </section>

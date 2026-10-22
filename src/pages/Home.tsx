@@ -1,8 +1,8 @@
+import { RedirectArrow } from '../components/ui/redirect-arrow';
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useInView, useReducedMotion } from 'framer-motion';
 import {
-  ArrowRight,
   BookOpenCheck,
   CalendarDays,
   Globe2,
@@ -153,7 +153,7 @@ const Home = () => {
             <div className="flex flex-wrap gap-4 justify-center">
               <Link to="/program" className="inline-flex w-full max-w-xs items-center justify-center gap-2 bg-[var(--primary-orange)] text-white px-8 py-5 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-lg sm:w-auto sm:px-10">
                 Explore Course Plans
-                <ArrowRight className="h-5 w-5 flex-none" aria-hidden="true" />
+                <RedirectArrow />
               </Link>
               <Link to="/faq" className="w-full max-w-xs bg-white text-[var(--primary-orange)] border-2 border-[var(--primary-orange)] px-8 py-5 rounded-full font-bold text-xl hover:bg-orange-50 transition-all sm:w-auto sm:px-10">
                 Program FAQ

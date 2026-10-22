@@ -1,6 +1,6 @@
 # Ignite Program Style Guide
 
-Last Updated: June 7, 2026 Primary Contact: Elaine Che  
+Last Updated: October 21, 2026 Primary Contact: Elaine Che
 This document outlines the visual identity and branding standards for the Ignite Summer Program. All program materials, including slide decks, websites, classroom headers, and marketing collateral, should follow these guidelines to keep Ignite consistent, energetic, playful, and easy for students to understand.
 
 # **1\. Core Visual Identity**
@@ -35,6 +35,8 @@ Ignite uses a three-font hierarchy from Google Fonts:
 * Use course header artwork for course cards, Google Classroom headers, and related class materials.  
 * Use rounded profile photos for mentors and staff.  
 * Use Lucide-style outline icons in UI controls and detail rows.  
+* Use the same straight right arrow (Lucide `ArrowRight`) for all redirect and destination-link icons across the website, Sol widget, and Moodle, including external and email links. Use a 24 × 24 viewBox, 2-unit stroke, rounded caps and joins, and no enclosing box. Do not substitute diagonal arrows, chevrons, or font glyphs.
+* Render redirect arrows at 20px for buttons and calls to action, or 16px for compact navigation and helper links. Keep arrows after the label, vertically centered, with an 8px gap (12px for larger buttons). Inherit the link's text color, prevent the icon from shrinking, and hide decorative arrows from assistive technology. Use the shared `RedirectArrow` component on the website and in Sol; use `.ignite-redirect-icon` (or its `--compact` modifier) with the matching SVG mask in Moodle's Raw SCSS.
 * Decorative images should use empty alt text. Informational images should have useful alt text.
 
 # **2\. Design Standards & Accessibility**

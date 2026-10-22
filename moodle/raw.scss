@@ -48,6 +48,21 @@ $ignite-catalog-details-height: 9.25rem;
 $ignite-catalog-extra-details-height: 11.5rem;
 $ignite-catalog-description-lines: 2;
 
+// Shared redirect arrow: matches Lucide ArrowRight in the website's RedirectArrow.
+// A CSS mask survives Moodle's Text editor without inline SVG or an icon font.
+.ignite-redirect-icon {
+    display: inline-block;
+    flex: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    vertical-align: middle;
+    font-size: 0;
+    background-color: currentColor;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.ignite-redirect-icon--compact { width: 1rem; height: 1rem; }
+
 // Exact body IDs exclude activities, quizzes, grades, course management and admin.
 #page-course-index,
 #page-course-index-category,
@@ -494,8 +509,13 @@ $ignite-catalog-description-lines: 2;
 // Poppins UI headings, Nunito body, orange CTAs, and existing Ignite artwork.
 #page-my-index,
 #page-my-indexsys {
+    #page.drawers { padding-inline: clamp(.75rem, 2vw, 2rem); }
+
     #page.drawers .main-inner {
-        max-width: 88rem;
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: clamp(1rem, 2vw, 2rem) 0;
         background: $ignite-catalog-cream;
         box-shadow: none;
     }
@@ -578,7 +598,7 @@ $ignite-catalog-description-lines: 2;
                 mask-size: contain;
                 mask-repeat: no-repeat;
             }
-            &[aria-current="page"] { background: $ignite-catalog-orange; color: $ignite-catalog-ink; }
+            &[aria-current="page"] { background: $ignite-catalog-orange; color: #fff; }
             &:hover { background: #FFF0E2; color: $ignite-catalog-link; }
         }
     }
@@ -610,14 +630,14 @@ $ignite-catalog-description-lines: 2;
         font-size: .8125rem;
 
         p { margin: .35rem 0 .65rem; color: $ignite-catalog-text; }
-        a { color: $ignite-catalog-link; font-weight: 800; text-underline-offset: .2em; }
+        a { display: inline-flex; align-items: center; gap: .5rem; color: $ignite-catalog-link; font-weight: 800; text-underline-offset: .2em; }
     }
 
     .ignite-learning-welcome {
         display: flex;
         align-items: center;
         gap: 1rem;
-        min-height: 22rem;
+        min-height: clamp(17rem, 30vh, 22rem);
         padding: clamp(1.5rem, 3vw, 2.5rem);
         border: 1px solid $ignite-catalog-orange;
         border-radius: 1.25rem;
@@ -639,7 +659,7 @@ $ignite-catalog-description-lines: 2;
 
     .ignite-learning-welcome__copy { flex: 1; min-width: 0; }
     .ignite-learning-welcome__copy > p:not(.ignite-learning-welcome__eyebrow) { max-width: 26rem; margin: 0; line-height: 1.65; }
-    .ignite-learning-welcome__eyebrow { margin: 0; color: #FFD166; font-size: .6875rem; font-weight: 900; letter-spacing: .13em; }
+    .ignite-learning-welcome__eyebrow { margin: 0; color: $ignite-catalog-orange; font-size: .6875rem; font-weight: 900; letter-spacing: .13em; }
     .ignite-learning-welcome__mascot { width: 28%; max-width: 16rem; height: auto; object-fit: contain; }
     .ignite-learning-welcome__actions {
         display: flex;
@@ -648,7 +668,7 @@ $ignite-catalog-description-lines: 2;
         gap: .75rem 1.25rem;
         margin-top: 1.5rem;
 
-        a { display: inline-flex; align-items: center; gap: .65rem; min-height: 44px; color: #fff; font-family: $ignite-catalog-heading; font-size: .875rem; font-weight: 700; }
+        a { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; color: #fff; font-family: $ignite-catalog-heading; font-size: .875rem; font-weight: 700; }
         .ignite-learning-welcome__primary { padding: .8rem 1.1rem; border-radius: .75rem; background: $ignite-catalog-orange; color: $ignite-catalog-ink; text-decoration: none; }
         .ignite-learning-welcome__primary:hover { background: $ignite-catalog-orange-dark; }
     }
@@ -665,12 +685,12 @@ $ignite-catalog-description-lines: 2;
     &:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) {
         display: grid;
         grid-template-columns: 13rem minmax(0, 1fr);
-        column-gap: 2rem;
+        column-gap: 1.5rem;
         align-items: start;
 
         > * { grid-column: 2; min-width: 0; }
-        > .block { margin-bottom: 1.5rem !important; }
-        > .block_html:has(.ignite-learning-nav) { grid-column: 1; grid-row: 1; }
+        > .block { margin-bottom: 1.25rem !important; }
+        > .block_html:has(.ignite-learning-nav) { grid-column: 1; grid-row: 1 / span 2; }
         > .block_html:has(.ignite-learning-welcome) {
             grid-row: 1;
             align-self: stretch;
@@ -691,18 +711,14 @@ $ignite-catalog-description-lines: 2;
             > .card-body > .d-flex:empty { display: none !important; }
         }
 
-        .block_myoverview { container-type: inline-size; }
+        .block_myoverview { container-type: inline-size; grid-row: 2; }
         .block_myoverview .card-grid {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
             gap: 1rem;
 
             > .col { width: auto; min-width: 0; max-width: none; }
             .course-card { width: 100%; margin-inline: 0 !important; }
-        }
-
-        @container (max-width: 36rem) {
-            .card-grid { grid-template-columns: minmax(0, 1fr); }
         }
 
         // When a block drawer is open, available width matters more than viewport.
