@@ -2,6 +2,7 @@
 // > Raw SCSS (NOT Raw initial SCSS or Additional theme preset files), then save.
 // Keep the existing preset, moodle/theme.scss; this is its catalog companion.
 // No Sass imports, framework rebuild, HTML changes, or JavaScript are required.
+// The optional learner dashboard below also uses two Text blocks; see DASHBOARD.md.
 //
 // Evidence checked 2026-10-13:
 // - learn.ignitefindyourfire.org/login/index.php: M.cfg.theme = "boost";
@@ -483,4 +484,251 @@ $ignite-catalog-description-lines: 2;
 // Keep the form heading, body copy, typography and panel layout unchanged.
 #page-login-index .login-layout-left .login-layout-left-content :is(h1, h2, h3, h4, h5, h6) {
     color: #FFFFFF;
+}
+
+// Learner dashboard. Native Moodle blocks still own courses, completion,
+// filters, deadlines, empty states, and permissions. No values are generated.
+// The navigation/welcome layout activates only after installing the Text blocks.
+// Core 5.2 uses .course-card/.card-img-top; older blocks use .dashboard-card.
+// Visual authority: Ignite Program Style Guide.md. Rammetto One display titles,
+// Poppins UI headings, Nunito body, orange CTAs, and existing Ignite artwork.
+#page-my-index,
+#page-my-indexsys {
+    #page.drawers .main-inner {
+        max-width: 88rem;
+        background: $ignite-catalog-cream;
+        box-shadow: none;
+    }
+
+    #region-main { background: transparent; }
+
+    .page-header-headings h1 {
+        color: $ignite-catalog-ink;
+        font-family: "Rammetto One", $ignite-catalog-heading;
+        font-weight: 400;
+    }
+
+    .block.card {
+        min-width: 0;
+        border-color: $ignite-catalog-border;
+        border-radius: 1.25rem;
+        box-shadow: 0 3px 16px rgba(78, 42, 18, .035);
+    }
+
+    .block > .card-body > .d-flex > .card-title {
+        color: $ignite-catalog-ink;
+        font-family: $ignite-catalog-heading;
+        font-size: 1.25rem;
+        font-weight: 700;
+    }
+
+    .course-card,
+    .dashboard-card {
+        min-width: 0;
+        border: 1px solid $ignite-catalog-border;
+        border-radius: 1rem;
+        box-shadow: none;
+
+        .card-img-top,
+        .dashboard-card-img {
+            height: 10rem;
+            border-radius: .95rem .95rem 0 0;
+            background-color: $ignite-catalog-cream;
+            background-position: center;
+            background-size: cover;
+        }
+
+        // Allow long course names to wrap without changing screen-reader text.
+        .course-info-container .text-truncate { white-space: normal; }
+        .coursename { color: $ignite-catalog-ink; font-family: $ignite-catalog-heading; font-weight: 700; text-decoration: none; }
+        .coursename:hover { text-decoration: underline; }
+        .course-info-container { padding: 1rem; }
+        .progress-text { color: $ignite-catalog-link; font-weight: 800; font-size: .875rem; }
+        .categoryname { color: $ignite-catalog-text; font-size: .8125rem; }
+        .progress { height: .5rem; border-radius: 999px; }
+    }
+
+    .ignite-learning-nav,
+    .ignite-learning-welcome { font-family: $ignite-catalog-body; color: $ignite-catalog-ink; }
+
+    .ignite-learning-nav {
+        display: flex;
+        flex-direction: column;
+        gap: .375rem;
+
+        > a {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            min-height: 46px;
+            padding: .6rem .9rem;
+            border-radius: .75rem;
+            color: $ignite-catalog-text;
+            font-family: $ignite-catalog-heading;
+            font-weight: 700;
+            text-decoration: none;
+
+            > span {
+                flex: 0 0 1.25rem;
+                width: 1.25rem;
+                height: 1.25rem;
+                font-size: 0;
+                background: currentColor;
+                mask-position: center;
+                mask-size: contain;
+                mask-repeat: no-repeat;
+            }
+            &[aria-current="page"] { background: $ignite-catalog-orange; color: $ignite-catalog-ink; }
+            &:hover { background: #FFF0E2; color: $ignite-catalog-link; }
+        }
+    }
+
+    // Outline icons live in SCSS so Moodle's Text editor need not retain SVG tags.
+    .ignite-learning-nav__icon--home { mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z'/%3E%3Cpath d='M9 21v-9h6v9'/%3E%3C/svg%3E"); }
+    .ignite-learning-nav__icon--courses { mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 7v14M3 3h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5v15h-5a4 4 0 0 0-4 3 4 4 0 0 0-4-3H3Z'/%3E%3C/svg%3E"); }
+    .ignite-learning-nav__icon--explore { mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='m16 8-3 5-5 3 3-5Z'/%3E%3C/svg%3E"); }
+    .ignite-learning-nav__icon--calendar { mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='16' rx='2'/%3E%3Cpath d='M16 3v4M8 3v4M3 11h18M8 16h2M14 16h2'/%3E%3C/svg%3E"); }
+
+    .ignite-learning-nav__brand {
+        display: flex;
+        align-items: center;
+        gap: .6rem;
+        padding: 0 .5rem 1.1rem;
+        font-family: $ignite-catalog-heading;
+        font-size: .875rem;
+        font-weight: 700;
+
+        img { object-fit: contain; }
+    }
+
+    .ignite-learning-nav__help {
+        margin-top: 1.25rem;
+        padding: 1rem;
+        border: 1px solid $ignite-catalog-border;
+        border-radius: 1rem;
+        background: #fff;
+        font-size: .8125rem;
+
+        p { margin: .35rem 0 .65rem; color: $ignite-catalog-text; }
+        a { color: $ignite-catalog-link; font-weight: 800; text-underline-offset: .2em; }
+    }
+
+    .ignite-learning-welcome {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        min-height: 22rem;
+        padding: clamp(1.5rem, 3vw, 2.5rem);
+        border: 1px solid $ignite-catalog-orange;
+        border-radius: 1.25rem;
+        color: #fff;
+        // Dark overlay preserves readable white text over the classroom artwork.
+        background: linear-gradient(100deg, rgba(26, 26, 46, .94), rgba(26, 26, 46, .86) 55%, rgba(26, 26, 46, .68)),
+            url("https://ignitefindyourfire.org/backgrounds/Program.jpg") center / cover no-repeat;
+        overflow: hidden;
+
+        h2 {
+            margin: .75rem 0;
+            color: #fff;
+            font-family: "Rammetto One", $ignite-catalog-heading;
+            font-size: clamp(1.75rem, 2.7vw, 2.5rem);
+            font-weight: 400;
+            line-height: 1.35;
+        }
+    }
+
+    .ignite-learning-welcome__copy { flex: 1; min-width: 0; }
+    .ignite-learning-welcome__copy > p:not(.ignite-learning-welcome__eyebrow) { max-width: 26rem; margin: 0; line-height: 1.65; }
+    .ignite-learning-welcome__eyebrow { margin: 0; color: #FFD166; font-size: .6875rem; font-weight: 900; letter-spacing: .13em; }
+    .ignite-learning-welcome__mascot { width: 28%; max-width: 16rem; height: auto; object-fit: contain; }
+    .ignite-learning-welcome__actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: .75rem 1.25rem;
+        margin-top: 1.5rem;
+
+        a { display: inline-flex; align-items: center; gap: .65rem; min-height: 44px; color: #fff; font-family: $ignite-catalog-heading; font-size: .875rem; font-weight: 700; }
+        .ignite-learning-welcome__primary { padding: .8rem 1.1rem; border-radius: .75rem; background: $ignite-catalog-orange; color: $ignite-catalog-ink; text-decoration: none; }
+        .ignite-learning-welcome__primary:hover { background: $ignite-catalog-orange-dark; }
+    }
+
+    .ignite-learning-nav a:focus-visible {
+        outline: 3px solid $ignite-catalog-ink;
+        outline-offset: 3px;
+    }
+
+    .ignite-learning-welcome a:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+    // Extra layout applies only with both Text blocks in the centre region.
+    // Edit mode keeps Moodle's normal block positions and move/edit controls.
+    &:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) {
+        display: grid;
+        grid-template-columns: 13rem minmax(0, 1fr);
+        column-gap: 2rem;
+        align-items: start;
+
+        > * { grid-column: 2; min-width: 0; }
+        > .block { margin-bottom: 1.5rem !important; }
+        > .block_html:has(.ignite-learning-nav) { grid-column: 1; grid-row: 1; }
+        > .block_html:has(.ignite-learning-welcome) {
+            grid-row: 1;
+            align-self: stretch;
+
+            > .card-body { display: flex; flex-direction: column; }
+            .card-text.content { display: flex; flex: 1; }
+            .ignite-learning-welcome { flex: 1; }
+        }
+
+        > .block_html:has(.ignite-learning-nav, .ignite-learning-welcome) {
+            border: 0;
+            background: transparent;
+            box-shadow: none;
+
+            > .card-body { padding: 0 !important; }
+            .card-text.content { margin: 0 !important; }
+            // Native editing header is empty when block titles are left blank.
+            > .card-body > .d-flex:empty { display: none !important; }
+        }
+
+        .block_myoverview { container-type: inline-size; }
+        .block_myoverview .card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+
+            > .col { width: auto; min-width: 0; max-width: none; }
+            .course-card { width: 100%; margin-inline: 0 !important; }
+        }
+
+        @container (max-width: 36rem) {
+            .card-grid { grid-template-columns: minmax(0, 1fr); }
+        }
+
+        // When a block drawer is open, available width matters more than viewport.
+        container-type: inline-size;
+        @container (max-width: 48rem) {
+            .ignite-learning-welcome__mascot { display: none; }
+        }
+    }
+
+    @media (max-width: 991.98px) {
+        &:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) {
+            display: block;
+
+            > .block_html:has(.ignite-learning-nav) { margin-bottom: 1rem !important; }
+            .ignite-learning-nav { flex-direction: row; flex-wrap: wrap; gap: .25rem; }
+            .ignite-learning-nav > a { font-size: .8125rem; padding: .5rem .7rem; }
+            .ignite-learning-nav__brand,
+            .ignite-learning-nav__help { display: none; }
+            .ignite-learning-welcome { min-height: 0; }
+        }
+    }
+
+    @media (max-width: 575.98px) {
+        .ignite-learning-welcome { padding: 1.5rem; }
+        .ignite-learning-welcome__mascot { display: none; }
+        .ignite-learning-welcome__actions { align-items: stretch; flex-direction: column; }
+        .ignite-learning-welcome__actions a { justify-content: center; }
+    }
 }

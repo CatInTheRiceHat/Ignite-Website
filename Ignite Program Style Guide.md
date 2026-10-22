@@ -15,7 +15,6 @@ The current website palette is the source of truth for Ignite digital materials.
 | :---- | :---- | :---- |
 | Primary Background | \#FFF8F0 | Default page background and soft section backgrounds. |
 | Primary Orange | \#F07B2A | Main brand color, CTAs, hero sections, active nav states, icons, mentor accents, and key headings. |
-| Dark Orange | \#D46A20 | Hover states, darker orange accents, and stronger emphasis when primary orange needs depth. |
 | Text Charcoal | \#1A1A2E | Main headings, high-contrast text, dark announcement bar, and important labels. |
 | Text Light | \#4A4A5E | Body copy, descriptions, secondary text, and card details. |
 | ![][image1] |  |  |
