@@ -495,11 +495,14 @@ $ignite-catalog-description-lines: 2;
     }
 }
 
-// Boost 5.2 login: one centered form, with native authentication controls.
-#page-login-index {
+// Boost 5.2 authentication: centered cards with native form controls.
+#page-login-index,
+#page-login-signup {
     // public/backgrounds/Fall.jpg, hosted on Moodle alongside this theme.
     #page {
-        background: $ignite-catalog-cream url("https://learn.ignitefindyourfire.org/ignite-assets/fall-bae85ba34077.jpg") center / cover no-repeat;
+        background: $ignite-catalog-cream url("https://learn.ignitefindyourfire.org/ignite-assets/fall-0ec361cf735c.jpg") center / cover no-repeat;
+        // Both screens keep the same crop when their forms need to scroll.
+        background-attachment: fixed;
     }
 
     #page-content {
@@ -540,12 +543,14 @@ $ignite-catalog-description-lines: 2;
     }
 
     .loginform > h1,
-    .loginform > p { text-align: center; }
+    .loginform > p,
+    .signupform > h1 { text-align: center; }
 
     // The welcome panel's mobile copy is redundant in the single-card layout.
     .loginform > .d-lg-none { display: none !important; }
 
-    .form-control {
+    .form-control,
+    .form-select {
         min-height: 3rem;
         border-radius: .75rem;
     }
@@ -573,6 +578,77 @@ $ignite-catalog-description-lines: 2;
             padding: 1.5rem 0;
             border: 0;
             box-shadow: none;
+        }
+    }
+}
+
+// Sign-up keeps Moodle's fields, password policy, and validation.
+// authentication.html replaces the cancel action with a direct login link.
+#page-login-signup {
+    .signupform::before {
+        content: "";
+        display: block;
+        width: 7rem;
+        height: 7rem;
+        margin: 0 auto 1.5rem;
+        background: url("https://ignitefindyourfire.org/mascots/Logo.png") center / contain no-repeat;
+    }
+
+    .signupform > h1 { margin-bottom: 1.5rem; font-size: 2rem; }
+    .signupform .form-control,
+    .signupform .form-select { background-color: #f8f9fa; max-width: 100%; }
+    .signupform .form-select { width: 100%; }
+
+    #fgroup_id_buttonar .fitem { flex-basis: 100%; margin-inline: 0 !important; }
+    #fgroup_id_buttonar .btn { width: 100%; min-height: 3rem; border-radius: .75rem; }
+
+    .ignite-signup-login {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: .5rem;
+        --bs-btn-color: #{$ignite-catalog-orange};
+        --bs-btn-bg: #fff;
+        --bs-btn-border-color: #{$ignite-catalog-orange};
+        --bs-btn-hover-color: #{$ignite-catalog-orange-dark};
+        --bs-btn-hover-bg: #fff;
+        --bs-btn-hover-border-color: #{$ignite-catalog-orange-dark};
+        --bs-btn-active-color: #{$ignite-catalog-orange-dark};
+        --bs-btn-active-bg: #fff;
+        --bs-btn-active-border-color: #{$ignite-catalog-orange-dark};
+        --bs-btn-focus-shadow-rgb: 240, 123, 42;
+    }
+
+    @media (min-width: 768px) {
+        #region-main.login-layout-right { flex-basis: 56rem; }
+        .login-container { padding: 2rem; }
+        .signupform::before { width: 5rem; height: 5rem; margin-bottom: 1rem; }
+
+        .signupform .mform {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem 2rem;
+
+            > * { grid-column: 1 / -1; min-width: 0; }
+            > .fitem { margin: 0 !important; --bs-gutter-x: 0; }
+        }
+
+        // Account details on the left, personal details on the right.
+        #fitem_id_username { grid-column: 1; grid-row: 1; }
+        #fitem_id_password { grid-column: 1; grid-row: 2; }
+        #fitem_id_email { grid-column: 1; grid-row: 3; }
+        #fitem_id_email2 { grid-column: 1; grid-row: 4; }
+        #fitem_id_firstname { grid-column: 2; grid-row: 1; }
+        #fitem_id_lastname { grid-column: 2; grid-row: 2; }
+        #fitem_id_city { grid-column: 2; grid-row: 3; }
+        #fitem_id_country { grid-column: 2; grid-row: 4; }
+        #fitem_id_passwordpolicyinfo { grid-row: 5; font-size: .875rem; }
+        #fgroup_id_buttonar { grid-row: 6; }
+
+        #fgroup_id_buttonar .felement > .w-100 > .d-flex { gap: 1rem; }
+        #fgroup_id_buttonar .fitem {
+            flex-basis: calc(50% - .5rem);
+            margin-bottom: 0 !important;
         }
     }
 }

@@ -47,6 +47,8 @@ try {
     }
     $current = ['url' => $CFG->wwwroot, 'settings' => $settings,
         'preset_content' => $file ? $file->get_content() : null, 'blocks' => []];
+    $footer = get_config('core', 'additionalhtmlfooter');
+    $current['authentication_footer'] = $footer === false ? null : $footer;
     $instances = $DB->get_records('block_instances', ['blockname' => 'html']);
     $counts = ['navigation' => 0, 'welcome' => 0];
     foreach ($instances as $instance) {
@@ -67,6 +69,13 @@ try {
                 !array_key_exists('preset_content', $desired)) {
             throw new RuntimeException('Invalid backup for this Moodle site.');
         }
+        // Older backups predate the authentication fragment; leave it as-is.
+        if (!array_key_exists('authentication_footer', $desired)) {
+            $desired['authentication_footer'] = $current['authentication_footer'];
+        }
+        if ($desired['authentication_footer'] !== null && !is_string($desired['authentication_footer'])) {
+            throw new RuntimeException('Invalid authentication footer in backup.');
+        }
         foreach ($desired['blocks'] as $id => $configdata) {
             if (!isset($current['blocks'][$id])) {
                 throw new RuntimeException("Managed block $id was removed or changed. Restore it separately.");
@@ -77,6 +86,42 @@ try {
         $desired['settings'] = ['scss' => file_get_contents(__DIR__ . '/raw.scss'),
             'preset' => 'theme.scss', 'brandcolor' => '#F07B2A'];
         $desired['preset_content'] = file_get_contents(__DIR__ . '/theme.scss');
+        $start = '<!-- ignite-authentication:start -->';
+        $end = '<!-- ignite-authentication:end -->';
+        $snippet = trim(file_get_contents(__DIR__ . '/authentication.html'));
+        $assets = json_decode(file_get_contents(__DIR__ . '/seasonal-backgrounds.json'), true, 512, JSON_THROW_ON_ERROR);
+        $backgrounds = [];
+        foreach (['spring', 'summer', 'fall', 'winter'] as $season) {
+            $filename = $assets[$season] ?? '';
+            if (!is_string($filename) || !preg_match('/^' . $season . '-[a-f0-9]{12}\.jpg$/', $filename)) {
+                throw new RuntimeException("Missing or invalid $season background.");
+            }
+            $backgrounds[$season] = $CFG->wwwroot . '/ignite-assets/' . $filename;
+        }
+        if (substr_count($snippet, '__IGNITE_SEASONAL_BACKGROUNDS__') !== 1) {
+            throw new RuntimeException('Invalid seasonal background placeholder.');
+        }
+        $snippet = str_replace('__IGNITE_SEASONAL_BACKGROUNDS__', json_encode($backgrounds,
+            JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR), $snippet);
+        $footer = $current['authentication_footer'] ?? '';
+        if (!str_starts_with($snippet, $start) || !str_ends_with($snippet, $end) ||
+                substr_count($snippet, $start) !== 1 || substr_count($snippet, $end) !== 1) {
+            throw new RuntimeException('Missing or invalid authentication snippet.');
+        }
+        if (substr_count($footer, $start) > 1 || substr_count($footer, $start) !== substr_count($footer, $end)) {
+            throw new RuntimeException('Duplicate or incomplete authentication footer markers.');
+        }
+        if (str_contains($footer, $start)) {
+            // Replace only our fragment, preserving unrelated Additional HTML.
+            $desired['authentication_footer'] = preg_replace_callback(
+                '/' . preg_quote($start, '/') . '.*?' . preg_quote($end, '/') . '/s',
+                static fn() => $snippet, $footer, 1, $replaced);
+            if ($replaced !== 1) {
+                throw new RuntimeException('Invalid authentication footer marker order.');
+            }
+        } else {
+            $desired['authentication_footer'] = $footer . ($footer === '' ? '' : "\n") . $snippet;
+        }
         foreach (['scss' => $desired['settings']['scss'], 'theme.scss' => $desired['preset_content']] as $name => $text) {
             if (!is_string($text) || strlen(trim($text)) < 100) {
                 throw new RuntimeException("Missing or empty $name. No settings were changed.");
@@ -106,6 +151,9 @@ try {
     if ($desired['preset_content'] !== $current['preset_content']) {
         $changes[] = 'theme_boost preset: theme.scss';
     }
+    if ($desired['authentication_footer'] !== $current['authentication_footer']) {
+        $changes[] = 'core.additionalhtmlfooter: Ignite authentication';
+    }
     foreach ($desired['blocks'] as $id => $configdata) {
         if ($current['blocks'][$id] !== $configdata) {
             $changes[] = "Ignite dashboard block $id";
@@ -132,6 +180,10 @@ try {
         }
         $transaction = $DB->start_delegated_transaction();
         try {
+            if ($desired['authentication_footer'] !== $current['authentication_footer'] &&
+                    !set_config('additionalhtmlfooter', $desired['authentication_footer'])) {
+                throw new RuntimeException('Failed to save the authentication footer.');
+            }
             foreach ($desired['settings'] as $name => $value) {
                 if ($settings[$name] !== $value && !set_config($name, $value, 'theme_boost')) {
                     throw new RuntimeException("Failed to save $name");

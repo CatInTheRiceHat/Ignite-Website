@@ -8,13 +8,15 @@ Local connection settings live in `moodle/connection.local`, which Git ignores v
 
 ## Edit and deploy
 
-1. Edit `moodle/raw.scss`, `moodle/theme.scss`, or the dashboard HTML snippets.
+1. Edit `moodle/raw.scss`, `moodle/theme.scss`, `moodle/authentication.html`, or the dashboard HTML snippets.
 2. Run `npm run moodle:check` to preview differences against live Moodle.
 3. Run `npm run moodle:deploy` to back up the managed settings, apply changes through Moodle's APIs, clear theme caches, compile both LTR and RTL CSS, and check the public login page.
 
 Codex can run these commands directly when asked to make and deploy Moodle changes; the user does not need to paste styles into the admin interface. Deployment is explicit, rather than triggered by every file save or a Vercel website build. A repeated deployment with matching content makes no settings changes and creates no additional backup.
 
-The sync owns Boost's Raw SCSS, the `theme.scss` preset file and preset selection, brand colour `#F07B2A`, and content in existing Ignite dashboard Text blocks. Dashboard blocks are identified by the `ignite-learning-nav` or `ignite-learning-welcome` class on `my-index` pages. Their other configuration and positions are preserved. Matching default blocks and personal copies receive content updates. Missing blocks are reported by routine deployment. The tool never resets personal dashboards or modifies courses, enrollments, grades, or Moodle core code.
+The sync owns Boost's Raw SCSS, the `theme.scss` preset file and preset selection, brand colour `#F07B2A`, and content in existing Ignite dashboard Text blocks. It also deploys `authentication.html` as a marked fragment in **Additional HTML → Before BODY is closed**, preserving any surrounding HTML. This selects seasonal backgrounds on login and sign-up and replaces sign-up's Cancel with a direct Log in link while keeping native form initialization and validation. Dashboard blocks are identified by the `ignite-learning-nav` or `ignite-learning-welcome` class on `my-index` pages. Their other configuration and positions are preserved. Matching default blocks and personal copies receive content updates. Missing blocks are reported by routine deployment. The tool never resets personal dashboards or modifies courses, enrollments, grades, or Moodle core code.
+
+Seasonal artwork comes from `public/backgrounds/Spring.jpg`, `Summer.jpg`, `Fall.jpg`, and `Winter.jpg`. Deployment publishes immutable copies under Moodle's `ignite-assets` directory and verifies their checksums before updating settings. Both authentication screens use **Europe/London** time, including British Summer Time: spring begins March 1, summer June 1, fall September 1, and winter December 1, each at 00:00. The page checks at minute boundaries and when a tab returns to view, so an open page can switch without a reload. Old image versions remain available for configuration restores. Without JavaScript, the existing fall artwork is the fallback.
 
 ## Initial dashboard installation
 
@@ -28,7 +30,7 @@ Installation writes a private manifest alongside theme backups. To undo an insta
 node scripts/sync-moodle.mjs --dashboard --restore=INSTALLATION-BACKUP.json
 ```
 
-Backups contain the previous managed theme settings, preset content, and managed block configurations. They are private files under `/var/backups/ignite-moodle`, outside the web root. They are configuration backups, not full site or database backups.
+Backups contain the previous managed theme settings, preset content, authentication footer, and managed block configurations. Backups created before the authentication enhancement leave the current footer unchanged when restored. They are private files under `/var/backups/ignite-moodle`, outside the web root. They are configuration backups, not full site or database backups.
 
 To restore one, use its filename from the deployment output:
 

@@ -1,0 +1,57 @@
+<!-- ignite-authentication:start -->
+<script>
+(() => {
+    const isSignup = document.body.id === 'page-login-signup';
+    if (!isSignup && document.body.id !== 'page-login-index') return;
+
+    const page = document.getElementById('page');
+    if (page && !page.dataset.igniteSeason) {
+        const backgrounds = __IGNITE_SEASONAL_BACKGROUNDS__;
+        const monthInLondon = new Intl.DateTimeFormat('en-GB', {
+            timeZone: 'Europe/London', month: 'numeric',
+        });
+        const seasons = [
+            'winter', 'winter', 'spring', 'spring', 'spring', 'summer',
+            'summer', 'summer', 'fall', 'fall', 'fall', 'winter',
+        ];
+        let timer;
+        const updateSeason = () => {
+            const season = seasons[Number(monthInLondon.format(new Date())) - 1];
+            if (page.dataset.igniteSeason !== season) {
+                page.style.backgroundImage = `url("${backgrounds[season]}")`;
+                page.dataset.igniteSeason = season;
+            }
+            // Align with the next minute, including midnight, without long timers.
+            clearTimeout(timer);
+            timer = setTimeout(updateSeason, 60000 - Date.now() % 60000);
+        };
+        updateSeason();
+        window.addEventListener('pageshow', updateSeason);
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) updateSeason();
+        });
+    }
+
+    if (!isSignup) return;
+    const heading = document.querySelector('.signupform > h1');
+    if (heading) heading.textContent = 'Create account';
+    const submit = document.getElementById('id_submitbutton');
+    if (submit) submit.value = 'Create account';
+
+    const cancel = document.getElementById('id_cancel');
+    if (!cancel || document.getElementById('ignite-signup-login')) return;
+
+    const login = document.createElement('a');
+    login.id = 'ignite-signup-login';
+    login.className = 'btn ignite-signup-login';
+    login.href = new URL('/login/index.php', window.location.origin).href;
+    login.textContent = 'Log in';
+
+    // Keep the native control available to Moodle's form initialization.
+    cancel.hidden = true;
+    cancel.disabled = true;
+    cancel.classList.add('d-none');
+    cancel.after(login);
+})();
+</script>
+<!-- ignite-authentication:end -->
