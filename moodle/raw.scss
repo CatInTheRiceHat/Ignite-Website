@@ -22,10 +22,15 @@
 // or teacher data: SCSS cannot supply those missing fields. It is left unchanged.
 // Moodle may omit summaries/covers above its "Courses with summaries limit".
 // Collapsed courses retain their native info/expand control; CSS cannot fetch data.
+// If the catalog shows only titles, info icons, and repeated fallback covers:
+// Site administration > Appearance > Courses > Courses with summaries limit
+// must be at least the total number of courses in that listing (e.g. 50 for 20).
+// Collapsed cards omit summaries AND course overview files, even when uploaded.
+// The compact collapsed layout below avoids reserving space for missing content.
 //
 // Brand: IGNITE_STYLE_GUIDE.md, src/index.css, tailwind.config.js, theme.scss.
-// Sol is the EXISTING flame with eyes and no mouth. The optional decorative
-// missing-cover background uses our public HTTPS artwork; cream remains if offline.
+// Missing course covers use the classroom artwork in public/backgrounds/Program.jpg.
+// The decorative fallback uses its public HTTPS URL; cream remains if offline.
 
 $ignite-catalog-cream: #FFF8F0;
 $ignite-catalog-orange: #F07B2A;
@@ -427,12 +432,20 @@ $ignite-catalog-description-lines: 2;
                     box-sizing: content-box;
                     border-radius: 1.2rem 1.2rem 0 0;
                     border-bottom: 3px solid $ignite-catalog-orange;
-                    background: $ignite-catalog-cream url("https://ignitefindyourfire.org/mascots/Laptop.png") center / auto 78% no-repeat;
+                    background: $ignite-catalog-cream url("https://ignitefindyourfire.org/backgrounds/Program.jpg") center / cover no-repeat;
                     pointer-events: none;
                 }
 
-                &.collapsed > .info {
-                    margin-bottom: 1.25rem;
+                &.collapsed {
+                    // Moodle returns an empty .content in collapsed mode. Do not
+                    // reserve the expanded card's fixed title/details tracks.
+                    // Removing .collapsed after the native info action restores
+                    // the normal three-row layout as course details arrive.
+                    grid-template-rows: auto auto;
+
+                    > .info {
+                        margin-bottom: 1.25rem;
+                    }
                 }
             }
         }

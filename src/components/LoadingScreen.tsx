@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { recordIntroEvent, watchIntroVideo } from '../lib/introDebug';
 
 interface LoadingScreenProps {
   onComplete: () => void;
@@ -16,13 +17,15 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const [isMobile] = useState(() => window.matchMedia('(max-width: 767px)').matches);
   const poster = isMobile ? '/backgrounds/Loading%20Screen%20Mobile.webp' : '/backgrounds/Loading%20Screen.webp';
 
-  const completeIntro = useCallback(() => {
+  const completeIntro = useCallback((reason: string) => {
     if (completionRequested.current) return;
     completionRequested.current = true;
+    recordIntroEvent('intro:completion-requested', { reason });
     const video = videoRef.current;
     const snapshot = snapshotRef.current;
     const context = snapshot?.getContext('2d');
     if (!video || video.readyState < 2 || !snapshot || !context) {
+      recordIntroEvent('snapshot:unavailable');
       video?.pause();
       onComplete();
       return;
@@ -34,12 +37,14 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
     snapshot.height = video.videoHeight;
     try {
       context.drawImage(video, 0, 0);
-    } catch {
+    } catch (error) {
+      recordIntroEvent('snapshot:error', { message: String(error) });
       // A player error must still allow the visitor to reach the website.
       video.pause();
       onComplete();
       return;
     }
+    recordIntroEvent('snapshot:captured', { width: snapshot.width, height: snapshot.height, currentTime: video.currentTime });
     setSnapshotVisible(true);
   }, [onComplete]);
 
@@ -50,6 +55,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
     // earlier can expose the poster or background on mobile compositors.
     let frame = window.requestAnimationFrame(() => {
       frame = window.requestAnimationFrame(() => {
+        recordIntroEvent('snapshot:painted');
         videoRef.current?.pause();
         onComplete();
       });
@@ -63,25 +69,26 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
     let firstFrameShown = false;
     let autoplayTimeout = 0;
     const video = videoRef.current;
+    const stopDebug = video ? watchIntroVideo(video) : () => {};
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     document.body.dataset.introLoading = 'true';
 
     // A failed download or stalled player should never block the website.
-    let timeout = window.setTimeout(completeIntro, 15000);
+    let timeout = window.setTimeout(() => completeIntro('watchdog-timeout'), 15000);
     const scheduleAutoplayFallback = () => {
       if (firstFrameShown || autoplayTimeout) return;
       // Give readiness retries a chance, then bypass a browser policy block
       // without asking the visitor to play a decorative intro manually.
-      autoplayTimeout = window.setTimeout(completeIntro, 2500);
+      autoplayTimeout = window.setTimeout(() => completeIntro('autoplay-timeout'), 2500);
     };
     const handlePlaying = () => {
       window.clearTimeout(timeout);
-      timeout = window.setTimeout(completeIntro, 15000);
+      timeout = window.setTimeout(() => completeIntro('watchdog-timeout'), 15000);
     };
     video?.addEventListener('playing', handlePlaying);
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') completeIntro();
+      if (event.key === 'Escape') completeIntro('escape');
     };
     window.addEventListener('keydown', handleKeyDown);
     const startPlayback = () => {
@@ -93,6 +100,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) scheduleAutoplayFallback();
       void video.play().catch((error: unknown) => {
         if (!active || completionRequested.current) return;
+        recordIntroEvent('video:play-rejected', { message: String(error), name: error instanceof Error ? error.name : undefined });
         // Safari can reject an early attempt before the clip is ready or while
         // the page is backgrounded. Readiness/visibility events retry it.
         if (error instanceof DOMException && error.name === 'NotAllowedError') {
@@ -100,7 +108,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           return;
         }
         if (error instanceof DOMException && error.name === 'AbortError') return;
-        completeIntro();
+        completeIntro('play-error');
       });
     };
     video?.addEventListener('loadeddata', startPlayback);
@@ -116,13 +124,14 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       if (!firstFrameShown && video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA &&
           video.currentTime > 0 && !video.paused) {
         firstFrameShown = true;
+        recordIntroEvent('video:first-frame', { currentTime: video.currentTime });
         window.clearTimeout(autoplayTimeout);
         setPlaybackStarted(true);
       }
       if (!video.seeking && video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA &&
           Number.isFinite(video.duration) && video.currentTime >= video.duration - fadeLeadTime) {
         // Capture before the native ended state can clear the video surface.
-        completeIntro();
+        completeIntro('closing-frame');
         return;
       }
       playbackFrame = window.requestAnimationFrame(checkClosingFrame);
@@ -131,6 +140,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
     return () => {
       active = false;
+      stopDebug();
       video?.removeEventListener('playing', handlePlaying);
       video?.removeEventListener('loadeddata', startPlayback);
       video?.removeEventListener('canplay', startPlayback);
@@ -142,6 +152,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       window.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = previousOverflow;
       delete document.body.dataset.introLoading;
+      recordIntroEvent('intro:cleanup', { overflow: document.body.style.overflow });
     };
   }, [completeIntro]);
 
@@ -169,8 +180,8 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         onTimeUpdate={(event) => {
           if (event.currentTarget.currentTime >= (isMobile ? 4 : 5)) setTextVisible(false);
         }}
-        onEnded={completeIntro}
-        onError={completeIntro}
+        onEnded={() => completeIntro('ended')}
+        onError={() => completeIntro('media-error')}
       />
       <img
         className="loading-screen__poster"
@@ -185,7 +196,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         style={{ visibility: snapshotVisible ? 'visible' : 'hidden' }}
         aria-hidden="true"
       />
-      <button className="loading-screen__skip" type="button" onClick={completeIntro}>
+      <button className="loading-screen__skip" type="button" onClick={() => completeIntro('skip')}>
         Skip intro <span aria-hidden="true">↗</span>
       </button>
       <div className="loading-screen__content">

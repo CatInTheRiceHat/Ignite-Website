@@ -52,6 +52,15 @@ test('starts playback even when the browser never reports canplaythrough', async
 
 test('fades a captured closing frame and restores the page without a blank frame', async ({ page }) => {
   await page.addInitScript(() => {
+    const drawImage = CanvasRenderingContext2D.prototype.drawImage;
+    CanvasRenderingContext2D.prototype.drawImage = new Proxy(drawImage, {
+      apply(target, context, args) {
+        if (args[0] instanceof HTMLVideoElement && context.canvas.classList.contains('loading-screen__snapshot')) {
+          context.canvas.dataset.capturedAt = String(args[0].currentTime);
+        }
+        return Reflect.apply(target, context, args);
+      },
+    });
     const pause = HTMLMediaElement.prototype.pause;
     HTMLMediaElement.prototype.pause = function () {
       const snapshot = this.closest('.loading-screen')?.querySelector('canvas');
@@ -81,7 +90,6 @@ test('fades a captured closing frame and restores the page without a blank frame
       ).data),
     );
     let expectedPixels: number[] = [];
-    let capturedAt = 0;
     const initialWidth = document.documentElement.clientWidth;
     await new Promise<void>(resolve => {
       const sample = () => {
@@ -91,7 +99,6 @@ test('fades a captured closing frame and restores the page without a blank frame
         }
         if (getComputedStyle(snapshot).visibility === 'visible') {
           if (!expectedPixels.length) {
-            capturedAt = player.currentTime;
             const reference = document.createElement('canvas');
             reference.width = player.videoWidth;
             reference.height = player.videoHeight;
@@ -113,7 +120,9 @@ test('fades a captured closing frame and restores the page without a blank frame
       sample();
     });
     return {
-      frames, expectedPixels, capturedAt, duration: player.duration,
+      // Measure the draw itself: the next animation frame can run after the
+      // video has ended on a busy device, even when capture happened in time.
+      frames, expectedPixels, capturedAt: Number(snapshot.dataset.capturedAt), duration: player.duration,
       snapshotWidth: snapshot.width, snapshotHeight: snapshot.height,
       initialWidth, finalWidth: document.documentElement.clientWidth,
       coveredAtPause: player.dataset.coveredAtPause,

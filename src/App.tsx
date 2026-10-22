@@ -2,6 +2,8 @@ import { useCallback, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { BrowserRouter as Router, Navigate, Routes, Route } from 'react-router-dom';
 import LoadingScreen from './components/LoadingScreen';
+import IntroDebug from './components/IntroDebug';
+import { introBypassed, introDebugEnabled, recordIntroEvent } from './lib/introDebug';
 import Layout from './components/layout/Layout';
 import Home from './pages/Home';
 import About from './pages/About';
@@ -18,7 +20,9 @@ const INTRO_SESSION_KEY = 'ignite:intro-seen';
 
 function App() {
   const [loading, setLoading] = useState(() => {
+    if (introBypassed) return false;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+    if (introDebugEnabled) return true;
     try {
       return sessionStorage.getItem(INTRO_SESSION_KEY) !== 'true';
     } catch {
@@ -27,6 +31,7 @@ function App() {
   });
 
   const dismissIntro = useCallback(() => {
+    recordIntroEvent('intro:dismissed');
     try {
       sessionStorage.setItem(INTRO_SESSION_KEY, 'true');
     } catch {
@@ -60,6 +65,7 @@ function App() {
           </Layout>
         </Router>
       </div>
+      {introDebugEnabled && <IntroDebug />}
     </>
   );
 }
