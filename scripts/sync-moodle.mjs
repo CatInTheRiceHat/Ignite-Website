@@ -1,0 +1,82 @@
+import { spawnSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
+import { homedir } from 'node:os';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const project = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const args = process.argv.slice(2);
+const restore = args.find((arg) => arg.startsWith('--restore='));
+if (args.some((arg) => arg !== '--apply' && arg !== restore) || (restore && args.includes('--apply'))) {
+  throw new Error('Use no arguments to preview, --apply to deploy, or --restore=BACKUP.json to restore.');
+}
+let connection;
+try {
+  connection = JSON.parse(readFileSync(resolve(project, 'moodle/connection.local'), 'utf8'));
+} catch {
+  throw new Error('Create moodle/connection.local using moodle/connection.example.json.');
+}
+const { host, user, key, root, webUser, backupDir } = connection;
+for (const [name, value] of Object.entries({ host, user, root, webUser, backupDir })) {
+  if (typeof value !== 'string' || !/^[a-zA-Z0-9_./:@-]+$/.test(value) || value.startsWith('-')) {
+    throw new Error(`Invalid connection setting: ${name}`);
+  }
+}
+if (!root.startsWith('/') || !backupDir.startsWith('/') || typeof key !== 'string') {
+  throw new Error('root and backupDir must be absolute paths; key must name a local SSH key.');
+}
+const identity = key.startsWith('~/') ? resolve(homedir(), key.slice(2)) : resolve(project, key);
+const target = `${user}@${host}`;
+const sshOptions = ['-i', identity, '-o', 'IdentitiesOnly=yes', '-o', 'BatchMode=yes',
+  '-o', 'StrictHostKeyChecking=yes', '-o', 'ConnectTimeout=10'];
+const quote = (value) => `'${String(value).replaceAll("'", "'\\''")}'`;
+function run(program, argv) {
+  const result = spawnSync(program, argv, { encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 });
+  if (result.error) throw result.error;
+  if (result.status !== 0) {
+    throw new Error(`${program} failed (${result.status}): ${result.stderr || result.stdout}`);
+  }
+  if (result.stderr) process.stderr.write(result.stderr);
+  return result.stdout;
+}
+const ssh = (command) => run('ssh', [...sshOptions, target, command]);
+const temporary = ssh('mktemp -d /tmp/ignite-moodle.XXXXXXXX').trim();
+if (!/^\/tmp\/ignite-moodle\.[a-zA-Z0-9]+$/.test(temporary)) throw new Error('Invalid remote temporary path.');
+const mode = restore || (args.includes('--apply') ? '--apply' : '--check');
+let backup;
+const php = (operation) => ssh(`cd /tmp && sudo -u ${quote(webUser)} php ${quote(`${temporary}/sync.php`)} ${quote(root)} ${quote(backupDir)} ${quote(operation)}`);
+const build = () => ssh(`cd /tmp && sudo -u ${quote(webUser)} php ${quote(`${temporary}/build-theme.php`)} ${quote(root)}`);
+try {
+  run('scp', [...sshOptions,
+    ...['sync.php', 'build-theme.php', 'raw.scss', 'theme.scss', 'dashboard-navigation.html', 'dashboard-welcome.html']
+      .map((file) => resolve(project, 'moodle', file)), `${target}:${temporary}/`]);
+  // The staged files are public styling/code only. Backups are private to the web-server user.
+  ssh(`chmod 755 ${quote(temporary)} && chmod 644 ${quote(temporary)}/*`);
+  // Only prepare backup storage when a deployment or restore is requested.
+  if (mode !== '--check') {
+    ssh(`install -d -o ${quote(webUser)} -g ${quote(webUser)} -m 700 ${quote(backupDir)}`);
+  }
+  const result = JSON.parse(php(mode));
+  backup = result.backup;
+  console.log(JSON.stringify(result, null, 2));
+  if (result.changed) {
+    console.log('Compiling Moodle theme CSS in both directions…');
+    try {
+      process.stdout.write(build());
+    } catch (error) {
+      console.error('Theme compilation failed. Restoring the previous settings.');
+      process.stdout.write(php(`--restore=${backup}`));
+      process.stdout.write(build());
+      throw error;
+    }
+    const response = await fetch(result.url + '/login/index.php', { signal: AbortSignal.timeout(30000) });
+    const html = await response.text();
+    if (!response.ok || !html.includes('id="page-login-index"')) {
+      throw new Error(`Post-deployment login-page check failed (HTTP ${response.status}). Backup: ${backup}`);
+    }
+    console.log(`Verified Moodle login page (HTTP ${response.status}).`);
+  }
+} finally {
+  try { ssh(`rm -rf -- ${quote(temporary)}`); }
+  catch (error) { console.error(`Could not remove staging directory ${temporary}: ${error.message}`); }
+}

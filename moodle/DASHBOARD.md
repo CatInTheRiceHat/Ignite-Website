@@ -6,13 +6,15 @@ The [Ignite Program Style Guide](../Ignite%20Program%20Style%20Guide.md) governs
 
 ## Apply in Moodle
 
+SSH deployment is configured for the DigitalOcean Moodle server. For routine code updates, use `npm run moodle:check` and `npm run moodle:deploy`; see [SYNC.md](SYNC.md). The commands update styles and existing Ignite Text blocks directly. The initial block arrangement below remains separate, and deployment does not reset personal dashboards.
+
 1. Replace **Site administration → Appearance → Themes → Boost → Advanced settings → Raw SCSS** with the complete contents of [raw.scss](raw.scss). Keep the existing preset. Under **Boost → General settings**, set **Brand colour** to **`#F07B2A`** (RGB **240, 123, 42**); that setting can override the preset's primary colour for native Moodle controls. Save and purge theme caches. This file includes the existing course catalog and classroom fallback styles.
 2. Open **Site administration → Appearance → Default Dashboard page** and turn on edit mode. Add two **Text** blocks to the **main content** region, with blank block titles. Use the editor's HTML/source view to paste [dashboard-navigation.html](dashboard-navigation.html) into the first and [dashboard-welcome.html](dashboard-welcome.html) into the second. Keep one copy of each block.
 3. Below these, place **Course overview** and optionally **Recently accessed courses**. Add **Timeline**, **Calendar**, or **Upcoming events** only if courses use scheduled activities; the current preview focuses on courses. The sidebar layout activates only when both Text blocks are in the main content region. Turn edit mode off to see it; edit mode preserves Moodle's normal block controls and arrangement.
 4. Ensure **My courses** is enabled under **Appearance → Navigation**, since the menu and welcome button link there. The links target Ignite's Moodle origin; update them if the installation moves.
 5. Check with a learner account, including one with no enrolled courses. Progress requires Moodle completion tracking and configured activity completion; courses without progress keep Moodle's normal display. If Timeline is enabled, learners without due work should see its native empty state. No additional statistics or streaks are fabricated.
 
-The Default Dashboard applies to new users. Existing users can use **Reset page to default** on their own dashboards. Moodle also provides **Reset Dashboard for all users** on the default dashboard page; that replaces existing personal arrangements, so use it only when you intend to reset those customizations. Changing these local files alone does not update the live Moodle settings.
+The Default Dashboard applies to new users. Existing users can use **Reset page to default** on their own dashboards. Moodle also provides **Reset Dashboard for all users** on the default dashboard page; that replaces existing personal arrangements, so use it only when you intend to reset those customizations. Local changes reach Moodle when the deployment command runs.
 
 ## Validation and limits
 

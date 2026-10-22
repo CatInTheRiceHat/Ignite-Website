@@ -1,0 +1,8 @@
+{
+  "host": "159.89.158.200",
+  "user": "root",
+  "key": "~/.ssh/ignite_moodle_ed25519",
+  "root": "/var/www/moodle",
+  "webUser": "www-data",
+  "backupDir": "/var/backups/ignite-moodle"
+}
