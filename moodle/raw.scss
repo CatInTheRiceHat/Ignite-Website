@@ -697,6 +697,8 @@ $ignite-catalog-description-lines: 2;
 
             > .card-body { display: flex; flex-direction: column; }
             .card-text.content { display: flex; flex: 1; }
+            // Moodle wraps Text content in .no-overflow; let it fill the grid column.
+            .card-text.content > .no-overflow { display: flex; flex: 1; min-width: 0; }
             .ignite-learning-welcome { flex: 1; }
         }
 

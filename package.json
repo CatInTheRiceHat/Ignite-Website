@@ -6,6 +6,8 @@
   "scripts": {
     "moodle:check": "node scripts/sync-moodle.mjs",
     "moodle:deploy": "node scripts/sync-moodle.mjs --apply",
+    "moodle:dashboard:check": "node scripts/sync-moodle.mjs --dashboard",
+    "moodle:dashboard:install": "node scripts/sync-moodle.mjs --dashboard --apply",
     "prebuild": "tsx scripts/index-sol-site.ts",
     "dev": "tsx --env-file-if-exists=.env.local scripts/dev-sol.ts",
     "build": "tsc -b && npm run typecheck:sol && vite build && npm run build:sol",

@@ -14,7 +14,19 @@ Local connection settings live in `moodle/connection.local`, which Git ignores v
 
 Codex can run these commands directly when asked to make and deploy Moodle changes; the user does not need to paste styles into the admin interface. Deployment is explicit, rather than triggered by every file save or a Vercel website build. A repeated deployment with matching content makes no settings changes and creates no additional backup.
 
-The sync owns Boost's Raw SCSS, the `theme.scss` preset file and preset selection, brand colour `#F07B2A`, and content in existing Ignite dashboard Text blocks. Dashboard blocks are identified by the `ignite-learning-nav` or `ignite-learning-welcome` class on `my-index` pages. Their other configuration and positions are preserved. Matching default blocks and personal copies receive content updates. Missing blocks are reported, not created. The tool never resets personal dashboards or modifies courses, enrollments, grades, or Moodle core code. See [DASHBOARD.md](DASHBOARD.md) for the separate initial block arrangement.
+The sync owns Boost's Raw SCSS, the `theme.scss` preset file and preset selection, brand colour `#F07B2A`, and content in existing Ignite dashboard Text blocks. Dashboard blocks are identified by the `ignite-learning-nav` or `ignite-learning-welcome` class on `my-index` pages. Their other configuration and positions are preserved. Matching default blocks and personal copies receive content updates. Missing blocks are reported by routine deployment. The tool never resets personal dashboards or modifies courses, enrollments, grades, or Moodle core code.
+
+## Initial dashboard installation
+
+Deploying styles alone does not add the navigation and welcome panels. Use `npm run moodle:dashboard:check` to preview the initial setup and `npm run moodle:dashboard:install` to install missing panels on the default dashboard and every existing personal dashboard. The installer enables My courses so the navigation links work. It adds the two panels above existing content, preserving native blocks, their positions, and personal dashboard records. New users inherit the default dashboard. Repeating installation adds no duplicates.
+
+This setup was applied on October 22, 2026: 56 panels were added across 28 dashboards. Existing native block records, dashboard records, and block-position overrides were verified unchanged. Routine HTML edits now reach these panels through `npm run moodle:deploy`. See [DASHBOARD.md](DASHBOARD.md) for the design and manual fallback.
+
+Installation writes a private manifest alongside theme backups. To undo an installation, remove only its created panels and restore the previous My courses setting with:
+
+```sh
+node scripts/sync-moodle.mjs --dashboard --restore=INSTALLATION-BACKUP.json
+```
 
 Backups contain the previous managed theme settings, preset content, and managed block configurations. They are private files under `/var/backups/ignite-moodle`, outside the web root. They are configuration backups, not full site or database backups.
 

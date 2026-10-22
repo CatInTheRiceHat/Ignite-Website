@@ -7,8 +7,9 @@ import { fileURLToPath } from 'node:url';
 const project = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
 const restore = args.find((arg) => arg.startsWith('--restore='));
-if (args.some((arg) => arg !== '--apply' && arg !== restore) || (restore && args.includes('--apply'))) {
-  throw new Error('Use no arguments to preview, --apply to deploy, or --restore=BACKUP.json to restore.');
+const dashboard = args.includes('--dashboard');
+if (args.some((arg) => arg !== '--apply' && arg !== '--dashboard' && arg !== restore) || (restore && args.includes('--apply'))) {
+  throw new Error('Use --apply to deploy or --restore=BACKUP.json to restore; add --dashboard for the initial dashboard installation.');
 }
 let connection;
 try {
@@ -44,11 +45,11 @@ const temporary = ssh('mktemp -d /tmp/ignite-moodle.XXXXXXXX').trim();
 if (!/^\/tmp\/ignite-moodle\.[a-zA-Z0-9]+$/.test(temporary)) throw new Error('Invalid remote temporary path.');
 const mode = restore || (args.includes('--apply') ? '--apply' : '--check');
 let backup;
-const php = (operation) => ssh(`cd /tmp && sudo -u ${quote(webUser)} php ${quote(`${temporary}/sync.php`)} ${quote(root)} ${quote(backupDir)} ${quote(operation)}`);
+const php = (operation) => ssh(`cd /tmp && sudo -u ${quote(webUser)} php ${quote(`${temporary}/${dashboard ? 'install-dashboard.php' : 'sync.php'}`)} ${quote(root)} ${quote(backupDir)} ${quote(operation)}`);
 const build = () => ssh(`cd /tmp && sudo -u ${quote(webUser)} php ${quote(`${temporary}/build-theme.php`)} ${quote(root)}`);
 try {
   run('scp', [...sshOptions,
-    ...['sync.php', 'build-theme.php', 'raw.scss', 'theme.scss', 'dashboard-navigation.html', 'dashboard-welcome.html']
+    ...['sync.php', 'install-dashboard.php', 'build-theme.php', 'raw.scss', 'theme.scss', 'dashboard-navigation.html', 'dashboard-welcome.html']
       .map((file) => resolve(project, 'moodle', file)), `${target}:${temporary}/`]);
   // The staged files are public styling/code only. Backups are private to the web-server user.
   ssh(`chmod 755 ${quote(temporary)} && chmod 644 ${quote(temporary)}/*`);
@@ -60,14 +61,16 @@ try {
   backup = result.backup;
   console.log(JSON.stringify(result, null, 2));
   if (result.changed) {
-    console.log('Compiling Moodle theme CSS in both directions…');
-    try {
-      process.stdout.write(build());
-    } catch (error) {
-      console.error('Theme compilation failed. Restoring the previous settings.');
-      process.stdout.write(php(`--restore=${backup}`));
-      process.stdout.write(build());
-      throw error;
+    if (!dashboard) {
+      console.log('Compiling Moodle theme CSS in both directions…');
+      try {
+        process.stdout.write(build());
+      } catch (error) {
+        console.error('Theme compilation failed. Restoring the previous settings.');
+        process.stdout.write(php(`--restore=${backup}`));
+        process.stdout.write(build());
+        throw error;
+      }
     }
     const response = await fetch(result.url + '/login/index.php', { signal: AbortSignal.timeout(30000) });
     const html = await response.text();

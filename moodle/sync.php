@@ -13,6 +13,7 @@ if ($argc !== 4 || !in_array($argv[3], ['--check', '--apply']) &&
 [$script, $root, $backupdir, $mode] = $argv;
 require $root . '/config.php';
 require_once $CFG->libdir . '/blocklib.php';
+require_once $CFG->libdir . '/filelib.php';
 if ($CFG->wwwroot !== 'https://learn.ignitefindyourfire.org' || ($CFG->theme ?? '') !== 'boost') {
     throw new RuntimeException('Expected the Ignite Moodle site using Boost. No settings were changed.');
 }
@@ -152,8 +153,11 @@ try {
                     if (!$block) {
                         throw new RuntimeException("Could not load dashboard block $id");
                     }
-                    // Moodle's save method returns void and throws on a database error.
-                    $block->instance_config_save(ignite_config((object)['configdata' => $configdata]));
+                    // Text blocks expect the editor-shaped value. Keep existing embedded files.
+                    $config = ignite_config((object)['configdata' => $configdata]);
+                    $config->text = ['itemid' => IGNORE_FILE_MERGE, 'format' => $config->format ?? FORMAT_HTML,
+                        'text' => $config->text];
+                    $block->instance_config_save($config);
                 }
             }
             $transaction->allow_commit();
