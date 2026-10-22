@@ -22,6 +22,22 @@ $font-family-sans-serif: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI"
 @import "bootstrap";
 @import "moodle";
 
+// White labels on solid orange controls, including hover/active/disabled states.
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-color: #fff;
+    --bs-btn-disabled-color: #fff;
+}
+
+.btn-outline-primary {
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-color: #fff;
+}
+
+.bg-primary,
+.text-bg-primary { color: #fff !important; }
+
 // Use the brand heading font for navigation and UI controls.
 .navbar .nav-link,
 .btn,
@@ -80,7 +96,7 @@ $font-family-sans-serif: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI"
     .btn-primary {
         background-color: #F07B2A;
         border-color: #F07B2A;
-        color: #1A1A2E;
+        color: #fff;
         border-radius: .75rem;
         font-family: "Poppins", "Segoe UI", Arial, sans-serif;
         font-weight: 700;
@@ -90,7 +106,7 @@ $font-family-sans-serif: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI"
     .btn-primary:active {
         background-color: #D46A20;
         border-color: #D46A20;
-        color: #1A1A2E;
+        color: #fff;
     }
 
     .btn-primary:focus-visible {

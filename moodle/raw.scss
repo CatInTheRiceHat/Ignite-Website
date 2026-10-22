@@ -145,7 +145,7 @@ $ignite-catalog-description-lines: 2;
                 border: 1px solid $ignite-catalog-link;
                 border-radius: 0 .85rem .85rem 0;
                 background: $ignite-catalog-orange;
-                color: $ignite-catalog-ink;
+                color: #fff;
                 font-family: $ignite-catalog-heading;
                 font-weight: 700;
                 transition: background-color .18s ease;
@@ -553,7 +553,7 @@ $ignite-catalog-description-lines: 2;
     #loginbtn {
         min-height: 3rem;
         border-radius: .75rem;
-        color: $ignite-catalog-ink;
+        color: #fff;
     }
 
     .login-form-recaptcha {
@@ -666,10 +666,10 @@ $ignite-catalog-description-lines: 2;
 
     #region-main { background: transparent; }
 
-    .page-header-headings h1 {
-        color: $ignite-catalog-ink;
-        font-family: "Rammetto One", $ignite-catalog-heading;
-        font-weight: 400;
+    // Navigation already identifies the dashboard; retain its H1 for readers.
+    .page-header-headings h1 { @include visually-hidden(); }
+    #page-header .page-context-header:has(.page-header-headings h1) {
+        margin-bottom: 0 !important;
     }
 
     .block.card {
@@ -813,7 +813,7 @@ $ignite-catalog-description-lines: 2;
         margin-top: 1.5rem;
 
         a { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; color: #fff; font-family: $ignite-catalog-heading; font-size: .875rem; font-weight: 700; }
-        .ignite-learning-welcome__primary { padding: .8rem 1.1rem; border-radius: .75rem; background: $ignite-catalog-orange; color: $ignite-catalog-ink; text-decoration: none; }
+        .ignite-learning-welcome__primary { padding: .8rem 1.1rem; border-radius: .75rem; background: $ignite-catalog-orange; color: #fff; text-decoration: none; }
         .ignite-learning-welcome__primary:hover { background: $ignite-catalog-orange-dark; }
     }
 
