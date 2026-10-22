@@ -495,10 +495,86 @@ $ignite-catalog-description-lines: 2;
     }
 }
 
-// Boost 5.2 login welcome: default title and headings entered in Instructions.
-// Keep the form heading, body copy, typography and panel layout unchanged.
-#page-login-index .login-layout-left .login-layout-left-content :is(h1, h2, h3, h4, h5, h6) {
-    color: #FFFFFF;
+// Boost 5.2 login: one centered form, with native authentication controls.
+#page-login-index {
+    // public/backgrounds/Fall.jpg, hosted on Moodle alongside this theme.
+    #page {
+        background: $ignite-catalog-cream url("https://learn.ignitefindyourfire.org/ignite-assets/fall-bae85ba34077.jpg") center / cover no-repeat;
+    }
+
+    #page-content {
+        justify-content: center;
+        align-items: center;
+        padding: clamp(1rem, 3vw, 2.5rem);
+    }
+
+    // Bootstrap's desktop display utility otherwise restores the split panel.
+    .login-layout-left { display: none !important; }
+
+    #region-main.login-layout-right {
+        flex: 0 1 32rem;
+        width: 100%;
+        min-width: 0;
+        min-height: 0;
+        padding: 0;
+    }
+
+    .login-layout-right-content {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+    }
+
+    .login-container {
+        padding: 2.5rem;
+        border: 1px solid $ignite-catalog-border;
+        border-radius: 1.5rem;
+        background: #fff;
+        box-shadow: 0 8px 32px rgba(78, 42, 18, .07);
+    }
+
+    #logoimage {
+        width: auto;
+        max-height: 7rem;
+        object-fit: contain;
+    }
+
+    .loginform > h1,
+    .loginform > p { text-align: center; }
+
+    // The welcome panel's mobile copy is redundant in the single-card layout.
+    .loginform > .d-lg-none { display: none !important; }
+
+    .form-control {
+        min-height: 3rem;
+        border-radius: .75rem;
+    }
+
+    #loginbtn {
+        min-height: 3rem;
+        border-radius: .75rem;
+        color: $ignite-catalog-ink;
+    }
+
+    .login-form-recaptcha {
+        display: flex;
+        justify-content: center;
+    }
+
+    @media (max-width: 575.98px) {
+        #page-content { padding: 1rem; }
+        .login-container { padding: 1.5rem 1rem; }
+    }
+
+    // Leave the native 304px CAPTCHA room even on a 320px-wide screen.
+    @media (max-width: 369.98px) {
+        #page-content { padding: .5rem; }
+        .login-container {
+            padding: 1.5rem 0;
+            border: 0;
+            box-shadow: none;
+        }
+    }
 }
 
 // Learner dashboard. Native Moodle blocks still own courses, completion,
@@ -509,6 +585,74 @@ $ignite-catalog-description-lines: 2;
 // Poppins UI headings, Nunito body, orange CTAs, and existing Ignite artwork.
 #page-my-index,
 #page-my-indexsys {
+    // Center the native home link in the upper white Moodle navigation bar.
+    .navbar > .container-fluid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    }
+
+    .navbar .navbar-brand {
+        display: flex !important;
+        grid-column: 2;
+        grid-row: 1;
+        justify-content: center;
+        gap: .6rem;
+        margin: 0 !important;
+        color: $ignite-catalog-orange;
+        font-family: "Rammetto One", $ignite-catalog-heading;
+        font-size: 1.9rem;
+
+        .logo {
+            content: url("https://ignitefindyourfire.org/mascots/Logo.png");
+            width: 2.5rem;
+            height: 2.5rem;
+            max-height: none;
+            margin: 0 !important;
+            object-fit: contain;
+        }
+
+        // The native logo's alt text already names Ignite for screen readers.
+        &:has(.logo)::after { content: "Ignite"; }
+    }
+
+    .navbar .primary-navigation,
+    .navbar .navbar-toggler {
+        grid-column: 1;
+        grid-row: 1;
+        justify-self: start;
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .navbar #usernavigation {
+        grid-column: 3;
+        grid-row: 1;
+        justify-self: end;
+        margin: 0 !important;
+    }
+
+    @media (min-width: 768px) and (max-width: 1199.98px) {
+        .navbar .navbar-brand { font-size: 1.4rem; gap: .35rem; }
+        .navbar .navbar-brand .logo { width: 2rem; height: 2rem; }
+    }
+
+    // Give mobile account/menu controls their own row below the centered brand.
+    @media (max-width: 767.98px) {
+        .navbar { height: 108px; max-height: 108px; }
+        .navbar > .container-fluid {
+            height: 100%;
+            grid-template-columns: auto minmax(0, 1fr);
+            grid-template-rows: 48px 60px;
+        }
+        .navbar .navbar-brand { grid-column: 1 / -1; grid-row: 1; font-size: 1.5rem; }
+        .navbar .navbar-brand .logo { width: 2rem; height: 2rem; }
+        .navbar .navbar-toggler { grid-column: 1; grid-row: 2; }
+        .navbar #usernavigation { grid-column: 2; grid-row: 2; }
+        #page { margin-top: 108px; }
+        #page.drawers { height: calc(100vh - 108px); }
+        .drawer { top: 108px; height: calc(100vh - 108px); }
+    }
+
     #page.drawers { padding-inline: clamp(.75rem, 2vw, 2rem); }
 
     #page.drawers .main-inner {
