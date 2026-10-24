@@ -45,7 +45,7 @@ const Mentors = () => {
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <h1 className="text-5xl md:text-7xl font-rammetto text-white">Our Team</h1>
-          <p className="text-xl md:text-2xl opacity-90 mt-4 leading-relaxed">Students who want to help.</p>
+          <p className="text-xl md:text-2xl opacity-90 mt-4 leading-relaxed">40+ interns helping students find their fire.</p>
         </div>
       </section>
 

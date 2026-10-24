@@ -146,7 +146,7 @@ const Home = () => {
           </BlurFade>
           <BlurFade delay={0.15}>
             <p className="text-lg sm:text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto font-medium leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
-              Ignite is building free live and independent courses in practical life skills. Explore the plans and find what sparks your curiosity.
+              Ignite’s 40+ interns are building free live and independent courses in practical life skills. Explore the plans and find what sparks your curiosity.
             </p>
           </BlurFade>
           <BlurFade delay={0.25}>
@@ -265,7 +265,7 @@ const Home = () => {
         <BlurFade className="relative z-10 w-full max-w-7xl mx-auto px-4 text-center">
           <h2 className="text-4xl md:text-6xl font-rammetto text-white mb-4 drop-shadow-[0_3px_10px_rgba(0,0,0,0.4)]">Meet Our Team</h2>
           <p className="text-xl md:text-2xl text-white mb-8 max-w-3xl mx-auto font-medium leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">
-            High school students who remember what it is like to be in your spot.
+            Meet our 40+ interns helping students build skills and find their fire.
           </p>
           <div className="flex justify-center">
             <Link to="/team" className="bg-[var(--primary-orange)] text-white px-12 py-5 rounded-full font-bold text-2xl hover:scale-105 transition-all shadow-xl">
