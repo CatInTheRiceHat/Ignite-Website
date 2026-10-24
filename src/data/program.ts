@@ -3,6 +3,7 @@ export type CourseFormat = 'live' | 'independent';
 // The October development catalog supersedes the August framework's course list.
 // The frameworks describe plans, not published courses or an enrollment schedule.
 // Instructor assignments reviewed against Courses in Development List.pdf (October 15, 2026).
+// Math and Onshape additions and their course teams verified against Moodle (October 24, 2026).
 // Catalog: https://docs.google.com/document/d/1kxusd_hLaY7hyZFQ_EY-ysFiA3ApgHAe-qMjN4RBSeo/edit
 // Independent framework: https://docs.google.com/document/d/1bhB1G1e-h1Pg0p4m_yYZu-hMPYt0CWK46k0vTt4ot3s/edit
 // Live outline: https://docs.google.com/document/d/1FN4tvQ8E10CcOBMnHoBSq8m4eThc2DBHcaIWq7nguJ4/edit
@@ -32,6 +33,9 @@ export interface DevelopmentCourse {
   icon: string;
   headerImage?: string;
   headerPosition?: string;
+  duration?: string;
+  description?: string;
+  prerequisites?: string;
 }
 
 export const developmentCourses: DevelopmentCourse[] = [
@@ -45,6 +49,14 @@ export const developmentCourses: DevelopmentCourse[] = [
   { title: 'Resilience & Stress Management', instructors: [{ name: 'Emma Zhou' }], format: 'independent', icon: '/mascots/Curious.png', headerImage: '/courses/Resilience%20&%20Stress%20Management.jpg?v=2738cda3' },
   { title: 'AI Literacy and Responsible Use', instructors: [{ name: 'Kevin Liu' }], format: 'independent', icon: '/mascots/AI.png', headerImage: '/courses/AI%20Literacy.jpeg' },
   { title: '3D Design & CAD Fundamentals', instructors: [{ name: 'Ridwanullah Ashiru' }, { name: 'Imoleayo Babatunde' }], format: 'independent', icon: '/mascots/Artist.png', headerImage: '/courses/3D%20Design%20&%20CAD%20Fundamentals.jpg' },
+  {
+    title: 'Onshape 3D CAD Foundations',
+    instructors: [{ name: 'Ridwanullah Ashiru' }],
+    format: 'independent',
+    icon: '/mascots/Artist.png',
+    headerImage: '/courses/Onshape.jpg?v=6e7221e9',
+    description: 'Build 3D models in Onshape, from your first sketch to a working mechanism, through step-by-step guides and design challenges.',
+  },
   { title: 'Cybersecurity, Online Safety & Media Literacy', format: 'independent', icon: '/mascots/Laptop.png', headerImage: '/courses/Cybersecurity,%20Online%20Safety%20&%20Media%20Literacy.jpg?v=b666addf' },
   { title: 'Career Exploration & Pathway Planning', instructors: [{ name: 'Akshay Kolluru' }], format: 'independent', icon: '/mascots/Graduation.png', headerImage: '/courses/Career%20Exploration%20&%20Pathway%20Planning.jpg' },
   { title: 'Financial Literacy & Economics', instructors: [{ name: 'Neil Anand' }], format: 'independent', icon: '/mascots/Finance.png', headerImage: '/courses/Financial%20Literacy%20&%20Economics.jpg?v=045e492c' },
@@ -55,6 +67,25 @@ export const developmentCourses: DevelopmentCourse[] = [
   { title: 'Emergency Preparedness & Safety', instructors: [{ name: 'Alliyah Battad (Lyra)' }], format: 'independent', icon: '/mascots/Lightbulb.png', headerImage: '/courses/Emergency%20Preparedness%20&%20Safety.jpg' },
   { title: 'Introductory Physics and Astronomy', instructors: [{ name: 'Michelle Thomatis' }], format: 'independent', icon: '/mascots/Research.png', headerImage: '/courses/Introductory%20Physics%20and%20Astronomy.jpg' },
   { title: 'Intro to Computer Science (Python)', instructors: [{ name: 'Yuenching Shao' }, { name: 'Daniel Yeh' }], format: 'independent', icon: '/mascots/Laptop.png', headerImage: '/courses/Intro%20to%20Computer%20Science%20(Python).jpg' },
+  {
+    title: 'Introduction to Algebra',
+    instructors: [{ name: 'Terrence Shu' }],
+    format: 'independent',
+    duration: 'To be confirmed',
+    icon: '/mascots/Research.png',
+    headerImage: '/courses/Algebra.jpg?v=c7cb74ff',
+    description: 'Bridge arithmetic and Algebra 1 with variables, expressions, equations, and real-world problems. Designed to supplement school learning.',
+  },
+  {
+    title: 'Introduction to Differential Calculus',
+    instructors: [{ name: 'Terrence Shu' }],
+    format: 'independent',
+    duration: 'To be confirmed',
+    icon: '/mascots/Research.png',
+    headerImage: '/courses/Differential%20Calculus.jpg?v=360efd24',
+    description: 'Explore limits, continuity, derivative rules, and applications of derivatives. Designed to supplement school learning.',
+    prerequisites: 'Completed Algebra 2, with strong algebra skills and familiarity with functions and trigonometry.',
+  },
 ];
 
 export const courseCounts = {

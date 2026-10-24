@@ -19,7 +19,13 @@ const CourseCard = ({ course }: { course: DevelopmentCourse }) => (
         <span className="rounded-full bg-[var(--bg-cream)] px-3 py-1">In development</span>
       </div>
       <h3 className="text-xl font-bold text-[var(--text-charcoal)] leading-snug">{course.title}</h3>
-      <p className="mt-4 text-sm text-[var(--text-light)]">Planned format: {courseFormats[course.format].duration.toLowerCase()}</p>
+      <p className="mt-4 text-sm text-[var(--text-light)]">Planned length: {(course.duration ?? courseFormats[course.format].duration).toLowerCase()}</p>
+      {course.description && <p className="mt-4 text-sm leading-relaxed text-[var(--text-light)]">{course.description}</p>}
+      {course.prerequisites && (
+        <p className="mt-4 text-sm leading-relaxed text-[var(--text-light)]">
+          <span className="font-bold text-[var(--text-charcoal)]">Prerequisites: </span>{course.prerequisites}
+        </p>
+      )}
       {course.instructors && course.instructors.length > 0 && (
         <div className="mt-5 rounded-2xl bg-[var(--bg-cream)] p-4 text-sm text-[var(--text-light)]">
           <p className="font-bold text-[var(--text-charcoal)]">Course team</p>
