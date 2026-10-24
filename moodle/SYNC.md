@@ -18,6 +18,14 @@ The sync owns Boost's Raw SCSS, the `theme.scss` preset file and preset selectio
 
 Seasonal artwork comes from `public/backgrounds/Spring.jpg`, `Summer.jpg`, `Fall.jpg`, and `Winter.jpg`. Deployment publishes immutable copies under Moodle's `ignite-assets` directory and verifies their checksums before updating settings. Both authentication screens use **Europe/London** time, including British Summer Time: spring begins March 1, summer June 1, fall September 1, and winter December 1, each at 00:00. The page checks at minute boundaries and when a tab returns to view, so an open page can switch without a reload. Old image versions remain available for configuration restores. Without JavaScript, the existing fall artwork is the fallback.
 
+## Staff CSV imports
+
+The `local_ignite_staffimports` plugin, sourced from `moodle/local/ignite_staffimports`, defaults new accounts created through Moodle's **Upload users** CSV page to `ignite_course_developer` when their rows contain no explicit role, course, category, group, or cohort assignment. Existing roles and explicit assignments take precedence. Public sign-ups, manually added accounts, and profile updates are unaffected. The uploader must already have permission to upload users and assign Course Developer.
+
+The default runs after the native importer finishes its explicit assignments. It retains the course-creator permission model: developers can create courses and automatically receive Teacher access within the courses they create. It refuses to assign the default if Course Developer has been changed into a role with site-wide course editing or administration rights. The switch is under **Site administration → Plugins → Local plugins → Ignite staff imports**.
+
+Deploy this plugin separately through Moodle's normal local-plugin installation/upgrade process; `moodle:deploy` only manages the theme and dashboard. Preserve the plugin during Moodle core upgrades. The integration checks in `tests/moodle-staff-imports.php` require a private Moodle database with `_staffimports_test_` in its name and outbound email disabled.
+
 ## Initial dashboard installation
 
 Deploying styles alone does not add the navigation and welcome panels. Use `npm run moodle:dashboard:check` to preview the initial setup and `npm run moodle:dashboard:install` to install missing panels on the default dashboard and every existing personal dashboard. The installer enables My courses so the navigation links work. It adds the two panels above existing content, preserving native blocks, their positions, and personal dashboard records. New users inherit the default dashboard. Repeating installation adds no duplicates.
