@@ -2,6 +2,8 @@
 
 This adds a learning menu, an illustrated welcome panel, and clearer course cards to the existing Boost dashboard. Moodle's Course overview and optional Recently accessed courses blocks provide each learner's actual courses and completion information. Timeline is optional if courses later use scheduled activities. The two Text blocks contain navigation and welcome copy only.
 
+The learning menu contains My dashboard and Explore courses. My courses is the main button in the welcome panel, with the native course overview below it. The dashboard's sidebar widgets are hidden through native block-position visibility settings on the default dashboard and existing personal dashboards, so Moodle omits the block drawer in normal view. New dashboards inherit those settings. Edit mode retains block-management controls.
+
 The [Ignite Program Style Guide](../Ignite%20Program%20Style%20Guide.md) governs the appearance: cream `#FFF8F0`, orange `#F07B2A`, dark-orange hover `#D46A20`, charcoal `#1A1A2E`, Rammetto One display titles, Poppins headings and navigation, and Nunito body text. The image-led welcome uses white display text over the existing classroom artwork with a dark overlay for contrast. Rounded cards, outline icons, orange actions, and Ignite's existing mascot remain part of the design. Khan Academy informs the learning layout.
 
 ## Apply in Moodle
