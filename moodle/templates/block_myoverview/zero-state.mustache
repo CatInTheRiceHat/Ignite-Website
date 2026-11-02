@@ -1,0 +1,25 @@
+{{!
+    Ignite's first-course welcome. Moodle renders this template only when the
+    current user has no active enrolled courses; filtered empty lists use
+    core_course/no-courses instead. Preserve the permission-checked buttons.
+}}
+<div class="block-myoverview block-cards" data-region="myoverview">
+    <section class="ignite-first-course" data-region="empty-message" aria-label="Get started with your first course">
+        <img class="ignite-first-course__mascot"
+             src="https://ignitefindyourfire.org/mascots/Puzzled.png"
+             width="220" height="273" alt="">
+        <div class="ignite-first-course__copy">
+            <p class="ignite-first-course__eyebrow">YOUR FIRST SPARK STARTS HERE</p>
+            <h3>Add your first course</h3>
+            <p>Not sure where to start? Explore the courses and find something that sparks your curiosity.</p>
+            <div class="ignite-first-course__actions">
+                {{#buttons}}
+                    {{> core/single_button}}
+                {{/buttons}}
+                <a class="btn btn-primary" href="https://learn.ignitefindyourfire.org/course/index.php">
+                    Explore courses <span class="ignite-redirect-icon" aria-hidden="true">→</span>
+                </a>
+            </div>
+        </div>
+    </section>
+</div>

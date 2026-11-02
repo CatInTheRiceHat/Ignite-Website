@@ -36,6 +36,29 @@ function ignite_kind(string $text): ?string {
     return null;
 }
 
+function ignite_write_template(string $path, ?string $content): void {
+    if ($content === null) {
+        if (is_file($path) && !unlink($path)) {
+            throw new RuntimeException('Could not remove the managed template override.');
+        }
+        return;
+    }
+    $temporary = tempnam(dirname($path), '.ignite-template-');
+    if ($temporary === false) {
+        throw new RuntimeException('Could not stage the managed template override.');
+    }
+    try {
+        if (file_put_contents($temporary, $content, LOCK_EX) !== strlen($content) ||
+                !chmod($temporary, 0644) || !rename($temporary, $path)) {
+            throw new RuntimeException('Could not save the managed template override.');
+        }
+    } finally {
+        if (is_file($temporary)) {
+            unlink($temporary);
+        }
+    }
+}
+
 try {
     $contextid = context_system::instance()->id;
     $fs = get_file_storage();
@@ -47,6 +70,16 @@ try {
     }
     $current = ['url' => $CFG->wwwroot, 'settings' => $settings,
         'preset_content' => $file ? $file->get_content() : null, 'blocks' => []];
+    $templatepaths = ['block_myoverview/zero-state.mustache' =>
+        $CFG->dirroot . '/theme/boost/templates/block_myoverview/zero-state.mustache'];
+    $current['template_overrides'] = [];
+    foreach ($templatepaths as $name => $path) {
+        $content = is_file($path) ? file_get_contents($path) : null;
+        if ($content === false) {
+            throw new RuntimeException('Could not read the managed template override.');
+        }
+        $current['template_overrides'][$name] = $content;
+    }
     $footer = get_config('core', 'additionalhtmlfooter');
     $current['authentication_footer'] = $footer === false ? null : $footer;
     $instances = $DB->get_records('block_instances', ['blockname' => 'html']);
@@ -76,6 +109,19 @@ try {
         if ($desired['authentication_footer'] !== null && !is_string($desired['authentication_footer'])) {
             throw new RuntimeException('Invalid authentication footer in backup.');
         }
+        // Backups from before first-course onboarding leave the override intact.
+        if (!array_key_exists('template_overrides', $desired)) {
+            $desired['template_overrides'] = $current['template_overrides'];
+        }
+        if (!is_array($desired['template_overrides']) ||
+                array_keys($desired['template_overrides']) !== array_keys($templatepaths)) {
+            throw new RuntimeException('Invalid managed templates in backup.');
+        }
+        foreach ($desired['template_overrides'] as $content) {
+            if ($content !== null && !is_string($content)) {
+                throw new RuntimeException('Invalid template content in backup.');
+            }
+        }
         foreach ($desired['blocks'] as $id => $configdata) {
             if (!isset($current['blocks'][$id])) {
                 throw new RuntimeException("Managed block $id was removed or changed. Restore it separately.");
@@ -86,6 +132,11 @@ try {
         $desired['settings'] = ['scss' => file_get_contents(__DIR__ . '/raw.scss'),
             'preset' => 'theme.scss', 'brandcolor' => '#F07B2A'];
         $desired['preset_content'] = file_get_contents(__DIR__ . '/theme.scss');
+        $template = file_get_contents(__DIR__ . '/zero-state.mustache');
+        if (!is_string($template) || !str_contains($template, 'class="ignite-first-course"')) {
+            throw new RuntimeException('Missing or invalid first-course template.');
+        }
+        $desired['template_overrides']['block_myoverview/zero-state.mustache'] = $template;
         $start = '<!-- ignite-authentication:start -->';
         $end = '<!-- ignite-authentication:end -->';
         $snippet = trim(file_get_contents(__DIR__ . '/authentication.html'));
@@ -154,6 +205,11 @@ try {
     if ($desired['authentication_footer'] !== $current['authentication_footer']) {
         $changes[] = 'core.additionalhtmlfooter: Ignite authentication';
     }
+    foreach ($desired['template_overrides'] as $name => $content) {
+        if ($current['template_overrides'][$name] !== $content) {
+            $changes[] = "Boost template: $name";
+        }
+    }
     foreach ($desired['blocks'] as $id => $configdata) {
         if ($current['blocks'][$id] !== $configdata) {
             $changes[] = "Ignite dashboard block $id";
@@ -179,7 +235,14 @@ try {
             umask($previousmask);
         }
         $transaction = $DB->start_delegated_transaction();
+        $writtentemplates = [];
         try {
+            foreach ($desired['template_overrides'] as $name => $content) {
+                if ($current['template_overrides'][$name] !== $content) {
+                    ignite_write_template($templatepaths[$name], $content);
+                    $writtentemplates[] = $name;
+                }
+            }
             if ($desired['authentication_footer'] !== $current['authentication_footer'] &&
                     !set_config('additionalhtmlfooter', $desired['authentication_footer'])) {
                 throw new RuntimeException('Failed to save the authentication footer.');
@@ -214,6 +277,14 @@ try {
             }
             $transaction->allow_commit();
         } catch (Throwable $error) {
+            foreach (array_reverse($writtentemplates) as $name) {
+                try {
+                    ignite_write_template($templatepaths[$name], $current['template_overrides'][$name]);
+                } catch (Throwable $restoreerror) {
+                    $error = new RuntimeException("Template rollback failed; restore backup $backup. " .
+                        $restoreerror->getMessage(), 0, $error);
+                }
+            }
             $transaction->rollback($error);
         }
         theme_reset_all_caches();

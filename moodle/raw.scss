@@ -950,6 +950,20 @@ $ignite-catalog-description-lines: 2;
         }
     }
 
+    // The first-course prompt takes the welcome panel's place for empty accounts.
+    &:not(.editing) #block-region-content:has(.ignite-first-course) {
+        > .block_html:has(.ignite-learning-welcome) { display: none; }
+        > .block_myoverview:has(.ignite-first-course) {
+            grid-row: 1;
+            border: 0;
+            background: transparent;
+            box-shadow: none;
+
+            > .card-body { padding: 0 !important; }
+            > .card-body > .d-flex:has(.card-title) { display: none !important; }
+        }
+    }
+
     @media (max-width: 991.98px) {
         &:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) {
             display: block;
@@ -968,5 +982,55 @@ $ignite-catalog-description-lines: 2;
         .ignite-learning-welcome__mascot { display: none; }
         .ignite-learning-welcome__actions { align-items: stretch; flex-direction: column; }
         .ignite-learning-welcome__actions a { justify-content: center; }
+    }
+}
+
+// Shared by the Dashboard and My courses empty states. Moodle supplies the
+// account-specific visibility and create/request buttons; no client-side guess.
+.ignite-first-course {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    min-height: 24rem;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border: 2px solid $ignite-catalog-border;
+    border-radius: 1.5rem;
+    background: $ignite-catalog-cream;
+    color: $ignite-catalog-ink;
+    font-family: $ignite-catalog-body;
+
+    h3 {
+        margin: .6rem 0 1rem;
+        color: $ignite-catalog-ink;
+        font-family: "Rammetto One", $ignite-catalog-heading;
+        font-size: clamp(1.6rem, 2.8vw, 2.25rem);
+        font-weight: 400;
+        line-height: 1.4;
+    }
+
+    p { max-width: 38rem; margin: 0; color: $ignite-catalog-text; line-height: 1.7; }
+    .ignite-first-course__eyebrow { color: $ignite-catalog-link; font-size: .75rem; font-weight: 900; letter-spacing: .1em; }
+    .ignite-first-course__mascot { flex: none; width: clamp(9rem, 18vw, 13.75rem); height: auto; }
+    .ignite-first-course__copy { min-width: 0; }
+    .ignite-first-course__actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: .75rem;
+        margin-top: 1.5rem;
+
+        .singlebutton, form { margin: 0; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 48px; padding: .8rem 1.1rem; border-radius: .75rem; font-family: $ignite-catalog-heading; font-weight: 700; }
+        .btn:focus-visible { outline: 3px solid $ignite-catalog-ink; outline-offset: 3px; }
+    }
+
+    @media (max-width: 575.98px) {
+        flex-direction: column;
+        min-height: 0;
+        text-align: center;
+
+        .ignite-first-course__mascot { width: 10rem; }
+        .ignite-first-course__actions { justify-content: center; }
     }
 }

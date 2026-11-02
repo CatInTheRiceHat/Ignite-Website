@@ -63,6 +63,7 @@ try {
   run('scp', [...sshOptions,
     ...['sync.php', 'install-dashboard.php', 'build-theme.php', 'raw.scss', 'theme.scss', 'authentication.html', 'dashboard-navigation.html', 'dashboard-welcome.html']
       .map((file) => resolve(project, 'moodle', file)),
+    resolve(project, 'moodle/templates/block_myoverview/zero-state.mustache'),
     ...(mode === '--apply' ? seasonalAssets.map((asset) => asset.source) : []), `${target}:${temporary}/`]);
   if (seasonalAssets.length) {
     const manifest = Object.fromEntries(seasonalAssets.map((asset) => [asset.season, asset.filename]));
@@ -73,6 +74,9 @@ try {
   // Only prepare backup storage when a deployment or restore is requested.
   if (mode !== '--check') {
     ssh(`install -d -o ${quote(webUser)} -g ${quote(webUser)} -m 700 ${quote(backupDir)}`);
+    if (!dashboard) {
+      ssh(`install -d -o ${quote(webUser)} -g ${quote(webUser)} -m 755 ${quote(`${root}/public/theme/boost/templates/block_myoverview`)}`);
+    }
   }
   if (mode === '--apply' && seasonalAssets.length) {
     const uploadedHashes = ssh(`sha256sum ${seasonalAssets.map((asset) => quote(`${temporary}/${asset.staged}`)).join(' ')}`)

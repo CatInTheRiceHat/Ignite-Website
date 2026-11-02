@@ -4,6 +4,8 @@ This adds a learning menu, an illustrated welcome panel, and clearer course card
 
 The learning menu contains My dashboard and Explore courses. My courses is the main button in the welcome panel, with the native course overview below it. The dashboard's sidebar widgets are hidden through native block-position visibility settings on the default dashboard and existing personal dashboards, so Moodle omits the block drawer in normal view. New dashboards inherit those settings. Edit mode retains block-management controls.
 
+Accounts without active enrolled courses see **Add your first course**, the puzzled question-mark mascot, and **Explore courses** in place of the usual dashboard welcome. Moodle still supplies Create course or Request course buttons only when the account has the relevant permission. The same empty state appears on My courses. After joining or creating a course, Moodle returns to the normal course list. Empty search results or filters do not trigger this prompt.
+
 The [Ignite Program Style Guide](../Ignite%20Program%20Style%20Guide.md) governs the appearance: cream `#FFF8F0`, orange `#F07B2A`, dark-orange hover `#D46A20`, charcoal `#1A1A2E`, Rammetto One display titles, Poppins headings and navigation, and Nunito body text. The image-led welcome uses white display text over the existing classroom artwork with a dark overlay for contrast. Rounded cards, outline icons, orange actions, and Ignite's existing mascot remain part of the design. Khan Academy informs the learning layout.
 
 ## Apply in Moodle
@@ -23,6 +25,8 @@ When using only the manual fallback, Default Dashboard changes apply to new user
 ## Validation and limits
 
 Dashboard action links use the same straight right arrow as the website and Sol. Reapply both Text block snippets along with Raw SCSS when updating these icons. The `.ignite-redirect-icon` class draws the shared outline arrow using a CSS mask, so it does not depend on the editor retaining SVG markup.
+
+The first-course view is the native `block_myoverview/zero-state` template override in [templates/block_myoverview/zero-state.mustache](templates/block_myoverview/zero-state.mustache), styled in Raw SCSS. It relies on Moodle's server-side enrollment check and requires no additional JavaScript. Run `php tests/moodle-first-course.php MOODLE_ROOT` on the Moodle server for read-only checks using existing empty learner, empty creator, and enrolled accounts.
 
 The preview uses sample course data and progress, explicitly labelled as a layout preview. The production Text blocks do not include the sample values. Styles follow Moodle 5.2.3's native `core/block`, `core_course/coursecard`, and `block_myoverview` markup. On October 22, 2026, native block HTML was rendered directly from the live installation in the administrator's dashboard context and checked in desktop and mobile browsers. This checks the server-rendered layout; interactive course loading still needs a normal signed-in browser check. The dashboard uses the available screen width with responsive gutters, and course cards fill as many columns as fit while keeping each card at least 15rem wide when space permits. The layout stacks on tablets and phones, retains native filters and menus, and does not change course activities, quizzes, grading, or admin pages.
 
