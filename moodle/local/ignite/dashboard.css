@@ -33,7 +33,8 @@
 .ignite-dashboard__help { display: flex; flex-wrap: wrap; gap: 1.5rem; padding-top: 1.5rem; }
 .ignite-dashboard summary { cursor: pointer; padding: .5rem 0; }
 /* The standalone learner home has room for the earlier navigation rail and a real native Timeline. */
-.ignite-learner-home #page.drawers .main-inner { max-width: 100%; }
+.ignite-learner-home #page.drawers .main-inner,
+.pagelayout-mydashboard:not(.editing):has(.block_ignite .ignite-dashboard) #page.drawers .main-inner { max-width: 100%; }
 .ignite-dashboard__layout, .ignite-dashboard__columns { display: grid; gap: 1.5rem; align-items: start; }
 .ignite-dashboard__workspace, .ignite-dashboard__hearth, .ignite-dashboard__timeline { min-width: 0; }
 .ignite-dashboard__timeline { margin-bottom: 1.5rem; }
