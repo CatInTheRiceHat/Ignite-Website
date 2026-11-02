@@ -1,0 +1,19 @@
+{{!
+    @template local_ignite/passport_card
+    Native badge collectible. Example context (json):
+    {"badgeid":1,"name":"First Spark","statuslabel":"Not earned","category":"Starter","placeholder":true,"detailurl":"badge.php?id=1"}
+}}
+<article class="ignite-passport__card" data-badgeid="{{badgeid}}" data-state="{{state}}">
+    <div class="ignite-passport__art">
+        {{#imageurl}}<img src="{{imageurl}}" alt="" width="144" height="144" loading="lazy">{{/imageurl}}
+        {{#placeholder}}<span class="ignite-passport__placeholder">{{#str}}passport_artplaceholder, local_ignite{{/str}}</span>{{/placeholder}}
+    </div>
+    <div class="ignite-passport__cardbody">
+        <p class="ignite-passport__category">{{category}}</p>
+        <h3><a href="{{detailurl}}">{{name}}</a></h3>
+        <p class="ignite-passport__status">{{statuslabel}}</p>
+        {{#primary}}<p>{{#str}}passport_primary, local_ignite{{/str}}</p>{{/primary}}
+        {{#dateissuedtext}}<p>{{#str}}passport_earneddate, local_ignite{{/str}}: {{dateissuedtext}}</p>{{/dateissuedtext}}
+        {{#caption}}<p>{{caption}}</p>{{/caption}}
+    </div>
+</article>

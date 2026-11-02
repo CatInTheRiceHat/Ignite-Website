@@ -40,6 +40,11 @@ final class provider implements \core_privacy\local\metadata\provider,
             'timeshown' => 'privacy:timeshown', 'timecreated' => 'privacy:timecreated',
             'timemodified' => 'privacy:timemodified',
         ], 'privacy:invitation');
+        $collection->add_database_table('local_ignite_feature', [
+            'userid' => 'privacy:userid', 'badgeid' => 'privacy:passportbadgeid',
+            'issuedid' => 'privacy:passportissuedid', 'slot' => 'privacy:passportslot',
+            'timemodified' => 'privacy:timemodified',
+        ], 'privacy:passportfeatures');
         return $collection;
     }
 
@@ -50,6 +55,7 @@ final class provider implements \core_privacy\local\metadata\provider,
                 $DB->record_exists('local_ignite_member', ['userid' => $userid]) ||
                 $DB->record_exists('local_ignite_invite', ['userid' => $userid]) ||
                 $DB->record_exists('local_ignite_history', ['userid' => $userid]) ||
+                $DB->record_exists('local_ignite_feature', ['userid' => $userid]) ||
                 $DB->record_exists('local_ignite_credit', ['userid' => $userid])) {
             $list->add_user_context($userid);
         }
@@ -64,6 +70,7 @@ final class provider implements \core_privacy\local\metadata\provider,
                 $DB->record_exists('local_ignite_member', ['userid' => $context->instanceid]) ||
                 $DB->record_exists('local_ignite_invite', ['userid' => $context->instanceid]) ||
                 $DB->record_exists('local_ignite_history', ['userid' => $context->instanceid]) ||
+                $DB->record_exists('local_ignite_feature', ['userid' => $context->instanceid]) ||
                 $DB->record_exists('local_ignite_credit', ['userid' => $context->instanceid]))) {
             $userlist->add_user($context->instanceid);
         }
@@ -99,6 +106,12 @@ final class provider implements \core_privacy\local\metadata\provider,
             }
             $data->$table = array_values($records);
         }
+        $features = $DB->get_records('local_ignite_feature', ['userid' => $userid], 'slot',
+            'id, badgeid, issuedid, slot, timemodified');
+        $data->passportfeatures = array_values(array_map(static function($feature) {
+            unset($feature->id);
+            return $feature;
+        }, $features));
         writer::with_context($context)->export_data([get_string('pluginname', 'local_ignite')], $data);
     }
 
@@ -129,6 +142,7 @@ final class provider implements \core_privacy\local\metadata\provider,
         \local_ignite\access::locked('hearth-accounting', static function() use ($DB, $userid) {
             \local_ignite\access::locked('user:' . $userid, static function() use ($DB, $userid) {
                 $DB->delete_records('local_ignite_invite', ['userid' => $userid]);
+                $DB->delete_records('local_ignite_feature', ['userid' => $userid]);
                 $DB->delete_records('local_ignite_prefs', ['userid' => $userid]);
                 $DB->delete_records('local_ignite_member', ['userid' => $userid]);
                 $DB->delete_records('local_ignite_history', ['userid' => $userid]);

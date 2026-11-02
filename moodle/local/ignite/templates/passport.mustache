@@ -1,0 +1,51 @@
+{{!
+    @template local_ignite/passport
+    Own-user collection. Example context (json):
+    {"nativeenabled":true,"canview":true,"earned":[],"pursue":[],"featured":[],"framecolor":"#62564D"}
+}}
+<div class="ignite-passport" style="--passport-frame: {{framecolor}};">
+    <div class="ignite-passport__welcome">
+        <div>
+            <p class="ignite-passport__eyebrow">{{#str}}passport_eyebrow, local_ignite{{/str}}</p>
+            <h2>{{#str}}passport_heading, local_ignite{{/str}}</h2>
+            <p>{{#str}}passport_about, local_ignite{{/str}}</p>
+            {{#hashearth}}<p>{{#str}}passport_hearthframe, local_ignite{{/str}}: {{hearthname}}</p>{{/hashearth}}
+            {{^hashearth}}<p>{{#str}}passport_neutralframe, local_ignite{{/str}}</p>{{/hashearth}}
+        </div>
+        <img src="{{solurl}}" alt="" width="128" height="128">
+    </div>
+    <nav class="ignite-passport__links" aria-label="{{#str}}passport_navigation, local_ignite{{/str}}">
+        <a href="{{homeurl}}">{{#str}}homeheading, local_ignite{{/str}}</a>
+        <a href="{{learnurl}}">{{#str}}explorecourses, local_ignite{{/str}}</a>
+        {{#canview}}<a href="{{nativeurl}}">{{#str}}passport_nativecollection, local_ignite{{/str}}</a>{{/canview}}
+    </nav>
+    {{^nativeenabled}}<p role="status">{{#str}}badgesunavailable, local_ignite{{/str}}</p>{{/nativeenabled}}
+    {{#nativeenabled}}
+        {{^canview}}<p role="status">{{#str}}passport_permission, local_ignite{{/str}}</p>{{/canview}}
+        {{#canview}}
+        <section aria-labelledby="passport-featured">
+            <div class="ignite-passport__sectionheading">
+                <h2 id="passport-featured">{{#str}}passport_featuretitle, local_ignite{{/str}}</h2>
+                <a href="{{featuredurl}}">{{#str}}passport_featureedit, local_ignite{{/str}}</a>
+            </div>
+            <p>{{#str}}passport_featureintro, local_ignite{{/str}}</p>
+            {{^hasfeatured}}<p>{{#str}}passport_nofeatured, local_ignite{{/str}}</p>{{/hasfeatured}}
+            <div class="ignite-passport__grid">{{#featured}}{{> local_ignite/passport_card}}{{/featured}}</div>
+        </section>
+        <section aria-labelledby="passport-earned">
+            <h2 id="passport-earned">{{#str}}passport_earned, local_ignite{{/str}} <span class="ignite-passport__count">({{earnedcount}})</span></h2>
+            {{^hasearned}}<p>{{#str}}passport_empty, local_ignite{{/str}}</p>{{/hasearned}}
+            <div class="ignite-passport__grid">{{#earned}}{{> local_ignite/passport_card}}{{/earned}}</div>
+        </section>
+        <section aria-labelledby="passport-pursue">
+            <h2 id="passport-pursue">{{#str}}passport_pursue, local_ignite{{/str}}</h2>
+            <p>{{#str}}passport_pendinghelp, local_ignite{{/str}}</p>
+            <ul class="ignite-passport__categories" aria-label="{{#str}}passport_categories, local_ignite{{/str}}">
+                {{#categories}}<li>{{name}}</li>{{/categories}}
+            </ul>
+            {{^haspursue}}<p>{{#str}}passport_nopreview, local_ignite{{/str}}</p>{{/haspursue}}
+            <div class="ignite-passport__grid">{{#pursue}}{{> local_ignite/passport_card}}{{/pursue}}</div>
+        </section>
+        {{/canview}}
+    {{/nativeenabled}}
+</div>

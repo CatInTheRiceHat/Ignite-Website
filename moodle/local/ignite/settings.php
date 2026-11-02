@@ -25,6 +25,9 @@ if ($hassiteconfig && has_capability('local/ignite:configure', context_system::i
         get_string('onboardingconfig', 'local_ignite'), get_string('onboardingconfig_desc', 'local_ignite'),
         \local_ignite\onboarding_config::EMPTY, PARAM_RAW, 80, 12));
     // Optional recommendation quiz deliberately has no setting or stored traits in this phase.
+    $settings->add(new \local_ignite\admin\passport_setting('local_ignite/passportcatalog',
+        get_string('passport_catalog', 'local_ignite'), get_string('passport_catalog_desc', 'local_ignite'),
+        \local_ignite\passport_catalog::EMPTY, PARAM_RAW, 80, 16));
     $ADMIN->add('localplugins', $settings);
     foreach (['hearthsetup' => 'draftsetup', 'hearthchallenges' => 'hearthchallenges'] as $route => $label) {
         $ADMIN->add('localplugins', new admin_externalpage('local_ignite_' . $route,
