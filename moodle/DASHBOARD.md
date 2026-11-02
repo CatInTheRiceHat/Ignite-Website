@@ -1,6 +1,6 @@
 # Ignite learner dashboard
 
-The service-backed dashboard candidate is documented in [Ignite dashboard implementation and setup](../docs/ignite-dashboard.md). It uses a native block alongside Timeline and Course overview, has not been deployed to production, and leaves landing changes behind an explicit administrator setting. The notes below describe the earlier live layout.
+The service-backed dashboard is documented in [Ignite dashboard implementation and setup](../docs/ignite-dashboard.md). It was deployed to live Learn after explicit approval on November 2, 2026 UTC. The default dashboard and 31 existing personal dashboards now show **Timeline → Ignite → Course overview**, with left learning navigation and a side Hearth card inside Ignite. Landing redirection and experimental stages remain off. See the [live deployment record](../docs/ignite-lms.md#live-deployment-record) for backups, verification and administrator setup. The notes below preserve the earlier live layout.
 
 The current dashboard shows **Timeline first, then Course overview**. Timeline is the roadmap requested by the user and uses Moodle's actual scheduled activities. Course overview supplies each account's courses, filters, and completion information. Accounts without due activities keep Moodle's native empty Timeline.
 
