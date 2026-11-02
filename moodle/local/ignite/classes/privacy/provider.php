@@ -18,13 +18,18 @@ final class provider implements \core_privacy\local\metadata\provider,
     public static function get_metadata(collection $collection): collection {
         $collection->add_database_table('local_ignite_prefs', [
             'userid' => 'privacy:userid', 'interests' => 'privacy:interests', 'goals' => 'privacy:goals',
-            'status' => 'privacy:status', 'currentstep' => 'privacy:currentstep', 'pathid' => 'privacy:pathid',
+            'targetkey' => 'privacy:targetkey', 'status' => 'privacy:status', 'currentstep' => 'privacy:currentstep', 'pathid' => 'privacy:pathid',
             'timecreated' => 'privacy:timecreated', 'timemodified' => 'privacy:timemodified',
         ], 'privacy:preferences');
         $collection->add_database_table('local_ignite_member', [
             'userid' => 'privacy:userid', 'houseid' => 'privacy:houseid',
             'timecreated' => 'privacy:timecreated', 'timemodified' => 'privacy:timemodified',
         ], 'privacy:membership');
+        $collection->add_database_table('local_ignite_invite', [
+            'userid' => 'privacy:userid', 'state' => 'privacy:invitestate', 'startercmid' => 'privacy:startercmid',
+            'timeshown' => 'privacy:timeshown', 'timecreated' => 'privacy:timecreated',
+            'timemodified' => 'privacy:timemodified',
+        ], 'privacy:invitation');
         return $collection;
     }
 
@@ -32,7 +37,8 @@ final class provider implements \core_privacy\local\metadata\provider,
         global $DB;
         $list = new contextlist();
         if ($DB->record_exists('local_ignite_prefs', ['userid' => $userid]) ||
-                $DB->record_exists('local_ignite_member', ['userid' => $userid])) {
+                $DB->record_exists('local_ignite_member', ['userid' => $userid]) ||
+                $DB->record_exists('local_ignite_invite', ['userid' => $userid])) {
             $list->add_user_context($userid);
         }
         return $list;
@@ -43,7 +49,8 @@ final class provider implements \core_privacy\local\metadata\provider,
         $context = $userlist->get_context();
         if ($context instanceof \context_user &&
                 ($DB->record_exists('local_ignite_prefs', ['userid' => $context->instanceid]) ||
-                $DB->record_exists('local_ignite_member', ['userid' => $context->instanceid]))) {
+                $DB->record_exists('local_ignite_member', ['userid' => $context->instanceid]) ||
+                $DB->record_exists('local_ignite_invite', ['userid' => $context->instanceid]))) {
             $userlist->add_user($context->instanceid);
         }
     }
@@ -66,6 +73,10 @@ final class provider implements \core_privacy\local\metadata\provider,
             $house = $DB->get_record('local_ignite_house', ['id' => $membership->houseid]);
             $membership->housename = $house ? $house->name : null;
             $data->membership = $membership;
+        }
+        if ($invitation = $DB->get_record('local_ignite_invite', ['userid' => $userid])) {
+            unset($invitation->id, $invitation->userid);
+            $data->invitation = $invitation;
         }
         writer::with_context($context)->export_data([get_string('pluginname', 'local_ignite')], $data);
     }
@@ -95,6 +106,7 @@ final class provider implements \core_privacy\local\metadata\provider,
     public static function erase_user(int $userid): void {
         global $DB;
         \local_ignite\access::locked('user:' . $userid, static function() use ($DB, $userid) {
+            $DB->delete_records('local_ignite_invite', ['userid' => $userid]);
             $DB->delete_records('local_ignite_prefs', ['userid' => $userid]);
             $DB->delete_records('local_ignite_member', ['userid' => $userid]);
         });

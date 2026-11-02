@@ -15,6 +15,13 @@
         <img src="{{mascoturl}}" alt="" width="144" height="144">
     </div>
     <p><a href="{{dashboardurl}}">{{backlabel}}</a></p>
+    {{#showinvitation}}
+    <section class="ignite-home__card" aria-labelledby="ignite-invitation">
+        <h2 id="ignite-invitation">{{#str}}hearthinvitation, local_ignite{{/str}}</h2>
+        <p>{{#str}}hearthinviteintro, local_ignite{{/str}}</p>
+        <a href="{{invitationurl}}">{{#str}}meethearths, local_ignite{{/str}}</a>
+    </section>
+    {{/showinvitation}}
     <div class="ignite-home__grid">
         <section class="ignite-home__card" aria-labelledby="ignite-courses">
             <h2 id="ignite-courses">{{#str}}yourcourses, local_ignite{{/str}}</h2>
@@ -30,6 +37,13 @@
             {{#hasinterests}}<p>{{interests}}</p>{{/hasinterests}}
             {{^hasinterests}}<p>{{#str}}nointerests, local_ignite{{/str}}</p>{{/hasinterests}}
             <p>{{#str}}onboardingstatus, local_ignite{{/str}}: {{onboardingstatus}}</p>
+            <p><a href="{{walkthroughurl}}">{{#str}}resumewalkthrough, local_ignite{{/str}}</a></p>
+            <p><a href="{{editinterestsurl}}">{{#str}}editinterests, local_ignite{{/str}}</a></p>
+            <p><a href="{{toururl}}">{{#str}}help, local_ignite{{/str}}</a></p>
+            {{#caninvite}}
+            <p>{{#str}}hearthinvitation, local_ignite{{/str}}: {{invitestate}}</p>
+            <p><a href="{{invitationurl}}">{{#str}}resumeinvitation, local_ignite{{/str}}</a></p>
+            {{/caninvite}}
         </section>
         {{/onboarding}}
         {{#houses}}

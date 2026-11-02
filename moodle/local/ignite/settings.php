@@ -15,6 +15,15 @@ if ($hassiteconfig && has_capability('local/ignite:configure', context_system::i
     $settings->add(new \local_ignite\admin\catalog_setting('local_ignite/catalog',
         get_string('catalog', 'local_ignite'), get_string('catalog_desc', 'local_ignite'),
         \local_ignite\catalog::EMPTY, PARAM_RAW, 80, 16));
+    $settings->add(new admin_setting_configselect('local_ignite/hearthtiming',
+        get_string('hearthtiming', 'local_ignite'), get_string('hearthtiming_desc', 'local_ignite'),
+        'afterchallenge', ['afterchallenge' => get_string('timing_afterchallenge', 'local_ignite'),
+            'initial' => get_string('timing_initial', 'local_ignite')]));
+    $settings->add(new \local_ignite\admin\selection_route_setting('local_ignite/hearthselectionroute',
+        get_string('selectionroute', 'local_ignite'), get_string('selectionroute_desc', 'local_ignite'), '', PARAM_RAW));
+    $settings->add(new \local_ignite\admin\onboarding_setting('local_ignite/onboardingconfig',
+        get_string('onboardingconfig', 'local_ignite'), get_string('onboardingconfig_desc', 'local_ignite'),
+        \local_ignite\onboarding_config::EMPTY, PARAM_RAW, 80, 12));
     $ADMIN->add('localplugins', $settings);
     $ADMIN->add('localplugins', new admin_externalpage('local_ignite_houses',
         get_string('managehouses', 'local_ignite'), new moodle_url('/local/ignite/houses.php'),
