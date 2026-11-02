@@ -1,16 +1,27 @@
 import { RedirectArrow } from '../components/ui/redirect-arrow';
 import { BookOpen, GraduationCap, Mail, MapPin } from 'lucide-react';
-import { IgnitionCard, IgnitionGroup } from '../components/team/ignition-reveal';
 import StaffImage from '../components/ui/staff-image';
 import { teamMembers } from '../data/mentors';
 import { INTERN_FORM_URL } from '../lib/links';
 
 const isCoFounder = (role: string) => role.toLowerCase().startsWith('co-founder');
+const isDirector = (role: string) => role.toLowerCase().startsWith('director');
+const currentStaff = teamMembers.filter((member) => member.role !== 'Former Staff');
 const staffSections = [
   {
-    id: 'current-staff',
-    title: 'Current Staff',
-    members: teamMembers.filter((member) => member.role !== 'Former Staff'),
+    id: 'co-founders',
+    title: 'Co-Founders',
+    members: currentStaff.filter((member) => isCoFounder(member.role)),
+  },
+  {
+    id: 'directors',
+    title: 'Directors',
+    members: currentStaff.filter((member) => isDirector(member.role)),
+  },
+  {
+    id: 'interns',
+    title: 'Interns',
+    members: currentStaff.filter((member) => !isCoFounder(member.role) && !isDirector(member.role)),
   },
   {
     id: 'former-staff',
@@ -61,24 +72,24 @@ const Mentors = () => {
       </section>
 
       {/* Team Grid */}
-      <IgnitionGroup className="pb-32">
+      <div className="pb-32">
         <div className="max-w-7xl mx-auto space-y-20 px-4">
           {staffSections.map(({ id, title, members }) => (
             <section key={id} aria-labelledby={id}>
               <h2 id={id} className="mb-10 text-3xl font-rammetto text-[var(--primary-orange)] md:text-4xl">{title}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 {members.map((member) => (
-                  <IgnitionCard key={member.email ?? member.name} revealId={member.email ?? member.name}>
+                  <article key={member.email ?? member.name}>
                     <div
                       className={`${
                         isCoFounder(member.role)
                           ? 'border-0 text-white shadow-orange-200/70'
                           : 'border-b-8 border-[var(--primary-orange)] bg-white'
-                      } group h-full overflow-hidden rounded-3xl p-6 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl sm:p-8`}
+                      } h-full overflow-hidden rounded-3xl p-6 shadow-sm sm:p-8`}
                       style={isCoFounder(member.role) ? { background: 'linear-gradient(135deg, var(--primary-orange) 0%, #E87324 55%, var(--primary-orange-dark) 100%)' } : undefined}
                     >
                       <div className="mb-8 flex items-start gap-4 sm:gap-5">
-                        <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-inner transform group-hover:rotate-6 transition-transform flex-shrink-0">
+                        <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-inner flex-shrink-0">
                           <StaffImage
                             src={member.image}
                             alt={member.name}
@@ -99,7 +110,7 @@ const Mentors = () => {
                           <a
                             href={`mailto:${member.email}`}
                             aria-label={`Email ${member.name}`}
-                            className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 transition-colors ${
+                            className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-[var(--text-charcoal)] ${
                               isCoFounder(member.role)
                                 ? 'border-white text-white hover:bg-white hover:text-[var(--primary-orange)]'
                                 : 'border-[var(--primary-orange)] text-[var(--primary-orange)] hover:bg-[var(--primary-orange)] hover:text-white'
@@ -136,13 +147,13 @@ const Mentors = () => {
                         )}
                       </div>
                     </div>
-                  </IgnitionCard>
+                  </article>
                 ))}
               </div>
             </section>
           ))}
         </div>
-      </IgnitionGroup>
+      </div>
 
       {/* Contact */}
       <section className="py-24 bg-white rounded-t-[4rem]">

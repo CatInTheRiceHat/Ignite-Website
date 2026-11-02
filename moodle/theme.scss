@@ -22,10 +22,8 @@ $font-family-sans-serif: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI"
 @import "bootstrap";
 @import "moodle";
 
-// Calm page background from the Ignite style guide. Priority also overrides
-// Boost's appended uploaded image and the authentication script's inline image.
-body,
-body.pagelayout-login #page {
+// Calm base background; authentication pages use their seasonal artwork.
+body {
     background-color: #FFF8F0;
     background-image: none !important;
 }

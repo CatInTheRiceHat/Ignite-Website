@@ -64,7 +64,7 @@ describe('public API', () => {
   });
 
   it('sends website founder facts to the provider and returns a direct answer with team navigation', async () => {
-    const answer = 'Ignite’s cofounders are Elaine Che (Chief Technology Officer), Austin Zhao (Chief Executive Officer), and Michael Zhao (Chief Outreach Officer).';
+    const answer = 'Ignite’s cofounders are Elaine Che (Chief Product and Technology Officer), Austin Zhao (Chief Executive Officer), and Michael Zhao (Chief Operations Officer).';
     const upstream = mockFetch(provider({ answer, destinationIds: ['team'] }));
     const response = await post(await start(upstream), { message: 'Who are the cofounders?' });
     expect(response.status).toBe(200);

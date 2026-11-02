@@ -212,7 +212,7 @@ const Home = () => {
               { img: '/assets/Career%20Skills.png',   title: 'Useful Skills',       desc: "Build habits for managing time, communicating, staying safe online, and understanding money." },
               { img: '/assets/Mentorship.png',        title: 'Student-led Learning', desc: "Students help shape practical courses, building on our Summer 2026 mentorship program." },
               { img: '/assets/Free.png',              title: 'Free Learning',       desc: "Our mission is free learning. Both developing formats are planned to stay free." },
-              { img: '/assets/No%20Experience.png',   title: 'Stay Curious',       desc: "Start with what interests you. Course-specific prerequisites are still to be confirmed." }
+              { img: '/assets/No%20Experience.png',   title: 'Stay Curious',       desc: "Start with what interests you. Check each course description for any prerequisites." }
             ].map((feature, i) => (
               <BlurFade key={i} delay={i * 0.08}>
                 <div className="bg-white/90 backdrop-blur-md p-10 md:p-12 rounded-3xl border border-orange-50 hover:bg-white hover:shadow-xl transition-all duration-300 group h-full">

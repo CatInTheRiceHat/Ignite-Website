@@ -48,11 +48,11 @@ export const knowledge: KnowledgeEntry[] = [
   {
     id: 'student-faq', destinationIds: ['faq', 'program', 'contact'], source: 'src/pages/FAQ.tsx; src/data/program.ts; src/lib/links.ts',
     keywords: ['apply', 'application', 'student', 'grade', 'eligible', 'eligibility', 'experience', 'grades', 'fee', 'tuition', 'certificate', 'enroll'],
-    facts: `Summer 2026 was free; the developing courses are planned as free learning opportunities. ${programCopy.eligibility} Course-specific prerequisites, completion requirements and certificates still need confirmation. No current student application link or enrollment availability is confirmed. The old student Google Form is no longer published and must not be suggested. The learning hub is a Moodle sign-in page, not an enrollment form. Intern applications are separate.`,
+    facts: `Summer 2026 was free; the developing courses are planned as free learning opportunities. ${programCopy.eligibility} Course-specific grade ranges and prerequisites are listed in the Program course descriptions. Differential Calculus requires at least Algebra 2, extremely strong algebra skills, and proficiency in functions and trigonometry; it supplements school calculus and is not AP exam preparation. Physics & Astronomy needs no previous experience or advanced math. Completion requirements and certificates still need confirmation. No current student application link or enrollment availability is confirmed. The old student Google Form is no longer published and must not be suggested. The learning hub is a Moodle sign-in page, not an enrollment form. Intern applications are separate.`,
   },
   {
     id: 'founders', destinationIds: ['team', 'about'], source: 'src/data/mentors.ts; src/pages/Mentors.tsx',
-    keywords: ['cofounder', 'cofounders', 'co-founder', 'co-founders', 'co founder', 'co founders', 'founder', 'founders', 'founded', 'started', 'founding', 'runs', 'leads', 'ceo', 'cto', 'chief', 'executive', 'technology', 'outreach'],
+    keywords: ['cofounder', 'cofounders', 'co-founder', 'co-founders', 'co founder', 'co founders', 'founder', 'founders', 'founded', 'started', 'founding', 'runs', 'leads', 'ceo', 'cpto', 'cto', 'coo', 'chief', 'executive', 'product', 'technology', 'operations'],
     facts: `Ignite's cofounders listed on the website are ${cofounders.map(member => `${member.name} (${member.role})`).join('; ')}. These names and roles come directly from the public team profiles.`,
   },
   {
@@ -97,7 +97,9 @@ const searchStopWords = new Set('a an and are as at be been but by can could do 
 function siteSearchTerms(text: string) {
   const normalized = text.toLowerCase().replace(/[-\u2010-\u2015]/g, ' ')
     .replace(/\b(?:co\s*founders?|founders?|founded)\b/g, 'founder')
-    .replace(/\bceo\b/g, 'chief executive officer').replace(/\bcto\b/g, 'chief technology officer');
+    .replace(/\bceo\b/g, 'chief executive officer')
+    .replace(/\b(?:cpto|cto)\b/g, 'chief product and technology officer')
+    .replace(/\bcoo\b/g, 'chief operations officer');
   return new Set((normalized.match(/[a-z0-9]+/g) || []).filter(word => !searchStopWords.has(word)));
 }
 

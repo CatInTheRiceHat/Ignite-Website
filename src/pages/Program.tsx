@@ -19,20 +19,27 @@ const CourseCard = ({ course }: { course: DevelopmentCourse }) => (
         <span className="rounded-full bg-[var(--bg-cream)] px-3 py-1">In development</span>
       </div>
       <h3 className="text-xl font-bold text-[var(--text-charcoal)] leading-snug">{course.title}</h3>
-      <p className="mt-4 text-sm text-[var(--text-light)]">Planned length: {(course.duration ?? courseFormats[course.format].duration).toLowerCase()}</p>
+      <div className="mt-4 space-y-2 text-sm leading-relaxed text-[var(--text-light)]">
+        {(course.duration || course.format === 'live') && (
+          <p>Planned length: {(course.duration ?? courseFormats.live.duration).toLowerCase()}</p>
+        )}
+        {course.audience && <p><span className="font-bold text-[var(--text-charcoal)]">Who it’s for: </span>{course.audience}</p>}
+        {course.commitment && <p><span className="font-bold text-[var(--text-charcoal)]">Course work: </span>{course.commitment}</p>}
+      </div>
       {course.description && <p className="mt-4 text-sm leading-relaxed text-[var(--text-light)]">{course.description}</p>}
       {course.prerequisites && (
         <p className="mt-4 text-sm leading-relaxed text-[var(--text-light)]">
           <span className="font-bold text-[var(--text-charcoal)]">Prerequisites: </span>{course.prerequisites}
         </p>
       )}
+      {course.note && <p className="mt-4 text-sm leading-relaxed text-[var(--text-light)]">{course.note}</p>}
       {course.instructors && course.instructors.length > 0 && (
         <div className="mt-5 rounded-2xl bg-[var(--bg-cream)] p-4 text-sm text-[var(--text-light)]">
-          <p className="font-bold text-[var(--text-charcoal)]">Course team</p>
+          <p className="font-bold text-[var(--text-charcoal)]">{course.instructors.length === 1 ? 'Teacher' : 'Teachers'}</p>
           <ul className="mt-2 space-y-2">
             {course.instructors.map((instructor) => (
               <li key={instructor.name} className="break-words leading-relaxed">
-                {instructor.name}{instructor.grades ? ` · Grades ${instructor.grades}` : ''}
+                {instructor.displayName ?? instructor.name}{instructor.grades ? ` · Grades ${instructor.grades}` : ''}
               </li>
             ))}
           </ul>
