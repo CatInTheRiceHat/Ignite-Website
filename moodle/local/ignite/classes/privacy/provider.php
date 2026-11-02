@@ -25,6 +25,16 @@ final class provider implements \core_privacy\local\metadata\provider,
             'userid' => 'privacy:userid', 'houseid' => 'privacy:houseid',
             'timecreated' => 'privacy:timecreated', 'timemodified' => 'privacy:timemodified',
         ], 'privacy:membership');
+        $collection->add_database_table('local_ignite_history', [
+            'userid' => 'privacy:userid', 'houseid' => 'privacy:houseid',
+            'timebegin' => 'privacy:timebegin', 'timeend' => 'privacy:timeend',
+        ], 'privacy:history');
+        $collection->add_database_table('local_ignite_credit', [
+            'userid' => 'privacy:userid', 'houseid' => 'privacy:houseid',
+            'challengeid' => 'privacy:challengeid', 'cmid' => 'privacy:cmid',
+            'timequalified' => 'privacy:timequalified', 'status' => 'privacy:creditstatus',
+            'timemodified' => 'privacy:timemodified',
+        ], 'privacy:credit');
         return $collection;
     }
 
@@ -32,7 +42,9 @@ final class provider implements \core_privacy\local\metadata\provider,
         global $DB;
         $list = new contextlist();
         if ($DB->record_exists('local_ignite_prefs', ['userid' => $userid]) ||
-                $DB->record_exists('local_ignite_member', ['userid' => $userid])) {
+                $DB->record_exists('local_ignite_member', ['userid' => $userid]) ||
+                $DB->record_exists('local_ignite_history', ['userid' => $userid]) ||
+                $DB->record_exists('local_ignite_credit', ['userid' => $userid])) {
             $list->add_user_context($userid);
         }
         return $list;
@@ -43,7 +55,9 @@ final class provider implements \core_privacy\local\metadata\provider,
         $context = $userlist->get_context();
         if ($context instanceof \context_user &&
                 ($DB->record_exists('local_ignite_prefs', ['userid' => $context->instanceid]) ||
-                $DB->record_exists('local_ignite_member', ['userid' => $context->instanceid]))) {
+                $DB->record_exists('local_ignite_member', ['userid' => $context->instanceid]) ||
+                $DB->record_exists('local_ignite_history', ['userid' => $context->instanceid]) ||
+                $DB->record_exists('local_ignite_credit', ['userid' => $context->instanceid]))) {
             $userlist->add_user($context->instanceid);
         }
     }
@@ -66,6 +80,13 @@ final class provider implements \core_privacy\local\metadata\provider,
             $house = $DB->get_record('local_ignite_house', ['id' => $membership->houseid]);
             $membership->housename = $house ? $house->name : null;
             $data->membership = $membership;
+        }
+        foreach (['history', 'credit'] as $table) {
+            $records = $DB->get_records('local_ignite_' . $table, ['userid' => $userid], 'id');
+            foreach ($records as $record) {
+                unset($record->id, $record->userid);
+            }
+            $data->$table = array_values($records);
         }
         writer::with_context($context)->export_data([get_string('pluginname', 'local_ignite')], $data);
     }
@@ -94,9 +115,15 @@ final class provider implements \core_privacy\local\metadata\provider,
     /** Privacy requests and account deletion must work even while features are disabled. */
     public static function erase_user(int $userid): void {
         global $DB;
-        \local_ignite\access::locked('user:' . $userid, static function() use ($DB, $userid) {
-            $DB->delete_records('local_ignite_prefs', ['userid' => $userid]);
-            $DB->delete_records('local_ignite_member', ['userid' => $userid]);
+        \local_ignite\access::locked('hearth-accounting', static function() use ($DB, $userid) {
+            \local_ignite\access::locked('user:' . $userid, static function() use ($DB, $userid) {
+                $DB->delete_records('local_ignite_prefs', ['userid' => $userid]);
+                $DB->delete_records('local_ignite_member', ['userid' => $userid]);
+                $DB->delete_records('local_ignite_history', ['userid' => $userid]);
+                $DB->delete_records('local_ignite_credit', ['userid' => $userid]);
+                // Do not serve stale totals containing erased contributions. The next task republishes totals.
+                $DB->delete_records('local_ignite_total');
+            });
         });
     }
 }

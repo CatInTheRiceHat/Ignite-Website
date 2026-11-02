@@ -1,0 +1,15 @@
+.ignite-hearths { background: #fff8f0; color: #292524; padding: clamp(1rem, 3vw, 2rem); border-radius: 1.25rem; }
+.ignite-hearths__lead { font-size: 1.5rem; font-weight: 600; }
+.ignite-hearths__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1rem; grid-auto-rows: 1fr; }
+.ignite-hearths__card { display: flex; flex-direction: column; background: white; border: 1px solid #c9b9aa; border-top: 5px solid #d46a20; padding: 1.25rem; border-radius: 1rem; overflow-wrap: anywhere; }
+.ignite-hearths__card form { margin-top: auto; }
+.ignite-hearths__art { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 9rem; }
+.ignite-hearths img { object-fit: contain; max-width: 100%; }
+.ignite-hearths__placeholder { display: flex; align-items: center; justify-content: center; width: 8rem; height: 8rem; padding: .5rem; border: 2px dashed #80674f; border-radius: 1rem; text-align: center; font-size: .9rem; }
+.ignite-hearths a { text-decoration: underline; color: #85370d; }
+.ignite-hearths__button { display: inline-block; padding: .7rem 1rem; background: #f07b2a; color: #292524 !important; border: 2px solid #85370d; border-radius: .6rem; font-weight: 600; text-align: start; white-space: normal; }
+.ignite-hearths__button:hover { background: #d46a20; color: #1f1b19 !important; }
+.ignite-hearths :is(a, button, input, select):focus-visible { outline: 3px solid #214f9b; outline-offset: 4px; }
+.ignite-hearths__flame { width: 5rem; height: 6rem; margin: 1rem; overflow: visible; }
+.ignite-hearths progress { width: min(100%, 28rem); accent-color: #85370d; }
+@media (prefers-reduced-motion: reduce) { .ignite-hearths *, .ignite-hearths *::before, .ignite-hearths *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }

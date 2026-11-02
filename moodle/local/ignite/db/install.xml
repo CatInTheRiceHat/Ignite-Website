@@ -28,6 +28,9 @@
         <FIELD NAME="emblem" TYPE="char" LENGTH="30" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="active" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false"/>
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="shortname" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="personality" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="mascot" TYPE="char" LENGTH="30" NOTNULL="true" DEFAULT="placeholder" SEQUENCE="false"/>
       </FIELDS>
       <KEYS><KEY NAME="primary" TYPE="primary" FIELDS="id"/></KEYS>
       <INDEXES><INDEX NAME="code" UNIQUE="true" FIELDS="code"/></INDEXES>
@@ -45,6 +48,93 @@
         <KEY NAME="user" TYPE="foreign-unique" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
         <KEY NAME="house" TYPE="foreign" FIELDS="houseid" REFTABLE="local_ignite_house" REFFIELDS="id"/>
       </KEYS>
+    </TABLE>
+    <TABLE NAME="local_ignite_history" COMMENT="Membership intervals; conservative second boundaries">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" NOTNULL="true" SEQUENCE="true" LENGTH="10"/>
+        <FIELD NAME="userid" TYPE="int" NOTNULL="true" SEQUENCE="false" LENGTH="10"/>
+        <FIELD NAME="houseid" TYPE="int" NOTNULL="true" SEQUENCE="false" LENGTH="10"/>
+        <FIELD NAME="timebegin" TYPE="int" NOTNULL="true" SEQUENCE="false" LENGTH="10"/>
+        <FIELD NAME="timeend" TYPE="int" NOTNULL="true" SEQUENCE="false" LENGTH="10" DEFAULT="0"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="user" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
+        <KEY NAME="house" TYPE="foreign" FIELDS="houseid" REFTABLE="local_ignite_house" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="userperiod" FIELDS="userid, timebegin, timeend" UNIQUE="false"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="local_ignite_challenge" COMMENT="One immutable period shared equally by every Hearth">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" NOTNULL="true" SEQUENCE="true" LENGTH="10"/>
+        <FIELD NAME="name" TYPE="char" NOTNULL="true" SEQUENCE="false" LENGTH="100"/>
+        <FIELD NAME="description" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="target" TYPE="int" NOTNULL="true" SEQUENCE="false" LENGTH="10"/>
+        <FIELD NAME="timestart" TYPE="int" NOTNULL="true" SEQUENCE="false" LENGTH="10"/>
+        <FIELD NAME="timeend" TYPE="int" NOTNULL="true" SEQUENCE="false" LENGTH="10"/>
+        <FIELD NAME="timezone" TYPE="char" NOTNULL="true" SEQUENCE="false" LENGTH="100"/>
+        <FIELD NAME="active" TYPE="int" NOTNULL="true" SEQUENCE="false" LENGTH="10" DEFAULT="1"/>
+        <FIELD NAME="timecreated" TYPE="int" NOTNULL="true" SEQUENCE="false" LENGTH="10"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="local_ignite_milestone" COMMENT="Designated native activity and completion condition">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" NOTNULL="true" SEQUENCE="true" LENGTH="10"/>
+        <FIELD NAME="challengeid" TYPE="int" NOTNULL="true" SEQUENCE="false" LENGTH="10"/>
+        <FIELD NAME="cmid" TYPE="int" NOTNULL="true" SEQUENCE="false" LENGTH="10"/>
+        <FIELD NAME="conditiontype" TYPE="char" NOTNULL="true" SEQUENCE="false" LENGTH="20"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="challenge" TYPE="foreign" FIELDS="challengeid" REFTABLE="local_ignite_challenge" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="activity" FIELDS="challengeid, cmid" UNIQUE="true"/>
+        <INDEX NAME="cm" FIELDS="cmid" UNIQUE="false"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="local_ignite_credit" COMMENT="First qualification ledger; withdrawn and excluded rows prevent repeats">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" NOTNULL="true" SEQUENCE="true" LENGTH="10"/>
+        <FIELD NAME="challengeid" TYPE="int" NOTNULL="true" SEQUENCE="false" LENGTH="10"/>
+        <FIELD NAME="userid" TYPE="int" NOTNULL="true" SEQUENCE="false" LENGTH="10"/>
+        <FIELD NAME="cmid" TYPE="int" NOTNULL="true" SEQUENCE="false" LENGTH="10"/>
+        <FIELD NAME="houseid" TYPE="int" NOTNULL="true" SEQUENCE="false" LENGTH="10" DEFAULT="0"/>
+        <FIELD NAME="timequalified" TYPE="int" NOTNULL="true" SEQUENCE="false" LENGTH="10"/>
+        <FIELD NAME="status" TYPE="char" NOTNULL="true" SEQUENCE="false" LENGTH="20"/>
+        <FIELD NAME="timemodified" TYPE="int" NOTNULL="true" SEQUENCE="false" LENGTH="10"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="challenge" TYPE="foreign" FIELDS="challengeid" REFTABLE="local_ignite_challenge" REFFIELDS="id"/>
+        <KEY NAME="user" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="once" FIELDS="challengeid, userid, cmid" UNIQUE="true"/>
+        <INDEX NAME="own" FIELDS="userid, houseid, challengeid, status" UNIQUE="false"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="local_ignite_total" COMMENT="Task computed shared totals; no learner roster">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" NOTNULL="true" SEQUENCE="true" LENGTH="10"/>
+        <FIELD NAME="challengeid" TYPE="int" NOTNULL="true" SEQUENCE="false" LENGTH="10"/>
+        <FIELD NAME="houseid" TYPE="int" NOTNULL="true" SEQUENCE="false" LENGTH="10"/>
+        <FIELD NAME="milestones" TYPE="int" NOTNULL="true" SEQUENCE="false" LENGTH="10" DEFAULT="0"/>
+        <FIELD NAME="timeupdated" TYPE="int" NOTNULL="true" SEQUENCE="false" LENGTH="10"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="challenge" TYPE="foreign" FIELDS="challengeid" REFTABLE="local_ignite_challenge" REFFIELDS="id"/>
+        <KEY NAME="house" TYPE="foreign" FIELDS="houseid" REFTABLE="local_ignite_house" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="total" FIELDS="challengeid, houseid" UNIQUE="true"/>
+      </INDEXES>
     </TABLE>
   </TABLES>
 </XMLDB>

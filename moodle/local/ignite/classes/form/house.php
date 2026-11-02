@@ -26,6 +26,17 @@ final class house extends \moodleform {
             $emblems[$emblem] = get_string('emblem_' . $emblem, 'local_ignite');
         }
         $form->addElement('select', 'emblem', get_string('houseemblem', 'local_ignite'), $emblems);
+        $form->addElement('text', 'shortname', get_string('hearthshortname', 'local_ignite'), ['maxlength' => 100]);
+        $form->setType('shortname', PARAM_TEXT);
+        $form->addElement('textarea', 'personality', get_string('hearthpersonality', 'local_ignite'), ['maxlength' => 2000]);
+        $form->setType('personality', PARAM_TEXT);
+        $mascots = ['placeholder' => get_string('mascotpending', 'local_ignite')] + $emblems;
+        $form->addElement('select', 'mascot', get_string('hearthmascot', 'local_ignite'), $mascots);
+        $form->addElement('static', 'artworkhelp', '', get_string('approvedarthelp', 'local_ignite'));
+        foreach (['emblem', 'mascot'] as $area) {
+            $form->addElement('filemanager', $area . 'file', get_string('approved' . $area, 'local_ignite'),
+                null, \local_ignite\hearth_assets::OPTIONS);
+        }
         $form->addElement('advcheckbox', 'active', get_string('houseactive', 'local_ignite'));
         $this->add_action_buttons(true, get_string('savechanges'));
     }
@@ -37,6 +48,14 @@ final class house extends \moodleform {
         }
         if (trim($data['name']) === '' || \core_text::strlen($data['name']) > 100) {
             $errors['name'] = get_string('required');
+        }
+        foreach (['emblemfile', 'mascotfile'] as $field) {
+            if (!\local_ignite\hearth_assets::validate((int)$data[$field])) {
+                $errors[$field] = get_string('invalidapprovedasset', 'local_ignite');
+            }
+        }
+        if (\core_text::strlen($data['personality']) > 2000 || \core_text::strlen($data['description']) > 2000) {
+            $errors['personality'] = get_string('identitytoolong', 'local_ignite');
         }
         return $errors;
     }
