@@ -1,11 +1,5 @@
 {{! A single current-user projection, shared by the native block and optional Ignite home. }}
 <div class="ignite-dashboard">
-    <div class="ignite-dashboard__layout">
-        <div class="ignite-dashboard__rail">
-            {{> local_ignite/dashboard_navigation }}
-            {{#hearthsenabled}}<aside class="ignite-dashboard__hearth" aria-label="{{#str}}dash_myhearth, local_ignite{{/str}}">{{> local_ignite/dashboard_hearth }}</aside>{{/hearthsenabled}}
-        </div>
-        <div class="ignite-dashboard__workspace">
     <section class="ignite-dashboard__welcome" aria-label="{{welcome}}">
         <div>
             <p class="ignite-dashboard__eyebrow">{{#str}}dash_yourspace, local_ignite{{/str}}</p>
@@ -23,13 +17,11 @@
     {{#selectionunavailable}}<p class="ignite-dashboard__notice">{{#str}}dash_selectionunavailable, local_ignite{{/str}}</p>{{/selectionunavailable}}
     {{#resumeonboarding}}<p><a href="{{onboardingurl}}">{{#str}}dash_resume, local_ignite{{/str}}</a></p>{{/resumeonboarding}}
 
-    {{#timeline}}<section class="ignite-dashboard__card ignite-dashboard__timeline" aria-label="{{timelinetitle}}">
+    {{#timeline}}<section class="ignite-dashboard__section ignite-dashboard__timeline" aria-label="{{timelinetitle}}">
         <h3>{{timelinetitle}}</h3>{{{timeline}}}
     </section>{{/timeline}}
 
-    <div class="ignite-dashboard__columns {{^hearthsenabled}}ignite-dashboard__columns--single{{/hearthsenabled}}">
-    <div class="ignite-dashboard__grid">
-        <section class="ignite-dashboard__card ignite-dashboard__learning">
+        <section class="ignite-dashboard__section ignite-dashboard__learning">
             <p class="ignite-dashboard__eyebrow">{{#str}}dash_yourlearning, local_ignite{{/str}}</p>
             {{#course}}
                 <h3>{{name}}</h3>
@@ -43,9 +35,10 @@
         </section>
 
 
+    {{#hearthsenabled}}{{> local_ignite/dashboard_hearth }}{{/hearthsenabled}}
 
         {{#passportenabled}}
-        <section class="ignite-dashboard__card ignite-dashboard__passport">
+        <section class="ignite-dashboard__section ignite-dashboard__passport">
             <h3>{{#str}}passport, local_ignite{{/str}}</h3>
             {{#passport}}
                 {{#hasfeatured}}<h4>{{#str}}dash_featured, local_ignite{{/str}}</h4><ul class="ignite-dashboard__badges">{{#featured}}<li>{{#imageurl}}<img src="{{imageurl}}" alt="" width="48" height="48">{{/imageurl}}<a href="{{detailurl}}">{{name}}</a><span>{{statuslabel}}</span></li>{{/featured}}</ul>{{/hasfeatured}}
@@ -60,23 +53,19 @@
         </section>
         {{/passportenabled}}
 
-        <section class="ignite-dashboard__card">
+        <section class="ignite-dashboard__section">
             <h3>{{#str}}dash_recommended, local_ignite{{/str}}</h3>
             {{#hasrecommendations}}<ul class="ignite-dashboard__recommendations">{{#recommendations}}<li><h4>{{name}}</h4><p>{{outcome}}</p><p class="ignite-dashboard__small">{{reason}}</p><a href="{{url}}">{{action}}<span class="ignite-dashboard__arrow" aria-hidden="true"></span></a></li>{{/recommendations}}</ul>{{/hasrecommendations}}
             {{^hasrecommendations}}<p>{{#str}}dash_norecommendations, local_ignite{{/str}}</p><a href="{{catalogurl}}">{{#str}}explorecourses, local_ignite{{/str}}</a>{{/hasrecommendations}}
         </section>
 
         {{#heat}}
-        <section class="ignite-dashboard__card">
+        <section class="ignite-dashboard__section">
             <h3>{{#str}}dash_heat, local_ignite{{/str}}</h3><p>{{#str}}dash_heatfiction, local_ignite{{/str}}</p>
             {{#available}}<p class="ignite-dashboard__status">{{stage}}</p><p>{{counttext}}</p>{{#next}}<p>{{next}}</p>{{/next}}{{^next}}<p>{{#str}}dash_heatlast, local_ignite{{/str}}</p>{{/next}}
             <details><summary>{{#str}}dash_qualifying, local_ignite{{/str}}</summary><ul>{{#requirements}}<li>{{name}} — {{condition}}. {{status}}</li>{{/requirements}}</ul><p>{{#str}}dash_heatreset, local_ignite{{/str}}</p></details>{{/available}}
             {{^available}}<p>{{#str}}dash_heatunavailable, local_ignite{{/str}}</p>{{/available}}
         </section>
         {{/heat}}
-    </div>
-    </div>
     {{#onboarding}}<nav class="ignite-dashboard__help" aria-label="{{#str}}dash_help, local_ignite{{/str}}"><a href="{{interestsurl}}">{{#str}}editinterests, local_ignite{{/str}}</a><a href="{{toururl}}">{{#str}}dash_help, local_ignite{{/str}}</a></nav>{{/onboarding}}
-        </div>
-    </div>
 </div>
