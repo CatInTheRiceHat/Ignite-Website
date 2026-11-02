@@ -15,14 +15,13 @@ final class badge_state {
         require_once($CFG->libdir . '/completionlib.php');
         if (empty($CFG->enablebadges) || $badgeid <= 0 ||
                 !has_capability('moodle/badges:manageownbadges', \context_user::instance($userid)) ||
-                !$DB->record_exists('badge', ['id' => $badgeid])) {
+                !($badge = learner_read_model::badge($badgeid))) {
             return null;
         }
-        $badge = new \core_badges\badge($badgeid);
         if (!self::visible($badge, [])) {
             return null;
         }
-        $issue = $DB->get_record('badge_issued', ['badgeid' => $badgeid, 'userid' => $userid]);
+        $issue = (learner_read_model::awards()[$badgeid] ?? null);
         // Respect native privacy choices; do not turn a hidden owned badge into an unearned preview.
         if ($issue && !$issue->visible) {
             return null;
@@ -56,7 +55,8 @@ final class badge_state {
 
     public static function course_visible(int $id): bool {
         global $DB;
-        $course = $DB->get_record('course', ['id' => $id]);
+        $course = learner_read_model::remember('badgecourse:' . $id,
+            static fn() => $DB->get_record('course', ['id' => $id]));
         return $course && $id !== SITEID && can_access_course($course, null, '', true) &&
             \core_course_category::can_view_course_info($course);
     }
@@ -78,7 +78,7 @@ final class badge_state {
                 // Cohort/competency/custom criteria need their own visibility adapter before exposing details.
                 return false;
             }
-            foreach ($criterion->params as $param) {
+            foreach (($criterion->params ?? []) as $param) {
                 if (isset($param['course']) && !self::course_visible((int)$param['course'])) {
                     return false;
                 }
@@ -89,8 +89,8 @@ final class badge_state {
                     }
                 }
                 if (isset($param['badge'])) {
-                    if (!$DB->record_exists('badge', ['id' => $param['badge']]) ||
-                            !self::visible(new \core_badges\badge($param['badge']), $visited)) {
+                    if (!($prerequisite = learner_read_model::badge((int)$param['badge'])) ||
+                            !self::visible($prerequisite, $visited)) {
                         return false;
                     }
                 }
@@ -126,7 +126,7 @@ final class badge_state {
         $activityids = [];
         foreach ($badge->criteria as $criterion) {
             if ((int)$criterion->criteriatype === BADGE_CRITERIA_TYPE_ACTIVITY) {
-                foreach ($criterion->params as $param) {
+                foreach (($criterion->params ?? []) as $param) {
                     $activityids[] = (int)$param['module'];
                 }
             } else if ((int)$criterion->criteriatype === BADGE_CRITERIA_TYPE_COURSE) {

@@ -1,5 +1,7 @@
 # Ignite LMS foundation
 
+This is the preserved Prompt 1 foundation record. See [the integrated learner dashboard](ignite-dashboard.md) for the current combined schema, services, native block, experimental heat configuration, and verification. Later-phase behavior supersedes this record where explicitly described.
+
 This records the completed Prompt 1 baseline. [Prompt 3 Hearth extensions](phases/prompt3-hearths.md) supersede its placeholder seeding, learner-facing house terminology and membership-history limits; existing stable IDs/services are preserved.
 
 ## Installed system and boundaries

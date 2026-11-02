@@ -14,11 +14,12 @@ $PAGE->set_url(new moodle_url('/local/ignite/index.php'));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title(get_string('pluginname', 'local_ignite'));
 $PAGE->set_heading(get_string('homeheading', 'local_ignite'));
-$PAGE->requires->css(new moodle_url('/local/ignite/styles.css'));
-$data = \local_ignite\home::data();
+$isdashboard = \local_ignite\access::enabled('dashboard');
+$PAGE->requires->css(new moodle_url('/local/ignite/' . ($isdashboard ? 'dashboard.css' : 'styles.css')));
+$data = $isdashboard ? \local_ignite\dashboard::data() : \local_ignite\home::data();
 echo $OUTPUT->header();
-echo $OUTPUT->render_from_template('local_ignite/home', $data);
-if (!empty($data['showinvitation'])) {
+echo $OUTPUT->render_from_template('local_ignite/' . ($isdashboard ? 'dashboard' : 'home'), $data);
+if (!empty($data['showinvitation']) || !empty($data['offer'])) {
     \local_ignite\invitations::shown();
 }
 echo $OUTPUT->footer();

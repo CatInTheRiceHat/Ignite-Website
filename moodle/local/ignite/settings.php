@@ -28,6 +28,11 @@ if ($hassiteconfig && has_capability('local/ignite:configure', context_system::i
     $settings->add(new \local_ignite\admin\passport_setting('local_ignite/passportcatalog',
         get_string('passport_catalog', 'local_ignite'), get_string('passport_catalog_desc', 'local_ignite'),
         \local_ignite\passport_catalog::EMPTY, PARAM_RAW, 80, 16));
+    $settings->add(new admin_setting_configcheckbox('local_ignite/dashboardlanding',
+        get_string('dash_landing', 'local_ignite'), get_string('dash_landing_desc', 'local_ignite'), 0));
+    $settings->add(new \local_ignite\admin\heat_setting('local_ignite/heatconfig',
+        get_string('dash_heatconfig', 'local_ignite'), get_string('dash_heatconfig_desc', 'local_ignite'),
+        \local_ignite\heat_stages::EMPTY, PARAM_RAW, 80, 12));
     $ADMIN->add('localplugins', $settings);
     foreach (['hearthsetup' => 'draftsetup', 'hearthchallenges' => 'hearthchallenges'] as $route => $label) {
         $ADMIN->add('localplugins', new admin_externalpage('local_ignite_' . $route,

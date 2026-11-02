@@ -1,5 +1,7 @@
 # Ignite learner dashboard
 
+The service-backed dashboard candidate is documented in [Ignite dashboard implementation and setup](../docs/ignite-dashboard.md). It uses a native block alongside Timeline and Course overview, has not been deployed to production, and leaves landing changes behind an explicit administrator setting. The notes below describe the earlier live layout.
+
 The current dashboard shows **Timeline first, then Course overview**. Timeline is the roadmap requested by the user and uses Moodle's actual scheduled activities. Course overview supplies each account's courses, filters, and completion information. Accounts without due activities keep Moodle's native empty Timeline.
 
 This arrangement was applied on November 1, 2026, to the default dashboard and 29 personal dashboards. Announcements, the older navigation and welcome panels, and other widgets are hidden using native block-position visibility settings. One missing Timeline block was added. The site-home announcements activity is also hidden from the page; its forum and posts remain stored. No dashboards were reset and no course activities were removed. New dashboards inherit the default block positions and visibility through Moodle's `my_copy_page()` implementation. Edit mode retains block-management controls.

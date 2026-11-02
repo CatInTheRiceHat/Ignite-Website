@@ -80,5 +80,19 @@ function xmldb_local_ignite_upgrade(int $oldversion): bool {
         }
         upgrade_plugin_savepoint(true, 2026110400, 'local', 'ignite');
     }
+    if ($oldversion < 2026110500) {
+        $table = new xmldb_table('local_ignite_credit');
+        $index = new xmldb_index('shared', XMLDB_INDEX_NOTUNIQUE, ['challengeid', 'houseid', 'status']);
+        if (!$DB->get_manager()->index_exists($table, $index)) {
+            $DB->get_manager()->add_index($table, $index);
+        }
+        upgrade_plugin_savepoint(true, 2026110500, 'local', 'ignite');
+    }
+    if ($oldversion < 2026110501) {
+        // The old levels switch was reserved, not consent to this experimental vocabulary.
+        // Require a fresh administrator decision before exposing the newly implemented system.
+        set_config('levels', 0, 'local_ignite');
+        upgrade_plugin_savepoint(true, 2026110501, 'local', 'ignite');
+    }
     return true;
 }

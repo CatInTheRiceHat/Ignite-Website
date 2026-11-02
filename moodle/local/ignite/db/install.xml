@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="local/ignite/db" VERSION="20261101" COMMENT="Ignite learner foundation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd">
+<XMLDB PATH="local/ignite/db" VERSION="20261105" COMMENT="Ignite learner services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd">
   <TABLES>
     <TABLE NAME="local_ignite_prefs" COMMENT="Private learner preferences; independent of enrollment">
       <FIELDS>
@@ -118,6 +118,7 @@
       <INDEXES>
         <INDEX NAME="once" FIELDS="challengeid, userid, cmid" UNIQUE="true"/>
         <INDEX NAME="own" FIELDS="userid, houseid, challengeid, status" UNIQUE="false"/>
+        <INDEX NAME="shared" FIELDS="challengeid, houseid, status" UNIQUE="false"/>
       </INDEXES>
     </TABLE>
     <TABLE NAME="local_ignite_total" COMMENT="Task computed shared totals; no learner roster">

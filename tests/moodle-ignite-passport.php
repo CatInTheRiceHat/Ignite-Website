@@ -58,6 +58,7 @@ function rejected(callable $fn, string $message): void {
 }
 function as_user(stdClass $user): void {
     core\session\manager::set_user($user);
+    if (class_exists(\local_ignite\learner_read_model::class)) { \local_ignite\learner_read_model::invalidate(); }
     $_POST = ['sesskey' => sesskey()];
     $_GET = [];
 }
@@ -112,7 +113,7 @@ if (($argv[2] ?? '') === '--baseline') {
     set_config('passportfixturebaseline', json_encode(snapshot(), JSON_THROW_ON_ERROR), 'local_ignite');
     exit(0);
 }
-verify((int)get_config('local_ignite', 'version') === ($integrated ? 2026110400 : 2026110104), 'Native installation or upgrade reached Passport version');
+verify((int)get_config('local_ignite', 'version') === ($integrated ? 2026110501 : 2026110104), 'Native installation or upgrade reached Passport version');
 if (!$integrated && ($argv[2] ?? '') !== '--fresh') {
     $baseline = json_decode(get_config('local_ignite', 'passportfixturebaseline'), true);
     foreach ($baseline['course'] as &$baselinecourse) {
@@ -353,10 +354,14 @@ rejected(fn() => passport::save_featured_current([$manuals[1]->id]), 'Disabled b
 as_user(get_admin());
 (new badge($manuals[1]->id))->set_status(BADGE_STATUS_ACTIVE_LOCKED);
 $DB->set_field('badge_issued', 'visible', 0, ['badgeid' => $manuals[1]->id, 'userid' => $users['alice']->id]);
+// Direct fixture mutation has no native event; invalidate this request's evidence snapshot.
+if (class_exists(\local_ignite\learner_read_model::class)) { \local_ignite\learner_read_model::invalidate(); }
 as_user($users['alice']);
 verify(passport::badge_current($manuals[1]->id) === null, 'Native private badge is not exposed by Passport');
 as_user(get_admin());
 $DB->set_field('badge_issued', 'visible', 1, ['badgeid' => $manuals[1]->id, 'userid' => $users['alice']->id]);
+// Direct fixture mutation has no native event; invalidate this request's evidence snapshot.
+if (class_exists(\local_ignite\learner_read_model::class)) { \local_ignite\learner_read_model::invalidate(); }
 course_change_visibility($course->id, 0);
 as_user($users['alice']);
 verify(passport::badge_current($first->id) === null && !in_array($first->id,
@@ -377,11 +382,15 @@ verify(passport::badge_current($manuals[2]->id) === null, 'Disabled Passport map
 passport::save_featured_current($featuredids);
 // Expiry is a native award field; simulate time passing only in the guarded fixture.
 $DB->set_field('badge_issued', 'dateexpire', time() - 1, ['badgeid' => $manuals[1]->id, 'userid' => $USER->id]);
+// Direct fixture mutation has no native event; invalidate this request's evidence snapshot.
+if (class_exists(\local_ignite\learner_read_model::class)) { \local_ignite\learner_read_model::invalidate(); }
 verify(badge_state::get_current($manuals[1]->id)['state'] === 'expired' &&
     !in_array($manuals[1]->id, array_column(passport::collection_current()['featured'], 'badgeid')),
     'Expired native award is labeled and cannot remain featured');
 rejected(fn() => passport::save_featured_current([$manuals[1]->id]), 'Expired badge cannot be featured');
 $DB->set_field('badge_issued', 'dateexpire', null, ['badgeid' => $manuals[1]->id, 'userid' => $USER->id]);
+// Direct fixture mutation has no native event; invalidate this request's evidence snapshot.
+if (class_exists(\local_ignite\learner_read_model::class)) { \local_ignite\learner_read_model::invalidate(); }
 as_user(get_admin());
 (new badge($manuals[2]->id))->delete(true);
 as_user($users['alice']);

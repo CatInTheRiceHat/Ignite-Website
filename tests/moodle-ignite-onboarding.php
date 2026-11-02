@@ -58,6 +58,7 @@ function rejected(callable $call, string $message): void {
 }
 function as_user(stdClass $user): void {
     core\session\manager::set_user($user);
+    if (class_exists(\local_ignite\learner_read_model::class)) { \local_ignite\learner_read_model::invalidate(); }
     $_POST = ['sesskey' => sesskey()];
     $_GET = [];
 }
@@ -95,7 +96,7 @@ if (($argv[2] ?? '') === '--prepare-upgrade') {
     echo "Saved Prompt 1 database snapshot\n";
     exit(0);
 }
-verify((int)get_config('local_ignite', 'version') === ($integrated ? 2026110400 : 2026110200), 'Native installer/upgrade reached Prompt 2 version');
+verify((int)get_config('local_ignite', 'version') === ($integrated ? 2026110501 : 2026110200), 'Native installer/upgrade reached Prompt 2 version');
 if ($saved = get_config('local_ignite', 'prompt2snapshot')) {
     verify(json_decode($saved) == (object)snapshot(), 'Upgrade preserved all foundation rows, completed walkthroughs, enrollments, grades and badges');
 } else if (!$integrated) {
@@ -140,6 +141,7 @@ $cmid = (int)$module->coursemodule;
 $DB->set_field('course_modules', 'completiongradeitemnumber', 0, ['id' => $cmid]);
 $DB->set_field('course_modules', 'completionpassgrade', 1, ['id' => $cmid]);
 rebuild_course_cache($course->id, true);
+if (class_exists(\local_ignite\learner_read_model::class)) { \local_ignite\learner_read_model::invalidate(); }
 $manual = enrol_get_plugin('manual');
 $instances = enrol_get_instances($course->id, false);
 $instance = array_values(array_filter($instances, fn($record) => $record->enrol === 'manual'))[0];
@@ -230,12 +232,16 @@ verify(recommendations::target('activity:' . $cmid) !== null, 'Restored active e
 $DB->set_field('course_modules', 'availability', json_encode(['op' => '&', 'c' => [
     ['type' => 'date', 'd' => '>=', 't' => time() + 86400]], 'showc' => [false]]), ['id' => $cmid]);
 rebuild_course_cache($course->id, true);
+if (class_exists(\local_ignite\learner_read_model::class)) { \local_ignite\learner_read_model::invalidate(); }
 verify(recommendations::target('activity:' . $cmid) === null, 'Native activity availability/prerequisite gate is respected');
 $DB->set_field('course_modules', 'availability', null, ['id' => $cmid]);
 rebuild_course_cache($course->id, true);
+if (class_exists(\local_ignite\learner_read_model::class)) { \local_ignite\learner_read_model::invalidate(); }
 $DB->set_field('course', 'visible', 0, ['id' => $course->id]);
+if (class_exists(\local_ignite\learner_read_model::class)) { \local_ignite\learner_read_model::invalidate(); }
 verify(recommendations::target('course:' . $course->id) === null, 'Hidden courses are not recommended');
 $DB->set_field('course', 'visible', 1, ['id' => $course->id]);
+if (class_exists(\local_ignite\learner_read_model::class)) { \local_ignite\learner_read_model::invalidate(); }
 
 as_user(get_admin());
 $open = create_course((object)['fullname' => 'Explore making things', 'shortname' => $tag . '_enrol',

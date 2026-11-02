@@ -6,7 +6,7 @@ namespace local_ignite;
 defined('MOODLE_INTERNAL') || die();
 
 final class access {
-    public const FEATURES = ['onboarding', 'houses', 'passport', 'levels'];
+    public const FEATURES = ['onboarding', 'houses', 'passport', 'levels', 'dashboard'];
 
     public static function enabled(?string $feature = null): bool {
         if (!get_config('local_ignite', 'enabled')) {
@@ -48,6 +48,7 @@ final class access {
             try {
                 $result = $operation();
                 $transaction->allow_commit();
+                learner_read_model::invalidate();
                 return $result;
             } catch (\Throwable $e) {
                 $transaction->rollback($e);

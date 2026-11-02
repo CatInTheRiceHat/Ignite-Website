@@ -6,18 +6,22 @@ defined('MOODLE_INTERNAL') || die();
 
 /** Read-only matching. Mapping is never an access grant or an enrollment. */
 final class recommendations {
-    public static function current(): array {
+    public static function current(bool $coursesonly = false): array {
         access::learner('onboarding');
         $prefs = preferences::get_current();
         $catalog = catalog::get();
         $config = onboarding_config::get();
-        $exploring = !$prefs->interests || in_array('unsure', $prefs->interests, true);
+        $interests = $prefs->interests;
+        if (!empty($prefs->pathid) && isset($catalog['paths'][$prefs->pathid])) {
+            $interests = array_unique(array_merge($catalog['paths'][$prefs->pathid]['interestids'] ?? [], $interests));
+        }
+        $exploring = !$interests || in_array('unsure', $interests, true);
         $candidates = [];
         foreach ($catalog['interests'] as $key => $mapping) {
-            if (!$exploring && !in_array($key, $prefs->interests, true)) {
+            if (!$exploring && !in_array($key, $interests, true)) {
                 continue;
             }
-            foreach (['activityids' => 'activity', 'courseids' => 'course'] as $field => $kind) {
+            foreach ($coursesonly ? ['courseids' => 'course'] : ['activityids' => 'activity', 'courseids' => 'course'] as $field => $kind) {
                 foreach ($mapping[$field] ?? [] as $id) {
                     $targetkey = $kind . ':' . $id;
                     // A practical outcome must be editorially configured, never fabricated from a title.
@@ -46,12 +50,14 @@ final class recommendations {
         if (!preg_match('/^(course|activity):([1-9][0-9]*)$/D', $key, $match)) {
             return null;
         }
-        $cmrow = $match[1] === 'activity' ? $DB->get_record('course_modules',
-            ['id' => (int)$match[2], 'deletioninprogress' => 0]) : null;
-        if ($match[1] === 'activity' && !$cmrow) {
+        $sources = learner_read_model::recommendation_sources();
+        $cmrow = $match[1] === 'activity' ? ($sources['cms'][(int)$match[2]] ??
+            $DB->get_record('course_modules', ['id' => (int)$match[2]])) : null;
+        if ($match[1] === 'activity' && (!$cmrow || $cmrow->deletioninprogress)) {
             return null;
         }
-        $course = $DB->get_record('course', ['id' => $cmrow ? $cmrow->course : (int)$match[2]]);
+        $courseid = $cmrow ? (int)$cmrow->course : (int)$match[2];
+        $course = $sources['courses'][$courseid] ?? $DB->get_record('course', ['id' => $courseid]);
         if (!$course || $course->id == SITEID || !$course->visible) {
             return null;
         }

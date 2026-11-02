@@ -20,6 +20,10 @@ function local_ignite_after_require_login($courseorid, $autologinguest, $cm, $se
             \local_ignite\onboarding::should_enter($SCRIPT, $preventredirect, $cm)) {
         redirect(new moodle_url('/local/ignite/onboarding.php'));
     }
+    if (($_SERVER['REQUEST_METHOD'] ?? '') === 'GET' && empty($_GET) &&
+            \local_ignite\dashboard_navigation::should_land($SCRIPT, $preventredirect, $cm)) {
+        redirect(new moodle_url('/local/ignite/index.php'));
+    }
 }
 
 /** Shared approved configuration artwork; no personal uploads or remote asset URLs. */

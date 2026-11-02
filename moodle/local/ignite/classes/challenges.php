@@ -56,9 +56,7 @@ final class challenges {
             }
             $cm = get_coursemodule_from_id(null, (int)$cmid, 0, false, MUST_EXIST);
             $course = get_course($cm->course);
-            if (!empty($cm->deletioninprogress) || !$course->enablecompletion || !$cm->completion ||
-                    ($condition === 'pass' && ((int)$cm->completion !== COMPLETION_TRACKING_AUTOMATIC ||
-                    $cm->completiongradeitemnumber === null || empty($cm->completionpassgrade)))) {
+            if (!milestone_eligibility::configured($cm, $course, $condition)) {
                 throw new \invalid_parameter_exception('Enable native completion / passing-grade completion first');
             }
         }
@@ -93,10 +91,12 @@ final class challenges {
                     'challengeid' => $id, 'cmid' => (int)$cmid, 'conditiontype' => $condition,
                 ]);
                 // Existing completions cannot become new Hearth work through a later reset.
+                $activity = get_coursemodule_from_id(null, (int)$cmid);
+                $course = get_course($activity->course);
                 $evidence = $DB->get_recordset('course_modules_completion', ['coursemoduleid' => (int)$cmid]);
                 foreach ($evidence as $completion) {
                     $key = ['challengeid' => $id, 'userid' => $completion->userid, 'cmid' => (int)$cmid];
-                    if (self::qualifies((int)$completion->completionstate, $condition) &&
+                    if (milestone_eligibility::qualifies($activity, $course, (int)$completion->completionstate, $condition) &&
                             !$DB->record_exists('local_ignite_credit', $key)) {
                         $DB->insert_record('local_ignite_credit', (object)($key + [
                             'houseid' => 0, 'timequalified' => $completion->timemodified,
@@ -142,7 +142,10 @@ final class challenges {
                 foreach ($periods as $period) {
                     $key = ['challengeid' => $period->id, 'userid' => $userid, 'cmid' => $cmid];
                     $old = $DB->get_record('local_ignite_credit', $key);
-                    $qualifies = self::qualifies((int)$evidence->completionstate, $period->conditiontype);
+                    $cm = get_coursemodule_from_id(null, $cmid, 0, false, IGNORE_MISSING);
+                    $course = $cm ? $DB->get_record('course', ['id' => $cm->course]) : false;
+                    $qualifies = $cm && $course && milestone_eligibility::qualifies($cm, $course,
+                        (int)$evidence->completionstate, $period->conditiontype);
                     if ($old) {
                         // Revocation is permanent for this period, even after recompletion.
                         if (!$qualifies && $old->status === 'credited') {
@@ -172,18 +175,20 @@ final class challenges {
 
     public static function qualifies(int $state, string $condition): bool {
         // Moodle: 0 incomplete, 1 complete, 2 complete/pass, 3 complete/fail.
-        return $condition === 'pass' ? $state === 2 : in_array($state, [1, 2], true);
+        return milestone_eligibility::state_matches($state, $condition);
     }
 
     /** Task only: reconcile resets/deletion, then publish totals. Never called by page rendering. */
     public static function refresh(): void {
-        global $DB;
-        access::locked('hearth-accounting', static function() use ($DB) {
+        global $DB, $CFG;
+        access::locked('hearth-accounting', static function() use ($DB, $CFG) {
             $records = $DB->get_recordset_sql('SELECT x.*, cc.completionstate, cc.timemodified AS evidencetime,
-                cm.id AS existingcm, cm.deletioninprogress, m.conditiontype, h.id AS validmembership
+                cm.id AS existingcm, cm.deletioninprogress, cm.completion, cm.completiongradeitemnumber,
+                cm.completionpassgrade, c.enablecompletion, m.conditiontype, h.id AS validmembership
                 FROM {local_ignite_credit} x
                 LEFT JOIN {course_modules_completion} cc ON cc.coursemoduleid = x.cmid AND cc.userid = x.userid
                 LEFT JOIN {course_modules} cm ON cm.id = x.cmid
+                LEFT JOIN {course} c ON c.id = cm.course
                 LEFT JOIN {local_ignite_milestone} m ON m.cmid = x.cmid AND m.challengeid = x.challengeid
                 LEFT JOIN {local_ignite_history} h ON h.userid = x.userid AND h.houseid = x.houseid
                     AND h.timebegin < x.timequalified AND (h.timeend = 0 OR h.timeend > x.timequalified)
@@ -191,7 +196,9 @@ final class challenges {
             foreach ($records as $record) {
                 // Changed completion timestamp includes reset + recompletion between task runs.
                 if (!$record->validmembership || !$record->existingcm || $record->deletioninprogress || $record->completionstate === null ||
-                        !$record->conditiontype || !self::qualifies((int)$record->completionstate, $record->conditiontype) ||
+                        !$record->conditiontype || !milestone_eligibility::qualifies($record,
+                        (object)['enablecompletion' => $record->enablecompletion],
+                        (int)$record->completionstate, $record->conditiontype) ||
                         (int)$record->evidencetime !== (int)$record->timequalified) {
                     $DB->update_record('local_ignite_credit', (object)[
                         'id' => $record->id, 'status' => 'withdrawn', 'timemodified' => time(),
@@ -220,10 +227,22 @@ final class challenges {
     public static function progress(int $challengeid, int $houseid): array {
         global $DB;
         $userid = access::learner('houses');
-        $total = $DB->get_record('local_ignite_total', ['challengeid' => $challengeid, 'houseid' => $houseid]);
-        return ['total' => $total ? (int)$total->milestones : 0, 'updated' => $total ? (int)$total->timeupdated : 0,
-            'own' => $DB->count_records('local_ignite_credit', [
-                'challengeid' => $challengeid, 'houseid' => $houseid, 'userid' => $userid, 'status' => 'credited',
-            ])];
+        $membership = houses::get_current();
+        if (!$membership || (int)$membership->id !== $houseid) {
+            throw new \invalid_parameter_exception('Only your current Hearth summary is available');
+        }
+        return learner_read_model::remember('challenge:' . $challengeid . ':' . $houseid,
+            static function() use ($DB, $userid, $challengeid, $houseid) {
+                // Aggregate the indexed ledger once, so own and shared counts describe the same snapshot.
+                // Cron still owns reconciliation and historical interval/reset rules; page reads never award credit.
+                $counts = $DB->get_record_sql("SELECT COUNT(1) AS total,
+                    COALESCE(SUM(CASE WHEN userid = :userid THEN 1 ELSE 0 END), 0) AS own
+                    FROM {local_ignite_credit} WHERE challengeid = :challengeid AND houseid = :houseid
+                    AND status = :status", ['userid' => $userid, 'challengeid' => $challengeid,
+                        'houseid' => $houseid, 'status' => 'credited']);
+                $total = $DB->get_record('local_ignite_total', ['challengeid' => $challengeid, 'houseid' => $houseid]);
+                return ['total' => (int)$counts->total, 'own' => (int)$counts->own,
+                    'updated' => $total ? (int)$total->timeupdated : 0];
+            });
     }
 }

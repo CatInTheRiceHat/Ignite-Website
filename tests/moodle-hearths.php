@@ -53,6 +53,7 @@ function rejected(callable $action, string $label): void {
 }
 function as_user(stdClass $user): void {
     \core\session\manager::set_user($user);
+    if (class_exists(\local_ignite\learner_read_model::class)) { \local_ignite\learner_read_model::invalidate(); }
     $_POST = ['sesskey' => sesskey()];
     $_GET = [];
 }
@@ -87,7 +88,7 @@ if (($argv[2] ?? '') === '--worker') {
 as_user(get_admin());
 $PAGE->set_context(context_system::instance());
 $PAGE->set_url('/local/ignite/hearth.php');
-verify((int)get_config('local_ignite', 'version') === ($integrated ? 2026110400 : 2026110300), 'Native version installed/upgraded');
+verify((int)get_config('local_ignite', 'version') === ($integrated ? 2026110501 : 2026110300), 'Native version installed/upgraded');
 $baseline = $DB->get_record('local_ignite_house', ['code' => 'ember']);
 if ($baseline) {
     verify($baseline->name === 'Renamed by administrator', 'Upgrade preserved administrator name');
@@ -312,8 +313,16 @@ challenges::deactivate($passid);
 $gradecount = $DB->count_records('grade_grades');
 verify($DB->count_records('user_enrolments') === $enrolcount && $DB->count_records('grade_grades') === $gradecount &&
     $DB->count_records('badge_issued') === $badgecount, 'Membership and accounting preserve native enrollment, grades and badge ownership');
-foreach (['https://evil.example/my/', '//evil.example/my/', '/admin/index.php', '/local/ignite/missing.php', '/local/ignite/onboarding.php', '/my/../admin/index.php'] as $url) {
+foreach (['https://evil.example/my/', '//evil.example/my/', '/admin/index.php', '/local/ignite/missing.php', '/my/../admin/index.php'] as $url) {
     verify(hearth_ui::return_url($url)->get_path() === '/local/ignite/index.php', 'Return destination rejected/falls back: ' . $url);
+}
+if ($integrated) {
+    set_config('onboarding', 1, 'local_ignite');
+    verify(hearth_ui::return_url('/local/ignite/onboarding.php')->get_path() === '/local/ignite/onboarding.php',
+        'Merged installed onboarding route resumes safely');
+} else {
+    verify(hearth_ui::return_url('/local/ignite/onboarding.php')->get_path() === '/local/ignite/index.php',
+        'Missing sibling route falls back safely');
 }
 verify(hearth_ui::return_url('/local/ignite/hearth.php?userid=22')->out(false) === $CFG->wwwroot . '/local/ignite/hearth.php', 'Permitted local destination drops untrusted query parameters');
 $context = context_user::instance($users['alice']->id);

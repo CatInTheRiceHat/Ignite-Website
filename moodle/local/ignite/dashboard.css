@@ -1,0 +1,36 @@
+/* Native Moodle retains its navigation, Timeline and Course overview. All styling is scoped. */
+.ignite-dashboard { color: #1a1a2e; background: #fff8f0; padding: clamp(1rem, 3vw, 2rem); border-radius: 1.25rem; font-family: Nunito, system-ui, sans-serif; line-height: 1.6; overflow-wrap: anywhere; }
+.ignite-dashboard h2, .ignite-dashboard h3, .ignite-dashboard h4 { color: #1a1a2e; font-family: Poppins, system-ui, sans-serif; line-height: 1.3; }
+.ignite-dashboard h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin: .3rem 0 .8rem; }
+.ignite-dashboard h3 { font-size: 1.3rem; margin-bottom: 1rem; }
+.ignite-dashboard h4 { font-size: 1.05rem; margin: .75rem 0 .5rem; }
+.ignite-dashboard p { margin: 0 0 1rem; }
+.ignite-dashboard a { color: #85370d; text-decoration: underline; text-underline-offset: .2em; }
+.ignite-dashboard a:focus-visible, .ignite-dashboard summary:focus-visible { outline: 3px solid #1a1a2e; outline-offset: 4px; border-radius: .2rem; }
+.ignite-dashboard__welcome { display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; margin-bottom: 1.5rem; }
+.ignite-dashboard__welcome > div { min-width: 0; }
+.ignite-dashboard__welcome > img { object-fit: contain; flex-shrink: 0; }
+.ignite-dashboard .ignite-dashboard__eyebrow { text-transform: uppercase; letter-spacing: .1em; color: #62564d; font-size: .75rem; font-weight: 700; margin-bottom: .4rem; }
+.ignite-dashboard a.ignite-dashboard__primary { display: inline-flex; align-items: center; gap: .75rem; background: #f07b2a; color: #1a1a2e; padding: .8rem 1.3rem; min-height: 48px; border: 2px solid #85370d; border-radius: 2rem; font-weight: 700; text-decoration: none; }
+.ignite-dashboard a.ignite-dashboard__primary:hover { background: #f7ad6d; }
+.ignite-dashboard__arrow { display: inline-block; vertical-align: middle; width: 20px; height: 20px; margin-left: .5rem; flex-shrink: 0; background: currentColor; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14m-6-6 6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat; }
+.ignite-dashboard__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 21rem), 1fr)); gap: 1.25rem; }
+.ignite-dashboard__card { min-width: 0; background: #fff; padding: clamp(1rem, 2.5vw, 1.5rem); border: 1px solid #d8cbc0; border-top: 4px solid #f07b2a; border-radius: 1rem; box-shadow: 0 3px 14px #1a1a2e08; }
+.ignite-dashboard__identity { display: flex; align-items: center; gap: 1rem; }
+.ignite-dashboard__identity img { object-fit: contain; }
+.ignite-dashboard__identity > div { min-width: 0; }
+.ignite-dashboard__identity p { margin-bottom: .5rem; }
+.ignite-dashboard__small { font-size: .875rem; color: #4a4a5e; }
+.ignite-dashboard__status { font-weight: 700; }
+.ignite-dashboard progress { display: block; width: 100%; height: 1rem; accent-color: #934214; margin: .5rem 0 1rem; }
+.ignite-dashboard__count { font-variant-numeric: tabular-nums; font-weight: 700; }
+.ignite-dashboard__notice, .ignite-dashboard__badge-next { padding: 1rem; background: #fff2e4; border-left: 3px solid #934214; border-radius: .5rem; }
+.ignite-dashboard__badges, .ignite-dashboard__recommendations { padding: 0; list-style: none; }
+.ignite-dashboard__badges li { display: grid; grid-template-columns: 1fr; margin-bottom: 1rem; }
+.ignite-dashboard__badges li img { object-fit: contain; margin-bottom: .5rem; }
+.ignite-dashboard__badges li span { color: #4a4a5e; font-size: .875rem; }
+.ignite-dashboard__recommendations li + li { border-top: 1px solid #d8cbc0; padding-top: 1rem; margin-top: 1rem; }
+.ignite-dashboard__help { display: flex; flex-wrap: wrap; gap: 1.5rem; padding-top: 1.5rem; }
+.ignite-dashboard summary { cursor: pointer; padding: .5rem 0; }
+@media (max-width: 480px) { .ignite-dashboard__welcome { align-items: flex-start; gap: .5rem; } .ignite-dashboard__welcome > img { width: 64px; height: 64px; } .ignite-dashboard__identity { flex-wrap: wrap; } }
+@media (prefers-reduced-motion: reduce) { .ignite-dashboard *, .ignite-dashboard *::before, .ignite-dashboard *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }

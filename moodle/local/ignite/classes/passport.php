@@ -7,6 +7,43 @@ defined('MOODLE_INTERNAL') || die();
 
 /** Collectible presentation of native credentials. This class has no award or completion mutations. */
 final class passport {
+    /** Bounded dashboard projection of the same permission-checked native badge services. */
+    public static function dashboard_current(?int $courseid): array {
+        global $CFG, $DB;
+        $userid = access::learner('passport');
+        $data = ['featured' => [], 'recent' => [], 'next' => false, 'nativeenabled' => !empty($CFG->enablebadges)];
+        if (!$data['nativeenabled'] || !has_capability('moodle/badges:manageownbadges', \context_user::instance($userid))) {
+            return $data;
+        }
+        $features = $DB->get_records('local_ignite_feature', ['userid' => $userid], 'slot');
+        foreach ($features as $feature) {
+            $card = self::badge_current((int)$feature->badgeid, false);
+            if ($card && $card['featureable'] && $card['issuedid'] === (int)$feature->issuedid) {
+                $data['featured'][] = $card;
+            }
+        }
+        foreach (learner_read_model::awards() as $award) {
+            if (!$award->visible) { continue; }
+            $card = self::badge_current((int)$award->badgeid, false);
+            if ($card) { $data['recent'][] = $card; }
+            if (count($data['recent']) === 3) { break; }
+        }
+        $catalog = passport_catalog::get();
+        // Prefer the current course's real collectible, then other accessible configured credentials.
+        uasort($catalog, static fn($a, $b) =>
+            (int)($b['courseid'] === $courseid) <=> (int)($a['courseid'] === $courseid));
+        foreach ($catalog as $id => $metadata) {
+            if (!$metadata['enabled'] || isset(learner_read_model::awards()[$id])) { continue; }
+            if ($card = self::badge_current((int)$id)) {
+                $data['next'] = $card;
+                break;
+            }
+        }
+        $data['hasfeatured'] = (bool)$data['featured'];
+        $data['hasrecent'] = (bool)$data['recent'];
+        return $data;
+    }
+
     public static function collection_current(): array {
         global $CFG, $DB, $OUTPUT;
         $userid = access::learner('passport');
@@ -63,6 +100,17 @@ final class passport {
 
     /** Current learner detail, or null with no disclosure for unavailable IDs. */
     public static function badge_current(int $badgeid, bool $details = true): ?array {
+        global $CFG;
+        $userid = access::learner('passport');
+        if (empty($CFG->enablebadges) || !has_capability('moodle/badges:manageownbadges', \context_user::instance($userid))) {
+            return null;
+        }
+        $configuration = json_encode([get_config('local_ignite', 'passportcatalog'), !empty($CFG->badges_allowcoursebadges)]);
+        return learner_read_model::remember('badgecard:' . $badgeid . ':' . (int)$details . ':' . sha1($configuration),
+            static fn() => self::build_badge_current($badgeid, $details));
+    }
+
+    private static function build_badge_current(int $badgeid, bool $details): ?array {
         global $PAGE;
         access::learner('passport');
         $metadata = passport_catalog::get()[$badgeid] ?? null;
@@ -75,7 +123,7 @@ final class passport {
         if (!$state || (!$metadata && !$state['owned'])) {
             return null;
         }
-        $badge = new \core_badges\badge($badgeid);
+        $badge = learner_read_model::badge($badgeid);
         $context = $badge->get_context();
         $category = $metadata['category'] ?? 'other';
         $data = $state + [
