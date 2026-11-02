@@ -12,3 +12,12 @@ function local_ignite_extend_navigation(global_navigation $navigation): void {
         $node->showinflatnavigation = true;
     }
 }
+
+/** Native callback runs after required password, profile, and site-policy checks. */
+function local_ignite_after_require_login($courseorid, $autologinguest, $cm, $setwantsurltome, $preventredirect): void {
+    global $SCRIPT;
+    if (($_SERVER['REQUEST_METHOD'] ?? '') === 'GET' && empty($_GET) &&
+            \local_ignite\onboarding::should_enter($SCRIPT, $preventredirect, $cm)) {
+        redirect(new moodle_url('/local/ignite/onboarding.php'));
+    }
+}

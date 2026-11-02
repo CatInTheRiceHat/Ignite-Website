@@ -1,0 +1,13 @@
+.ignite-walk { max-width: 62rem; margin-inline: auto; }
+.ignite-walk__steps { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; padding: 1rem 2rem; }
+.ignite-walk__steps li { padding: .25rem; }
+.ignite-walk__steps [aria-current="step"] { font-weight: 700; border-bottom: 3px solid #934214; }
+.ignite-walk .form-check { padding: .85rem .85rem .85rem 2.25rem; background: #FFF8F0; border: 1px solid #78685c; border-radius: .75rem; width: 100%; }
+.ignite-walk .form-check label { cursor: pointer; overflow-wrap: anywhere; }
+.ignite-walk__detail { display: block; margin-top: .35rem; }
+.ignite-walk .form-check:focus-within, .ignite-walk a:focus-visible, .ignite-walk button:focus-visible, .ignite-walk input:focus-visible { outline: 3px solid #6b3716; outline-offset: 3px; }
+.ignite-walk .btn-primary { background: #F07B2A; border-color: #934214; color: #251b13; }
+.ignite-walk .btn-primary:hover { background: #D46A20; color: #1b130e; }
+.ignite-walk .fitem { margin-bottom: .8rem; }
+@media (max-width: 480px) { .ignite-walk .ignite-home__card { padding: 1rem; } .ignite-walk .btn { white-space: normal; margin-block: .25rem; } }
+@media (prefers-reduced-motion: reduce) { .ignite-walk *, .ignite-walk *::before, .ignite-walk *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }

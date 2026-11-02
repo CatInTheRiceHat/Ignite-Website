@@ -15,7 +15,8 @@ final class home {
         $interestnames = [];
         foreach ($prefs->interests as $id) {
             // Removed configuration does not destroy a learner's stored choices.
-            $interestnames[] = $catalog['interests'][$id]['name'] ?? $id;
+            $interestnames[] = $catalog['interests'][$id]['name'] ??
+                (in_array($id, onboarding::INTERESTS, true) ? get_string('interest_' . $id, 'local_ignite') : $id);
         }
         $courses = [];
         foreach (enrol_get_my_courses('id, fullname', 'visible DESC, sortorder ASC') as $course) {
@@ -34,6 +35,10 @@ final class home {
             $learningpath = '/my/';
             $learninglabel = 'opendashboard';
         }
+        $invitation = access::enabled('onboarding') ? invitations::current() : null;
+        $caninvite = $invitation && invitations::can_offer();
+        $invitationlink = $invitation && onboarding_config::selection_url() &&
+            in_array($invitation->state, ['eligible', 'shown', 'deferred'], true);
         return [
             'mascoturl' => $OUTPUT->image_url('sol', 'local_ignite')->out(false),
             'dashboardurl' => (new \moodle_url(!empty($CFG->enabledashboard) ? '/my/' : '/',
@@ -45,6 +50,13 @@ final class home {
             'badgesurl' => (new \moodle_url('/badges/mybadges.php'))->out(false),
             'courses' => $courses, 'hascourses' => (bool)$courses,
             'interests' => implode(', ', $interestnames), 'hasinterests' => (bool)$interestnames,
+            'walkthroughurl' => (new \moodle_url('/local/ignite/onboarding.php'))->out(false),
+            'editinterestsurl' => (new \moodle_url('/local/ignite/onboarding.php', ['edit' => 1]))->out(false),
+            'toururl' => (new \moodle_url('/local/ignite/tour.php'))->out(false),
+            'invitationurl' => (new \moodle_url('/local/ignite/invitation.php'))->out(false),
+            'showinvitation' => $caninvite && $invitation->state === 'eligible',
+            'caninvite' => $invitationlink,
+            'invitestate' => $invitation ? get_string('invitestate_' . $invitation->state, 'local_ignite') : '',
             'onboarding' => access::enabled('onboarding'),
             'onboardingstatus' => get_string('status_' . $prefs->status, 'local_ignite'),
             'houses' => access::enabled('houses'), 'hashouse' => (bool)$house,

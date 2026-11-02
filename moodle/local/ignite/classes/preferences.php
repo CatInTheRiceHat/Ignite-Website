@@ -6,8 +6,8 @@ namespace local_ignite;
 defined('MOODLE_INTERNAL') || die();
 
 final class preferences {
-    public const STATUSES = ['notstarted', 'inprogress', 'complete'];
-    public const STEPS = ['interests', 'path', 'house', 'challenge', 'done'];
+    public const STATUSES = ['notstarted', 'inprogress', 'complete', 'dismissed'];
+    public const STEPS = ['welcome', 'interests', 'goal', 'path', 'hearth', 'finish', 'house', 'challenge', 'done'];
 
     public static function get_current(): \stdClass {
         global $DB;
@@ -40,7 +40,7 @@ final class preferences {
             throw new \invalid_parameter_exception('Invalid interests');
         }
         foreach ($interests as $interest) {
-            if (!is_string($interest) || !isset($catalog['interests'][$interest])) {
+            if (!is_string($interest) || (!isset($catalog['interests'][$interest]) && !in_array($interest, onboarding::INTERESTS, true))) {
                 throw new \invalid_parameter_exception('Unknown interest');
             }
         }

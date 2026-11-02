@@ -18,4 +18,7 @@ $PAGE->requires->css(new moodle_url('/local/ignite/styles.css'));
 $data = \local_ignite\home::data();
 echo $OUTPUT->header();
 echo $OUTPUT->render_from_template('local_ignite/home', $data);
+if (!empty($data['showinvitation'])) {
+    \local_ignite\invitations::shown();
+}
 echo $OUTPUT->footer();
