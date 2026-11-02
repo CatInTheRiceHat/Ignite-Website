@@ -40,6 +40,8 @@ Version 1.0.0 was installed on October 28, 2026, on Moodle 5.2.4 after a full Po
 
 ## Initial dashboard installation
 
+The live layout was simplified on November 1, 2026: Timeline appears first and Course overview second. Announcements, the legacy Text panels, and other widgets are hidden on the default and existing personal dashboards. Routine theme sync preserves these native block-position settings. See [DASHBOARD.md](DASHBOARD.md) for the layout backup and validation. The installation commands below describe the earlier navigation/welcome setup, not the current two-block arrangement.
+
 Deploying styles alone does not add the navigation and welcome panels. Use `npm run moodle:dashboard:check` to preview the initial setup and `npm run moodle:dashboard:install` to install missing panels on the default dashboard and every existing personal dashboard. The installer enables My courses so the navigation links work. It adds the two panels above existing content, preserving native blocks, their positions, and personal dashboard records. New users inherit the default dashboard. Repeating installation adds no duplicates.
 
 This setup was applied on October 22, 2026: 56 panels were added across 28 dashboards. Existing native block records, dashboard records, and block-position overrides were verified unchanged. Routine HTML edits now reach these panels through `npm run moodle:deploy`. See [DASHBOARD.md](DASHBOARD.md) for the design and manual fallback.

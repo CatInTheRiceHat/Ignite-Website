@@ -1,5 +1,14 @@
 export type CourseFormat = 'live' | 'independent';
 
+export const courseFields = [
+  { id: 'technology', label: 'Technology & Creation' },
+  { id: 'career', label: 'Career & Business' },
+  { id: 'personal', label: 'Personal Skills & Wellbeing' },
+  { id: 'leadership', label: 'Leadership & Discovery' },
+] as const;
+
+export type CourseField = (typeof courseFields)[number]['id'];
+
 // The October development catalog supersedes the August framework's course list.
 // The frameworks describe plans, not published courses or an enrollment schedule.
 // Instructor assignments reviewed against Courses in Development List.pdf (November 1, 2026).
@@ -31,6 +40,7 @@ export const courseFormats = {
 export interface DevelopmentCourse {
   title: string;
   format: CourseFormat;
+  field: CourseField;
   instructors?: { name: string; displayName?: string; grades?: string }[];
   icon: string;
   headerImage?: string;
@@ -46,6 +56,7 @@ export interface DevelopmentCourse {
 export const developmentCourses: DevelopmentCourse[] = [
   {
     title: 'Content Creation & Digital Storytelling',
+    field: 'technology',
     format: 'live',
     icon: '/mascots/Artist.png',
     headerImage: '/courses/Content%20Creation%20&%20Digital%20Storytelling.jpg',
@@ -53,6 +64,7 @@ export const developmentCourses: DevelopmentCourse[] = [
   },
   {
     title: 'Professional Communication & Public Speaking',
+    field: 'career',
     instructors: [{ name: 'Anisa Doshi Chandra' }],
     format: 'live',
     icon: '/mascots/Microphone.png',
@@ -62,6 +74,7 @@ export const developmentCourses: DevelopmentCourse[] = [
   },
   {
     title: 'Game Development (Scratch)',
+    field: 'technology',
     instructors: [{ name: 'Jake Hu' }],
     format: 'live',
     icon: '/mascots/Laptop.png',
@@ -70,6 +83,7 @@ export const developmentCourses: DevelopmentCourse[] = [
   },
   {
     title: 'Productivity, Time Management & Organization',
+    field: 'personal',
     instructors: [{ name: 'Shivmanas Kamarsu' }],
     format: 'independent',
     icon: '/mascots/Productivity.png',
@@ -78,6 +92,7 @@ export const developmentCourses: DevelopmentCourse[] = [
   },
   {
     title: 'Marketing, Branding & Digital Design',
+    field: 'career',
     instructors: [{ name: 'Dhruv Agarwal' }],
     format: 'independent',
     icon: '/mascots/Artist.png',
@@ -86,6 +101,7 @@ export const developmentCourses: DevelopmentCourse[] = [
   },
   {
     title: 'Scientific Research & Data Analysis',
+    field: 'leadership',
     instructors: [{ name: 'Daniya Shivapur' }],
     format: 'independent',
     icon: '/mascots/Research.png',
@@ -94,6 +110,7 @@ export const developmentCourses: DevelopmentCourse[] = [
   },
   {
     title: 'Social Impact & Project Development',
+    field: 'leadership',
     instructors: [{ name: 'Anisa Doshi Chandra' }],
     format: 'independent',
     icon: '/mascots/Project.png',
@@ -102,6 +119,7 @@ export const developmentCourses: DevelopmentCourse[] = [
   },
   {
     title: 'Resilience & Stress-Management',
+    field: 'personal',
     instructors: [{ name: 'Emma Zhou' }],
     format: 'independent',
     duration: 'Five weeks',
@@ -112,6 +130,7 @@ export const developmentCourses: DevelopmentCourse[] = [
   },
   {
     title: 'AI Literacy and Responsible Use',
+    field: 'technology',
     instructors: [{ name: 'Kevin Liu' }],
     format: 'independent',
     duration: 'Six weeks',
@@ -122,6 +141,7 @@ export const developmentCourses: DevelopmentCourse[] = [
   },
   {
     title: '3D Design and CAD Basics',
+    field: 'technology',
     instructors: [{ name: 'Imoleayo Babatunde', displayName: 'Babatunde Imoleayo' }, { name: 'Achyut Karthikeyan' }],
     format: 'independent',
     duration: 'Six weeks',
@@ -131,6 +151,7 @@ export const developmentCourses: DevelopmentCourse[] = [
   },
   {
     title: 'Onshape 3D CAD Foundations',
+    field: 'technology',
     instructors: [{ name: 'Ridwanullah Ashiru' }],
     format: 'independent',
     duration: 'Six weeks',
@@ -140,6 +161,7 @@ export const developmentCourses: DevelopmentCourse[] = [
   },
   {
     title: 'Cybersecurity, Online Safety & Media Literacy',
+    field: 'personal',
     instructors: [{ name: 'Akshay Kolluru' }],
     format: 'independent',
     icon: '/mascots/Laptop.png',
@@ -148,6 +170,7 @@ export const developmentCourses: DevelopmentCourse[] = [
   },
   {
     title: 'Career Exploration & Pathway Planning',
+    field: 'career',
     instructors: [{ name: 'Akshay Kolluru' }],
     format: 'independent',
     icon: '/mascots/Graduation.png',
@@ -156,6 +179,7 @@ export const developmentCourses: DevelopmentCourse[] = [
   },
   {
     title: 'Intro to Economics & Financial Literacy',
+    field: 'career',
     format: 'independent',
     audience: 'Grades 4–8.',
     commitment: '40 hours total.',
@@ -165,6 +189,7 @@ export const developmentCourses: DevelopmentCourse[] = [
   },
   {
     title: 'Entrepreneurship Essentials: Planning, Record-Keeping & Financial Tracking',
+    field: 'career',
     instructors: [{ name: 'Benjamin Oluwadamilare Oluyemi' }],
     format: 'independent',
     audience: 'Early-stage entrepreneurs and small business owners.',
@@ -174,6 +199,7 @@ export const developmentCourses: DevelopmentCourse[] = [
   },
   {
     title: 'Leadership, Teamwork & Conflict Resolution',
+    field: 'leadership',
     instructors: [{ name: 'Nikhil Tadepalli' }],
     format: 'independent',
     icon: '/mascots/Mentors.png',
@@ -183,6 +209,7 @@ export const developmentCourses: DevelopmentCourse[] = [
   },
   {
     title: 'Civic Literacy & Community Action',
+    field: 'leadership',
     instructors: [{ name: 'Kireeti Kotha' }],
     format: 'independent',
     icon: '/mascots/Project.png',
@@ -191,6 +218,7 @@ export const developmentCourses: DevelopmentCourse[] = [
   },
   {
     title: 'Relationships, Boundaries & Social Skills',
+    field: 'personal',
     instructors: [{ name: 'Nikhil Tadepalli' }],
     format: 'independent',
     duration: 'Six weeks',
@@ -202,6 +230,7 @@ export const developmentCourses: DevelopmentCourse[] = [
   },
   {
     title: 'Emergency Preparedness and Safety Asynchronous Course',
+    field: 'personal',
     instructors: [{ name: 'Alliyah Battad (Lyra)', displayName: 'Alliyah (Lyra) Battad' }],
     format: 'independent',
     icon: '/mascots/Lightbulb.png',
@@ -210,6 +239,7 @@ export const developmentCourses: DevelopmentCourse[] = [
   },
   {
     title: 'Introduction to Physics & Astronomy',
+    field: 'leadership',
     instructors: [{ name: 'Michelle Thomatis' }],
     format: 'independent',
     duration: 'Eight weeks',
@@ -220,6 +250,7 @@ export const developmentCourses: DevelopmentCourse[] = [
   },
   {
     title: 'Introduction to Computer Science (Python-Based)',
+    field: 'technology',
     instructors: [{ name: 'Yuenching Shao' }, { name: 'Daniel Yeh' }],
     format: 'independent',
     icon: '/mascots/Laptop.png',
@@ -228,6 +259,7 @@ export const developmentCourses: DevelopmentCourse[] = [
   },
   {
     title: 'Introduction to Algebra',
+    field: 'leadership',
     instructors: [{ name: 'Terrence Shu' }],
     format: 'independent',
     duration: 'To be confirmed',
