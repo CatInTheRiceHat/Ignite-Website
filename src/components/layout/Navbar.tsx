@@ -46,32 +46,32 @@ const Navbar = () => {
         style={{ scaleX }}
         className="absolute bottom-0 left-0 right-0 h-[3px] bg-[var(--primary-orange)] origin-left z-50"
       />
-      <div className="max-w-7xl mx-auto px-4 h-24 md:h-28 flex items-center justify-between transition-all duration-300">
+      <div className="max-w-7xl mx-auto px-4 h-20 md:h-24 flex items-center justify-between transition-all duration-300">
         {/* Mobile Header */}
         <div className="w-full xl:w-auto flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3 text-[1.7rem] md:text-[1.95rem] font-rammetto text-[var(--primary-orange)] group">
+          <Link to="/" className="flex items-center gap-2 text-[1.4rem] md:text-[1.65rem] font-rammetto text-[var(--primary-orange)] group">
             <img
               src="/mascots/Logo.png"
               alt="Ignite"
-              className="w-10 h-10 object-contain transition-transform group-hover:scale-105"
+              className="w-8 h-8 object-contain transition-transform group-hover:scale-105"
             />
             Ignite
           </Link>
           
           <button 
-            className="xl:hidden flex h-11 w-11 items-center justify-center rounded-full text-[var(--primary-orange)] transition-colors hover:bg-orange-50"
+            className="xl:hidden flex h-10 w-10 items-center justify-center rounded-full text-[var(--primary-orange)] transition-colors hover:bg-orange-50"
             onClick={() => setIsOpen((open) => !open)}
             aria-label="Toggle menu"
             aria-expanded={isOpen}
             aria-controls="mobile-menu"
             type="button"
           >
-            {isOpen ? <X className="h-7 w-7" aria-hidden="true" /> : <Menu className="h-7 w-7" aria-hidden="true" />}
+            {isOpen ? <X className="h-6 w-6" aria-hidden="true" /> : <Menu className="h-6 w-6" aria-hidden="true" />}
           </button>
         </div>
 
         {/* Desktop Links */}
-        <div className="hidden xl:flex items-center gap-7 whitespace-nowrap font-semibold text-xl">
+        <div className="hidden xl:flex items-center gap-5 whitespace-nowrap font-semibold text-base">
           {navLinks.map((link) => (
             <NavLink
               key={link.path}
@@ -83,7 +83,7 @@ const Navbar = () => {
               {link.name}
             </NavLink>
           ))}
-          <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[var(--primary-orange)] px-5 py-3 font-extrabold text-white transition-colors hover:bg-[var(--primary-orange-dark)]">
+          <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center gap-2 rounded-full bg-[var(--primary-orange)] px-4 py-2 font-normal text-white transition-colors hover:bg-[var(--primary-orange-dark)]">
             Apply Now
             <RedirectArrow size={16} />
           </a>
@@ -95,10 +95,10 @@ const Navbar = () => {
         target="_blank"
         rel="noopener noreferrer"
         aria-label={announcementText}
-        className="group flex min-h-12 items-center justify-center bg-[var(--text-charcoal)] px-4 py-2 text-center text-white transition-colors hover:bg-[var(--primary-orange-dark)]"
+        className="group flex min-h-10 items-center justify-center bg-[var(--text-charcoal)] px-4 py-2 text-center text-white transition-colors hover:bg-[var(--primary-orange-dark)]"
       >
-        <span className="flex w-full min-w-0 max-w-7xl items-center justify-center gap-2 text-[0.7rem] font-bold leading-tight sm:text-base md:text-lg">
-          <Megaphone className="h-4 w-4 flex-none text-white sm:h-5 sm:w-5" aria-hidden="true" />
+        <span className="flex w-full min-w-0 max-w-7xl items-center justify-center gap-2 text-[0.7rem] font-semibold leading-tight sm:text-sm">
+          <Megaphone className="h-4 w-4 flex-none text-white" aria-hidden="true" />
           <span className="block min-w-0 max-w-[38ch] flex-1 whitespace-normal text-center sm:max-w-none sm:flex-none">
             {announcementText}
           </span>
@@ -114,22 +114,22 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.18, ease: 'easeInOut' }}
-            className="xl:hidden absolute left-0 right-0 top-full max-h-[calc(100dvh-10rem)] overflow-y-auto border-t border-orange-100 bg-white shadow-lg"
+            className="xl:hidden absolute left-0 right-0 top-full max-h-[calc(100dvh-7.5rem)] md:max-h-[calc(100dvh-8.5rem)] overflow-y-auto border-t border-orange-100 bg-white shadow-lg"
           >
-            <div className="mx-auto flex max-w-7xl flex-col px-4 py-4 font-semibold text-xl">
+            <div className="mx-auto flex max-w-7xl flex-col px-4 py-3 font-semibold text-base">
               {navLinks.map((link) => (
                 <NavLink
                   key={link.path}
                   to={link.path}
                   onClick={() => setIsOpen(false)}
                   className={({ isActive }) =>
-                    `rounded-lg px-4 py-3 transition-colors hover:bg-orange-50 hover:text-[var(--primary-orange)] ${isActive ? 'text-[var(--primary-orange)]' : 'text-[var(--text-light)]'}`
+                    `rounded-lg px-3 py-2.5 transition-colors hover:bg-orange-50 hover:text-[var(--primary-orange)] ${isActive ? 'text-[var(--primary-orange)]' : 'text-[var(--text-light)]'}`
                   }
                 >
                   {link.name}
                 </NavLink>
               ))}
-              <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)} className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-4 py-3 font-extrabold text-white transition-colors hover:bg-[var(--primary-orange-dark)]">
+              <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)} className="mt-2 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-3 py-2 font-normal text-white transition-colors hover:bg-[var(--primary-orange-dark)]">
                 Apply Now
                 <RedirectArrow size={16} />
               </a>
