@@ -12,44 +12,44 @@ const CourseCard = ({ course }: { course: DevelopmentCourse }) => {
   ].filter(Boolean).join(' ');
 
   return (
-  <article className="flex h-[40rem] min-w-0 flex-col bg-white rounded-[2rem] overflow-hidden hover:shadow-lg transition-shadow border-2 border-orange-100">
-    {course.headerImage ? (
-      <div className="h-44 shrink-0 overflow-hidden bg-orange-50">
-        <img src={course.headerImage} alt="" className="block h-full w-full object-cover" style={{ objectPosition: course.headerPosition }} loading="lazy" />
-      </div>
-    ) : (
-      <div className="h-44 shrink-0 flex items-center justify-center bg-orange-50">
-        <img src={course.icon} alt="" className="h-24 w-24 object-contain" loading="lazy" />
-      </div>
-    )}
-    <div className="grid min-h-0 flex-1 grid-rows-[auto_3.5rem_1.25rem_minmax(0,1fr)_6.75rem] gap-4 p-6 sm:p-8">
-      <div className="flex gap-2 text-xs font-bold text-[var(--text-charcoal)]">
-        <span className="rounded-full bg-orange-100 px-3 py-1">{courseFormats[course.format].label}</span>
-        <span className="rounded-full bg-[var(--bg-cream)] px-3 py-1">In development</span>
-      </div>
-      <h3 className="line-clamp-2 text-xl font-bold text-[var(--text-charcoal)] leading-snug" title={course.title}>{course.title}</h3>
-      <div className="min-w-0 text-sm leading-5 text-[var(--text-light)]">
-        {(course.duration || course.format === 'live') && (
-          <p className="truncate">Planned length: {(course.duration ?? courseFormats.live.duration).toLowerCase()}</p>
-        )}
-      </div>
-      <div className="min-h-0 overflow-hidden">
-        {summary && <p className="line-clamp-5 text-sm leading-relaxed text-[var(--text-light)]" title={summary}>{summary}</p>}
-      </div>
-      {course.instructors && course.instructors.length > 0 && (
-        <div className="min-w-0 rounded-2xl bg-[var(--bg-cream)] p-4 text-sm text-[var(--text-light)]">
-          <p className="font-bold text-[var(--text-charcoal)]">{course.instructors.length === 1 ? 'Teacher' : 'Teachers'}</p>
-          <ul className="mt-2 space-y-1">
-            {course.instructors.map((instructor) => (
-              <li key={instructor.name} className="truncate leading-5" title={`${instructor.displayName ?? instructor.name}${instructor.grades ? ` · Grades ${instructor.grades}` : ''}`}>
-                {instructor.displayName ?? instructor.name}{instructor.grades ? ` · Grades ${instructor.grades}` : ''}
-              </li>
-            ))}
-          </ul>
+    <article className="flex h-[40rem] min-w-0 flex-col bg-white rounded-[2rem] overflow-hidden hover:shadow-lg transition-shadow border-2 border-orange-100">
+      {course.headerImage ? (
+        <div className="h-44 shrink-0 overflow-hidden bg-orange-50">
+          <img src={course.headerImage} alt="" className="block h-full w-full object-cover" style={{ objectPosition: course.headerPosition }} loading="lazy" />
+        </div>
+      ) : (
+        <div className="h-44 shrink-0 flex items-center justify-center bg-orange-50">
+          <img src={course.icon} alt="" className="h-24 w-24 object-contain" loading="lazy" />
         </div>
       )}
-    </div>
-  </article>
+      <div className="grid min-h-0 flex-1 grid-rows-[auto_3.5rem_1.25rem_minmax(0,1fr)_6.75rem] gap-4 p-6 sm:p-8">
+        <div className="flex gap-2 text-xs font-bold text-[var(--text-charcoal)]">
+          <span className="rounded-full bg-orange-100 px-3 py-1">{courseFormats[course.format].label}</span>
+          <span className="rounded-full bg-[var(--bg-cream)] px-3 py-1">In development</span>
+        </div>
+        <h3 className="line-clamp-2 text-xl font-bold text-[var(--text-charcoal)] leading-snug" title={course.title}>{course.title}</h3>
+        <div className="min-w-0 text-sm leading-5 text-[var(--text-light)]">
+          {(course.duration || course.format === 'live') && (
+            <p className="truncate">Planned length: {(course.duration ?? courseFormats.live.duration).toLowerCase()}</p>
+          )}
+        </div>
+        <div className="min-h-0 overflow-hidden">
+          {summary && <p className="line-clamp-5 text-sm leading-relaxed text-[var(--text-light)]" title={summary}>{summary}</p>}
+        </div>
+        {course.instructors && course.instructors.length > 0 && (
+          <div className="min-w-0 rounded-2xl bg-[var(--bg-cream)] p-4 text-sm text-[var(--text-light)]">
+            <p className="font-bold text-[var(--text-charcoal)]">{course.instructors.length === 1 ? 'Teacher' : 'Teachers'}</p>
+            <ul className="mt-2 space-y-1">
+              {course.instructors.map((instructor) => (
+                <li key={instructor.name} className="truncate leading-5" title={`${instructor.displayName ?? instructor.name}${instructor.grades ? ` · Grades ${instructor.grades}` : ''}`}>
+                  {instructor.displayName ?? instructor.name}{instructor.grades ? ` · Grades ${instructor.grades}` : ''}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </article>
   );
 };
 
