@@ -1,5 +1,7 @@
 # Prompt 4 — Ignite Passport
 
+The current learner-facing name is **Campfire**. This phase record uses the former Passport name; internal service/setting keys and existing URLs remain compatible.
+
 This branch starts at the committed, completed Prompt 1 foundation `19bfa59f8a06bd06f7bdfba0df70a9d6ff829fbb`. See [the original implementation notes](ignite-lms.md). Worktree: `/Users/elaine/Documents/Ignite-prompt4`; branch: `ignite/prompt4-passport`. It does not require Prompts 2 or 3. Keep this phase isolated until sequential integration.
 
 ## Learner routes and behavior

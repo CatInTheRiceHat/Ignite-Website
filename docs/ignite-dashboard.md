@@ -8,7 +8,7 @@ Prompts 2–4 were merged sequentially on `ignite/prompt5-dashboard`. Their comp
 
 ## Current layout
 
-The standalone Ignite home keeps Moodle’s real Timeline horizontal across the main workspace, the earlier **My learning space** navigation on the left, and **My Hearth** in a separate right column. Container queries stack this layout on narrow screens and in narrow native block regions. The enabled native `block_timeline` renderable and renderer supply its preferences, filters, JavaScript and permission-aware scheduled activities; no parallel Timeline is maintained. Native `/my/` continues using its existing Timeline block without an embedded duplicate. This presentation update is local version 2026110701 (0.7.1), with no schema migration or dashboard reset. It was deployed to live Learn after explicit approval; see the [deployment record](ignite-lms.md#live-deployment-record).
+The current learner header uses **Home, Explore Courses, Hearth and Campfire**. The custom sidebar and nested tile grid have been removed. Dashboard content follows a full-width vertical flow; Moodle’s own horizontal Timeline remains above it on native Dashboard and uses its existing activity/event rules. The standalone Ignite home embeds that same native Timeline component. My courses and permission-checked Site administration remain available in the account menu. Existing Passport URLs/settings/records are retained under the Campfire display name. See the [current deployment record](ignite-lms.md#navigation-and-flat-layout-follow-up).
 
 ## Administrator setup
 

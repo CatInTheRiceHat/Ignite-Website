@@ -38,7 +38,7 @@ final class navigation {
         $node = $PAGE->settingsnav->find('siteadministration', \navigation_node::TYPE_SITE_ADMIN);
         if (!$node) { $node = $PAGE->settingsnav->find('root', \navigation_node::TYPE_SITE_ADMIN); }
         if ($node) {
-            $hook->add_navitem((object)['itemtype' => 'link', 'title' => get_string('siteadministration'), 'url' => $node->action()]);
+            $hook->add_navitem((object)['itemtype' => 'link', 'title' => (string)$node->text, 'url' => $node->action()]);
         }
     }
 }
