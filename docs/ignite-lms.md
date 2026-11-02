@@ -16,7 +16,7 @@ The verified runtime is Moodle **5.2.4**, branch `502`, core `2026042004`, PHP *
    sudo -u www-data php admin/cli/purge_caches.php
    ```
 
-4. Confirm `local_ignite` **2026110700 / 0.7.0** and `block_ignite` **2026110501 / 0.5.0**. The block contract did not change and its existing minimum local-plugin dependency remains valid. Review setup diagnostics before enabling learner features.
+4. Confirm `local_ignite` **2026110701 / 0.7.1** and `block_ignite` **2026110501 / 0.5.0**. The block contract did not change and its existing minimum local-plugin dependency remains valid. Review setup diagnostics before enabling learner features.
 
 The canonical XMLDB schema has **12 Ignite tables**. Ordered migrations retain the completed Prompt 1 savepoint `2026110101`, then onboarding `0200`, Hearths `0300`, Passport `0400`, dashboard `0500/0501`, mission metadata `0600`, and aggregate report snapshots `0700`. A real upgrade from a completed Prompt 1 database preserved edited settings, stable identity IDs, preferences and memberships. Existing memberships gain a history interval beginning at migration time: older membership changes cannot be reconstructed and no historical Hearth credit is invented. The once-reserved stages switch is explicitly reset off by the dashboard migration. Other existing settings are preserved; upgrades do not reseed or overwrite identities. Unsupported out-of-order sibling-development databases require a separate reviewed migration or a rebuilt disposable fixture.
 
@@ -43,6 +43,8 @@ Example eligibility configuration:
 ```json
 {"automatic":true,"requireenrolment":false,"cohortids":[],"goals":{"make":"Make something useful","solve":"Solve a practical problem","explore":"Explore something new"}}
 ```
+
+The standalone Ignite home reuses the enabled native Timeline block’s renderable, stored date/sort preferences, AMD controls and action-event APIs in a horizontal panel. It has the earlier **My learning space** navigation rail on the left and a separate **My Hearth** column on the right. Narrow containers stack the layout. This adds no scheduled-work service or progress records. On native Dashboard, the existing Timeline block remains separate and is not duplicated inside `block_ignite`.
 
 For the dashboard, use Moodle's **Appearance → Default Dashboard** editor to add the existing thin **Ignite learner dashboard** block. Retain Timeline and Course overview. Existing personal dashboards can add it through native editing; do not reset personal layouts. Ignite navigation also opens the same experience at `/local/ignite/index.php` when the dashboard flag is on.
 
@@ -108,6 +110,8 @@ Checks used copied Moodle source and **empty isolated PostgreSQL fixtures**, sep
 - **4 distinct Chromium scenarios passed in staged runs** around the real native badge-processing boundary: new onboarding with wrong/correct Quiz retries and attempt limits; administrator/editor/report/direct-URL boundaries; confirmed Passport plus post-starter membership and released mentor feedback; administrator-enabled earlier Hearth selection. Real HTTP was used without mocked activity or completion responses.
 - Native completion, badge, Hearth and report tasks ran. Tests cover pending/released grading, changed failing grades, delayed and concurrent events, no retroactive starter credit, reset/reversal behavior, skipped/resumed onboarding, deferred invitations, changed/renamed membership, no recommendations, disabled tracking/badges/dashboard, revoked enrollment, deleted activities, privacy export/erasure and permission boundaries. Dashboard-only edge cases already passed in the [prior phase](ignite-dashboard.md#verification).
 - Visual runtime inspected at **360px mobile and 1440px desktop**; keyboard focus and scoped axe scans passed with **zero violations**, including native feedback and keyboard scrolling in the administrator report. Marketing repository commands passed: `npm run lint`, `npm test` (**122 passed, 4 skipped**) and `npm run build`. The available Node runtime was 20.17; production/development setup should use the repository's declared Node 22. No marketing application behavior changed.
+
+The layout update to 0.7.1 passed native upgrade, PHP syntax, repository lint and one focused real-Moodle browser scenario at 1440px/360px: navigation/Hearth placement, full-width Timeline, working native date filters, keyboard focus and zero scoped axe violations. Earlier successful progress checks were reused. Run it against the isolated preview with `IGNITE_LAYOUT_FIXTURE=1 npx playwright test --config config/playwright.integrated.config.ts --grep "native horizontal Timeline"`. No schema or learner-record changes are introduced by this layout update.
 
 The guarded PHP suite is `tests/moodle-ignite-integrated.php`; browser configuration is `config/playwright.integrated.config.ts`. See [mission fixture instructions](ignite-missions.md#isolated-example-and-checks) for reproducible staged execution. The fixture suite creates native activities/users and must only run on its explicitly guarded disposable fixture. Native schema and PHP syntax checks cover the final source.
 

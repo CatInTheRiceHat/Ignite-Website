@@ -1,10 +1,14 @@
 # Ignite learner dashboard
 
-This preserves the Prompt 5 verification and design record. The [integrated operations guide](ignite-lms.md) supersedes version/setup and background accounting details; local_ignite is now 2026110700 and block_ignite remains 2026110501.
+This preserves the Prompt 5 verification and design record. The [integrated operations guide](ignite-lms.md) supersedes version/setup and background accounting details; local_ignite is now 2026110701 and block_ignite remains 2026110501.
 
 The dashboard combines the real onboarding, Hearth and native-badge Passport services. It is implemented in `local_ignite` with a thin `block_ignite` native Moodle block. Existing Timeline and Course overview blocks continue to supply scheduled work and the full course list; their PHP, templates, positions and personal dashboard copies are not replaced. No dashboard reset, injected dynamic HTML, Moodle core edit, enrollment mutation or credential-awarding endpoint is introduced.
 
 Prompts 2–4 were merged sequentially on `ignite/prompt5-dashboard`. Their competing shared files were reconciled: final XMLDB schema, ordered savepoints, language/settings, home, callback, invitation deferral and complete privacy coverage. The Passport migration now follows onboarding and Hearths at `2026110400`; the original isolated Passport savepoint `2026110104` is not reused. Final local/block versions are `2026110501`. Unsupported sibling-development database combinations should be rebuilt as private fixtures rather than upgraded out of order.
+
+## Current layout
+
+The standalone Ignite home keeps Moodle’s real Timeline horizontal across the main workspace, the earlier **My learning space** navigation on the left, and **My Hearth** in a separate right column. Container queries stack this layout on narrow screens and in narrow native block regions. The enabled native `block_timeline` renderable and renderer supply its preferences, filters, JavaScript and permission-aware scheduled activities; no parallel Timeline is maintained. Native `/my/` continues using its existing Timeline block without an embedded duplicate. This presentation update is local version 2026110701 (0.7.1), with no schema migration, dashboard reset or production deployment.
 
 ## Administrator setup
 

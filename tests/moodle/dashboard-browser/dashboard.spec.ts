@@ -51,7 +51,7 @@ test('real learner dashboard, native block, mobile, keyboard and contrast', asyn
   await expect(primary).toBeFocused();
   expect(await primary.evaluate(el => getComputedStyle(el).outlineStyle)).toBe('solid');
   await page.keyboard.press('Tab');
-  await expect(root.getByRole('link', { name: 'Open course and requirements', exact: true })).toBeFocused();
+  await expect(root.locator('.ignite-dashboard__timeline [data-region="day-filter"]').getByRole('button')).toBeFocused();
   expect(await page.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches)).toBe(true);
   await primary.click();
   await expect(page.getByRole('heading', { name: 'Reflect on a change', exact: true })).toBeVisible();
