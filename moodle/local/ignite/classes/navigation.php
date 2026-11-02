@@ -35,8 +35,9 @@ final class navigation {
         if (!empty($CFG->enablemycourses)) {
             $hook->add_navitem((object)['itemtype' => 'link', 'title' => get_string('mycourses'), 'url' => new \moodle_url('/my/courses.php')]);
         }
-        if ($node = ($PAGE->settingsnav->find('siteadministration', \navigation_node::TYPE_SITE_ADMIN) ??
-                $PAGE->settingsnav->find('root', \navigation_node::TYPE_SITE_ADMIN))) {
+        $node = $PAGE->settingsnav->find('siteadministration', \navigation_node::TYPE_SITE_ADMIN);
+        if (!$node) { $node = $PAGE->settingsnav->find('root', \navigation_node::TYPE_SITE_ADMIN); }
+        if ($node) {
             $hook->add_navitem((object)['itemtype' => 'link', 'title' => get_string('siteadministration'), 'url' => $node->action()]);
         }
     }
