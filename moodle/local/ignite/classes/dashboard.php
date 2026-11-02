@@ -24,6 +24,8 @@ final class dashboard {
         $course = $courses[$chosenid] ?? ($courses ? reset($courses) : null);
         $data = ['welcome' => get_string('dash_welcome', 'local_ignite', self::plain($USER->firstname)),
             'solurl' => $OUTPUT->image_url('sol', 'local_ignite')->out(false),
+            'dashboardurl' => (new \moodle_url('/local/ignite/index.php'))->out(false),
+            'mycoursesurl' => !empty($CFG->enabledmycourses) ? (new \moodle_url('/my/courses.php'))->out(false) : '',
             'catalogurl' => (new \moodle_url('/course/index.php'))->out(false),
             'nativeurl' => (new \moodle_url(!empty($CFG->enabledashboard) ? '/my/' : '/my/courses.php'))->out(false),
             'passporturl' => (new \moodle_url('/local/ignite/passport.php'))->out(false),

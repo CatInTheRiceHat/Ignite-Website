@@ -1,5 +1,8 @@
 {{! A single current-user projection, shared by the native block and optional Ignite home. }}
 <div class="ignite-dashboard">
+    <div class="ignite-dashboard__layout">
+        {{> local_ignite/dashboard_navigation }}
+        <div class="ignite-dashboard__workspace">
     <section class="ignite-dashboard__welcome" aria-label="{{welcome}}">
         <div>
             <p class="ignite-dashboard__eyebrow">{{#str}}dash_yourspace, local_ignite{{/str}}</p>
@@ -17,6 +20,11 @@
     {{#selectionunavailable}}<p class="ignite-dashboard__notice">{{#str}}dash_selectionunavailable, local_ignite{{/str}}</p>{{/selectionunavailable}}
     {{#resumeonboarding}}<p><a href="{{onboardingurl}}">{{#str}}dash_resume, local_ignite{{/str}}</a></p>{{/resumeonboarding}}
 
+    {{#timeline}}<section class="ignite-dashboard__card ignite-dashboard__timeline" aria-label="{{timelinetitle}}">
+        <h3>{{timelinetitle}}</h3>{{{timeline}}}
+    </section>{{/timeline}}
+
+    <div class="ignite-dashboard__columns {{^hearthsenabled}}ignite-dashboard__columns--single{{/hearthsenabled}}">
     <div class="ignite-dashboard__grid">
         <section class="ignite-dashboard__card ignite-dashboard__learning">
             <p class="ignite-dashboard__eyebrow">{{#str}}dash_yourlearning, local_ignite{{/str}}</p>
@@ -31,34 +39,7 @@
             {{^course}}<h3>{{#str}}dash_start, local_ignite{{/str}}</h3><p>{{#str}}dash_noenrolment, local_ignite{{/str}}</p><a href="{{catalogurl}}">{{#str}}explorecourses, local_ignite{{/str}}</a>{{/course}}
         </section>
 
-        {{#hearthsenabled}}
-        <section class="ignite-dashboard__card">
-            <h3>{{#str}}dash_myhearth, local_ignite{{/str}}</h3>
-            {{#hearth}}
-                <div class="ignite-dashboard__identity">
-                    {{#mascoturl}}<img src="{{mascoturl}}" alt="" width="88" height="88">{{/mascoturl}}
-                    {{#placeholder}}<span>{{#str}}mascotpending, local_ignite{{/str}}</span>{{/placeholder}}
-                    <div><h4>{{name}}</h4><p>{{personality}}</p></div>
-                </div>
-                <p>{{description}}</p>
-                {{#inactive}}<p>{{#str}}inactivehouse, local_ignite{{/str}}</p>{{/inactive}}
-                {{#challenge}}
-                    <h4>{{name}}</h4><p>{{description}}</p>{{#available}}<p>{{progress}}</p>
-                    <progress value="{{value}}" max="{{target}}" aria-label="{{progress}}">{{progress}}</progress>
-                    <p><strong>{{own}}</strong></p>{{/available}}{{^available}}<p>{{#str}}totals_pending, local_ignite{{/str}}</p>{{/available}}
-                    <p class="ignite-dashboard__small">{{#str}}totalsdelay, local_ignite{{/str}} {{#asof}}{{#str}}totalsasof, local_ignite{{/str}} {{asof}}{{/asof}}</p>
-                {{/challenge}}
-                {{^challenge}}<p>{{#str}}nochallenge, local_ignite{{/str}}</p>{{/challenge}}
-                <a href="{{hearthurl}}">{{#str}}dash_openhearth, local_ignite{{/str}}<span class="ignite-dashboard__arrow" aria-hidden="true"></span></a>
-            {{/hearth}}
-            {{^hearth}}
-                <p>{{#str}}nohouse, local_ignite{{/str}}</p>
-                {{#offer}}<p class="ignite-dashboard__notice">{{#str}}dash_invitation, local_ignite{{/str}}</p><p><a href="{{invitationurl}}">{{#str}}dash_meethearths, local_ignite{{/str}}</a></p>{{/offer}}
-                {{^offer}}{{#deferred}}<p>{{#str}}dash_deferred, local_ignite{{/str}}</p>{{/deferred}}<p><a href="{{chooseurl}}">{{#str}}choosehearth, local_ignite{{/str}}</a></p>{{/offer}}
-                <p class="ignite-dashboard__small">{{#str}}houseaccess, local_ignite{{/str}}</p>
-            {{/hearth}}
-        </section>
-        {{/hearthsenabled}}
+
 
         {{#passportenabled}}
         <section class="ignite-dashboard__card ignite-dashboard__passport">
@@ -91,5 +72,9 @@
         </section>
         {{/heat}}
     </div>
+        {{#hearthsenabled}}<aside class="ignite-dashboard__hearth" aria-label="{{#str}}dash_myhearth, local_ignite{{/str}}">{{> local_ignite/dashboard_hearth }}</aside>{{/hearthsenabled}}
+    </div>
     {{#onboarding}}<nav class="ignite-dashboard__help" aria-label="{{#str}}dash_help, local_ignite{{/str}}"><a href="{{interestsurl}}">{{#str}}editinterests, local_ignite{{/str}}</a><a href="{{toururl}}">{{#str}}dash_help, local_ignite{{/str}}</a></nav>{{/onboarding}}
+        </div>
+    </div>
 </div>

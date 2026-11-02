@@ -1,0 +1,8 @@
+<nav class="ignite-dashboard__sidebar" aria-label="{{#str}}dash_navigation, local_ignite{{/str}}">
+    <div class="ignite-dashboard__brand"><img src="{{solurl}}" alt="" width="40" height="40"><span>{{#str}}dash_space, local_ignite{{/str}}</span></div>
+    <a href="{{dashboardurl}}" aria-current="page"><span class="ignite-dashboard__navicon ignite-dashboard__navicon--home" aria-hidden="true"></span>{{#str}}dash_dashboard, local_ignite{{/str}}</a>
+    {{#mycoursesurl}}<a href="{{mycoursesurl}}"><span class="ignite-dashboard__navicon ignite-dashboard__navicon--courses" aria-hidden="true"></span>{{#str}}mycourses, core{{/str}}</a>{{/mycoursesurl}}
+    <a href="{{catalogurl}}"><span class="ignite-dashboard__navicon ignite-dashboard__navicon--explore" aria-hidden="true"></span>{{#str}}explorecourses, local_ignite{{/str}}</a>
+    {{#passportenabled}}<a href="{{passporturl}}"><span class="ignite-dashboard__navicon ignite-dashboard__navicon--passport" aria-hidden="true"></span>{{#str}}passport, local_ignite{{/str}}</a>{{/passportenabled}}
+    {{#onboarding}}<div class="ignite-dashboard__sidebar-help"><strong>{{#str}}dash_stuck, local_ignite{{/str}}</strong><p>{{#str}}dash_questions, local_ignite{{/str}}</p><a href="{{toururl}}">{{#str}}dash_help, local_ignite{{/str}}<span class="ignite-dashboard__arrow" aria-hidden="true"></span></a></div>{{/onboarding}}
+</nav>

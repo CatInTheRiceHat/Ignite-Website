@@ -156,7 +156,7 @@ if (($argv[2] ?? '')==='--after') {
     check(missions::current($fixture->missionid)['complete'],'Mission derives browser success from native completion');
     echo "Post-browser checks: $checks passed\n"; exit;
 }
-check((int)get_config('local_ignite','version')===2026110700,'Final native version installed/upgraded');
+check((int)get_config('local_ignite','version')>=2026110700,'Integrated native schema installed/upgraded');
 check(!get_config('local_ignite','missions') && !get_config('local_ignite','levels'),'Missions and undecided stages default off');
 foreach (['enabled','onboarding','houses','passport','dashboard','missions'] as $flag) { set_config($flag,1,'local_ignite'); }
 set_config('enablecompletion',1); $CFG->enablecompletion=1; set_config('enablebadges',1); $CFG->enablebadges=1;

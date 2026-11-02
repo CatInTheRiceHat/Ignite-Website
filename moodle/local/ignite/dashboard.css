@@ -1,5 +1,5 @@
 /* Native Moodle retains its navigation, Timeline and Course overview. All styling is scoped. */
-.ignite-dashboard { color: #1a1a2e; background: #fff8f0; padding: clamp(1rem, 3vw, 2rem); border-radius: 1.25rem; font-family: Nunito, system-ui, sans-serif; line-height: 1.6; overflow-wrap: anywhere; }
+.ignite-dashboard { color: #1a1a2e; background: #fff8f0; padding: clamp(1rem, 3vw, 2rem); border-radius: 1.25rem; font-family: Nunito, system-ui, sans-serif; line-height: 1.6; overflow-wrap: anywhere; container: ignite-dashboard / inline-size; }
 .ignite-dashboard h2, .ignite-dashboard h3, .ignite-dashboard h4 { color: #1a1a2e; font-family: Poppins, system-ui, sans-serif; line-height: 1.3; }
 .ignite-dashboard h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin: .3rem 0 .8rem; }
 .ignite-dashboard h3 { font-size: 1.3rem; margin-bottom: 1rem; }
@@ -32,6 +32,33 @@
 .ignite-dashboard__recommendations li + li { border-top: 1px solid #d8cbc0; padding-top: 1rem; margin-top: 1rem; }
 .ignite-dashboard__help { display: flex; flex-wrap: wrap; gap: 1.5rem; padding-top: 1.5rem; }
 .ignite-dashboard summary { cursor: pointer; padding: .5rem 0; }
+/* The standalone learner home has room for the earlier navigation rail and a real native Timeline. */
+.ignite-learner-home #page.drawers .main-inner { max-width: 100%; }
+.ignite-dashboard__layout, .ignite-dashboard__columns { display: grid; gap: 1.5rem; align-items: start; }
+.ignite-dashboard__workspace, .ignite-dashboard__hearth, .ignite-dashboard__timeline { min-width: 0; }
+.ignite-dashboard__timeline { margin-bottom: 1.5rem; }
+.ignite-dashboard__sidebar { display: flex; flex-wrap: wrap; gap: .375rem; align-items: center; }
+.ignite-dashboard__brand { display: flex; align-items: center; gap: .6rem; flex-basis: 100%; font-weight: 800; padding: .25rem .5rem .75rem; }
+.ignite-dashboard__brand img { object-fit: contain; }
+.ignite-dashboard__sidebar > a { display: flex; align-items: center; gap: .65rem; min-height: 46px; padding: .6rem .8rem; border-radius: .75rem; color: #1a1a2e; font-weight: 700; text-decoration: none; }
+.ignite-dashboard__sidebar > a[aria-current="page"] { background: #f07b2a; color: #1a1a2e; }
+.ignite-dashboard__sidebar > a:hover { background: #ffe9d7; }
+.ignite-dashboard__sidebar-help { display: none; }
+.ignite-dashboard__navicon { display: inline-block; width: 20px; height: 20px; flex-shrink: 0; background: currentColor; mask-position: center; mask-size: contain; mask-repeat: no-repeat; }
+.ignite-dashboard__navicon--home { mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z'/%3E%3Cpath d='M9 21v-9h6v9'/%3E%3C/svg%3E"); }
+.ignite-dashboard__navicon--courses { mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 7v14M3 3h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5v15h-5a4 4 0 0 0-4 3 4 4 0 0 0-4-3H3Z'/%3E%3C/svg%3E"); }
+.ignite-dashboard__navicon--explore { mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='m16 8-3 5-5 3 3-5Z'/%3E%3C/svg%3E"); }
+.ignite-dashboard__navicon--passport { mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='3' width='14' height='18' rx='2'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3Cpath d='M9 17h6'/%3E%3C/svg%3E"); }
+@container ignite-dashboard (min-width: 52rem) {
+    .ignite-dashboard__columns { grid-template-columns: minmax(0, 1fr) minmax(16rem, 19rem); }
+    .ignite-dashboard__columns--single { grid-template-columns: minmax(0, 1fr); }
+}
+@container ignite-dashboard (min-width: 68rem) {
+    .ignite-dashboard__layout { grid-template-columns: 12.5rem minmax(0, 1fr); gap: 1.75rem; }
+    .ignite-dashboard__sidebar { flex-direction: column; align-items: stretch; position: sticky; top: 5rem; }
+    .ignite-dashboard__sidebar-help { display: block; margin-top: 1.25rem; padding: 1rem; border: 1px solid #d8cbc0; border-radius: 1rem; background: #fff; font-size: .875rem; }
+    .ignite-dashboard__sidebar-help p { margin: .5rem 0; }
+}
 @media (max-width: 480px) { .ignite-dashboard__welcome { align-items: flex-start; gap: .5rem; } .ignite-dashboard__welcome > img { width: 64px; height: 64px; } .ignite-dashboard__identity { flex-wrap: wrap; } }
 @media (prefers-reduced-motion: reduce) { .ignite-dashboard *, .ignite-dashboard *::before, .ignite-dashboard *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 
