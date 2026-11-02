@@ -46,5 +46,23 @@
         <KEY NAME="house" TYPE="foreign" FIELDS="houseid" REFTABLE="local_ignite_house" REFFIELDS="id"/>
       </KEYS>
     </TABLE>
+    <TABLE NAME="local_ignite_feature" COMMENT="Private Passport choices referencing native award instances; no credential data">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="badgeid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="issuedid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="slot" TYPE="int" LENGTH="1" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="user" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="userslot" UNIQUE="true" FIELDS="userid, slot"/>
+        <INDEX NAME="userbadge" UNIQUE="true" FIELDS="userid, badgeid"/>
+      </INDEXES>
+    </TABLE>
   </TABLES>
 </XMLDB>

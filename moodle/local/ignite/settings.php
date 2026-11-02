@@ -15,6 +15,9 @@ if ($hassiteconfig && has_capability('local/ignite:configure', context_system::i
     $settings->add(new \local_ignite\admin\catalog_setting('local_ignite/catalog',
         get_string('catalog', 'local_ignite'), get_string('catalog_desc', 'local_ignite'),
         \local_ignite\catalog::EMPTY, PARAM_RAW, 80, 16));
+    $settings->add(new \local_ignite\admin\passport_setting('local_ignite/passportcatalog',
+        get_string('passport_catalog', 'local_ignite'), get_string('passport_catalog_desc', 'local_ignite'),
+        \local_ignite\passport_catalog::EMPTY, PARAM_RAW, 80, 16));
     $ADMIN->add('localplugins', $settings);
     $ADMIN->add('localplugins', new admin_externalpage('local_ignite_houses',
         get_string('managehouses', 'local_ignite'), new moodle_url('/local/ignite/houses.php'),

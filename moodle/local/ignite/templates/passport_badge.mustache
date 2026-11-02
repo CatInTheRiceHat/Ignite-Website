@@ -1,0 +1,36 @@
+{{!
+    @template local_ignite/passport_badge
+    Authorized native badge detail. Example context (json):
+    {"name":"First Spark","category":"Starter","statuslabel":"Not earned","placeholder":true,"criteria":"Activity completion","passporturl":"passport.php"}
+}}
+<div class="ignite-passport">
+    <p><a href="{{passporturl}}">{{#str}}passport_back, local_ignite{{/str}}</a></p>
+    {{#earned}}<p class="ignite-passport__celebration" role="status">{{#str}}passport_celebrate, local_ignite{{/str}}</p>{{/earned}}
+    <div class="ignite-passport__detail">
+        <div class="ignite-passport__art ignite-passport__art--detail">
+            {{#imageurl}}<img src="{{imageurl}}" alt="" width="240" height="240">{{/imageurl}}
+            {{#placeholder}}<span class="ignite-passport__placeholder">{{#str}}passport_artplaceholder, local_ignite{{/str}}</span>{{/placeholder}}
+        </div>
+        <div>
+            <p class="ignite-passport__category">{{category}}</p>
+            <h2>{{name}}</h2>
+            <p class="ignite-passport__status">{{statuslabel}}</p>
+            {{#primary}}<p>{{#str}}passport_primary, local_ignite{{/str}}</p>{{/primary}}
+            <div>{{{description}}}</div>
+            {{#dateissuedtext}}<p>{{#str}}passport_earneddate, local_ignite{{/str}}: {{dateissuedtext}}</p>{{/dateissuedtext}}
+            {{#dateexpiretext}}<p>{{#str}}passport_expirydate, local_ignite{{/str}}: {{dateexpiretext}}</p>{{/dateexpiretext}}
+            <p>{{#str}}passport_issuer, local_ignite{{/str}}: {{issuer}}</p>
+            {{#hascourse}}<p>{{#str}}course{{/str}}: {{coursename}}</p>{{/hascourse}}
+            {{#coursecompleteknown}}<p>{{#str}}passport_coursecomplete, local_ignite{{/str}}: {{coursecompletelabel}}</p>{{/coursecompleteknown}}
+            {{#caption}}<p>{{caption}}</p>{{/caption}}
+            <p><a class="ignite-passport__action" href="{{actionurl}}">{{actionlabel}}</a></p>
+            {{#featureable}}<p><a href="{{featuredurl}}">{{#str}}passport_featureedit, local_ignite{{/str}}</a></p>{{/featureable}}
+        </div>
+    </div>
+    <section aria-labelledby="passport-criteria">
+        <h2 id="passport-criteria">{{#str}}passport_criteria, local_ignite{{/str}}</h2>
+        <div>{{{criteria}}}</div>
+        <p>{{#str}}passport_pendinghelp, local_ignite{{/str}}</p>
+    </section>
+    <p><a href="{{nativeurl}}">{{#str}}passport_nativecollection, local_ignite{{/str}}</a></p>
+</div>

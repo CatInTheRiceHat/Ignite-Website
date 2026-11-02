@@ -42,7 +42,7 @@ final class home {
             'coursesurl' => (new \moodle_url($learningpath))->out(false),
             'learninglabel' => get_string($learninglabel, 'local_ignite'),
             'catalogurl' => (new \moodle_url('/course/index.php'))->out(false),
-            'badgesurl' => (new \moodle_url('/badges/mybadges.php'))->out(false),
+            'badgesurl' => (new \moodle_url('/local/ignite/passport.php'))->out(false),
             'courses' => $courses, 'hascourses' => (bool)$courses,
             'interests' => implode(', ', $interestnames), 'hasinterests' => (bool)$interestnames,
             'onboarding' => access::enabled('onboarding'),
