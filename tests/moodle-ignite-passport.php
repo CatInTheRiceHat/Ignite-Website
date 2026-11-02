@@ -6,9 +6,18 @@ if (PHP_SAPI !== 'cli' || $argc < 2) {
 }
 define('CLI_SCRIPT', true);
 require $argv[1] . '/config.php';
+$integrated = in_array('--integrated', $argv, true);
+if ($integrated) {
+    if (!str_contains($CFG->dbname, 'ignite_lms_test_p5_') || empty($CFG->noemailever) ||
+            !str_starts_with($CFG->wwwroot, 'http://127.0.0.1:') ||
+            !str_starts_with($CFG->dataroot, '/tmp/ignite-p5-runtime/')) {
+        throw new RuntimeException('Requires an isolated combined Ignite fixture.');
+    }
+} else {
 if (!str_contains($CFG->dbname, 'ignite_lms_test_passport') || empty($CFG->noemailever) ||
         !str_starts_with($CFG->wwwroot, 'http://127.0.0.1:')) {
     throw new RuntimeException('Requires isolated Passport test DB, loopback URL, and disabled email.');
+}
 }
 require_once($CFG->dirroot . '/user/lib.php');
 require_once($CFG->dirroot . '/course/lib.php');
@@ -103,15 +112,15 @@ if (($argv[2] ?? '') === '--baseline') {
     set_config('passportfixturebaseline', json_encode(snapshot(), JSON_THROW_ON_ERROR), 'local_ignite');
     exit(0);
 }
-verify((int)get_config('local_ignite', 'version') === 2026110104, 'Native installation or upgrade reached Passport version');
-if (($argv[2] ?? '') !== '--fresh') {
+verify((int)get_config('local_ignite', 'version') === ($integrated ? 2026110400 : 2026110104), 'Native installation or upgrade reached Passport version');
+if (!$integrated && ($argv[2] ?? '') !== '--fresh') {
     $baseline = json_decode(get_config('local_ignite', 'passportfixturebaseline'), true);
     foreach ($baseline['course'] as &$baselinecourse) {
         unset($baselinecourse['cacherev']);
     }
     unset($baselinecourse);
     verify($baseline === json_decode(json_encode(snapshot()), true), 'Upgrade preserved foundation IDs, names, colors, memberships, preferences, courses, enrollment, grades and credentials');
-} else {
+} else if (!$integrated) {
     verify(!local_ignite\access::enabled(), 'Fresh installation remains disabled by default');
     verify($DB->count_records('local_ignite_feature') === 0, 'Fresh installation has no personal choices');
     verify($DB->count_records('badge') === 0, 'Fresh installation does not create native example badges');
@@ -426,7 +435,7 @@ $bobcontext = context_user::instance($users['bob']->id);
 set_config('enabled', 0, 'local_ignite');
 verify(in_array($alicecontext->id, provider::get_contexts_for_userid($users['alice']->id)->get_contextids()), 'Privacy discovers feature-only user data while disabled');
 $metadata = provider::get_metadata(new \core_privacy\local\metadata\collection('local_ignite'));
-verify(count($metadata->get_collection()) === 3, 'Privacy metadata describes all three personal tables');
+verify(count($metadata->get_collection()) === ($integrated ? 6 : 3), 'Privacy metadata describes every integrated personal table');
 $list = new userlist($alicecontext, 'local_ignite');
 provider::get_users_in_context($list);
 verify(array_values($list->get_userids()) === [(int)$users['alice']->id], 'Privacy lists only feature record owner');

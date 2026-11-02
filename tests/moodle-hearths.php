@@ -6,9 +6,18 @@ if (PHP_SAPI !== 'cli' || $argc < 2) {
 }
 define('CLI_SCRIPT', true);
 require $argv[1] . '/config.php';
+$integrated = in_array('--integrated', $argv, true);
+if ($integrated) {
+    if (!str_contains($CFG->dbname, 'ignite_lms_test_p5_') || empty($CFG->noemailever) ||
+            !str_starts_with($CFG->wwwroot, 'http://127.0.0.1:') ||
+            !str_starts_with($CFG->dataroot, '/tmp/ignite-p5-runtime/')) {
+        throw new RuntimeException('Requires an isolated combined Ignite fixture.');
+    }
+} else {
 if (!str_contains($CFG->dbname, 'ignite_lms_test_p3_') || empty($CFG->noemailever) ||
         !str_starts_with($CFG->wwwroot, 'http://127.0.0.1:')) {
     throw new RuntimeException('Requires isolated Prompt 3 test DB, loopback wwwroot and disabled email.');
+}
 }
 require_once($CFG->dirroot . '/user/lib.php');
 require_once($CFG->dirroot . '/course/lib.php');
@@ -78,7 +87,7 @@ if (($argv[2] ?? '') === '--worker') {
 as_user(get_admin());
 $PAGE->set_context(context_system::instance());
 $PAGE->set_url('/local/ignite/hearth.php');
-verify((int)get_config('local_ignite', 'version') === 2026110300, 'Native version installed/upgraded');
+verify((int)get_config('local_ignite', 'version') === ($integrated ? 2026110400 : 2026110300), 'Native version installed/upgraded');
 $baseline = $DB->get_record('local_ignite_house', ['code' => 'ember']);
 if ($baseline) {
     verify($baseline->name === 'Renamed by administrator', 'Upgrade preserved administrator name');
@@ -169,6 +178,7 @@ $DB->delete_records('local_ignite_credit', ['userid' => $users['alice']->id, 'cm
 $workers = [];
 for ($n = 0; $n < 6; $n++) {
     $command = [PHP_BINARY, __FILE__, $argv[1], '--worker', $users['alice']->id, $cms[0], $challengeid];
+    if ($integrated) { $command[] = '--integrated'; }
     $workers[] = proc_open($command, [0 => ['file', '/dev/null', 'r'], 1 => ['file', '/dev/null', 'a'], 2 => ['file', '/dev/null', 'a']], $pipes);
 }
 foreach ($workers as $worker) {

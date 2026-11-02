@@ -18,7 +18,10 @@ $PAGE->requires->css('/local/ignite/hearths.css');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_sesskey();
     if (optional_param('defer', 0, PARAM_BOOL)) {
-        // Choosing later leaves existing membership and onboarding state intact.
+        // Defer the optional invitation, preserving membership and walkthrough state.
+        if (\local_ignite\access::enabled('onboarding') && !$current) {
+            \local_ignite\invitations::defer();
+        }
         redirect($return);
     }
     if (!isset($available[$selected])) {

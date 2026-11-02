@@ -6,9 +6,18 @@ if (PHP_SAPI !== 'cli' || $argc < 2) {
 }
 define('CLI_SCRIPT', true);
 require $argv[1] . '/config.php';
+$integrated = in_array('--integrated', $argv, true);
+if ($integrated) {
+    if (!str_contains($CFG->dbname, 'ignite_lms_test_p5_') || empty($CFG->noemailever) ||
+            !str_starts_with($CFG->wwwroot, 'http://127.0.0.1:') ||
+            !str_starts_with($CFG->dataroot, '/tmp/ignite-p5-runtime/')) {
+        throw new RuntimeException('Requires an isolated combined Ignite fixture.');
+    }
+} else {
 if (!str_contains($CFG->dbname, 'ignite_lms_test_prompt2_') || empty($CFG->noemailever) ||
         $CFG->wwwroot !== 'http://127.0.0.1:8766' || !str_starts_with($CFG->dataroot, '/tmp/ignite-p2-')) {
     throw new RuntimeException('Requires the private Prompt 2 DB, data directory, loopback URL, and no email.');
+}
 }
 require_once($CFG->dirroot . '/user/lib.php');
 require_once($CFG->dirroot . '/course/lib.php');
@@ -86,10 +95,10 @@ if (($argv[2] ?? '') === '--prepare-upgrade') {
     echo "Saved Prompt 1 database snapshot\n";
     exit(0);
 }
-verify((int)get_config('local_ignite', 'version') === 2026110200, 'Native installer/upgrade reached Prompt 2 version');
+verify((int)get_config('local_ignite', 'version') === ($integrated ? 2026110400 : 2026110200), 'Native installer/upgrade reached Prompt 2 version');
 if ($saved = get_config('local_ignite', 'prompt2snapshot')) {
     verify(json_decode($saved) == (object)snapshot(), 'Upgrade preserved all foundation rows, completed walkthroughs, enrollments, grades and badges');
-} else {
+} else if (!$integrated) {
     verify(!access::enabled() && $DB->count_records('local_ignite_house') === 4,
         'Fresh installation retains disabled foundation switches and exactly four stable records');
 }
