@@ -1,0 +1,11 @@
+<?php
+// This file is part of Moodle - https://moodle.org/
+// Licensed under the GNU GPL v3 or later.
+defined('MOODLE_INTERNAL') || die();
+
+$plugin->component = 'local_ignite';
+$plugin->version = 2026110101;
+$plugin->requires = 2026042004;
+$plugin->supported = [502, 502];
+$plugin->maturity = MATURITY_BETA;
+$plugin->release = '0.1.0';

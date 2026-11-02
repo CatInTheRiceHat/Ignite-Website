@@ -1,0 +1,58 @@
+{{!
+    @template local_ignite/home
+    Ignite foundation home. All learner state comes from Moodle and local_ignite services.
+    Example context (json):
+    {"mascoturl":"sol.png","dashboardurl":"/my/","coursesurl":"/my/courses.php",
+     "catalogurl":"/course/index.php","learninglabel":"Go to My courses","hascourses":false,"onboarding":false,"houses":false,"passport":false}
+}}
+<div class="ignite-home">
+    <div class="ignite-home__welcome">
+        <div>
+            <h2>{{#str}}welcome, local_ignite{{/str}}</h2>
+            <p>{{#str}}welcomeintro, local_ignite{{/str}}</p>
+            <a class="ignite-home__action" href="{{coursesurl}}">{{learninglabel}}<span class="ignite-home__arrow" aria-hidden="true"></span></a>
+        </div>
+        <img src="{{mascoturl}}" alt="" width="144" height="144">
+    </div>
+    <p><a href="{{dashboardurl}}">{{backlabel}}</a></p>
+    <div class="ignite-home__grid">
+        <section class="ignite-home__card" aria-labelledby="ignite-courses">
+            <h2 id="ignite-courses">{{#str}}yourcourses, local_ignite{{/str}}</h2>
+            {{#hascourses}}
+                <ul>{{#courses}}<li><a href="{{url}}">{{{name}}}</a></li>{{/courses}}</ul>
+            {{/hascourses}}
+            {{^hascourses}}<p>{{#str}}nocourses, local_ignite{{/str}}</p>{{/hascourses}}
+            <a href="{{catalogurl}}">{{#str}}explorecourses, local_ignite{{/str}}</a>
+        </section>
+        {{#onboarding}}
+        <section class="ignite-home__card" aria-labelledby="ignite-preferences">
+            <h2 id="ignite-preferences">{{#str}}yourinterests, local_ignite{{/str}}</h2>
+            {{#hasinterests}}<p>{{interests}}</p>{{/hasinterests}}
+            {{^hasinterests}}<p>{{#str}}nointerests, local_ignite{{/str}}</p>{{/hasinterests}}
+            <p>{{#str}}onboardingstatus, local_ignite{{/str}}: {{onboardingstatus}}</p>
+        </section>
+        {{/onboarding}}
+        {{#houses}}
+        <section class="ignite-home__card" aria-labelledby="ignite-house">
+            <h2 id="ignite-house">{{#str}}yourhouse, local_ignite{{/str}}</h2>
+            {{#hashouse}}
+                <img src="{{emblemurl}}" alt="" width="64" height="64">
+                <h3 style="border-inline-start: 4px solid {{houseaccent}}; padding-inline-start: .5rem;">{{housename}}</h3><p>{{housedescription}}</p>
+                {{#houseinactive}}<p>{{#str}}inactivehouse, local_ignite{{/str}}</p>{{/houseinactive}}
+            {{/hashouse}}
+            {{^hashouse}}<p>{{#str}}nohouse, local_ignite{{/str}}</p>{{/hashouse}}
+            <p>{{#str}}houseaccess, local_ignite{{/str}}</p>
+        </section>
+        {{/houses}}
+        {{#passport}}
+        <section class="ignite-home__card" aria-labelledby="ignite-passport">
+            <h2 id="ignite-passport">{{#str}}passport, local_ignite{{/str}}</h2>
+            {{#badgesenabled}}
+                <p>{{#str}}passportintro, local_ignite{{/str}}</p>
+                <a href="{{badgesurl}}">{{#str}}viewbadges, local_ignite{{/str}}</a>
+            {{/badgesenabled}}
+            {{^badgesenabled}}<p>{{#str}}badgesunavailable, local_ignite{{/str}}</p>{{/badgesenabled}}
+        </section>
+        {{/passport}}
+    </div>
+</div>
