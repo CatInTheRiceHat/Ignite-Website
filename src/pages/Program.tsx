@@ -1,9 +1,6 @@
 import { useState } from 'react';
-import { BookOpen, Lightbulb, MessagesSquare, Rocket } from 'lucide-react';
 import { courseCounts, courseFields, courseFormats, developmentCourses, programCopy, type CourseField, type CourseFormat, type DevelopmentCourse } from '../data/program';
 import ProgramNextSteps from '../components/program/ProgramNextSteps';
-
-const fieldIcons = { technology: BookOpen, career: Lightbulb, personal: MessagesSquare, leadership: Rocket };
 
 const CourseCard = ({ course }: { course: DevelopmentCourse }) => {
   const summary = course.description?.trim() || 'Course in progress.';
@@ -54,9 +51,8 @@ const Program = () => {
   const coursesForFormat = developmentCourses.filter((course) => format === 'all' || course.format === format);
   const coursesForField = developmentCourses.filter((course) => field === 'all' || course.field === field);
   const visibleCourses = coursesForFormat.filter((course) => field === 'all' || course.field === field);
-  const visibleGroups = courseFields.map((group, index) => ({
+  const visibleGroups = courseFields.map((group) => ({
     ...group,
-    number: String(index + 1).padStart(2, '0'),
     courses: visibleCourses.filter((course) => course.field === group.id),
   })).filter((group) => group.courses.length > 0);
   const formatCounts = {
@@ -155,13 +151,9 @@ const Program = () => {
             Showing {visibleCourses.length} {format === 'all' ? '' : `${courseFormats[format].label.toLowerCase()} `}{visibleCourses.length === 1 ? 'course' : 'courses'} in development.
           </p>
           <div id="development-courses" className="space-y-12">
-            {visibleGroups.map((group) => {
-              const Icon = fieldIcons[group.id];
-              return (
+            {visibleGroups.map((group) => (
                 <section key={group.id} aria-labelledby={`field-${group.id}`}>
-                  <div className="flex items-center gap-3 sm:gap-4 border-b-2 border-orange-200 pb-4 mb-6 text-[var(--primary-orange)]">
-                    <span className="text-lg font-bold" aria-hidden="true">{group.number}</span>
-                    <Icon className="h-7 w-7 shrink-0" aria-hidden="true" />
+                  <div className="flex items-center gap-3 sm:gap-4 mb-6 text-[var(--primary-orange)]">
                     <h3 id={`field-${group.id}`} className="text-xl sm:text-2xl font-bold">{group.label}</h3>
                     <span className="ml-auto shrink-0 text-sm font-bold text-[var(--text-light)]">{group.courses.length} {group.courses.length === 1 ? 'course' : 'courses'}</span>
                   </div>
@@ -169,8 +161,7 @@ const Program = () => {
                     {group.courses.map((course) => <CourseCard key={course.title} course={course} />)}
                   </div>
                 </section>
-              );
-            })}
+            ))}
             {visibleCourses.length === 0 && (
               <div className="rounded-3xl border-2 border-orange-100 bg-white p-8 text-center">
                 <p className="text-[var(--text-light)]">No courses match these filters.</p>
