@@ -3,51 +3,43 @@ import { courseCounts, courseFormats, developmentCourses, programCopy, type Cour
 import ProgramNextSteps from '../components/program/ProgramNextSteps';
 
 const CourseCard = ({ course }: { course: DevelopmentCourse }) => {
-  const summary = [
-    course.audience && `Who it’s for: ${course.audience}`,
-    course.commitment && `Course work: ${course.commitment}`,
-    course.description,
-    course.prerequisites && `Prerequisites: ${course.prerequisites}`,
-    course.note,
-  ].filter(Boolean).join(' ');
+  const summary = course.description?.trim() || 'Course in progress.';
+  const instructors = course.instructors ?? [];
 
   return (
-    <article className="flex h-[40rem] min-w-0 flex-col bg-white rounded-[2rem] overflow-hidden hover:shadow-lg transition-shadow border-2 border-orange-100">
+    <article className="flex h-full min-w-0 flex-col bg-white rounded-[2rem] overflow-hidden hover:shadow-lg transition-shadow border-2 border-orange-100">
       {course.headerImage ? (
-        <div className="h-44 shrink-0 overflow-hidden bg-orange-50">
-          <img src={course.headerImage} alt="" className="block h-full w-full object-cover" style={{ objectPosition: course.headerPosition }} loading="lazy" />
+        <div className="aspect-[43/24] w-full shrink-0 overflow-hidden bg-orange-50">
+          <img src={course.headerImage} alt="" width={2752} height={1536} className="block h-full w-full object-contain" loading="lazy" />
         </div>
       ) : (
-        <div className="h-44 shrink-0 flex items-center justify-center bg-orange-50">
+        <div className="aspect-[43/24] w-full shrink-0 flex items-center justify-center bg-orange-50">
           <img src={course.icon} alt="" className="h-24 w-24 object-contain" loading="lazy" />
         </div>
       )}
-      <div className="grid min-h-0 flex-1 grid-rows-[auto_3.5rem_1.25rem_minmax(0,1fr)_6.75rem] gap-4 p-6 sm:p-8">
-        <div className="flex gap-2 text-xs font-bold text-[var(--text-charcoal)]">
+      <div className="grid h-[22rem] min-w-0 shrink-0 grid-cols-[minmax(0,1fr)] grid-rows-[1.5rem_3.5rem_minmax(0,1fr)_5.5rem] gap-4 p-6 sm:p-8">
+        <div className="flex gap-2 whitespace-nowrap text-xs font-bold text-[var(--text-charcoal)]">
           <span className="rounded-full bg-orange-100 px-3 py-1">{courseFormats[course.format].label}</span>
           <span className="rounded-full bg-[var(--bg-cream)] px-3 py-1">In development</span>
         </div>
         <h3 className="line-clamp-2 text-xl font-bold text-[var(--text-charcoal)] leading-snug" title={course.title}>{course.title}</h3>
-        <div className="min-w-0 text-sm leading-5 text-[var(--text-light)]">
-          {(course.duration || course.format === 'live') && (
-            <p className="truncate">Planned length: {(course.duration ?? courseFormats.live.duration).toLowerCase()}</p>
-          )}
-        </div>
         <div className="min-h-0 overflow-hidden">
-          {summary && <p className="line-clamp-5 text-sm leading-relaxed text-[var(--text-light)]" title={summary}>{summary}</p>}
+          <p className="line-clamp-3 text-sm leading-relaxed text-[var(--text-light)]" title={summary}>{summary}</p>
         </div>
-        {course.instructors && course.instructors.length > 0 && (
-          <div className="min-w-0 rounded-2xl bg-[var(--bg-cream)] p-4 text-sm text-[var(--text-light)]">
-            <p className="font-bold text-[var(--text-charcoal)]">{course.instructors.length === 1 ? 'Teacher' : 'Teachers'}</p>
-            <ul className="mt-2 space-y-1">
-              {course.instructors.map((instructor) => (
+        <footer className="min-w-0 rounded-2xl bg-[var(--bg-cream)] px-4 py-3 text-sm text-[var(--text-light)]">
+          <p className="font-bold text-[var(--text-charcoal)]">{instructors.length > 1 ? 'Teachers' : 'Teacher'}</p>
+          {instructors.length > 0 ? (
+            <ul className="mt-1">
+              {instructors.map((instructor) => (
                 <li key={instructor.name} className="truncate leading-5" title={`${instructor.displayName ?? instructor.name}${instructor.grades ? ` · Grades ${instructor.grades}` : ''}`}>
                   {instructor.displayName ?? instructor.name}{instructor.grades ? ` · Grades ${instructor.grades}` : ''}
                 </li>
               ))}
             </ul>
-          </div>
-        )}
+          ) : (
+            <p className="mt-1 leading-5">Not yet listed.</p>
+          )}
+        </footer>
       </div>
     </article>
   );
