@@ -17,7 +17,7 @@ const CourseCard = ({ course }: { course: DevelopmentCourse }) => {
           <img src={course.icon} alt="" className="h-24 w-24 object-contain" loading="lazy" />
         </div>
       )}
-      <div className="grid h-[22rem] min-w-0 shrink-0 grid-cols-[minmax(0,1fr)] grid-rows-[1.5rem_3.5rem_minmax(0,1fr)_5.5rem] gap-4 p-6 sm:p-8">
+      <div className="grid min-h-[22rem] min-w-0 flex-1 grid-cols-[minmax(0,1fr)] grid-rows-[1.5rem_3.5rem_minmax(4.5rem,1fr)_auto] gap-4 p-6 sm:p-8">
         <div className="flex gap-2 whitespace-nowrap text-xs font-bold text-[var(--text-charcoal)]">
           <span className="rounded-full bg-orange-100 px-3 py-1">{courseFormats[course.format].label}</span>
           <span className="rounded-full bg-[var(--bg-cream)] px-3 py-1">In development</span>
@@ -26,12 +26,12 @@ const CourseCard = ({ course }: { course: DevelopmentCourse }) => {
         <div className="min-h-0 overflow-hidden">
           <p className="line-clamp-3 text-sm leading-relaxed text-[var(--text-light)]" title={summary}>{summary}</p>
         </div>
-        <footer className="min-w-0 rounded-2xl bg-[var(--bg-cream)] px-4 py-3 text-sm text-[var(--text-light)]">
+        <footer className={`flex min-w-0 flex-col items-center justify-center rounded-2xl bg-[var(--bg-cream)] px-4 py-4 text-center text-sm text-[var(--text-light)] ${instructors.length > 1 ? 'min-h-[6.5rem]' : 'min-h-[5.5rem]'}`}>
           <p className="font-bold text-[var(--text-charcoal)]">{instructors.length > 1 ? 'Teachers' : 'Teacher'}</p>
           {instructors.length > 0 ? (
-            <ul className="mt-1">
+            <ul className="mt-1 w-full space-y-1">
               {instructors.map((instructor) => (
-                <li key={instructor.name} className="truncate leading-5" title={`${instructor.displayName ?? instructor.name}${instructor.grades ? ` · Grades ${instructor.grades}` : ''}`}>
+                <li key={instructor.name} className="break-words leading-5" title={`${instructor.displayName ?? instructor.name}${instructor.grades ? ` · Grades ${instructor.grades}` : ''}`}>
                   {instructor.displayName ?? instructor.name}{instructor.grades ? ` · Grades ${instructor.grades}` : ''}
                 </li>
               ))}
