@@ -71,7 +71,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Links */}
-        <div className="hidden xl:flex items-center gap-4 font-semibold text-xl">
+        <div className="hidden xl:flex items-center gap-7 whitespace-nowrap font-semibold text-xl">
           {navLinks.map((link) => (
             <NavLink
               key={link.path}
@@ -83,7 +83,7 @@ const Navbar = () => {
               {link.name}
             </NavLink>
           ))}
-          <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[var(--primary-orange)] px-5 py-3 text-white transition-colors hover:bg-[var(--primary-orange-dark)]">
+          <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[var(--primary-orange)] px-5 py-3 font-extrabold text-white transition-colors hover:bg-[var(--primary-orange-dark)]">
             Apply Now
             <RedirectArrow size={16} />
           </a>
@@ -129,7 +129,7 @@ const Navbar = () => {
                   {link.name}
                 </NavLink>
               ))}
-              <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)} className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-4 py-3 text-white transition-colors hover:bg-[var(--primary-orange-dark)]">
+              <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)} className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-4 py-3 font-extrabold text-white transition-colors hover:bg-[var(--primary-orange-dark)]">
                 Apply Now
                 <RedirectArrow size={16} />
               </a>
