@@ -1,0 +1,36 @@
+<div class="ignite-hearths">
+    {{#house}}
+    <section class="ignite-hearths__card" style="border-top-color: {{accent}};">
+        <div class="ignite-hearths__art">
+            {{#mascoturl}}<img src="{{mascoturl}}" alt="" width="128" height="128">{{/mascoturl}}
+            {{#placeholder}}<span class="ignite-hearths__placeholder">{{#str}}mascotpending, local_ignite{{/str}}</span>{{/placeholder}}
+            <img src="{{emblemurl}}" alt="" width="48" height="48">
+        </div>
+        <h2>{{name}}</h2><p>{{personality}}</p><p>{{description}}</p>
+        {{#inactive}}<p>{{#str}}inactivehouse, local_ignite{{/str}}</p>{{/inactive}}
+    </section>
+    {{#challenge}}
+    <section class="ignite-hearths__card mt-3">
+        <h2>{{name}}</h2><p>{{description}}</p><p>{{period}}</p>
+        <svg class="ignite-hearths__flame" viewBox="0 0 100 120" aria-hidden="true" focusable="false">
+            <defs><clipPath id="ignite-progress-flame"><path d="M50 3 C58 28 35 39 49 55 C61 45 65 34 63 25 C99 67 99 103 75 114 C48 130 10 111 9 81 C7 67 17 49 27 43 C21 65 32 72 37 68 C22 35 49 28 50 3Z"/></clipPath></defs>
+            <path d="M50 3 C58 28 35 39 49 55 C61 45 65 34 63 25 C99 67 99 103 75 114 C48 130 10 111 9 81 C7 67 17 49 27 43 C21 65 32 72 37 68 C22 35 49 28 50 3Z" fill="#f5e2d1" stroke="#85370d" stroke-width="2"/>
+            <rect x="0" y="{{filly}}" width="100" height="{{fillheight}}" fill="#f07b2a" clip-path="url(#ignite-progress-flame)"/>
+        </svg>
+        <p>{{progress}}</p>
+        <progress value="{{value}}" max="{{target}}" aria-label="{{progress}}">{{progress}}</progress>
+        <p>{{own}}</p>
+        <p>{{#str}}totalsdelay, local_ignite{{/str}} {{#asof}}{{#str}}totalsasof, local_ignite{{/str}} {{asof}}{{/asof}}</p>
+    </section>
+    {{/challenge}}
+    {{^challenge}}<p>{{#str}}nochallenge, local_ignite{{/str}}</p>{{/challenge}}
+    {{#next}}<p><a class="ignite-hearths__button" href="{{url}}">{{#str}}nextmilestone, local_ignite{{/str}}: {{{name}}}</a></p>{{/next}}
+    {{^next}}<p>{{#str}}noeligiblemilestone, local_ignite{{/str}}</p>{{/next}}
+    {{#learningcourse}}<p><a href="{{url}}">{{#str}}continuelearning, local_ignite{{/str}}: {{{name}}}</a></p>{{/learningcourse}}
+    <p><a href="{{chooseurl}}">{{#str}}switchhearth, local_ignite{{/str}}</a></p>
+    <p>{{#str}}switchhelp, local_ignite{{/str}}</p>
+    {{/house}}
+    {{^house}}<p>{{#str}}nohouse, local_ignite{{/str}}</p><p><a class="ignite-hearths__button" href="{{chooseurl}}">{{#str}}choosehearth, local_ignite{{/str}}</a></p>{{/house}}
+    <p>{{#str}}houseaccess, local_ignite{{/str}}</p>
+    <p><a href="{{homeurl}}">{{#str}}homeheading, local_ignite{{/str}}</a> · <a href="{{coursesurl}}">{{#str}}explorecourses, local_ignite{{/str}}</a></p>
+</div>

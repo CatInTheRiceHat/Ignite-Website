@@ -24,7 +24,13 @@ if ($hassiteconfig && has_capability('local/ignite:configure', context_system::i
     $settings->add(new \local_ignite\admin\onboarding_setting('local_ignite/onboardingconfig',
         get_string('onboardingconfig', 'local_ignite'), get_string('onboardingconfig_desc', 'local_ignite'),
         \local_ignite\onboarding_config::EMPTY, PARAM_RAW, 80, 12));
+    // Optional recommendation quiz deliberately has no setting or stored traits in this phase.
     $ADMIN->add('localplugins', $settings);
+    foreach (['hearthsetup' => 'draftsetup', 'hearthchallenges' => 'hearthchallenges'] as $route => $label) {
+        $ADMIN->add('localplugins', new admin_externalpage('local_ignite_' . $route,
+            get_string($label, 'local_ignite'), new moodle_url('/local/ignite/' . $route . '.php'),
+            ['moodle/site:config', 'local/ignite:configure']));
+    }
     $ADMIN->add('localplugins', new admin_externalpage('local_ignite_houses',
         get_string('managehouses', 'local_ignite'), new moodle_url('/local/ignite/houses.php'),
         ['moodle/site:config', 'local/ignite:configure']));

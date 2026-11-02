@@ -18,10 +18,18 @@ if ($id) {
     if ($data = $form->get_data()) {
         require_sesskey();
         \local_ignite\houses::configure($id, [
+            'shortname' => $data->shortname, 'personality' => $data->personality, 'mascot' => $data->mascot,
             'name' => $data->name, 'description' => $data->description,
             'accent' => $data->accent, 'emblem' => $data->emblem, 'active' => (int)$data->active,
         ]);
+        \local_ignite\hearth_assets::save($id, ['emblem' => (int)$data->emblemfile, 'mascot' => (int)$data->mascotfile]);
         redirect($baseurl, get_string('changessaved'), null, \core\output\notification::NOTIFY_SUCCESS);
+    }
+    foreach (['emblem', 'mascot'] as $area) {
+        $draftid = file_get_submitted_draft_itemid($area . 'file');
+        file_prepare_draft_area($draftid, context_system::instance()->id, 'local_ignite', $area, $id,
+            \local_ignite\hearth_assets::OPTIONS);
+        $record->{$area . 'file'} = $draftid;
     }
     $form->set_data($record);
 }
@@ -32,6 +40,7 @@ echo html_writer::tag('p', get_string('houseconfiguration', 'local_ignite'));
 if (isset($form)) {
     $form->display();
 } else {
+    echo html_writer::link(new moodle_url('/local/ignite/hearthsetup.php'), get_string('draftsetup', 'local_ignite'));
     $table = new html_table();
     $table->head = [get_string('housecode', 'local_ignite'), get_string('housename', 'local_ignite'),
         get_string('houseactive', 'local_ignite'), get_string('edit')];

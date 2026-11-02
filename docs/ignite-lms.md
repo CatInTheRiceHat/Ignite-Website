@@ -1,5 +1,7 @@
 # Ignite LMS foundation
 
+This records the completed Prompt 1 baseline. [Prompt 3 Hearth extensions](phases/prompt3-hearths.md) supersede its placeholder seeding, learner-facing house terminology and membership-history limits; existing stable IDs/services are preserved.
+
 ## Installed system and boundaries
 
 Inspected November 1, 2026 by reading the installed source over SSH. Moodle reports **5.2.4 (Build: 20261005)**, branch `502`, core version `2026042004.00`, with PHP 8.3.6. The installation root is `/var/www/moodle`; the public webroot and plugin root are `/var/www/moodle/public`. The repository contains customizations, not a complete Moodle distribution.

@@ -1,0 +1,45 @@
+<div class="ignite-hearths">
+    <p class="ignite-hearths__lead">{{#str}}sparksyou, local_ignite{{/str}}</p>
+    <p>{{#str}}hearthinvitation, local_ignite{{/str}}</p>
+    <p>{{#str}}houseaccess, local_ignite{{/str}}</p>
+    {{#switching}}<p>{{#str}}switchhelp, local_ignite{{/str}}</p>{{/switching}}
+    {{#confirmation}}
+    <section class="ignite-hearths__card">
+        <h2>{{#str}}confirmhearth, local_ignite, {{selectedname}}{{/str}}</h2>
+        <p>{{#str}}switchhelp, local_ignite{{/str}}</p>
+        <form method="post" action="{{action}}">
+            <input type="hidden" name="sesskey" value="{{sesskey}}">
+            <input type="hidden" name="hearthid" value="{{selected}}">
+            <button class="ignite-hearths__button" name="confirm" value="1">{{#str}}confirmchoice, local_ignite{{/str}}</button>
+        </form>
+        <p><a href="{{action}}">{{#str}}backtohearths, local_ignite{{/str}}</a></p>
+    </section>
+    {{/confirmation}}
+    {{^confirmation}}
+    <div class="ignite-hearths__grid">
+        {{#cards}}
+        <section class="ignite-hearths__card" style="border-top-color: {{accent}};">
+            <div class="ignite-hearths__art">
+                {{#mascoturl}}<img src="{{mascoturl}}" alt="" width="128" height="128">{{/mascoturl}}
+                {{#placeholder}}<span class="ignite-hearths__placeholder">{{#str}}mascotpending, local_ignite{{/str}}</span>{{/placeholder}}
+                <img src="{{emblemurl}}" alt="" width="48" height="48">
+            </div>
+            <h2>{{name}}</h2>
+            <p>{{personality}}</p><p>{{description}}</p>
+            {{#challenge}}<p>{{#str}}currentchallenge, local_ignite{{/str}}: {{challenge}}</p>{{/challenge}}
+            {{#current}}<p>{{#str}}currenthearth, local_ignite{{/str}}</p>{{/current}}
+            <form method="post" action="{{action}}">
+                <input type="hidden" name="sesskey" value="{{sesskey}}">
+                <button class="ignite-hearths__button" name="hearthid" value="{{id}}">{{#str}}chooseidentity, local_ignite, {{name}}{{/str}}</button>
+            </form>
+        </section>
+        {{/cards}}
+    </div>
+    {{^hascards}}<p>{{#str}}noactivehearths, local_ignite{{/str}}</p>{{/hascards}}
+    {{/confirmation}}
+    <form method="post" action="{{action}}" class="mt-3">
+        <input type="hidden" name="sesskey" value="{{sesskey}}">
+        <button class="btn btn-secondary" name="defer" value="1">{{#str}}chooselater, local_ignite{{/str}}</button>
+    </form>
+    <p><a href="{{continueurl}}">{{#str}}continuelearning, local_ignite{{/str}}</a></p>
+</div>

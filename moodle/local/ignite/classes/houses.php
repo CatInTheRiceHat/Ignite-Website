@@ -7,6 +7,7 @@ defined('MOODLE_INTERNAL') || die();
 
 final class houses {
     public const EMBLEMS = ['sol', 'celebrate', 'lightbulb', 'graduation'];
+    public const MASCOTS = ['placeholder', 'sol', 'celebrate', 'lightbulb', 'graduation'];
 
     public static function get_current(): ?\stdClass {
         global $DB;
@@ -32,17 +33,23 @@ final class houses {
         access::locked('houses', static function() use ($DB, $userid, $houseid) {
             access::locked('user:' . $userid, static function() use ($DB, $userid, $houseid) {
                 $existing = $DB->get_record('local_ignite_member', ['userid' => $userid]);
+                $house = $houseid === null ? null :
+                    $DB->get_record('local_ignite_house', ['id' => $houseid], '*', MUST_EXIST);
+                if (($existing && (int)$existing->houseid === $houseid) || (!$existing && $houseid === null)) {
+                    return;
+                }
+                if ($house && !$house->active) {
+                    throw new \invalid_parameter_exception('Inactive house');
+                }
+                $now = time();
+                $DB->set_field('local_ignite_history', 'timeend', $now, ['userid' => $userid, 'timeend' => 0]);
                 if ($houseid === null) {
                     $DB->delete_records('local_ignite_member', ['userid' => $userid]);
                     return;
                 }
-                $house = $DB->get_record('local_ignite_house', ['id' => $houseid], '*', MUST_EXIST);
-                if ($existing && (int)$existing->houseid === $houseid) {
-                    return;
-                }
-                if (!$house->active) {
-                    throw new \invalid_parameter_exception('Inactive house');
-                }
+                $DB->insert_record('local_ignite_history', (object)[
+                    'userid' => $userid, 'houseid' => $houseid, 'timebegin' => $now, 'timeend' => 0,
+                ]);
                 $record = (object)['userid' => $userid, 'houseid' => $houseid, 'timemodified' => time()];
                 if ($existing) {
                     $record->id = $existing->id;
@@ -72,7 +79,7 @@ final class houses {
         global $DB;
         access::administrator();
         require_sesskey();
-        if (array_diff(array_keys($data), ['name', 'description', 'accent', 'emblem', 'active']) ||
+        if (array_diff(array_keys($data), ['name', 'description', 'accent', 'emblem', 'active', 'shortname', 'personality', 'mascot']) ||
                 !isset($data['name'], $data['description'], $data['accent'], $data['emblem'], $data['active']) ||
                 !is_string($data['name']) || trim($data['name']) === '' || \core_text::strlen($data['name']) > 100 ||
                 clean_param($data['name'], PARAM_TEXT) !== $data['name'] ||
@@ -81,6 +88,15 @@ final class houses {
                 !is_string($data['accent']) || !self::valid_accent($data['accent']) ||
                 !in_array($data['emblem'], self::EMBLEMS, true) || !in_array($data['active'], [0, 1], true)) {
             throw new \invalid_parameter_exception('Invalid house configuration');
+        }
+        foreach (['shortname' => 100, 'personality' => 2000] as $field => $maxlength) {
+            if (isset($data[$field]) && (!is_string($data[$field]) ||
+                    \core_text::strlen($data[$field]) > $maxlength || clean_param($data[$field], PARAM_TEXT) !== $data[$field])) {
+                throw new \invalid_parameter_exception('Invalid Hearth identity');
+            }
+        }
+        if (isset($data['mascot']) && !in_array($data['mascot'], self::MASCOTS, true)) {
+            throw new \invalid_parameter_exception('Invalid approved mascot');
         }
         access::locked('houses', static function() use ($DB, $id, $data) {
             $record = $DB->get_record('local_ignite_house', ['id' => $id], '*', MUST_EXIST);

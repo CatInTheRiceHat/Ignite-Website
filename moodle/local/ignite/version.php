@@ -4,8 +4,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_ignite';
-$plugin->version = 2026110200;
+$plugin->version = 2026110300;
 $plugin->requires = 2026042004;
 $plugin->supported = [502, 502];
 $plugin->maturity = MATURITY_BETA;
-$plugin->release = '0.2.0';
+$plugin->release = '0.3.0';
