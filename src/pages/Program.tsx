@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { courseCounts, courseFields, courseFormats, developmentCourses, programCopy, type CourseField, type CourseFormat, type DevelopmentCourse } from '../data/program';
 import ProgramNextSteps from '../components/program/ProgramNextSteps';
+import { STUDENT_PREENROLLMENT_URL } from '../lib/links';
+import { RedirectArrow } from '../components/ui/redirect-arrow';
 
 const CourseCard = ({ course }: { course: DevelopmentCourse }) => {
   const summary = course.description?.trim() || 'Course in progress.';
@@ -76,6 +78,11 @@ const Program = () => {
           <h1 className="text-5xl md:text-7xl font-rammetto text-white">The Program</h1>
           <p className="text-xl md:text-2xl opacity-90 mt-4">Practical life skills. Two ways to learn.</p>
           <p className="max-w-2xl mx-auto mt-6 text-lg leading-relaxed">Live and independent courses are being developed. Explore what’s planned below.</p>
+          <p className="mt-6 text-lg font-bold">Student pre-enrollment is now open.</p>
+          <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-lg font-bold text-[var(--primary-orange)] shadow-lg transition-transform hover:scale-105 active:scale-95">
+            Apply Now
+            <RedirectArrow />
+          </a>
         </div>
       </section>
 

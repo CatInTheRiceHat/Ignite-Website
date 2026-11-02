@@ -278,7 +278,7 @@ export const courseCounts = {
 
 export const programCopy = {
   direction: 'Practical skills for everyday life: managing your time, communicating clearly, staying safe online, understanding money, and turning ideas into projects.',
-  availability: 'These courses are in development. Launch dates, class schedules, and student enrollment details have not been confirmed.',
+  availability: 'Student pre-enrollment is now open. These courses are in development; launch dates and class schedules are still being planned.',
   eligibility: 'Ignite welcomes all students. Bring your curiosity and a willingness to learn.',
   expansion: 'After Summer 2026, Ignite is working toward free online learning that combines live classes with independent courses. The goal is to help more students build useful skills, wherever they learn.',
   proposals: 'AI learning support, professional curriculum review, new partnerships, and broader reach are proposals. Their launch, approval, and growth targets have not been confirmed.',
@@ -293,7 +293,7 @@ export const programFaqs = [
   { question: 'Is experience required?', answer: 'Requirements vary by course. Introduction to Physics & Astronomy needs no previous experience or advanced math. Check the individual course descriptions for prerequisites.' },
   { question: 'Who are the mentors?', answer: 'Ignite is student-led. High school mentors helped students practice skills during Summer 2026. Teaching and feedback arrangements for developing courses are still being planned.' },
   { question: 'Where will learning happen?', answer: 'Both formats are planned for online learning. Independent course plans include weekly lessons, practice, quizzes, applied work, feedback, revision, and a final project. The learning hub currently opens a Moodle sign-in page.' },
-  { question: 'Can I apply now?', answer: 'A current student application link and enrollment availability have not been confirmed. The learning hub is a Moodle sign-in page. Intern applications are separate and linked on the Hiring page.' },
+  { question: 'Can I apply now?', answer: 'Yes! Student pre-enrollment is open. Use any Apply Now button to fill out the student pre-enrollment form. Courses are still in development, and launch dates and class schedules are being planned. Intern applications are separate and linked on the Hiring page.' },
   { question: 'What will I work toward?', answer: 'Both draft formats build toward a final project. Course-specific completion requirements and any certificates will need to be confirmed before launch.' },
   { question: 'How is Ignite expanding?', answer: `${programCopy.expansion} ${programCopy.proposals}` },
   { question: 'How do I contact you?', answer: 'Email ignitefindyourfire@gmail.com with questions about the program or eligibility.' },

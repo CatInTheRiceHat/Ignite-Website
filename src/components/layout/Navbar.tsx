@@ -4,8 +4,9 @@ import { NavLink, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { Megaphone, Menu, X } from 'lucide-react';
 import { RECORDS_PAGE } from '../../config/records';
+import { STUDENT_PREENROLLMENT_URL } from '../../lib/links';
 
-const announcementText = "Help build Ignite’s next chapter. Explore student intern opportunities.";
+const announcementText = 'Student pre-enrollment is open. Apply now!';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -82,11 +83,17 @@ const Navbar = () => {
               {link.name}
             </NavLink>
           ))}
+          <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[var(--primary-orange)] px-5 py-3 text-white transition-colors hover:bg-[var(--primary-orange-dark)]">
+            Apply Now
+            <RedirectArrow size={16} />
+          </a>
         </div>
 
       </div>
-      <Link
-        to="/hiring"
+      <a
+        href={STUDENT_PREENROLLMENT_URL}
+        target="_blank"
+        rel="noopener noreferrer"
         aria-label={announcementText}
         className="group flex min-h-12 items-center justify-center bg-[var(--text-charcoal)] px-4 py-2 text-center text-white transition-colors hover:bg-[var(--primary-orange-dark)]"
       >
@@ -97,7 +104,7 @@ const Navbar = () => {
           </span>
           <RedirectArrow size={16} className="hidden transition-transform group-hover:translate-x-1 sm:block" />
         </span>
-      </Link>
+      </a>
       {/* Mobile Links */}
       <AnimatePresence>
         {isOpen && (
@@ -122,6 +129,10 @@ const Navbar = () => {
                   {link.name}
                 </NavLink>
               ))}
+              <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)} className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-4 py-3 text-white transition-colors hover:bg-[var(--primary-orange-dark)]">
+                Apply Now
+                <RedirectArrow size={16} />
+              </a>
             </div>
           </motion.div>
         )}

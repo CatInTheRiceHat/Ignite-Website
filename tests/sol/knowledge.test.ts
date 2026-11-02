@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { expect, it } from 'vitest';
 import { courseCounts, developmentCourses, programCopy } from '../../src/data/program';
 import { teamMembers } from '../../src/data/mentors';
-import { LEARNING_HUB_URL, INTERN_FORM_URL } from '../../src/lib/links';
+import { LEARNING_HUB_URL, INTERN_FORM_URL, STUDENT_PREENROLLMENT_URL } from '../../src/lib/links';
 import { RECORDS_PAGE } from '../../src/config/records';
 import { destinations, resolveDestination } from '../../src/sol/shared/destinations';
 import { knowledge, relevantKnowledge } from '../../server/sol/knowledge';
@@ -50,9 +50,11 @@ it('uses the current developing catalog without turning plans into enrollment pr
   for (const course of developmentCourses) expect(courses).toContain(course.title);
   expect(courses).toContain(programCopy.availability);
   const enrollment = knowledge.find(entry => entry.id === 'student-faq')!.facts;
-  expect(enrollment).toContain('No current student application link');
+  expect(enrollment).toContain('Student pre-enrollment is now open');
+  expect(enrollment).toContain(STUDENT_PREENROLLMENT_URL);
+  expect(knowledge.find(entry => entry.id === 'student-faq')!.destinationIds).toContain('apply');
   expect(enrollment).toContain(programCopy.eligibility);
-  expect(() => resolveDestination('apply', 'https://ignitefindyourfire.org')).toThrow();
+  expect(resolveDestination('apply', 'https://ignitefindyourfire.org').url).toBe(STUDENT_PREENROLLMENT_URL);
 });
 
 it('keeps navigation aligned with public routes and verified links', () => {
@@ -64,6 +66,7 @@ it('keeps navigation aligned with public routes and verified links', () => {
   }
   expect(destinations.learning.url).toBe(LEARNING_HUB_URL);
   expect(destinations.intern.url).toBe(INTERN_FORM_URL);
+  expect(destinations.apply.url).toBe(STUDENT_PREENROLLMENT_URL);
   const help = knowledge.find(entry => entry.id === 'help')!;
   expect(help.destinationIds).toContain('learning');
   expect(help.facts).toContain('cannot access Moodle accounts, lessons, grades or student information');

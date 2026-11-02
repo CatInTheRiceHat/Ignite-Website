@@ -1,4 +1,4 @@
-import type { DestinationId } from '../../src/sol/shared/destinations.js';
+import { destinations, type DestinationId } from '../../src/sol/shared/destinations.js';
 import { courseCounts, courseFormats, developmentCourses, programCopy } from '../../src/data/program.js';
 import { teamMembers } from '../../src/data/mentors.js';
 import { internRoles } from '../../src/data/internRoles.js';
@@ -46,9 +46,9 @@ export const knowledge: KnowledgeEntry[] = [
     facts: `The catalog has ${courseCounts.all} courses in development: ${courseCounts.live} live and ${courseCounts.independent} independent. Plans: ${developmentCourses.map(course => `${course.title} (${course.format})${course.instructors?.length ? `; course team: ${course.instructors.map(instructor => `${instructor.name}${instructor.grades ? ` (Grades ${instructor.grades})` : ''}`).join(', ')}` : ''}`).join('; ')}. ${programCopy.availability}`,
   },
   {
-    id: 'student-faq', destinationIds: ['faq', 'program', 'contact'], source: 'src/pages/FAQ.tsx; src/data/program.ts; src/lib/links.ts',
-    keywords: ['apply', 'application', 'student', 'grade', 'eligible', 'eligibility', 'experience', 'grades', 'fee', 'tuition', 'certificate', 'enroll'],
-    facts: `Summer 2026 was free; the developing courses are planned as free learning opportunities. ${programCopy.eligibility} Course-specific grade ranges and prerequisites are listed in the Program course descriptions. Physics & Astronomy needs no previous experience or advanced math. Completion requirements and certificates still need confirmation. No current student application link or enrollment availability is confirmed. The old student Google Form is no longer published and must not be suggested. The learning hub is a Moodle sign-in page, not an enrollment form. Intern applications are separate.`,
+    id: 'student-faq', destinationIds: ['apply', 'faq', 'program', 'contact'], source: 'src/pages/FAQ.tsx; src/data/program.ts; src/lib/links.ts',
+    keywords: ['apply', 'application', 'student', 'grade', 'eligible', 'eligibility', 'experience', 'grades', 'fee', 'tuition', 'certificate', 'enroll', 'enrollment', 'pre-enrollment', 'preenrollment', 'sign up'],
+    facts: `Summer 2026 was free; the developing courses are planned as free learning opportunities. ${programCopy.eligibility} Course-specific grade ranges and prerequisites are listed in the Program course descriptions. Physics & Astronomy needs no previous experience or advanced math. Completion requirements and certificates still need confirmation. Student pre-enrollment is now open through the Fillout form at ${destinations.apply.url}. Offer the apply destination for student applications and pre-enrollment. Courses are still in development; launch dates and class schedules are being planned. The learning hub is a Moodle sign-in page, not an enrollment form. Intern applications are separate.`,
   },
   {
     id: 'founders', destinationIds: ['team', 'about'], source: 'src/data/mentors.ts; src/pages/Mentors.tsx',

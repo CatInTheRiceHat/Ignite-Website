@@ -15,6 +15,7 @@ import {
 import BlurFade from '../components/ui/blur-fade';
 import FadingCarousel from '../components/ui/fading-carousel';
 import { programCopy } from '../data/program';
+import { STUDENT_PREENROLLMENT_URL } from '../lib/links';
 
 // ---------------------------------------------------------------------------
 // Sub-components
@@ -146,17 +147,17 @@ const Home = () => {
           </BlurFade>
           <BlurFade delay={0.15}>
             <p className="text-lg sm:text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto font-medium leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
-              Ignite’s 50+ interns are building free live and independent courses in practical life skills. Explore the plans and find what sparks your curiosity.
+              Ignite’s 50+ interns are building free live and independent courses in practical life skills. Student pre-enrollment is now open. Find what sparks your curiosity.
             </p>
           </BlurFade>
           <BlurFade delay={0.25}>
             <div className="flex flex-wrap gap-4 justify-center">
-              <Link to="/program" className="inline-flex w-full max-w-xs items-center justify-center gap-2 bg-[var(--primary-orange)] text-white px-8 py-5 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-lg sm:w-auto sm:px-10">
-                Explore Course Plans
+              <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex w-full max-w-xs items-center justify-center gap-2 bg-[var(--primary-orange)] text-white px-8 py-5 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-lg sm:w-auto sm:px-10">
+                Apply Now
                 <RedirectArrow />
-              </Link>
-              <Link to="/faq" className="w-full max-w-xs bg-white text-[var(--primary-orange)] border-2 border-[var(--primary-orange)] px-8 py-5 rounded-full font-bold text-xl hover:bg-orange-50 transition-all sm:w-auto sm:px-10">
-                Program FAQ
+              </a>
+              <Link to="/program" className="w-full max-w-xs bg-white text-[var(--primary-orange)] border-2 border-[var(--primary-orange)] px-8 py-5 rounded-full font-bold text-xl hover:bg-orange-50 transition-all sm:w-auto sm:px-10">
+                Explore Course Plans
               </Link>
             </div>
           </BlurFade>
@@ -246,7 +247,7 @@ const Home = () => {
             autoPlay={false}
             items={[
               { image: '/mascots/Grades.png',  title: 'All Students', desc: programCopy.eligibility },
-              { image: '/mascots/Zoom.png',    title: 'Online Learning Plans', desc: "We are developing live and independent online courses. Dates and enrollment details are not yet confirmed." },
+              { image: '/mascots/Zoom.png',    title: 'Online Learning Plans', desc: 'We are developing live and independent online courses. Student pre-enrollment is open; launch dates and class schedules are still being planned.' },
               { image: '/mascots/Curious.png', title: 'Curious Students', desc: "You do not need to know what you want to do yet." },
             ]}
           />

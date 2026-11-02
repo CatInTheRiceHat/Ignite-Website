@@ -1,6 +1,6 @@
 import { RedirectArrow } from '../ui/redirect-arrow';
 import { Link } from 'react-router-dom';
-import { LEARNING_HUB_URL, INTERN_FORM_URL } from '../../lib/links';
+import { LEARNING_HUB_URL, INTERN_FORM_URL, STUDENT_PREENROLLMENT_URL } from '../../lib/links';
 import { RECORDS_PAGE } from '../../config/records';
 
 const Footer = () => {
@@ -38,11 +38,15 @@ const Footer = () => {
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row sm:flex-wrap gap-4">
+              <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-white text-[var(--primary-orange)] px-8 py-4 rounded-full font-bold text-lg hover:scale-105 active:scale-95 transition-all shadow-lg">
+                Apply Now
+                <RedirectArrow />
+              </a>
               <a
                 href={LEARNING_HUB_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-white text-[var(--primary-orange)] px-8 py-4 rounded-full font-bold text-lg hover:scale-105 active:scale-95 transition-all shadow-lg"
+                className="inline-flex items-center justify-center gap-2 border-2 border-white bg-transparent px-8 py-4 rounded-full font-bold text-lg text-white hover:bg-white hover:text-[var(--primary-orange)] active:scale-95 transition-all"
               >
                 Learning Hub (Moodle Sign-in)
                 <RedirectArrow />

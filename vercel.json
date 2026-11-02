@@ -4,10 +4,17 @@
   "outputDirectory": "dist",
   "routes": [
     {
+      "src": "/apply/?",
+      "status": 307,
+      "headers": {
+        "Location": "https://forms.fillout.com/t/oqB8WMKbJ6us"
+      }
+    },
+    {
       "handle": "filesystem"
     },
     {
-      "src": "/(about|team|mentors|program|faq|apply|statistics|hiring|records|partnerships)/?",
+      "src": "/(about|team|mentors|program|faq|statistics|hiring|records|partnerships)/?",
       "dest": "/index.html"
     }
   ],
