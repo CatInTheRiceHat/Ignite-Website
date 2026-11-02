@@ -153,18 +153,7 @@ final class recommendations {
             if (!in_array($state, [COMPLETION_COMPLETE, COMPLETION_COMPLETE_PASS], true)) {
                 continue;
             }
-            $passrequired = $starter['requirepass'] || !empty($cm->completionpassgrade);
-            if ($passrequired || $cm->completiongradeitemnumber !== null) {
-                $item = \grade_item::fetch(['courseid' => $cm->course, 'itemtype' => 'mod',
-                    'itemmodule' => $cm->modname, 'iteminstance' => $cm->instance,
-                    'itemnumber' => $cm->completiongradeitemnumber ?? 0]);
-                $grades = $item ? \grade_grade::fetch_users_grades($item, [$USER->id], false) : [];
-                $grade = $grades ? reset($grades) : null;
-                if (!$grade || $grade->finalgrade === null || $item->needsupdate ||
-                        ($passrequired && ($item->gradepass <= 0 || $grade->finalgrade < $item->gradepass))) {
-                    continue;
-                }
-            }
+            if (!activity_evidence::valid($cm,$target['course'],$state,(int)$USER->id,$starter['requirepass'])) { continue; }
             return (int)$cm->id;
         }
         return null;

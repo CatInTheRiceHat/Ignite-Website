@@ -12,14 +12,14 @@
     {{#challenge}}
     <section class="ignite-hearths__card mt-3">
         <h2>{{name}}</h2><p>{{description}}</p><p>{{period}}</p>
-        <svg class="ignite-hearths__flame" viewBox="0 0 100 120" aria-hidden="true" focusable="false">
+        {{#available}}<svg class="ignite-hearths__flame" viewBox="0 0 100 120" aria-hidden="true" focusable="false">
             <defs><clipPath id="ignite-progress-flame"><path d="M50 3 C58 28 35 39 49 55 C61 45 65 34 63 25 C99 67 99 103 75 114 C48 130 10 111 9 81 C7 67 17 49 27 43 C21 65 32 72 37 68 C22 35 49 28 50 3Z"/></clipPath></defs>
             <path d="M50 3 C58 28 35 39 49 55 C61 45 65 34 63 25 C99 67 99 103 75 114 C48 130 10 111 9 81 C7 67 17 49 27 43 C21 65 32 72 37 68 C22 35 49 28 50 3Z" fill="#f5e2d1" stroke="#85370d" stroke-width="2"/>
             <rect x="0" y="{{filly}}" width="100" height="{{fillheight}}" fill="#f07b2a" clip-path="url(#ignite-progress-flame)"/>
         </svg>
         <p>{{progress}}</p>
         <progress value="{{value}}" max="{{target}}" aria-label="{{progress}}">{{progress}}</progress>
-        <p>{{own}}</p>
+        <p>{{own}}</p>{{/available}}{{^available}}<p>{{#str}}totals_pending, local_ignite{{/str}}</p>{{/available}}
         <p>{{#str}}totalsdelay, local_ignite{{/str}} {{#asof}}{{#str}}totalsasof, local_ignite{{/str}} {{asof}}{{/asof}}</p>
     </section>
     {{/challenge}}

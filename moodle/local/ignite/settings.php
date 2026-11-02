@@ -21,9 +21,11 @@ if ($hassiteconfig && has_capability('local/ignite:configure', context_system::i
             'initial' => get_string('timing_initial', 'local_ignite')]));
     $settings->add(new \local_ignite\admin\selection_route_setting('local_ignite/hearthselectionroute',
         get_string('selectionroute', 'local_ignite'), get_string('selectionroute_desc', 'local_ignite'), '', PARAM_RAW));
-    $settings->add(new \local_ignite\admin\onboarding_setting('local_ignite/onboardingconfig',
+    $onboardingsetting = new \local_ignite\admin\onboarding_setting('local_ignite/onboardingconfig',
         get_string('onboardingconfig', 'local_ignite'), get_string('onboardingconfig_desc', 'local_ignite'),
-        \local_ignite\onboarding_config::EMPTY, PARAM_RAW, 80, 12));
+        \local_ignite\onboarding_config::EMPTY, PARAM_RAW, 80, 12);
+    $onboardingsetting->set_updatedcallback('\\local_ignite\\reports::invalidate');
+    $settings->add($onboardingsetting);
     // Optional recommendation quiz deliberately has no setting or stored traits in this phase.
     $settings->add(new \local_ignite\admin\passport_setting('local_ignite/passportcatalog',
         get_string('passport_catalog', 'local_ignite'), get_string('passport_catalog_desc', 'local_ignite'),
@@ -33,7 +35,16 @@ if ($hassiteconfig && has_capability('local/ignite:configure', context_system::i
     $settings->add(new \local_ignite\admin\heat_setting('local_ignite/heatconfig',
         get_string('dash_heatconfig', 'local_ignite'), get_string('dash_heatconfig_desc', 'local_ignite'),
         \local_ignite\heat_stages::EMPTY, PARAM_RAW, 80, 12));
+    $policy=new \local_ignite\admin\policy_setting('local_ignite/onboardingpolicy',
+        get_string('policy_title','local_ignite'),get_string('policy_desc','local_ignite'),
+        \local_ignite\onboarding_policy::EMPTY,PARAM_RAW,80,12);
+    $policy->set_updatedcallback('\\local_ignite\\reports::invalidate');
+    $settings->add($policy);
     $ADMIN->add('localplugins', $settings);
+    $ADMIN->add('reports',new admin_externalpage('local_ignite_report',get_string('report_title','local_ignite'),
+        new moodle_url('/local/ignite/report.php'),'local/ignite:viewreport'));
+    $ADMIN->add('localplugins',new admin_externalpage('local_ignite_setup',get_string('setup_title','local_ignite'),
+        new moodle_url('/local/ignite/setup.php'),['moodle/site:config','local/ignite:configure']));
     foreach (['hearthsetup' => 'draftsetup', 'hearthchallenges' => 'hearthchallenges'] as $route => $label) {
         $ADMIN->add('localplugins', new admin_externalpage('local_ignite_' . $route,
             get_string($label, 'local_ignite'), new moodle_url('/local/ignite/' . $route . '.php'),
@@ -42,4 +53,9 @@ if ($hassiteconfig && has_capability('local/ignite:configure', context_system::i
     $ADMIN->add('localplugins', new admin_externalpage('local_ignite_houses',
         get_string('managehouses', 'local_ignite'), new moodle_url('/local/ignite/houses.php'),
         ['moodle/site:config', 'local/ignite:configure']));
+}
+
+if (!$hassiteconfig && has_capability('local/ignite:viewreport',context_system::instance())) {
+    $ADMIN->add('reports',new admin_externalpage('local_ignite_report',get_string('report_title','local_ignite'),
+        new moodle_url('/local/ignite/report.php'),'local/ignite:viewreport'));
 }

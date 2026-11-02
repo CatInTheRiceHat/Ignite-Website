@@ -63,6 +63,7 @@ final class preferences {
                 $record->timecreated = time();
                 $DB->insert_record('local_ignite_prefs', $record);
             }
+            reports::invalidate();
         });
     }
 }

@@ -3,9 +3,9 @@
 if (PHP_SAPI !== 'cli' || $argc < 2) { exit("Supply private Moodle root [--snapshot].\n"); }
 define('CLI_SCRIPT', true);
 require $argv[1] . '/config.php';
-if (!str_contains($CFG->dbname, 'ignite_lms_test_p5_') || empty($CFG->noemailever) ||
+if ((!str_contains($CFG->dbname, 'ignite_lms_test_p5_') && !str_contains($CFG->dbname, 'ignite_lms_test_final_')) || empty($CFG->noemailever) ||
         !str_starts_with($CFG->wwwroot, 'http://127.0.0.1:') ||
-        !str_starts_with($CFG->dataroot, '/tmp/ignite-p5-runtime/')) {
+        (!str_starts_with($CFG->dataroot, '/tmp/ignite-p5-runtime/') && !str_starts_with($CFG->dataroot, '/tmp/ignite-final-runtime/'))) {
     throw new RuntimeException('Private combined fixture required.');
 }
 \core\session\manager::set_user(get_admin());

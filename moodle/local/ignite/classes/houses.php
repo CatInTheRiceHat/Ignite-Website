@@ -45,6 +45,7 @@ final class houses {
                 $DB->set_field('local_ignite_history', 'timeend', $now, ['userid' => $userid, 'timeend' => 0]);
                 if ($houseid === null) {
                     $DB->delete_records('local_ignite_member', ['userid' => $userid]);
+                    reports::invalidate();
                     return;
                 }
                 $DB->insert_record('local_ignite_history', (object)[
@@ -58,6 +59,7 @@ final class houses {
                     $record->timecreated = time();
                     $DB->insert_record('local_ignite_member', $record);
                 }
+                reports::invalidate();
             });
         });
     }
@@ -101,6 +103,7 @@ final class houses {
         access::locked('houses', static function() use ($DB, $id, $data) {
             $record = $DB->get_record('local_ignite_house', ['id' => $id], '*', MUST_EXIST);
             $DB->update_record('local_ignite_house', (object)(['id' => $record->id] + $data + ['timemodified' => time()]));
+            reports::invalidate();
         });
     }
 }

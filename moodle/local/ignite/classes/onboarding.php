@@ -61,7 +61,7 @@ final class onboarding {
             $interests = $data['interests'] ?? [];
             if (!is_array($interests) || !array_is_list($interests) || count($interests) > 3 ||
                     count(array_filter($interests, 'is_string')) !== count($interests) ||
-                    array_diff($interests, self::INTERESTS) || count(array_unique($interests)) !== count($interests) ||
+                    array_diff($interests, array_keys(onboarding_policy::interest_options())) || count(array_unique($interests)) !== count($interests) ||
                     (in_array('unsure', $interests, true) && count($interests) > 1)) {
                 throw new \invalid_parameter_exception('Choose up to three interests, or unsure on its own');
             }
@@ -69,7 +69,7 @@ final class onboarding {
         }
         if ($action === 'next' && $step === 'goal') {
             $goal = $data['goals'] ?? '';
-            if (!is_string($goal) || ($goal !== '' && !in_array($goal, self::GOALS, true))) {
+            if (!is_string($goal) || ($goal !== '' && !array_key_exists($goal, onboarding_policy::get()['goals']))) {
                 throw new \invalid_parameter_exception('Invalid goal');
             }
             $changes['goals'] = $goal ?: null;
@@ -91,7 +91,7 @@ final class onboarding {
         if ($action === 'start') {
             $starter = recommendations::starter_target();
             if ($starter) {
-                $destination = new \moodle_url($starter['url']);
+                $destination = new \moodle_url(missions::url((int)$starter['cm']->id, $starter['url']));
             } else {
                 $prefs = preferences::get_current();
                 $target = !empty($prefs->targetkey) ? recommendations::target($prefs->targetkey) : null;
@@ -136,6 +136,7 @@ final class onboarding {
             } else {
                 $DB->update_record('local_ignite_prefs', $record);
             }
+            reports::invalidate();
         });
         return $edit || in_array($action, ['skip', 'start', 'home'], true) ? $destination : null;
     }
@@ -145,23 +146,13 @@ final class onboarding {
         global $USER, $SESSION;
         if ($preventredirect || $cm || (defined('CLI_SCRIPT') && CLI_SCRIPT) ||
                 (defined('AJAX_SCRIPT') && AJAX_SCRIPT) || (defined('WS_SERVER') && WS_SERVER) ||
-                !isloggedin() || isguestuser() || !access::enabled('onboarding') ||
+                !isloggedin() || isguestuser() || !access::enabled('onboarding') || !onboarding_policy::get()['automatic'] ||
+                !onboarding_policy::eligible($USER) ||
                 !has_capability('local/ignite:use', \context_system::instance()) || is_siteadmin() ||
                 \core\session\manager::is_loggedinas() || !empty($USER->access['rsw']) ||
                 empty($USER->confirmed) || !empty($SESSION->wantsurl) ||
                 !in_array($path, ['/my/index.php', '/my/courses.php'], true)) {
             return false;
-        }
-        // A teacher/developer's ordinary work session should not enter a learner walkthrough.
-        foreach (['moodle/course:update', 'moodle/course:create', 'moodle/grade:edit', 'moodle/site:config'] as $capability) {
-            if (has_capability($capability, \context_system::instance())) {
-                return false;
-            }
-            // Staff roles can exist without enrollment, including at category level.
-            [$categories, $courses] = get_user_capability_contexts($capability, true, null, true, '', '', '', '', 1);
-            if ($categories || $courses) {
-                return false;
-            }
         }
         return in_array(preferences::get_current()->status, ['notstarted', 'inprogress'], true);
     }

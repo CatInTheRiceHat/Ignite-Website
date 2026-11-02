@@ -1,5 +1,7 @@
 # Ignite learner dashboard
 
+This preserves the Prompt 5 verification and design record. The [integrated operations guide](ignite-lms.md) supersedes version/setup and background accounting details; local_ignite is now 2026110700 and block_ignite remains 2026110501.
+
 The dashboard combines the real onboarding, Hearth and native-badge Passport services. It is implemented in `local_ignite` with a thin `block_ignite` native Moodle block. Existing Timeline and Course overview blocks continue to supply scheduled work and the full course list; their PHP, templates, positions and personal dashboard copies are not replaced. No dashboard reset, injected dynamic HTML, Moodle core edit, enrollment mutation or credential-awarding endpoint is introduced.
 
 Prompts 2–4 were merged sequentially on `ignite/prompt5-dashboard`. Their competing shared files were reconciled: final XMLDB schema, ordered savepoints, language/settings, home, callback, invitation deferral and complete privacy coverage. The Passport migration now follows onboarding and Hearths at `2026110400`; the original isolated Passport savepoint `2026110104` is not reused. Final local/block versions are `2026110501`. Unsupported sibling-development database combinations should be rebuilt as private fixtures rather than upgraded out of order.
@@ -58,7 +60,7 @@ Replace the illustrative keys with real **course-module IDs**, not instance IDs.
 
 Heat displays the exact next stage's **total threshold and remaining distinct milestone count**, plus accessible milestone names/conditions/statuses. It never reveals a restricted title. It stores no additional personal ledger and never writes native completion, grades, enrollment or badges. Native overrides are valid Moodle evidence under the selected configured condition. Administrators should use assessed automatic/pass rules where assessment is needed; completion by itself is not mastery.
 
-Hearth joins/switches, inclusive period start/exclusive end, strict membership second boundaries, excluded first evidence and immutable started periods retain Prompt 3's rules. Silent bulk resets/deletions still reconcile through Moodle cron. `challenges::progress()` now reads own/shared counts together in one indexed ledger aggregate, cached for the request, so the two numbers describe the same snapshot immediately after normal completion/reversal events. The scheduled task remains the reconciliation owner and publishes its last update timestamp. This supersedes the earlier phase note's task-only display aggregation; pages still never create or award contributions. The new `(challengeid, houseid, status)` index supports this read. No roster or other Hearth's summary is exposed by this own-membership service.
+Hearth joins/switches, inclusive period start/exclusive end, strict membership second boundaries, excluded first evidence and immutable started periods retain Prompt 3's rules. Integration now maintains the shared cached total in the completion-event accounting transaction and reconciles it in cron. `challenges::progress()` reads that total and an indexed own-user subquery in one snapshot, with request caching; it performs no Hearth-wide page aggregate. Missing totals show pending until cron. See the [current accounting and reset guide](ignite-lms.md#background-work-evidence-and-resets).
 
 ## Permissions, caching and lifecycle
 

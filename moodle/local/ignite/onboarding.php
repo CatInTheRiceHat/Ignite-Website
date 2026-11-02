@@ -8,6 +8,7 @@ if (!\local_ignite\access::enabled('onboarding')) {
 }
 \local_ignite\access::learner('onboarding');
 $edit = optional_param('edit', false, PARAM_BOOL);
+if (!\local_ignite\onboarding_policy::eligible($USER)) { redirect(new moodle_url('/local/ignite/index.php')); }
 $step = $edit ? 'interests' : \local_ignite\onboarding::step();
 $prefs = \local_ignite\preferences::get_current();
 $recommendations = $step === 'path' ? \local_ignite\recommendations::current() : [];
@@ -28,7 +29,7 @@ if ($data = $form->get_data()) {
     }
     $values = [];
     if ($step === 'interests') {
-        $values['interests'] = array_values(array_filter(\local_ignite\onboarding::INTERESTS,
+        $values['interests'] = array_values(array_filter(array_keys(\local_ignite\onboarding_policy::interest_options()),
             static fn($key) => !empty($data->{'interest_' . $key})));
     } else if ($step === 'goal') {
         $values['goals'] = $data->goals ?? '';

@@ -34,3 +34,7 @@
 .ignite-dashboard summary { cursor: pointer; padding: .5rem 0; }
 @media (max-width: 480px) { .ignite-dashboard__welcome { align-items: flex-start; gap: .5rem; } .ignite-dashboard__welcome > img { width: 64px; height: 64px; } .ignite-dashboard__identity { flex-wrap: wrap; } }
 @media (prefers-reduced-motion: reduce) { .ignite-dashboard *, .ignite-dashboard *::before, .ignite-dashboard *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+
+@media (max-width: 480px) {
+    .ignite-mission .feedbacktable th { width: 38%; min-width: 6.5rem; overflow-wrap: normal; word-break: normal; }
+}

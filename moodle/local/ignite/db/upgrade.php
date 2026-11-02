@@ -94,5 +94,13 @@ function xmldb_local_ignite_upgrade(int $oldversion): bool {
         set_config('levels', 0, 'local_ignite');
         upgrade_plugin_savepoint(true, 2026110501, 'local', 'ignite');
     }
+    foreach ([2026110600=>'local_ignite_mission',2026110700=>'local_ignite_report'] as $version=>$name) {
+        if ($oldversion < $version) {
+            $file=new xmldb_file(__DIR__.'/install.xml'); $file->loadXMLStructure();
+            $table=$file->getStructure()->getTable($name);
+            if (!$DB->get_manager()->table_exists($table)) { $DB->get_manager()->create_table($table); }
+            upgrade_plugin_savepoint(true,$version,'local','ignite');
+        }
+    }
     return true;
 }

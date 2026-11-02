@@ -4,6 +4,9 @@
 defined('MOODLE_INTERNAL') || die();
 
 $capabilities = [
+    'local/ignite:managemissions' => ['captype'=>'write','contextlevel'=>CONTEXT_COURSE,
+        'archetypes'=>['editingteacher'=>CAP_ALLOW]],
+    'local/ignite:viewreport' => ['captype'=>'read','contextlevel'=>CONTEXT_SYSTEM,'archetypes'=>[]],
     'local/ignite:use' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_SYSTEM,

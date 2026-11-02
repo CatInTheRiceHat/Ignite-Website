@@ -18,7 +18,7 @@ $data = ['house' => $house ? \local_ignite\hearth_ui::identity($house) : null,
 if ($house && $challenge) {
     $progress = \local_ignite\challenges::progress((int)$challenge->id, (int)$house->id);
     $fillheight = min(120, (int)floor($progress['total'] / $challenge->target * 120));
-    $data['challenge'] = ['fillheight' => $fillheight, 'filly' => 120 - $fillheight, 'name' => $challenge->name, 'description' => $challenge->description,
+    $data['challenge'] = ['available'=>$progress['available'], 'fillheight' => $fillheight, 'filly' => 120 - $fillheight, 'name' => $challenge->name, 'description' => $challenge->description,
         'progress' => get_string('hearthprogress', 'local_ignite', (object)[
             'count' => $progress['total'], 'target' => $challenge->target]),
         'own' => get_string('owncontribution', 'local_ignite', $progress['own']),

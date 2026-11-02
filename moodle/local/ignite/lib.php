@@ -55,3 +55,12 @@ function local_ignite_myprofile_navigation(\core_user\output\myprofile\tree $tre
             get_string('managehearth', 'local_ignite'), null, new moodle_url('/local/ignite/choosehearth.php')));
     }
 }
+
+/** Course-scoped mission editing; native course navigation remains intact. */
+function local_ignite_extend_navigation_course($navigation, $course, $context): void {
+    if (has_capability('moodle/course:manageactivities', $context) &&
+            has_capability('local/ignite:managemissions', $context)) {
+        $navigation->add(get_string('missions','local_ignite'),
+            new moodle_url('/local/ignite/missions.php',['courseid'=>$course->id]), navigation_node::TYPE_SETTING);
+    }
+}

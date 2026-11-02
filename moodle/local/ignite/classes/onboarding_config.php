@@ -42,6 +42,15 @@ final class onboarding_config {
                     'deletioninprogress' => 0, 'completion' => 2]))) {
                 throw new \invalid_parameter_exception('Starter needs automatic Moodle activity completion');
             }
+            if ($checkreferences) {
+                $raw = get_coursemodule_from_id(null, $starter['cmid'], 0, false, MUST_EXIST);
+                $course = get_course($raw->course);
+                $cm = get_fast_modinfo($course)->get_cm($raw->id);
+                if (!$course->visible || !$cm->visible || !recommendations::substantive_starter($cm) ||
+                        !milestone_eligibility::configured($cm, $course, $starter['requirepass'] ? 'pass' : 'complete')) {
+                    throw new \invalid_parameter_exception('Starter requires a visible course/activity, enabled site/course completion and substantive automatic completion. For requirepass, configure a native passing grade and pass completion.');
+                }
+            }
         }
         foreach ($data['outcomes'] as $key => $outcome) {
             if (!preg_match('/^(course|activity):([1-9][0-9]*)$/D', $key, $match) || !is_string($outcome) ||

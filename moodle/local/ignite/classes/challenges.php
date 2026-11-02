@@ -106,6 +106,12 @@ final class challenges {
                 }
                 $evidence->close();
             }
+            foreach ($DB->get_records('local_ignite_house') as $house) {
+                if (!$DB->record_exists('local_ignite_total',['challengeid'=>$id,'houseid'=>$house->id])) {
+                    $DB->insert_record('local_ignite_total',(object)['challengeid'=>$id,'houseid'=>$house->id,'milestones'=>0,'timeupdated'=>time()]);
+                }
+            }
+            reports::invalidate();
             return $id;
         });
     }
@@ -152,6 +158,7 @@ final class challenges {
                             $DB->update_record('local_ignite_credit', (object)[
                                 'id' => $old->id, 'status' => 'withdrawn', 'timemodified' => time(),
                             ]);
+                            self::adjust_total((int)$period->id,(int)$old->houseid,-1);
                         }
                         continue;
                     }
@@ -168,9 +175,18 @@ final class challenges {
                         'timequalified' => $when, 'status' => $inperiod && $membership ? 'credited' : 'excluded',
                         'timemodified' => time(),
                     ]));
+                    if ($inperiod && $membership) { self::adjust_total((int)$period->id,(int)$membership->houseid,1); }
                 }
             });
         });
+    }
+
+    /** Called only under the accounting lock/transaction. Missing snapshots wait for cron (e.g. privacy erasure). */
+    private static function adjust_total(int $challengeid,int $houseid,int $delta): void {
+        global $DB;
+        $total=$DB->get_record('local_ignite_total',['challengeid'=>$challengeid,'houseid'=>$houseid]);
+        if ($total) { $total->milestones=max(0,(int)$total->milestones+$delta); $total->timeupdated=time(); $DB->update_record('local_ignite_total',$total); }
+        reports::invalidate();
     }
 
     public static function qualifies(int $state, string $condition): bool {
@@ -207,12 +223,16 @@ final class challenges {
             }
             $records->close();
             $DB->delete_records('local_ignite_total');
-            $totals = $DB->get_records_sql('SELECT MIN(id) AS id, challengeid, houseid, COUNT(1) AS milestones
-                FROM {local_ignite_credit} WHERE status = ? GROUP BY challengeid, houseid', ['credited']);
-            foreach ($totals as $total) {
-                unset($total->id);
-                $total->timeupdated = time();
-                $DB->insert_record('local_ignite_total', $total);
+            $totals=$DB->get_records_sql("SELECT MIN(id) AS id,challengeid,houseid,COUNT(1) AS milestones
+                FROM {local_ignite_credit} WHERE status='credited' GROUP BY challengeid,houseid");
+            $counts=[];
+            foreach ($totals as $total) { $counts[$total->challengeid.':'.$total->houseid]=(int)$total->milestones; }
+            $houses=$DB->get_records('local_ignite_house');
+            foreach ($DB->get_records('local_ignite_challenge') as $challenge) {
+                foreach ($houses as $house) {
+                    $DB->insert_record('local_ignite_total',(object)['challengeid'=>$challenge->id,'houseid'=>$house->id,
+                        'milestones'=>$counts[$challenge->id.':'.$house->id] ?? 0,'timeupdated'=>time()]);
+                }
             }
         });
     }
@@ -233,16 +253,14 @@ final class challenges {
         }
         return learner_read_model::remember('challenge:' . $challengeid . ':' . $houseid,
             static function() use ($DB, $userid, $challengeid, $houseid) {
-                // Aggregate the indexed ledger once, so own and shared counts describe the same snapshot.
-                // Cron still owns reconciliation and historical interval/reset rules; page reads never award credit.
-                $counts = $DB->get_record_sql("SELECT COUNT(1) AS total,
-                    COALESCE(SUM(CASE WHEN userid = :userid THEN 1 ELSE 0 END), 0) AS own
-                    FROM {local_ignite_credit} WHERE challengeid = :challengeid AND houseid = :houseid
-                    AND status = :status", ['userid' => $userid, 'challengeid' => $challengeid,
-                        'houseid' => $houseid, 'status' => 'credited']);
-                $total = $DB->get_record('local_ignite_total', ['challengeid' => $challengeid, 'houseid' => $houseid]);
-                return ['total' => (int)$counts->total, 'own' => (int)$counts->own,
-                    'updated' => $total ? (int)$total->timeupdated : 0];
+                // One snapshot: cached shared count plus an indexed own-user subquery. No Hearth-wide page aggregation.
+                $total=$DB->get_record_sql("SELECT t.*, (SELECT COUNT(1) FROM {local_ignite_credit} x
+                    WHERE x.challengeid=t.challengeid AND x.houseid=t.houseid AND x.userid=:userid
+                    AND x.status='credited') AS own FROM {local_ignite_total} t
+                    WHERE t.challengeid=:challengeid AND t.houseid=:houseid",
+                    ['userid'=>$userid,'challengeid'=>$challengeid,'houseid'=>$houseid]);
+                return ['available'=>(bool)$total,'total'=>$total ? (int)$total->milestones : 0,
+                    'own'=>$total ? (int)$total->own : 0,'updated'=>$total ? (int)$total->timeupdated : 0];
             });
     }
 }

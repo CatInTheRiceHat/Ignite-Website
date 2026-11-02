@@ -34,7 +34,7 @@ final class dashboard {
             'interestsurl' => (new \moodle_url('/local/ignite/onboarding.php', ['edit' => 1]))->out(false),
             'onboardingurl' => (new \moodle_url('/local/ignite/onboarding.php'))->out(false),
             'onboarding' => access::enabled('onboarding'),
-            'resumeonboarding' => access::enabled('onboarding') && in_array($prefs->status, ['notstarted', 'inprogress', 'dismissed']),
+            'resumeonboarding' => access::enabled('onboarding') && onboarding_policy::eligible($USER) && in_array($prefs->status, ['notstarted', 'inprogress', 'dismissed']),
             'hearthsenabled' => access::enabled('houses'), 'passportenabled' => access::enabled('passport'),
             'course' => false, 'primary' => false, 'recommendations' => [], 'hearth' => false,
             'heat' => false, 'offer' => false, 'deferred' => false,
@@ -70,7 +70,7 @@ final class dashboard {
                 if ($challenge = challenges::current()) {
                     $progress = challenges::progress((int)$challenge->id, (int)$hearth->id);
                     $data['hearth']['challenge'] = ['name' => $challenge->name, 'description' => $challenge->description,
-                        'progress' => get_string('hearthprogress', 'local_ignite', (object)[
+                        'available'=>$progress['available'], 'progress' => get_string('hearthprogress', 'local_ignite', (object)[
                             'count' => $progress['total'], 'target' => $challenge->target]),
                         'own' => get_string('owncontribution', 'local_ignite', $progress['own']),
                         'value' => min($progress['total'], $challenge->target), 'target' => $challenge->target,
@@ -92,7 +92,7 @@ final class dashboard {
     /** Native progress denominator and completion states; sequence is the course's section/activity order. */
     public static function course(\stdClass $course, array $evidence): array {
         global $USER, $CFG;
-        access::learner('dashboard');
+        access::learner();
         if (!learner_read_model::course_available($course)) {
             throw new \invalid_parameter_exception('Course unavailable');
         }
@@ -122,7 +122,7 @@ final class dashboard {
             $data['note'] = get_string($complete ? 'dash_coursecomplete' :
                 ($done === count($modules) ? 'dash_awaitcourse' : 'dash_activityprogress'), 'local_ignite');
         }
-        if ($complete) { return $data; }
+        if ($complete) { $data['next']=missions::next_for_course($course); return $data; }
         // A teaching session has no learner next-action claim, even if it can bypass restrictions.
         if ($completion->is_enabled() && !$tracked) { return $data; }
         foreach (get_fast_modinfo($course)->get_cms() as $cm) {
@@ -141,7 +141,7 @@ final class dashboard {
                 $data['note'] = get_string('dash_nextunavailable', 'local_ignite');
                 return $data;
             }
-            $data['next'] = ['url' => $cm->url->out(false), 'name' => self::plain($cm->name)];
+            $data['next'] = ['url' => missions::url((int)$cm->id, $cm->url->out(false)), 'name' => self::plain($cm->name), 'cmid' => (int)$cm->id];
             return $data;
         }
         if (!$known) { return $data; }

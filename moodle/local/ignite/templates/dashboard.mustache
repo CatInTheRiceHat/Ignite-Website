@@ -43,9 +43,9 @@
                 <p>{{description}}</p>
                 {{#inactive}}<p>{{#str}}inactivehouse, local_ignite{{/str}}</p>{{/inactive}}
                 {{#challenge}}
-                    <h4>{{name}}</h4><p>{{description}}</p><p>{{progress}}</p>
+                    <h4>{{name}}</h4><p>{{description}}</p>{{#available}}<p>{{progress}}</p>
                     <progress value="{{value}}" max="{{target}}" aria-label="{{progress}}">{{progress}}</progress>
-                    <p><strong>{{own}}</strong></p>
+                    <p><strong>{{own}}</strong></p>{{/available}}{{^available}}<p>{{#str}}totals_pending, local_ignite{{/str}}</p>{{/available}}
                     <p class="ignite-dashboard__small">{{#str}}totalsdelay, local_ignite{{/str}} {{#asof}}{{#str}}totalsasof, local_ignite{{/str}} {{asof}}{{/asof}}</p>
                 {{/challenge}}
                 {{^challenge}}<p>{{#str}}nochallenge, local_ignite{{/str}}</p>{{/challenge}}

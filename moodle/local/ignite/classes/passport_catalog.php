@@ -54,6 +54,9 @@ final class passport_catalog {
             }
             if ($checkreferences) {
                 $badge = new \core_badges\badge((int)$id);
+                if ($entry['enabled'] && count($badge->criteria)<2) {
+                    throw new \invalid_parameter_exception('Configure native badge award criteria before enabling this Passport mapping');
+                }
                 if ($entry['courseid'] && (!$DB->record_exists('course', ['id' => $entry['courseid']]) ||
                         ((int)$badge->type === BADGE_TYPE_COURSE && (int)$badge->courseid !== $entry['courseid']))) {
                     throw new \invalid_parameter_exception('Course must exist and match the course badge');

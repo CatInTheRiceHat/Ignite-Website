@@ -1,0 +1,17 @@
+<div class="ignite-dashboard ignite-mission">
+    <h2>{{title}}</h2><p><strong>{{outcome}}</strong></p><p>{{#str}}mission_time_label, local_ignite{{/str}}: {{duration}}</p>
+    <section class="ignite-dashboard__card"><h3>{{#str}}mission_intro_heading, local_ignite{{/str}}</h3><p>{{explanation}}</p>
+        <h3>{{#str}}mission_rules_heading, local_ignite{{/str}}</h3><p>{{requirements}}</p>
+        <p>{{#str}}mission_nativerules, local_ignite{{/str}}</p><ul>{{#nativerules}}<li>{{description}}</li>{{/nativerules}}</ul><ol>{{#steps}}<li>{{name}} — {{status}}</li>{{/steps}}</ol>
+        <p><strong>{{state}}</strong></p>{{#trackingunavailable}}<p>{{#str}}mission_trackingoff, local_ignite{{/str}}</p>{{/trackingunavailable}}
+        {{#action}}<p><a class="ignite-dashboard__primary" href="{{url}}">{{name}}<span class="ignite-dashboard__arrow" aria-hidden="true"></span></a></p>{{/action}}
+        {{#unavailable}}<p>{{#str}}mission_locked, local_ignite{{/str}}</p>{{/unavailable}}
+        {{#feedback}}<h3>{{#str}}mission_feedback, local_ignite{{/str}}</h3>{{{feedback}}}{{/feedback}}
+        {{#complete}}<p>{{personal}}</p>{{#badgestatus}}<p>{{#str}}mission_badge, local_ignite{{/str}}: {{badgestatus}}</p>{{/badgestatus}}
+            {{#hasbadgeconfigured}}{{^badgestatus}}<p>{{#str}}mission_nobadge, local_ignite{{/str}}</p>{{/badgestatus}}{{#badgeurl}}<p><a href="{{badgeurl}}">{{#str}}mission_badgerequirements, local_ignite{{/str}}</a></p>{{/badgeurl}}{{/hasbadgeconfigured}}{{^hasbadgeconfigured}}<p>{{#str}}mission_noassociation, local_ignite{{/str}}</p>{{/hasbadgeconfigured}}
+            {{#offer}}<p><a href="{{invitationurl}}">{{#str}}meethearths, local_ignite{{/str}}</a></p>{{/offer}}
+            {{#next}}<p><a class="ignite-dashboard__primary" href="{{url}}">{{#str}}mission_next, local_ignite{{/str}}: {{name}}<span class="ignite-dashboard__arrow" aria-hidden="true"></span></a></p>{{/next}}
+        {{/complete}}
+    </section>
+    <p><a href="{{courseurl}}">{{#str}}dash_viewcourse, local_ignite{{/str}}</a></p><p><a href="{{homeurl}}">{{#str}}gotoignitehome, local_ignite{{/str}}</a></p>
+</div>

@@ -13,12 +13,20 @@ final class heat_stages {
         global $DB;
         $data = json_decode($json, true);
         if (strlen($json) > 100000 || !is_array($data) ||
-                array_diff(array_keys($data), ['thresholds', 'milestones']) ||
+                array_diff(array_keys($data), ['thresholds', 'milestones', 'labels']) ||
                 !isset($data['thresholds'], $data['milestones']) || !is_array($data['milestones']) ||
                 !is_array($data['thresholds']) || !array_is_list($data['thresholds']) ||
                 count($data['thresholds']) !== 5 || $data['thresholds'][0] !== 0 || count($data['milestones']) > 200) {
             throw new \invalid_parameter_exception('Invalid personal heat stage configuration');
         }
+        $data['labels'] = $data['labels'] ?? self::NAMES;
+        if (!is_array($data['labels']) || !array_is_list($data['labels']) || count($data['labels'])!==5) { throw new \invalid_parameter_exception('Choose five distinct stage labels'); }
+        foreach ($data['labels'] as $label) {
+            if (!is_string($label) || trim($label)==='' || \core_text::strlen($label)>50 || clean_param($label,PARAM_TEXT)!==$label) {
+                throw new \invalid_parameter_exception('Use short plain text stage labels');
+            }
+        }
+        if (count(array_unique($data['labels']))!==5) { throw new \invalid_parameter_exception('Choose distinct stage labels'); }
         $previous = -1;
         foreach ($data['thresholds'] as $threshold) {
             if (!is_int($threshold) || $threshold <= $previous || $threshold > 1000000) {
@@ -72,11 +80,11 @@ final class heat_stages {
         if (!$eligible) { return $data; }
         $index = 0;
         foreach ($config['thresholds'] as $i => $threshold) { if ($count >= $threshold) { $index = $i; } }
-        $data += ['count' => $count, 'counttext' => get_string('dash_heatcount', 'local_ignite', $count), 'stage' => self::NAMES[$index], 'next' => false];
+        $data += ['count' => $count, 'counttext' => get_string('dash_heatcount', 'local_ignite', $count), 'stage' => $config['labels'][$index], 'next' => false];
         $data['available'] = true;
         if ($index < 4) {
             $data['next'] = get_string('dash_heatnext', 'local_ignite', (object)[
-                'stage' => self::NAMES[$index + 1], 'total' => $config['thresholds'][$index + 1],
+                'stage' => $config['labels'][$index + 1], 'total' => $config['thresholds'][$index + 1],
                 'remaining' => $config['thresholds'][$index + 1] - $count]);
         }
         return $data;

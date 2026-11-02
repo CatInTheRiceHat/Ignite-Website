@@ -17,17 +17,17 @@ final class onboarding extends \moodleform {
         $form->setType('edit', PARAM_BOOL);
         if ($step === 'interests') {
             $form->addElement('static', 'interesthelp', '', get_string('interesthelp', 'local_ignite'));
-            foreach (\local_ignite\onboarding::INTERESTS as $key) {
-                $form->addElement('advcheckbox', 'interest_' . $key, '', get_string('interest_' . $key, 'local_ignite'));
+            foreach (\local_ignite\onboarding_policy::interest_options() as $key=>$label) {
+                $form->addElement('advcheckbox', 'interest_' . $key, '', $label);
                 $form->setDefault('interest_' . $key, in_array($key, $prefs->interests, true));
             }
         } else if ($step === 'goal') {
             $form->addElement('radio', 'goals', '', get_string('nogoal', 'local_ignite'), '');
-            foreach (\local_ignite\onboarding::GOALS as $key) {
-                $form->addElement('radio', 'goals', '', get_string('goal_' . $key, 'local_ignite'), $key);
+            foreach (\local_ignite\onboarding_policy::get()['goals'] as $key=>$label) {
+                $form->addElement('radio', 'goals', '', $label, $key);
             }
-            $form->setType('goals', PARAM_ALPHA);
-            $form->setDefault('goals', in_array($prefs->goals, \local_ignite\onboarding::GOALS, true) ? $prefs->goals : '');
+            $form->setType('goals', PARAM_ALPHANUMEXT);
+            $form->setDefault('goals', array_key_exists($prefs->goals ?? '', \local_ignite\onboarding_policy::get()['goals']) ? $prefs->goals : '');
         } else if ($step === 'path') {
             $recommendations = $this->_customdata['recommendations'];
             if (!$recommendations) {
@@ -83,7 +83,7 @@ final class onboarding extends \moodleform {
         $errors = parent::validation($data, $files);
         if ($this->_customdata['step'] === 'interests' &&
                 (isset($data['next']) || isset($data['saveinterests']))) {
-            $selected = array_filter(\local_ignite\onboarding::INTERESTS,
+            $selected = array_filter(array_keys(\local_ignite\onboarding_policy::interest_options()),
                 static fn($key) => !empty($data['interest_' . $key]));
             if (count($selected) > 3 || (in_array('unsure', $selected, true) && count($selected) > 1)) {
                 $errors['interest_unsure'] = get_string('interesterror', 'local_ignite');

@@ -6,7 +6,7 @@ namespace local_ignite;
 defined('MOODLE_INTERNAL') || die();
 
 final class access {
-    public const FEATURES = ['onboarding', 'houses', 'passport', 'levels', 'dashboard'];
+    public const FEATURES = ['onboarding', 'houses', 'passport', 'levels', 'dashboard', 'missions'];
 
     public static function enabled(?string $feature = null): bool {
         if (!get_config('local_ignite', 'enabled')) {

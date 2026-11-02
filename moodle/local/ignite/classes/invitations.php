@@ -44,9 +44,9 @@ final class invitations {
 
     /** Eligibility is rechecked after setting changes or revocation, including on a stale form. */
     public static function can_offer(): bool {
-        global $DB;
+        global $DB, $USER;
         $userid = access::learner('onboarding');
-        if (!onboarding_config::selection_url() ||
+        if (!onboarding_policy::eligible($USER) || !onboarding_config::selection_url() ||
                 $DB->record_exists('local_ignite_member', ['userid' => $userid])) {
             return false;
         }

@@ -19,3 +19,10 @@ foreach (['course_module_completion_updated', 'course_completion_updated', 'cour
     $observers[] = ['eventname' => '\\core\\event\\' . $eventname,
         'callback' => '\\local_ignite\\learner_read_model::invalidate'];
 }
+
+foreach (['course_module_completion_updated','course_completion_updated','course_reset_ended','user_deleted',
+        'user_enrolment_created','user_enrolment_updated','user_enrolment_deleted','role_assigned','role_unassigned',
+        'badge_awarded','badge_revoked','course_deleted','course_updated','course_module_updated','course_module_deleted',
+        'cohort_member_added','cohort_member_removed','role_capabilities_updated','user_updated','user_created','user_graded'] as $eventname) {
+    $observers[]=['eventname'=>'\\core\\event\\'.$eventname,'callback'=>'\\local_ignite\\reports::invalidate'];
+}

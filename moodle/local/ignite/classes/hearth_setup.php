@@ -48,6 +48,7 @@ final class hearth_setup {
                     throw new \invalid_parameter_exception('Invalid setup target');
                 }
             }
+            reports::invalidate();
         });
     }
 }

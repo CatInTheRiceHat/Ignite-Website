@@ -149,6 +149,7 @@ final class provider implements \core_privacy\local\metadata\provider,
                 $DB->delete_records('local_ignite_credit', ['userid' => $userid]);
                 // Do not serve stale totals containing erased contributions. The next task republishes totals.
                 $DB->delete_records('local_ignite_total');
+                \local_ignite\reports::invalidate();
             });
         });
     }
