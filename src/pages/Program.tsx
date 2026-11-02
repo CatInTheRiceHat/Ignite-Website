@@ -2,43 +2,46 @@ import { useState } from 'react';
 import { courseCounts, courseFormats, developmentCourses, programCopy, type CourseFormat, type DevelopmentCourse } from '../data/program';
 import ProgramNextSteps from '../components/program/ProgramNextSteps';
 
-const CourseCard = ({ course }: { course: DevelopmentCourse }) => (
-  <article className="bg-white rounded-[2rem] overflow-hidden hover:shadow-lg transition-shadow border-2 border-orange-100 h-full">
+const CourseCard = ({ course }: { course: DevelopmentCourse }) => {
+  const summary = [
+    course.audience && `Who it’s for: ${course.audience}`,
+    course.commitment && `Course work: ${course.commitment}`,
+    course.description,
+    course.prerequisites && `Prerequisites: ${course.prerequisites}`,
+    course.note,
+  ].filter(Boolean).join(' ');
+
+  return (
+  <article className="flex h-[40rem] min-w-0 flex-col bg-white rounded-[2rem] overflow-hidden hover:shadow-lg transition-shadow border-2 border-orange-100">
     {course.headerImage ? (
-      <div className="overflow-hidden bg-orange-50">
-        <img src={course.headerImage} alt="" className="block h-auto w-full" loading="lazy" />
+      <div className="h-44 shrink-0 overflow-hidden bg-orange-50">
+        <img src={course.headerImage} alt="" className="block h-full w-full object-cover" style={{ objectPosition: course.headerPosition }} loading="lazy" />
       </div>
     ) : (
-      <div className="h-32 sm:h-36 flex items-center justify-center bg-orange-50">
+      <div className="h-44 shrink-0 flex items-center justify-center bg-orange-50">
         <img src={course.icon} alt="" className="h-24 w-24 object-contain" loading="lazy" />
       </div>
     )}
-    <div className="p-6 sm:p-8">
-      <div className="flex flex-wrap gap-2 mb-4 text-sm font-bold text-[var(--text-charcoal)]">
+    <div className="grid min-h-0 flex-1 grid-rows-[auto_3.5rem_1.25rem_minmax(0,1fr)_6.75rem] gap-4 p-6 sm:p-8">
+      <div className="flex gap-2 text-xs font-bold text-[var(--text-charcoal)]">
         <span className="rounded-full bg-orange-100 px-3 py-1">{courseFormats[course.format].label}</span>
         <span className="rounded-full bg-[var(--bg-cream)] px-3 py-1">In development</span>
       </div>
-      <h3 className="text-xl font-bold text-[var(--text-charcoal)] leading-snug">{course.title}</h3>
-      <div className="mt-4 space-y-2 text-sm leading-relaxed text-[var(--text-light)]">
+      <h3 className="line-clamp-2 text-xl font-bold text-[var(--text-charcoal)] leading-snug" title={course.title}>{course.title}</h3>
+      <div className="min-w-0 text-sm leading-5 text-[var(--text-light)]">
         {(course.duration || course.format === 'live') && (
-          <p>Planned length: {(course.duration ?? courseFormats.live.duration).toLowerCase()}</p>
+          <p className="truncate">Planned length: {(course.duration ?? courseFormats.live.duration).toLowerCase()}</p>
         )}
-        {course.audience && <p><span className="font-bold text-[var(--text-charcoal)]">Who it’s for: </span>{course.audience}</p>}
-        {course.commitment && <p><span className="font-bold text-[var(--text-charcoal)]">Course work: </span>{course.commitment}</p>}
       </div>
-      {course.description && <p className="mt-4 text-sm leading-relaxed text-[var(--text-light)]">{course.description}</p>}
-      {course.prerequisites && (
-        <p className="mt-4 text-sm leading-relaxed text-[var(--text-light)]">
-          <span className="font-bold text-[var(--text-charcoal)]">Prerequisites: </span>{course.prerequisites}
-        </p>
-      )}
-      {course.note && <p className="mt-4 text-sm leading-relaxed text-[var(--text-light)]">{course.note}</p>}
+      <div className="min-h-0 overflow-hidden">
+        {summary && <p className="line-clamp-5 text-sm leading-relaxed text-[var(--text-light)]" title={summary}>{summary}</p>}
+      </div>
       {course.instructors && course.instructors.length > 0 && (
-        <div className="mt-5 rounded-2xl bg-[var(--bg-cream)] p-4 text-sm text-[var(--text-light)]">
+        <div className="min-w-0 rounded-2xl bg-[var(--bg-cream)] p-4 text-sm text-[var(--text-light)]">
           <p className="font-bold text-[var(--text-charcoal)]">{course.instructors.length === 1 ? 'Teacher' : 'Teachers'}</p>
-          <ul className="mt-2 space-y-2">
+          <ul className="mt-2 space-y-1">
             {course.instructors.map((instructor) => (
-              <li key={instructor.name} className="break-words leading-relaxed">
+              <li key={instructor.name} className="truncate leading-5" title={`${instructor.displayName ?? instructor.name}${instructor.grades ? ` · Grades ${instructor.grades}` : ''}`}>
                 {instructor.displayName ?? instructor.name}{instructor.grades ? ` · Grades ${instructor.grades}` : ''}
               </li>
             ))}
@@ -47,7 +50,8 @@ const CourseCard = ({ course }: { course: DevelopmentCourse }) => (
       )}
     </div>
   </article>
-);
+  );
+};
 
 const Program = () => {
   const [format, setFormat] = useState<CourseFormat | 'all'>('all');
