@@ -30,7 +30,7 @@ final class setup_review {
             }
         }
         foreach (passport_catalog::get() as $id=>$mapping) {
-            if (!$DB->record_exists('badge',['id'=>$id])) { $messages[]='Passport mapping '.$id.' references a deleted badge.'; continue; }
+            if (!$DB->record_exists('badge',['id'=>$id])) { $messages[]='Campfire mapping '.$id.' references a deleted badge.'; continue; }
             $badge=new \core_badges\badge($id);
             if (!$badge->is_active()) { $messages[]='Badge '.$id.' is disabled. Enable it through native badge management after reviewing its criteria; existing ownership is preserved.'; }
             if (!$badge || count($badge->criteria)<2) { $messages[]='Badge '.$id.' has no configured native award criteria. Configure and enable it in Moodle; mission metadata never awards a badge.'; }

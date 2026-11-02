@@ -20,7 +20,7 @@ final class passport_catalog {
         global $CFG, $DB;
         require_once($CFG->libdir . '/badgeslib.php');
         if (strlen($json) > 100000) {
-            throw new \invalid_parameter_exception('Passport mapping is too large');
+            throw new \invalid_parameter_exception('Campfire mapping is too large');
         }
         $data = json_decode($json);
         if (!$data instanceof \stdClass || array_keys((array)$data) !== ['badges'] ||
@@ -33,7 +33,7 @@ final class passport_catalog {
             if (!preg_match('/^[1-9][0-9]{0,9}$/D', (string)$id) || !$entry instanceof \stdClass ||
                     array_diff(array_keys((array)$entry), ['category', 'courseid', 'primary', 'artwork', 'caption', 'enabled']) ||
                     !isset($entry->category) || !in_array($entry->category, self::CATEGORIES, true)) {
-                throw new \invalid_parameter_exception('Invalid Passport badge mapping');
+                throw new \invalid_parameter_exception('Invalid Campfire badge mapping');
             }
             $entry = (array)$entry + ['courseid' => null, 'primary' => false, 'artwork' => 'placeholder',
                 'caption' => '', 'enabled' => true];
@@ -44,7 +44,7 @@ final class passport_catalog {
                     clean_param($entry['caption'], PARAM_TEXT) !== $entry['caption'] ||
                     ($entry['artwork'] === 'course' && !$entry['courseid']) ||
                     ($entry['primary'] && (!$entry['courseid'] || $entry['category'] !== 'skill'))) {
-                throw new \invalid_parameter_exception('Invalid Passport presentation metadata');
+                throw new \invalid_parameter_exception('Invalid Campfire presentation metadata');
             }
             if ($entry['primary'] && isset($primarycourses[$entry['courseid']])) {
                 throw new \invalid_parameter_exception('Only one primary collectible per course');
@@ -55,7 +55,7 @@ final class passport_catalog {
             if ($checkreferences) {
                 $badge = new \core_badges\badge((int)$id);
                 if ($entry['enabled'] && count($badge->criteria)<2) {
-                    throw new \invalid_parameter_exception('Configure native badge award criteria before enabling this Passport mapping');
+                    throw new \invalid_parameter_exception('Configure native badge award criteria before enabling this Campfire mapping');
                 }
                 if ($entry['courseid'] && (!$DB->record_exists('course', ['id' => $entry['courseid']]) ||
                         ((int)$badge->type === BADGE_TYPE_COURSE && (int)$badge->courseid !== $entry['courseid']))) {

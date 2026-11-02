@@ -1,7 +1,10 @@
 {{! A single current-user projection, shared by the native block and optional Ignite home. }}
 <div class="ignite-dashboard">
     <div class="ignite-dashboard__layout">
-        {{> local_ignite/dashboard_navigation }}
+        <div class="ignite-dashboard__rail">
+            {{> local_ignite/dashboard_navigation }}
+            {{#hearthsenabled}}<aside class="ignite-dashboard__hearth" aria-label="{{#str}}dash_myhearth, local_ignite{{/str}}">{{> local_ignite/dashboard_hearth }}</aside>{{/hearthsenabled}}
+        </div>
         <div class="ignite-dashboard__workspace">
     <section class="ignite-dashboard__welcome" aria-label="{{welcome}}">
         <div>
@@ -72,7 +75,6 @@
         </section>
         {{/heat}}
     </div>
-        {{#hearthsenabled}}<aside class="ignite-dashboard__hearth" aria-label="{{#str}}dash_myhearth, local_ignite{{/str}}">{{> local_ignite/dashboard_hearth }}</aside>{{/hearthsenabled}}
     </div>
     {{#onboarding}}<nav class="ignite-dashboard__help" aria-label="{{#str}}dash_help, local_ignite{{/str}}"><a href="{{interestsurl}}">{{#str}}editinterests, local_ignite{{/str}}</a><a href="{{toururl}}">{{#str}}dash_help, local_ignite{{/str}}</a></nav>{{/onboarding}}
         </div>
