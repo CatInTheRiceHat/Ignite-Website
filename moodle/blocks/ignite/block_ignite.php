@@ -21,7 +21,7 @@ class block_ignite extends block_base {
             return $this->content;
         }
         $this->page->requires->css('/local/ignite/dashboard.css');
-        $data = \local_ignite\dashboard::data();
+        $data = \local_ignite\dashboard::data(true);
         $this->content->text = $this->page->get_renderer('core')->render_from_template('local_ignite/dashboard', $data);
         if ($data['offer']) { \local_ignite\invitations::shown(); }
         return $this->content;

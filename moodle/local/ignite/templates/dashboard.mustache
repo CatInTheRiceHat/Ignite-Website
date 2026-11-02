@@ -21,51 +21,5 @@
         <h3>{{timelinetitle}}</h3>{{{timeline}}}
     </section>{{/timeline}}
 
-        <section class="ignite-dashboard__section ignite-dashboard__learning">
-            <p class="ignite-dashboard__eyebrow">{{#str}}dash_yourlearning, local_ignite{{/str}}</p>
-            {{#course}}
-                <h3>{{name}}</h3>
-                {{#complete}}<p class="ignite-dashboard__status">{{#str}}dash_complete, local_ignite{{/str}}</p>{{/complete}}
-                {{#known}}<p class="ignite-dashboard__count">{{counttext}}</p><progress value="{{percent}}" max="100" aria-label="{{counttext}}">{{counttext}}</progress>{{/known}}
-                <p>{{note}}</p>
-                {{#next}}<p>{{#str}}dash_upnext, local_ignite{{/str}}: <strong>{{name}}</strong></p>{{/next}}
-                <a href="{{url}}">{{#str}}dash_viewcourse, local_ignite{{/str}}<span class="ignite-dashboard__arrow" aria-hidden="true"></span></a>
-            {{/course}}
-            {{^course}}<h3>{{#str}}dash_start, local_ignite{{/str}}</h3><p>{{#str}}dash_noenrolment, local_ignite{{/str}}</p><a href="{{catalogurl}}">{{#str}}explorecourses, local_ignite{{/str}}</a>{{/course}}
-        </section>
-
-
-    {{#hearthsenabled}}{{> local_ignite/dashboard_hearth }}{{/hearthsenabled}}
-
-        {{#passportenabled}}
-        <section class="ignite-dashboard__section ignite-dashboard__passport">
-            <h3>{{#str}}passport, local_ignite{{/str}}</h3>
-            {{#passport}}
-                {{#hasfeatured}}<h4>{{#str}}dash_featured, local_ignite{{/str}}</h4><ul class="ignite-dashboard__badges">{{#featured}}<li>{{#imageurl}}<img src="{{imageurl}}" alt="" width="48" height="48">{{/imageurl}}<a href="{{detailurl}}">{{name}}</a><span>{{statuslabel}}</span></li>{{/featured}}</ul>{{/hasfeatured}}
-                {{^hasfeatured}}<p>{{#str}}dash_nofeatured, local_ignite{{/str}}</p>{{/hasfeatured}}
-                {{#hasrecent}}<h4>{{#str}}dash_recent, local_ignite{{/str}}</h4><ul class="ignite-dashboard__badges">{{#recent}}<li><a href="{{detailurl}}">{{name}}</a><span>{{statuslabel}} · {{dateissuedtext}}</span></li>{{/recent}}</ul>{{/hasrecent}}
-                {{^hasrecent}}<p>{{#str}}dash_nobadges, local_ignite{{/str}}</p>{{/hasrecent}}
-                {{#next}}<div class="ignite-dashboard__badge-next"><h4>{{#str}}dash_nextbadge, local_ignite{{/str}}: {{name}}</h4><p>{{statuslabel}}</p><p><strong>{{#str}}dash_requirements, local_ignite{{/str}}</strong></p>{{{criteria}}}<p><a href="{{detailurl}}">{{#str}}dash_badgedetails, local_ignite{{/str}}</a></p></div>{{/next}}
-                {{^next}}<p>{{#str}}dash_nonextbadge, local_ignite{{/str}}</p>{{/next}}
-                {{^nativeenabled}}<p>{{#str}}badgesunavailable, local_ignite{{/str}}</p>{{/nativeenabled}}
-            {{/passport}}
-            <a href="{{passporturl}}">{{#str}}dash_openpassport, local_ignite{{/str}}<span class="ignite-dashboard__arrow" aria-hidden="true"></span></a>
-        </section>
-        {{/passportenabled}}
-
-        <section class="ignite-dashboard__section">
-            <h3>{{#str}}dash_recommended, local_ignite{{/str}}</h3>
-            {{#hasrecommendations}}<ul class="ignite-dashboard__recommendations">{{#recommendations}}<li><h4>{{name}}</h4><p>{{outcome}}</p><p class="ignite-dashboard__small">{{reason}}</p><a href="{{url}}">{{action}}<span class="ignite-dashboard__arrow" aria-hidden="true"></span></a></li>{{/recommendations}}</ul>{{/hasrecommendations}}
-            {{^hasrecommendations}}<p>{{#str}}dash_norecommendations, local_ignite{{/str}}</p><a href="{{catalogurl}}">{{#str}}explorecourses, local_ignite{{/str}}</a>{{/hasrecommendations}}
-        </section>
-
-        {{#heat}}
-        <section class="ignite-dashboard__section">
-            <h3>{{#str}}dash_heat, local_ignite{{/str}}</h3><p>{{#str}}dash_heatfiction, local_ignite{{/str}}</p>
-            {{#available}}<p class="ignite-dashboard__status">{{stage}}</p><p>{{counttext}}</p>{{#next}}<p>{{next}}</p>{{/next}}{{^next}}<p>{{#str}}dash_heatlast, local_ignite{{/str}}</p>{{/next}}
-            <details><summary>{{#str}}dash_qualifying, local_ignite{{/str}}</summary><ul>{{#requirements}}<li>{{name}} — {{condition}}. {{status}}</li>{{/requirements}}</ul><p>{{#str}}dash_heatreset, local_ignite{{/str}}</p></details>{{/available}}
-            {{^available}}<p>{{#str}}dash_heatunavailable, local_ignite{{/str}}</p>{{/available}}
-        </section>
-        {{/heat}}
     {{#onboarding}}<nav class="ignite-dashboard__help" aria-label="{{#str}}dash_help, local_ignite{{/str}}"><a href="{{interestsurl}}">{{#str}}editinterests, local_ignite{{/str}}</a><a href="{{toururl}}">{{#str}}dash_help, local_ignite{{/str}}</a></nav>{{/onboarding}}
 </div>

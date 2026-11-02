@@ -10,7 +10,7 @@ final class dashboard {
         return content_to_text(format_string($value), false);
     }
 
-    public static function data(): array {
+    public static function data(bool $summaryonly = false): array {
         global $CFG, $USER, $OUTPUT, $DB;
         access::learner('dashboard');
         require_once($CFG->libdir . '/completionlib.php');
@@ -47,7 +47,7 @@ final class dashboard {
             $data['course'] = self::course($course, $evidence);
             $data['primary'] = $data['course']['next'];
         }
-        if ($data['onboarding']) {
+        if ($data['onboarding'] && (!$summaryonly || !$data['primary'])) {
             foreach (recommendations::current(true) as $target) {
                 if ($course && (int)$target['course']->id === (int)$course->id) { continue; }
                 $target['name'] = self::plain($target['course']->fullname);
@@ -63,9 +63,12 @@ final class dashboard {
                     $data['primary'] = ['url' => $target['url'], 'name' => $target['name'], 'enrol' => true];
                 }
                 $data['recommendations'][] = $target;
+                if ($summaryonly && $data['primary']) { break; }
             }
         }
         $data['hasrecommendations'] = (bool)$data['recommendations'];
+        // Home only needs the welcome/action. Hidden sections must not read badges or consume invitations.
+        if ($summaryonly) { return $data; }
         if ($data['hearthsenabled']) {
             if ($hearth = houses::get_current()) {
                 $data['hearth'] = hearth_ui::identity($hearth);

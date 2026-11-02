@@ -14,6 +14,7 @@ test('simple dashboard retains native Timeline and four navigation destinations'
   await page.goto('/local/ignite/index.php');
   const root = page.locator('.ignite-dashboard');
   await expect(root.locator('.ignite-dashboard__sidebar, .ignite-dashboard__rail, .ignite-dashboard__grid')).toHaveCount(0);
+  await expect(root.locator('.ignite-dashboard__learning, .ignite-dashboard__hearth-card, .ignite-dashboard__passport, .ignite-dashboard__recommendations')).toHaveCount(0);
   const primary = page.locator('.primary-navigation');
   for (const [name, path] of [['Home', '/my/'], ['Explore Courses', '/course/index.php'], ['Hearth', '/local/ignite/hearth.php'], ['Campfire', '/local/ignite/passport.php']]) {
     const link = primary.getByRole('menuitem', { name, exact: true });

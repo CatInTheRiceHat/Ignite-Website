@@ -17,7 +17,7 @@ $PAGE->set_heading(get_string('homeheading', 'local_ignite'));
 $isdashboard = \local_ignite\access::enabled('dashboard');
 if ($isdashboard) { $PAGE->add_body_class('ignite-learner-home'); }
 $PAGE->requires->css(new moodle_url('/local/ignite/' . ($isdashboard ? 'dashboard.css' : 'styles.css')));
-$data = $isdashboard ? \local_ignite\dashboard::data() : \local_ignite\home::data();
+$data = $isdashboard ? \local_ignite\dashboard::data(true) : \local_ignite\home::data();
 // Reuse the installed Timeline block's renderable, preferences, AMD and native action-event APIs.
 // The native Dashboard keeps its own Timeline block; only the standalone home embeds it here.
 if ($isdashboard && $DB->record_exists('block', ['name' => 'timeline', 'visible' => 1]) &&
