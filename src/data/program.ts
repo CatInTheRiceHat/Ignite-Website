@@ -180,18 +180,6 @@ export const developmentCourses: DevelopmentCourse[] = [
     description: 'Bridge arithmetic and Algebra 1 by using variables, expressions, and equations to solve multi-step real-world problems. Explore rational numbers, factors, multiples, exponents, expressions and variables, equations and inequalities, ratios, functions, and an introduction to geometry.',
     note: 'Designed to supplement school learning, not replace a course at school.',
   },
-  {
-    title: 'Introduction to Differential Calculus',
-    instructors: [{ name: 'Terrence Shu' }],
-    format: 'independent',
-    duration: 'To be confirmed',
-    icon: '/mascots/Research.png',
-    headerImage: '/courses/Differential%20Calculus.jpg?v=360efd24',
-    audience: 'Advanced math students ready for introductory college calculus concepts.',
-    description: 'Explore limits and continuity, derivative rules, and applications of derivatives. The course covers material comparable to the first semester of AP Calculus AB or the first three months of AP Calculus BC.',
-    prerequisites: 'Successfully completed at least Algebra 2, with extremely strong algebra skills and proficiency in functions and trigonometry.',
-    note: 'Designed to supplement a school calculus course. It does not replace that course and is not intended to prepare students for either AP Calculus exam.',
-  },
 ];
 
 export const courseCounts = {
@@ -214,7 +202,7 @@ export const programFaqs = [
   { question: 'What’s the time commitment?', answer: `Live: ${courseFormats.live.commitment} Independent: ${courseFormats.independent.commitment}` },
   { question: 'Which courses are available?', answer: `The catalog contains ${courseCounts.all} courses in development: ${courseCounts.live} live and ${courseCounts.independent} independent. ${programCopy.availability}` },
   { question: 'Who are the courses for?', answer: programCopy.eligibility },
-  { question: 'Is experience required?', answer: 'Requirements vary by course. Introduction to Physics & Astronomy needs no previous experience or advanced math. Introduction to Differential Calculus requires at least Algebra 2, extremely strong algebra skills, and proficiency in functions and trigonometry. Check the individual course descriptions for prerequisites.' },
+  { question: 'Is experience required?', answer: 'Requirements vary by course. Introduction to Physics & Astronomy needs no previous experience or advanced math. Check the individual course descriptions for prerequisites.' },
   { question: 'Who are the mentors?', answer: 'Ignite is student-led. High school mentors helped students practice skills during Summer 2026. Teaching and feedback arrangements for developing courses are still being planned.' },
   { question: 'Where will learning happen?', answer: 'Both formats are planned for online learning. Independent course plans include weekly lessons, practice, quizzes, applied work, feedback, revision, and a final project. The learning hub currently opens a Moodle sign-in page.' },
   { question: 'Can I apply now?', answer: 'A current student application link and enrollment availability have not been confirmed. The learning hub is a Moodle sign-in page. Intern applications are separate and linked on the Hiring page.' },
