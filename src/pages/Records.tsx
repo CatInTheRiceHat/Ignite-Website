@@ -17,7 +17,7 @@ import ProgramNextSteps from '../components/program/ProgramNextSteps';
 const recordTeam = summer2026Mentors;
 
 const statistics = {
-  applications: 110,
+  students: 110,
   courseSelections: 295,
   schools: 77,
   countriesAndRegions: 5,
@@ -119,9 +119,9 @@ const Records = () => {
                   <div className="rounded-3xl bg-white/15 p-5 backdrop-blur-sm sm:p-6">
                     <UsersRound className="h-7 w-7" aria-hidden="true" />
                     <dd className="mt-5 font-rammetto text-4xl leading-none text-white sm:text-5xl md:text-6xl">
-                      {statistics.applications}
+                      {statistics.students}
                     </dd>
-                    <dt className="mt-3 font-bold text-white/90">Applications</dt>
+                    <dt className="mt-3 font-bold text-white/90">Students</dt>
                   </div>
                   <div className="rounded-3xl bg-white p-5 text-[var(--text-charcoal)] shadow-lg sm:p-6">
                     <BookOpenCheck className="h-7 w-7 text-[var(--primary-orange)]" aria-hidden="true" />

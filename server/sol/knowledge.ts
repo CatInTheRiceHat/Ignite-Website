@@ -68,7 +68,7 @@ export const knowledge: KnowledgeEntry[] = [
   {
     id: 'records', destinationIds: ['records'], source: 'src/pages/Records.tsx; src/config/records.ts',
     keywords: ['records', 'student work', 'projects', 'capstone', 'examples', 'results', 'statistics', 'stats', 'numbers', 'reach', 'cohorts', 'schools', 'countries', 'impact'],
-    facts: 'The records route is /records. Its Summer 2026 statistics report 110 applications, 295 course selections, 77 schools, five countries/regions, ten live cohorts over three weeks, and ten mentors. These are historical figures, not current enrollment or future projections. Student-work examples include a Cleanse Nonprofit pitch about misinformation, a Nice Tea campaign design, and a study comparing basil growth under red, green, blue and white light.',
+    facts: 'The records route is /records. Its Summer 2026 statistics report 110 students, 295 course selections, 77 schools, five countries/regions, ten live cohorts over three weeks, and ten mentors. These are historical figures, not current enrollment or future projections. Student-work examples include a Cleanse Nonprofit pitch about misinformation, a Nice Tea campaign design, and a study comparing basil growth under red, green, blue and white light.',
   },
   {
     id: 'help', destinationIds: ['contact', 'faq', 'learning'], source: 'src/pages/FAQ.tsx; src/data/program.ts; src/pages/Hiring.tsx; src/lib/links.ts; src/components/program/ProgramNextSteps.tsx',

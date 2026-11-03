@@ -107,7 +107,7 @@ function CountStat({
 }
 
 const featuredStatistics = [
-  { value: 110, label: 'Applications', icon: UsersRound, mascot: '/mascots/Curious.png' },
+  { value: 110, label: 'Students', icon: UsersRound, mascot: '/mascots/Curious.png' },
   { value: 295, label: 'Course selections', icon: BookOpenCheck, mascot: '/mascots/Laptop.png' },
   { value: 77, label: 'Schools', icon: School, mascot: '/mascots/Graduation.png' },
 ];
