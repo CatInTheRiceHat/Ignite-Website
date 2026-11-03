@@ -19,4 +19,9 @@ export const confirmedPartners: Partner[] = [
     logo: '/partnerships/Sophie.png',
     website: 'https://hello-sophie.com/',
   },
+  {
+    name: 'Innovate Education',
+    logo: '/partnerships/Innovate Education.png',
+    website: 'https://innovate-education.org/',
+  },
 ];

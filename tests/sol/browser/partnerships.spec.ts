@@ -33,19 +33,21 @@ test('partnership calls to action link directly to the application form', async 
   const alternative = application.getByRole('link', { name: /Open partnership application/ });
   await expect(alternative).toHaveAttribute('href', 'https://forms.gle/6Zte2NF4fbWj2Y7W9');
   await expect(alternative).toHaveAttribute('target', '_blank');
-  await expect(page.getByRole('heading', { name: 'Our partners', exact: true })).toHaveCount(1);
+  await expect(page.getByRole('heading', { name: 'Current Partnerships', exact: true })).toHaveCount(1);
 });
 
-test('partner logos link to both websites and stay still with reduced motion', async ({ page }) => {
+test('partner logos link to their websites and stay still with reduced motion', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/partnerships');
-  const partners = page.getByRole('region', { name: 'Our partners', exact: true });
+  const partners = page.getByRole('region', { name: 'Current Partnerships', exact: true });
   await partners.scrollIntoViewIfNeeded();
   await expect(page.getByRole('heading', { name: 'Start small. Build together.', exact: true })).toHaveCount(0);
   await expect(partners.getByRole('link', { name: /^Visit Doorstop Education/ })).toHaveAttribute('href', 'https://doorstopeducation.org/');
   await expect(partners.getByRole('img', { name: 'Sophie logo', exact: true })).toHaveAttribute('src', '/partnerships/Sophie.png');
   await expect(partners.getByRole('link', { name: /^Visit Sophie/ })).toHaveAttribute('href', 'https://hello-sophie.com/');
-  await expect(partners.getByRole('link')).toHaveCount(2);
+  await expect(partners.getByRole('img', { name: 'Innovate Education logo', exact: true })).toHaveAttribute('src', '/partnerships/Innovate Education.png');
+  await expect(partners.getByRole('link', { name: /^Visit Innovate Education/ })).toHaveAttribute('href', 'https://innovate-education.org/');
+  await expect(partners.getByRole('link')).toHaveCount(3);
   await expect(partners.getByRole('button')).toHaveCount(0);
   expect(await partners.locator('ul').evaluate(element => getComputedStyle(element).animationName)).toBe('none');
 });
@@ -53,7 +55,7 @@ test('partner logos link to both websites and stay still with reduced motion', a
 test('partner strip moves left to right without a pause button', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/partnerships');
-  const partners = page.getByRole('region', { name: 'Our partners', exact: true });
+  const partners = page.getByRole('region', { name: 'Current Partnerships', exact: true });
   await partners.scrollIntoViewIfNeeded();
   await page.mouse.move(0, 0);
   const track = partners.locator('ul').first();
@@ -67,7 +69,7 @@ test('partner strip moves left to right without a pause button', async ({ page }
 test('partner strip loops seamlessly and keeps duplicate links out of keyboard navigation', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/partnerships');
-  const partners = page.getByRole('region', { name: 'Our partners', exact: true });
+  const partners = page.getByRole('region', { name: 'Current Partnerships', exact: true });
   await partners.scrollIntoViewIfNeeded();
   const groups = partners.locator('ul');
   const first = await groups.nth(0).boundingBox();
@@ -76,7 +78,7 @@ test('partner strip loops seamlessly and keeps duplicate links out of keyboard n
   expect(first!.width).toBeGreaterThanOrEqual(await partners.evaluate(element => Math.min(element.clientWidth, 1280)));
   expect(await groups.nth(0).locator('img').evaluateAll(elements => elements.map(element => element.getAttribute('src'))))
     .toEqual(await groups.nth(1).locator('img').evaluateAll(elements => elements.map(element => element.getAttribute('src'))));
-  await expect(partners.getByRole('link')).toHaveCount(2);
+  await expect(partners.getByRole('link')).toHaveCount(3);
   for (const duplicate of await partners.locator('li[aria-hidden="true"] a').all()) {
     await expect(duplicate).toHaveAttribute('tabindex', '-1');
   }
