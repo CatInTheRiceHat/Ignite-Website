@@ -10,7 +10,7 @@
     "moodle:dashboard:install": "node scripts/sync-moodle.mjs --dashboard --apply",
     "prebuild": "tsx scripts/index-sol-site.ts",
     "dev": "tsx --env-file-if-exists=.env.local scripts/dev-sol.ts",
-    "build": "tsc -b && npm run typecheck:sol && vite build && npm run build:sol",
+    "build": "tsc -b && npm run typecheck:sol && vite build && tsx scripts/build-demo-entry.ts && npm run build:sol",
     "lint": "eslint .",
     "preview": "vite preview",
     "build:sol": "vite build --config config/vite.sol.config.ts",

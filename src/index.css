@@ -104,6 +104,8 @@ body[data-intro-loading] sol-widget {
 
 @layer base {
   html {
+    background: var(--bg-cream);
+    overscroll-behavior-y: none;
     scrollbar-width: none;
   }
 
@@ -123,6 +125,7 @@ body[data-intro-loading] sol-widget {
 
   body {
     @apply bg-[var(--bg-cream)] text-[var(--text-charcoal)] font-sans;
+    overscroll-behavior-y: none;
   }
 
   a:focus-visible, button:focus-visible {

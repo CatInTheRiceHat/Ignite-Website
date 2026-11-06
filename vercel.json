@@ -14,6 +14,10 @@
       "handle": "filesystem"
     },
     {
+      "src": "/demo/boundaries/?",
+      "dest": "/demo/boundaries/index.html"
+    },
+    {
       "src": "/(about|team|mentors|program|faq|statistics|hiring|records|partnerships)/?",
       "dest": "/index.html"
     }

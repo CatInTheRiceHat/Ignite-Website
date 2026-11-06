@@ -12,6 +12,7 @@
     "../scripts/refresh-sol-knowledge.ts",
     "../scripts/index-sol-site.ts",
     "../scripts/render-sol-page.ts",
+    "../scripts/build-demo-entry.ts",
     "../tests/sol",
     "*.ts"
   ]

@@ -414,7 +414,8 @@ a:hover {
 .nav-links a:hover,
 .nav-links a.active {
   background: var(--primary-orange);
-  color: var(--text-charcoal);
+  color: #fff;
+  font-family: var(--font-primary);
 }
 
 .nav-toggle {
@@ -488,7 +489,7 @@ a:hover {
   justify-content: center;
   gap: var(--spacing-xs);
   padding: 0.75rem 1.5rem;
-  font-family: var(--font-display);
+  font-family: var(--font-primary);
   font-size: 1.125rem;
   font-weight: 800;
   border-radius: var(--radius-full);
@@ -528,7 +529,7 @@ a:hover {
 
 .btn-primary {
   background: var(--primary-orange);
-  color: var(--text-charcoal) !important;
+  color: #fff !important;
   box-shadow: 0 4px 0 rgba(255, 107, 53, 0.2);
 }
 
@@ -544,13 +545,13 @@ a:hover {
 
 .btn-secondary {
   background: var(--primary-orange);
-  color: var(--text-charcoal);
+  color: #fff;
   box-shadow: none;
 }
 
 .btn-secondary:hover {
   background: var(--primary-orange);
-  color: var(--text-charcoal);
+  color: #fff;
   transform: translateY(-4px);
   box-shadow: 0 4px 0 0 var(--primary-orange-dark);
 }

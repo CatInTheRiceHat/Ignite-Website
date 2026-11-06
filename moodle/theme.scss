@@ -47,6 +47,7 @@ body.pagelayout-incourse {
 
 // White labels on solid orange controls, including hover/active/disabled states.
 .btn-primary {
+    font-family: "Nunito", "Segoe UI", Arial, sans-serif;
     --bs-btn-color: #fff;
     --bs-btn-hover-color: #fff;
     --bs-btn-active-color: #fff;
@@ -61,11 +62,15 @@ body.pagelayout-incourse {
 .bg-primary,
 .text-bg-primary { color: #fff !important; }
 
-// Use the brand heading font for navigation and UI controls.
+// Use the brand heading font for navigation and course headings.
 .navbar .nav-link,
-.btn,
 .dashboard-card .coursename {
     font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+    font-weight: 700;
+}
+
+.btn {
+    font-family: "Nunito", "Segoe UI", Arial, sans-serif;
     font-weight: 700;
 }
 
@@ -121,7 +126,7 @@ body.pagelayout-incourse {
         border-color: #F07B2A;
         color: #fff;
         border-radius: .75rem;
-        font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+        font-family: "Nunito", "Segoe UI", Arial, sans-serif;
         font-weight: 700;
     }
 

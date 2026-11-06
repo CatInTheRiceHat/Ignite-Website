@@ -8,6 +8,7 @@ import { siteContent } from '../../server/sol/site-content';
 import { programFaqs } from '../../src/data/program';
 import { interns, mentors } from '../../src/data/mentors';
 import { RECORDS_PAGE } from '../../src/config/records';
+import { DEMO_PATH } from '../../src/config/courseDemo';
 
 it('indexes every public page in a fresh production process without router or dependency-scan failures', () => {
   const cli = createRequire(import.meta.url).resolve('tsx/cli');
@@ -17,7 +18,7 @@ it('indexes every public page in a fresh production process without router or de
   });
   expect(result.error).toBeUndefined();
   expect(result.status, result.stderr).toBe(0);
-  expect(result.stdout).toContain('Indexed 8 public website pages for Sol.');
+  expect(result.stdout).toContain('Indexed 9 public website pages for Sol.');
   expect(result.stderr).not.toMatch(/vite:dep-scan|Cannot destructure|Request is outdated/);
 }, 35000);
 
@@ -34,7 +35,7 @@ it('covers every public page route, excluding redirects and error pages', () => 
   const routes = readFileSync('src/App.tsx', 'utf8');
   const literalPaths = [...routes.matchAll(/<Route path="([^"]+)"/g)].map(match => match[1])
     .filter(path => path !== '/mentors' && path !== '/statistics' && path !== '/apply' && path !== '*');
-  expect(siteContent.map(page => page.path).sort()).toEqual([...literalPaths, RECORDS_PAGE.path].sort());
+  expect(siteContent.map(page => page.path).sort()).toEqual([...literalPaths, RECORDS_PAGE.path, DEMO_PATH].sort());
   expect(new Set(siteContent.map(page => page.path)).size).toBe(siteContent.length);
   for (const page of siteContent) {
     expect(page.text.length).toBeGreaterThan(100);
@@ -53,7 +54,7 @@ it('contains the actual FAQ answers and all published team profiles', () => {
     expect(team).toContain(member.name);
     expect(team).toContain(member.role);
   }
-  expect(siteContent.find(page => page.path === '/')!.text).toMatch(/110\s+Applications/);
+  expect(siteContent.find(page => page.path === '/')!.text).toMatch(/110\s+Students/);
 });
 
 it('finds student-work details from page text even when the summaries have no matching keyword', () => {

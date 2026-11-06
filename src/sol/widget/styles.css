@@ -6,7 +6,8 @@
 .sol-widget button:disabled { cursor: default; opacity: .6; }
 .sol-widget button, .sol-widget a { -webkit-tap-highlight-color: transparent; }
 .sol-widget h2, .sol-widget h3, .sol-widget p { margin: 0; }
-.sol-widget h2, .sol-widget h3, .sol-widget button, .sol-widget .sol-quick, .sol-widget .sol-nav-link { font-family: 'Poppins', sans-serif; }
+.sol-widget h2, .sol-widget h3 { font-family: 'Poppins', sans-serif; }
+.sol-widget button, .sol-widget .sol-quick, .sol-widget .sol-nav-link { font-family: 'Nunito', sans-serif; }
 .sol-widget a { color: #1A1A2E; }
 .sol-widget :focus-visible { outline: 3px solid #1A1A2E; outline-offset: 3px; }
 .sol-widget svg { flex: none; vertical-align: middle; }
@@ -63,7 +64,7 @@
 .sol-composer textarea { width: 100%; min-width: 0; min-height: 44px; max-height: 90px; resize: none; field-sizing: content; border: 0; outline: 0; padding: 11px 12px; background: transparent; color: #1A1A2E; font-size: 16px; line-height: 22px; text-align: left; }
 .sol-composer textarea:focus-visible { outline: 0; }
 .sol-composer textarea::placeholder { color: #626271; opacity: 1; font-size: 13px; }
-.sol-send { flex: none; display: grid; place-items: center; height: 44px; width: 44px; border: 0; border-radius: 12px; background: #F07B2A; color: #1A1A2E; }
+.sol-send { flex: none; display: grid; place-items: center; height: 44px; width: 44px; border: 0; border-radius: 12px; background: #F07B2A; color: #fff; }
 .sol-send:hover:enabled { background: #D46A20; }
 .sol-input-hint { font-size: 9px; color: #4A4A5E; text-align: center; margin-top: 6px !important; }
 .sol-privacy { font-size: 10px; color: #4A4A5E; text-align: center; margin-top: 9px !important; line-height: 1.5; }

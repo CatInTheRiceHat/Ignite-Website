@@ -146,7 +146,7 @@ $ignite-catalog-description-lines: 2;
                 border-radius: 0 .85rem .85rem 0;
                 background: $ignite-catalog-orange;
                 color: #fff;
-                font-family: $ignite-catalog-heading;
+                font-family: $ignite-catalog-body;
                 font-weight: 700;
                 transition: background-color .18s ease;
 
@@ -818,7 +818,7 @@ $ignite-catalog-description-lines: 2;
                 mask-size: contain;
                 mask-repeat: no-repeat;
             }
-            &[aria-current="page"] { background: $ignite-catalog-orange; color: #fff; }
+            &[aria-current="page"] { background: $ignite-catalog-orange; color: #fff; font-family: $ignite-catalog-body; }
             &:hover { background: #FFF0E2; color: $ignite-catalog-link; }
         }
     }
@@ -888,7 +888,7 @@ $ignite-catalog-description-lines: 2;
         gap: .75rem 1.25rem;
         margin-top: 1.5rem;
 
-        a { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; color: #fff; font-family: $ignite-catalog-heading; font-size: .875rem; font-weight: 700; }
+        a { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; color: #fff; font-family: $ignite-catalog-body; font-size: .875rem; font-weight: 700; }
         .ignite-learning-welcome__primary { padding: .8rem 1.1rem; border-radius: .75rem; background: $ignite-catalog-orange; color: #fff; text-decoration: none; }
         .ignite-learning-welcome__primary:hover { background: $ignite-catalog-orange-dark; }
     }

@@ -9,6 +9,7 @@ const publicPages = [
   { path: '/about', source: 'src/pages/About.tsx' },
   { path: '/team', source: 'src/pages/Mentors.tsx' },
   { path: '/program', source: 'src/pages/Program.tsx' },
+  { path: '/demo/boundaries', source: 'src/pages/CourseDemo.tsx' },
   { path: '/faq', source: 'src/pages/FAQ.tsx' },
   { path: '/hiring', source: 'src/pages/Hiring.tsx' },
   { path: '/partnerships', source: 'src/pages/Partnerships.tsx' },

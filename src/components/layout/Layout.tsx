@@ -20,8 +20,9 @@ const Layout = ({ children }: LayoutProps) => {
   }, [pathname, hash]);
 
   useEffect(() => {
-    const metadata = pageMetadata[pathname] ?? defaultMetadata;
-    const url = `https://ignitefindyourfire.org${pathname === '/' ? '/' : pathname}`;
+    const canonicalPath = pathname.replace(/\/+$/, '') || '/';
+    const metadata = pageMetadata[canonicalPath] ?? defaultMetadata;
+    const url = `https://ignitefindyourfire.org${canonicalPath}`;
     document.title = metadata.title;
     const values = {
       'meta[name="description"]': metadata.description,
@@ -40,7 +41,7 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      <main className="flex-grow pt-[7.5rem] md:pt-[8.5rem]">
+      <main className="flex-grow pt-[8.5rem] sm:pt-32 md:pt-36">
         {children}
       </main>
       <Footer />

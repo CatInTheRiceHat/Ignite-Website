@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { lazy, Suspense, useCallback, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { BrowserRouter as Router, Navigate, Routes, Route } from 'react-router-dom';
 import LoadingScreen from './components/LoadingScreen';
@@ -14,12 +14,15 @@ import Hiring from './pages/Hiring';
 import Partnerships from './pages/Partnerships';
 import Records from './pages/Records';
 import NotFound from './pages/NotFound';
+import { DEMO_PATH } from './config/courseDemo';
 import { RECORDS_PAGE } from './config/records';
 
 const INTRO_SESSION_KEY = 'ignite:intro-seen';
+const CourseDemo = lazy(() => import('./pages/CourseDemo'));
 
 function App() {
   const [loading, setLoading] = useState(() => {
+    if (window.location.pathname.replace(/\/+$/, '') === DEMO_PATH) return false;
     if (introBypassed) return false;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
     if (introDebugEnabled) return true;
@@ -54,6 +57,7 @@ function App() {
               <Route path="/team" element={<Mentors />} />
               <Route path="/mentors" element={<Navigate to="/team" replace />} />
               <Route path="/program" element={<Program />} />
+              <Route path={DEMO_PATH} element={<Suspense fallback={<p role="status" className="p-12 text-center">Opening your sample week…</p>}><CourseDemo /></Suspense>} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/apply" element={<Navigate to="/program" replace />} />
               <Route path="/statistics" element={<Navigate to={RECORDS_PAGE.path} replace />} />

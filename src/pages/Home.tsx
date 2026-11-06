@@ -16,6 +16,8 @@ import BlurFade from '../components/ui/blur-fade';
 import FadingCarousel from '../components/ui/fading-carousel';
 import { programCopy } from '../data/program';
 import { STUDENT_PREENROLLMENT_URL } from '../lib/links';
+import { featuredCourse } from '../config/courseDemo';
+import FeaturedCourse from '../components/program/FeaturedCourse';
 
 // ---------------------------------------------------------------------------
 // Sub-components
@@ -159,10 +161,15 @@ const Home = () => {
               <Link to="/program" className="w-full max-w-xs bg-white text-[var(--primary-orange)] border-2 border-[var(--primary-orange)] px-8 py-5 rounded-full font-bold text-xl hover:bg-orange-50 transition-all sm:w-auto sm:px-10">
                 Explore Course Plans
               </Link>
+              <Link to={featuredCourse.path} className="inline-flex w-full max-w-xs items-center justify-center gap-2 rounded-full border-2 border-white bg-white px-8 py-5 text-xl font-bold text-[var(--text-charcoal)] hover:bg-orange-50 sm:w-auto">
+                Try a course<RedirectArrow />
+              </Link>
             </div>
           </BlurFade>
         </div>
       </section>
+
+      <FeaturedCourse />
 
       {/* Summer 2026 Results */}
       <section className="bg-white py-16 shadow-sm md:py-20" aria-labelledby="home-statistics-heading">
@@ -208,11 +215,10 @@ const Home = () => {
               <p className="text-xl md:text-2xl text-white font-semibold leading-relaxed max-w-3xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">{programCopy.direction}</p>
             </div>
           </BlurFade>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
             {[
               { img: '/assets/Career%20Skills.png',   title: 'Useful Skills',       desc: "Build habits for managing time, communicating, staying safe online, and understanding money." },
               { img: '/assets/Mentorship.png',        title: 'Student-led Learning', desc: "Students help shape practical courses, building on our Summer 2026 mentorship program." },
-              { img: '/assets/Free.png',              title: 'Free Learning',       desc: "Our mission is free learning. Both developing formats are planned to stay free." },
               { img: '/assets/No%20Experience.png',   title: 'Stay Curious',       desc: "Start with what interests you. Check each course description for any prerequisites." }
             ].map((feature, i) => (
               <BlurFade key={i} delay={i * 0.08}>

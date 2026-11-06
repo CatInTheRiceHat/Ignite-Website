@@ -71,7 +71,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Links */}
-        <div className="hidden xl:flex items-center gap-5 whitespace-nowrap font-semibold text-base">
+        <div className="hidden xl:flex items-center gap-5 whitespace-nowrap font-bold text-lg">
           {navLinks.map((link) => (
             <NavLink
               key={link.path}
@@ -83,7 +83,7 @@ const Navbar = () => {
               {link.name}
             </NavLink>
           ))}
-          <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center gap-2 rounded-full bg-[var(--primary-orange)] px-4 py-2 font-normal text-white transition-colors hover:bg-[var(--primary-orange-dark)]">
+          <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center gap-2 rounded-full bg-[var(--primary-orange)] px-4 py-2 font-bold text-white transition-colors hover:bg-[var(--primary-orange-dark)]">
             Apply Now
             <RedirectArrow size={16} />
           </a>
@@ -95,9 +95,9 @@ const Navbar = () => {
         target="_blank"
         rel="noopener noreferrer"
         aria-label={announcementText}
-        className="group flex min-h-10 items-center justify-center bg-[var(--text-charcoal)] px-4 py-2 text-center text-white transition-colors hover:bg-[var(--primary-orange-dark)]"
+        className="group flex min-h-14 items-center justify-center bg-[var(--text-charcoal)] px-4 py-2 text-center text-white transition-colors hover:bg-[var(--primary-orange-dark)] sm:min-h-12"
       >
-        <span className="flex w-full min-w-0 max-w-7xl items-center justify-center gap-2 text-[0.7rem] font-semibold leading-tight sm:text-sm">
+        <span className="flex w-full min-w-0 max-w-7xl items-center justify-center gap-2 text-base font-bold leading-tight sm:text-lg">
           <Megaphone className="h-4 w-4 flex-none text-white" aria-hidden="true" />
           <span className="block min-w-0 max-w-[38ch] flex-1 whitespace-normal text-center sm:max-w-none sm:flex-none">
             {announcementText}
@@ -114,9 +114,9 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.18, ease: 'easeInOut' }}
-            className="xl:hidden absolute left-0 right-0 top-full max-h-[calc(100dvh-7.5rem)] md:max-h-[calc(100dvh-8.5rem)] overflow-y-auto border-t border-orange-100 bg-white shadow-lg"
+            className="xl:hidden absolute left-0 right-0 top-full max-h-[calc(100dvh-8.5rem)] sm:max-h-[calc(100dvh-8rem)] md:max-h-[calc(100dvh-9rem)] overflow-y-auto border-t border-orange-100 bg-white shadow-lg"
           >
-            <div className="mx-auto flex max-w-7xl flex-col px-4 py-3 font-semibold text-base">
+            <div className="mx-auto flex max-w-7xl flex-col px-4 py-3 font-bold text-lg">
               {navLinks.map((link) => (
                 <NavLink
                   key={link.path}
@@ -129,7 +129,7 @@ const Navbar = () => {
                   {link.name}
                 </NavLink>
               ))}
-              <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)} className="mt-2 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-3 py-2 font-normal text-white transition-colors hover:bg-[var(--primary-orange-dark)]">
+              <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)} className="mt-2 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-3 py-2 font-bold text-white transition-colors hover:bg-[var(--primary-orange-dark)]">
                 Apply Now
                 <RedirectArrow size={16} />
               </a>

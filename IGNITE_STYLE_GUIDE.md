@@ -1,6 +1,6 @@
 # Ignite Program Style Guide
 
-Last Updated: October 21, 2026
+Last Updated: November 5, 2026
 Primary Contact: Elaine Che
 
 This document outlines the visual identity and branding standards for the Ignite Summer Program. All program materials, including slide decks, websites, classroom headers, and marketing collateral, should follow these guidelines to keep Ignite consistent, energetic, playful, and easy for students to understand.
@@ -30,7 +30,8 @@ Ignite uses a three-font hierarchy from Google Fonts:
 | Use | Font | Notes |
 | --- | --- | --- |
 | Display Titles | Rammetto One | Big page titles, hero headings, section moments, and playful display text. |
-| Headings | Poppins | Subheaders, card titles, nav labels, buttons, and bold UI labels. |
+| Headings | Poppins | Subheaders, card titles, nav labels, and bold UI labels. |
+| Buttons | Nunito | All button labels, including links styled as buttons. Orange backgrounds always use white text. |
 | Body Text | Nunito | Paragraphs, descriptions, form text, supporting copy, and general readable content. |
 
 ### Imagery And Icons
@@ -48,10 +49,11 @@ Ignite uses a three-font hierarchy from Google Fonts:
 - Layouts should be clean and spacious, with rounded cards, large headings, and clear visual hierarchy.
 - Cards should generally use large rounded corners, soft shadows, and orange accent borders or strips.
 - Buttons should be rounded, high-contrast, and action-oriented.
+- Every button with an orange background must use white (`#FFFFFF`) text in Nunito. This includes links styled as buttons and all orange hover, focus, active, or disabled states. Button icons and arrows inherit the white text color.
 - Avoid cluttered slides or pages. Use one main idea per section whenever possible.
 - Keep text readable on Zoom and mobile. Favor large font sizes and generous line spacing.
 - Maintain strong contrast, especially on orange or image backgrounds.
-- Use `#1A1A2E` or white for high-contrast text depending on background.
+- Use `#1A1A2E` or white for high-contrast text depending on background; orange buttons always use white text.
 - Do not place long text directly over busy images unless there is a strong overlay.
 - Add alt text for meaningful images in digital documents and websites.
 
@@ -69,6 +71,7 @@ Use short sentences and friendly phrasing. Avoid corporate wording, dense academ
 
 ## 4. Component Style Notes
 
+- Buttons: Nunito labels; every orange background uses white text and white icons or arrows.
 - Navbar: white translucent surface with orange active links and a charcoal announcement bar.
 - Hero sections: orange or image-led, with white display text.
 - Course cards: white cards with classroom-style image headers, course icons, mentor avatars, and compact descriptions.

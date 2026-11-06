@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { featuredCourse } from '../config/courseDemo';
 import { courseCounts, courseFields, courseFormats, developmentCourses, programCopy, type CourseField, type CourseFormat, type DevelopmentCourse } from '../data/program';
 import ProgramNextSteps from '../components/program/ProgramNextSteps';
 import { STUDENT_PREENROLLMENT_URL } from '../lib/links';
@@ -83,6 +85,13 @@ const Program = () => {
             Apply Now
             <RedirectArrow />
           </a>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-12" aria-labelledby="sample-week-heading">
+        <div className="flex flex-col gap-6 rounded-[2rem] border-2 border-orange-100 bg-white p-7 md:flex-row md:items-center md:justify-between md:p-10">
+          <div className="max-w-2xl"><p className="text-sm font-bold text-[var(--text-light)]">A complete sample week · No account needed</p><h2 id="sample-week-heading" className="mt-2 text-2xl md:text-3xl">Experience learning on Ignite.</h2><p className="mt-3 text-[var(--text-light)]">Explore Week {featuredCourse.weekNumber} of {featuredCourse.course.title}. {featuredCourse.summary} {featuredCourse.workload}, at your pace.</p></div>
+          <Link to={featuredCourse.path} className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-7 py-4 font-sans font-bold text-white transition-colors hover:bg-[var(--primary-orange-dark)]">Explore a sample week<RedirectArrow /></Link>
         </div>
       </section>
 
