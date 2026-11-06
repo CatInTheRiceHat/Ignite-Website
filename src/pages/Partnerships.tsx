@@ -36,7 +36,7 @@ const Partnerships = () => (
           <p className="mt-6 text-lg leading-relaxed text-[var(--text-light)] md:text-xl">
             Whether you want to introduce Ignite to your community, try a lesson with your students, develop educational resources together, or support our work, we’d love to explore what we can build together.
           </p>
-          <a href={PARTNERSHIP_FORM_URL} target="_blank" rel="noopener noreferrer" className="mt-10 inline-flex min-h-14 items-center justify-center gap-3 rounded-full bg-[var(--primary-orange)] px-7 py-4 text-xl font-bold text-white shadow-lg shadow-orange-100 transition-all hover:bg-[var(--primary-orange-dark)] motion-safe:hover:scale-105 motion-safe:active:scale-95 sm:px-10">
+          <a href={PARTNERSHIP_FORM_URL} target="_blank" rel="noopener noreferrer" className="mt-10 inline-flex min-h-14 items-center justify-center gap-3 rounded-full bg-[var(--primary-orange)] px-7 py-4 text-white shadow-lg shadow-orange-100 transition-all hover:bg-[var(--primary-orange-dark)] motion-safe:hover:scale-105 motion-safe:active:scale-95 sm:px-10 font-sans font-bold text-button">
             Partner with Ignite
             <RedirectArrow />
             <span className="sr-only"> (opens in a new tab)</span>

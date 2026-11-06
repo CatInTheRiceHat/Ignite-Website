@@ -11,7 +11,7 @@
 .ignite-dashboard__welcome > div { min-width: 0; }
 .ignite-dashboard__welcome > img { object-fit: contain; flex-shrink: 0; }
 .ignite-dashboard .ignite-dashboard__eyebrow { text-transform: uppercase; letter-spacing: .1em; color: #62564d; font-size: .75rem; font-weight: 700; margin-bottom: .4rem; }
-.ignite-dashboard a.ignite-dashboard__primary { display: inline-flex; align-items: center; gap: .75rem; background: #f07b2a; color: #fff; font-family: Nunito, sans-serif; padding: .8rem 1.3rem; min-height: 48px; border: 2px solid #85370d; border-radius: 2rem; font-weight: 700; text-decoration: none; }
+.ignite-dashboard a.ignite-dashboard__primary { display: inline-flex; align-items: center; gap: .75rem; background: #f07b2a; color: #fff; font-family: Nunito, sans-serif; padding: .8rem 1.3rem; min-height: 48px; border: 2px solid #85370d; border-radius: 2rem; font-weight: 700; text-decoration: none; font-size: var(--button-font-size, 1.25rem); line-height: 1.4; }
 .ignite-dashboard a.ignite-dashboard__primary:hover { background: #f7ad6d; }
 .ignite-dashboard__arrow { display: inline-block; vertical-align: middle; width: 20px; height: 20px; margin-left: .5rem; flex-shrink: 0; background: currentColor; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14m-6-6 6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat; }
 .ignite-dashboard__section { min-width: 0; padding: 1.5rem 0; border-bottom: 1px solid #d8cbc0; }

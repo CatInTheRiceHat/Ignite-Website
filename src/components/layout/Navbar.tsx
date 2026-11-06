@@ -71,7 +71,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Links */}
-        <div className="hidden xl:flex items-center gap-5 whitespace-nowrap font-bold text-lg">
+        <div className="hidden xl:flex items-center gap-5 whitespace-nowrap font-sans font-bold text-lg">
           {navLinks.map((link) => (
             <NavLink
               key={link.path}
@@ -83,7 +83,7 @@ const Navbar = () => {
               {link.name}
             </NavLink>
           ))}
-          <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center gap-2 rounded-full bg-[var(--primary-orange)] px-4 py-2 font-bold text-white transition-colors hover:bg-[var(--primary-orange-dark)]">
+          <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center gap-2 rounded-full bg-[var(--primary-orange)] px-4 py-2 text-white transition-colors hover:bg-[var(--primary-orange-dark)] font-sans font-bold text-button">
             Apply Now
             <RedirectArrow size={16} />
           </a>
@@ -116,7 +116,7 @@ const Navbar = () => {
             transition={{ duration: 0.18, ease: 'easeInOut' }}
             className="xl:hidden absolute left-0 right-0 top-full max-h-[calc(100dvh-8.5rem)] sm:max-h-[calc(100dvh-8rem)] md:max-h-[calc(100dvh-9rem)] overflow-y-auto border-t border-orange-100 bg-white shadow-lg"
           >
-            <div className="mx-auto flex max-w-7xl flex-col px-4 py-3 font-bold text-lg">
+            <div className="mx-auto flex max-w-7xl flex-col px-4 py-3 font-sans font-bold text-lg">
               {navLinks.map((link) => (
                 <NavLink
                   key={link.path}
@@ -129,7 +129,7 @@ const Navbar = () => {
                   {link.name}
                 </NavLink>
               ))}
-              <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)} className="mt-2 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-3 py-2 font-bold text-white transition-colors hover:bg-[var(--primary-orange-dark)]">
+              <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)} className="mt-2 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-3 py-2 font-sans text-button font-bold text-white transition-colors hover:bg-[var(--primary-orange-dark)]">
                 Apply Now
                 <RedirectArrow size={16} />
               </a>

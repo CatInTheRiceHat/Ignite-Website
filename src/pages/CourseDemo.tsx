@@ -75,7 +75,7 @@ const CourseDemo = () => {
           <h1 id="demo-title">{sample.course.title}</h1>
           <CourseCreators course={sample.course} className="mt-5" />
           <p className="demo-hero-description">{sample.summary}</p>
-          <button type="button" className="demo-button" onClick={() => go(nextPart.id)}>{count ? 'Continue your week' : 'Start the sample week'}<RedirectArrow /></button>
+          {!current && <button type="button" className="demo-button" onClick={() => go(nextPart.id)}>{count ? 'Continue your week' : 'Start the sample week'}<RedirectArrow /></button>}
           <p className="demo-hero-small">Your progress on this one week of the course will be saved in this browser.</p>
         </div>
         <LearningTimeline weekNumber={sample.weekNumber} currentId={current?.id} steps={parts.map(part => ({ ...part, complete: partComplete(part.id, state), onSelect: () => go(part.id) }))} />
@@ -87,13 +87,13 @@ const CourseDemo = () => {
       <aside className="demo-sidebar" aria-label="Week navigation and progress">
         <div className="demo-progress-heading"><strong>Your week</strong><span>{count} / {parts.length} complete</span></div>
         <progress max={parts.length} value={count} aria-label="Sample week completion" />
-        <button type="button" className="demo-outline-link" aria-current={!current ? 'page' : undefined} onClick={() => go()}>Week overview</button>
+        {current && <><button type="button" className="demo-outline-link" onClick={() => go()}>Week overview</button>
         <nav aria-label="Sample week parts"><ol>{parts.map((part, i) => <li key={part.id}>
           <button type="button" aria-current={current?.id === part.id ? 'step' : undefined} onClick={() => go(part.id)}>
             <span className={`demo-step-number ${partComplete(part.id, state) ? 'is-done' : ''}`} aria-hidden="true">{partComplete(part.id, state) ? <Check size={16} /> : i + 1}</span>
             <span><span className="demo-step-title">{part.title}</span><span className="demo-step-kind">{partComplete(part.id, state) ? 'Complete · ' : ''}{part.kind}</span></span>
           </button>
-        </li>)}</ol></nav>
+        </li>)}</ol></nav></>}
         <div className="demo-save-note"><ShieldCheck size={18} aria-hidden="true" /><p>{saved ? 'Your work is saved in this browser so you can return on this device; it is not submitted to anyone.' : 'Browser saving is unavailable, so download your work before closing this tab.'}</p></div>
         <div className="demo-utility-actions"><button type="button" onClick={download}><Download size={16} aria-hidden="true" />Download work</button><button type="button" onClick={() => resetDialog.current?.showModal()}><RotateCcw size={16} aria-hidden="true" />Reset progress</button></div>
       </aside>
@@ -113,7 +113,6 @@ const CourseDemo = () => {
           <div className="demo-callout">Plan for about 4½ hours over the week, including roughly 100 minutes for reading, writing and revising the case study. You can visit the sections in any order and return later to finish your work.</div>
           <h3>How this sample works</h3><p>You can choose any section from the outline and use the explanations and hints to reconsider an answer whenever you need to. Written activities include criteria for reviewing your own work, rather than a grade from a live mentor.</p>
           <p>Please use fictional situations in your answers, since anyone sharing your browser profile could see saved work. If you’re using a shared device, download anything you want to keep and reset the demo before you leave.</p>
-          <button type="button" className="demo-button" onClick={() => go(nextPart.id)}>{count ? 'Continue learning' : 'Begin part 1'}<RedirectArrow /></button>
         </div>}
         {current?.id === 'learn' && <Lesson {...props} />}
         {quizPart && <Quiz key={current.id} questions={questionSets[current.id as keyof typeof questionSets]} {...props} />}

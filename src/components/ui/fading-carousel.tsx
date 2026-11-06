@@ -15,6 +15,7 @@ interface FadingCarouselProps {
   variant?: 'light' | 'dark'; // light = white text (for dark/image backgrounds), dark = dark text (default)
   imageStyle?: 'boxed' | 'open'; // boxed = rounded container, open = no box
   expandActiveOnly?: boolean;
+  size?: 'default' | 'large';
 }
 
 const FadingCarousel = ({
@@ -24,6 +25,7 @@ const FadingCarousel = ({
   variant = 'dark',
   imageStyle = 'boxed',
   expandActiveOnly = false,
+  size = 'default',
 }: FadingCarouselProps) => {
   const [active, setActive] = useState(0);
   const [displayedImage, setDisplayedImage] = useState<number | null>(null);
@@ -70,7 +72,7 @@ const FadingCarousel = ({
   ));
 
   return (
-    <div className={`${expandActiveOnly ? 'max-w-7xl' : 'max-w-5xl'} mx-auto px-4 [overflow-anchor:none]`}>
+    <div className={`${expandActiveOnly || size === 'large' ? 'max-w-7xl' : 'max-w-5xl'} mx-auto w-full px-4 [overflow-anchor:none]`}>
       <div className={`flex flex-col md:flex-row ${expandActiveOnly ? 'items-start gap-0' : 'items-center gap-10 md:gap-16'}`}>
 
         {/* Left - fading image */}
@@ -99,7 +101,7 @@ const FadingCarousel = ({
               </div>
             </div>
           ) : (
-            <div className={`relative ${expandActiveOnly ? 'h-96 sm:h-[500px] lg:h-[620px]' : 'h-[420px]'}`}>
+            <div className={`relative ${expandActiveOnly ? 'h-96 sm:h-[500px] lg:h-[620px]' : size === 'large' ? 'h-[460px] md:h-[540px]' : 'h-[420px]'}`}>
               {images}
               {/* Dot indicators */}
               <div className="absolute bottom-0 left-0 right-0 flex justify-center gap-2 z-10">
@@ -170,7 +172,7 @@ const FadingCarousel = ({
               }`}
             >
               <h3
-                className={`text-xl font-bold mb-1 transition-colors duration-300 ${
+                className={`${size === 'large' ? 'text-2xl' : 'text-xl'} font-bold mb-1 transition-colors duration-300 ${
                   i === active
                     ? isLight ? 'text-white' : 'text-[var(--primary-orange)]'
                     : isLight ? 'text-white/70' : 'text-[var(--text-charcoal)]'
@@ -179,7 +181,7 @@ const FadingCarousel = ({
                 {item.title}
               </h3>
               <p
-                className={`text-base leading-relaxed transition-all duration-300 ${
+                className={`${size === 'large' ? 'text-lg' : 'text-base'} leading-relaxed transition-all duration-300 ${
                   i === active
                     ? isLight ? 'text-white/90' : 'text-[var(--text-light)]'
                     : isLight ? 'text-white/50' : 'text-[var(--text-light)] opacity-60'

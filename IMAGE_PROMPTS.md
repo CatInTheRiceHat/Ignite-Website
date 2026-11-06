@@ -20,7 +20,7 @@ These go behind text with a light white/cream overlay on top, so they need to be
 
 ---
 
-### 2. `What You'll Get.png` — "Key Benefits" Section
+### 2. `Hero 2.jpg` — "Key Benefits" Section
 **Where it's used:** Background behind 6 feature cards (Career Skills, Career Exposure, Mentorship, Free, No Experience Needed, Shark Tank Finale).
 
 **Whisk prompt:**
@@ -28,7 +28,7 @@ These go behind text with a light white/cream overlay on top, so they need to be
 
 ---
 
-### 3. `Who is Ignite For.png` — "Who Is Ignite For?" Section
+### 3. `Who.jpg` — "Who Is Ignite For?" Section
 **Where it's used:** Background behind 3 cards: Grades 6–8, Online & Zoom, Curious Minds.
 
 **Whisk prompt:**
@@ -44,7 +44,7 @@ These go behind text with a light white/cream overlay on top, so they need to be
 
 ---
 
-### 5. `Meet Your Mentors.png` — "Meet Your Mentors" Section
+### 5. `Mentors.jpg` — "Meet Your Mentors" Section
 **Where it's used:** Background behind the "Meet Your Mentors" heading, subtitle, and a call-to-action button.
 
 **Whisk prompt:**
@@ -149,10 +149,10 @@ These are small square icons used inside cards and activity sections. **Transpar
 | File | Section | Page | Type |
 |---|---|---|---|
 | Hero.png | Hero background | Home + About | Full-width BG |
-| What You'll Get.png | Key Benefits background | Home | Full-width BG |
-| Who is Ignite For.png | Who Is It For background | Home | Full-width BG |
+| Hero 2.jpg | Key Benefits background | Home | Full-width BG |
+| Who.jpg | Who Is It For background | Home | Full-width BG |
 | Program Overview.png | Program Overview background | Home | Full-width BG |
-| Meet Your Mentors.png | Mentors teaser background | Home | Full-width BG |
+| Mentors.jpg | Mentors teaser background | Home | Full-width BG |
 | Mascot.png | CTA section right-side deco | Home | Decorative PNG |
 | Graduation.png | Apply page header right-side | Apply | Decorative PNG |
 | Laptop.png | Communication icon | Home, Curriculum, Program | Square icon PNG |

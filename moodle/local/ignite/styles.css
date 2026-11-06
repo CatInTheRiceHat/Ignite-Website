@@ -8,7 +8,7 @@
 .ignite-home__card h2 { font-size: 1.3rem; }
 .ignite-home a { color: #934214; text-decoration: underline; text-underline-offset: .2em; }
 .ignite-home a:focus-visible { outline: 3px solid #1a1a2e; outline-offset: 4px; border-radius: .25rem; }
-.ignite-home a.ignite-home__action { display: inline-flex; align-items: center; gap: .5rem; padding: .75rem 1.25rem; background: #f07b2a; color: #fff; font-family: Nunito, sans-serif; font-weight: 700; border: 2px solid #934214; border-radius: 2rem; text-decoration: none; }
+.ignite-home a.ignite-home__action { display: inline-flex; align-items: center; gap: .5rem; padding: .75rem 1.25rem; background: #f07b2a; color: #fff; font-family: Nunito, sans-serif; font-weight: 700; border: 2px solid #934214; border-radius: 2rem; text-decoration: none; font-size: var(--button-font-size, 1.25rem); line-height: 1.4; }
 .ignite-home a.ignite-home__action:hover { background: #d46a20; }
 .ignite-home__arrow { width: 20px; height: 20px; flex-shrink: 0; background: currentColor; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14m-6-6 6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat; }
 @media (max-width: 480px) { .ignite-home__welcome { align-items: flex-start; } .ignite-home__welcome img { width: 64px; height: 64px; } }

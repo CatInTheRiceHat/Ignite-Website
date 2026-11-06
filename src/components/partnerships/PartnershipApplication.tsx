@@ -21,7 +21,7 @@ const PartnershipApplication = () => {
                 <iframe src={form.embedUrl} title="Ignite Partnership Application Google Form" className="h-[1400px] w-full rounded-2xl border-0 bg-white md:h-[1200px]" loading="lazy" />
               ) : null}
               <div className="flex justify-center">
-                <a href={form.url} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-14 items-center justify-center gap-3 rounded-full bg-[var(--primary-orange)] px-6 py-4 text-xl font-bold text-white shadow-lg shadow-orange-100 transition-all hover:bg-[var(--primary-orange-dark)] motion-safe:hover:scale-105 motion-safe:active:scale-95 sm:px-8">
+                <a href={form.url} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-14 items-center justify-center gap-3 rounded-full bg-[var(--primary-orange)] px-6 py-4 text-white shadow-lg shadow-orange-100 transition-all hover:bg-[var(--primary-orange-dark)] motion-safe:hover:scale-105 motion-safe:active:scale-95 sm:px-8 font-sans font-bold text-button">
                   Open partnership application
                   <RedirectArrow />
                   <span className="sr-only"> (opens in a new tab)</span>

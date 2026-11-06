@@ -12,7 +12,7 @@ const Expansion = () => (
           <p className="text-lg text-[var(--text-light)] leading-relaxed mb-4">{programCopy.expansion}</p>
           <p className="text-lg text-[var(--text-charcoal)] font-bold mb-4">{courseCounts.all} courses in development: {courseCounts.live} live and {courseCounts.independent} independent.</p>
           <p className="text-[var(--text-light)] leading-relaxed mb-6">{programCopy.proposals}</p>
-          <Link to="/program#course-catalog" className="inline-flex rounded-full bg-orange-50 px-6 py-3 font-bold text-[var(--text-charcoal)] hover:bg-orange-100 transition-colors">Explore the Course Plans</Link>
+          <Link to="/program#course-catalog" className="inline-flex rounded-full bg-orange-50 px-6 py-3 text-[var(--text-charcoal)] hover:bg-orange-100 transition-colors font-sans font-bold text-button">Explore the Course Plans</Link>
         </div>
       </BlurFade>
     </div>

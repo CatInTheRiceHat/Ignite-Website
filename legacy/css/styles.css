@@ -255,6 +255,7 @@
   --font-primary: 'Nunito', sans-serif;
   --font-display: 'Poppins', sans-serif;
   --font-rammetto: 'Rammetto One', sans-serif;
+  --button-font-size: 1.25rem;
 
   /* Spacing */
   --spacing-xs: 0.5rem;
@@ -398,7 +399,7 @@ a:hover {
 }
 
 .nav-links a {
-  font-family: var(--font-display);
+  font-family: var(--font-primary);
   font-weight: 600;
   font-size: 1rem;
   color: var(--text-charcoal);
@@ -490,8 +491,9 @@ a:hover {
   gap: var(--spacing-xs);
   padding: 0.75rem 1.5rem;
   font-family: var(--font-primary);
-  font-size: 1.125rem;
-  font-weight: 800;
+  font-size: var(--button-font-size);
+  line-height: 1.4;
+  font-weight: 700;
   border-radius: var(--radius-full);
   border: none;
   cursor: pointer;
@@ -1145,10 +1147,10 @@ main.no-nav-padding {
   z-index: -1;
 }
 
-.bg-what-you-get { background-image: url('/backgrounds/What%20You%27ll%20Get.png'); }
-.bg-who-is-ignite { background-image: url('/backgrounds/Who%20is%20Ignite%20For.png'); }
+.bg-what-you-get { background-image: url('/backgrounds/Hero%202.jpg?v=ba7dbc62'); }
+.bg-who-is-ignite { background-image: url('/backgrounds/Who.jpg?v=349dec28'); }
 .bg-program-overview { background-image: url('/backgrounds/Program%20Overview.png'); }
-.bg-meet-mentors { background-image: url('/backgrounds/Meet%20Your%20Mentors.png'); }
+.bg-meet-mentors { background-image: url('/backgrounds/Mentors.jpg?v=f0898cf4'); }
 
 /* Chalkboard Layout */
 .chalkboard-layout {

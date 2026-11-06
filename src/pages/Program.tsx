@@ -81,7 +81,7 @@ const Program = () => {
           <p className="text-xl md:text-2xl opacity-90 mt-4">Practical life skills. Two ways to learn.</p>
           <p className="max-w-2xl mx-auto mt-6 text-lg leading-relaxed">Live and independent courses are being developed. Explore what’s planned below.</p>
           <p className="mt-6 text-lg font-bold">Student pre-enrollment is now open.</p>
-          <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-lg font-bold text-[var(--primary-orange)] shadow-lg transition-transform hover:scale-105 active:scale-95">
+          <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-[var(--primary-orange)] shadow-lg transition-transform hover:scale-105 active:scale-95 font-sans font-bold text-button">
             Apply Now
             <RedirectArrow />
           </a>
@@ -91,7 +91,7 @@ const Program = () => {
       <section className="mx-auto max-w-7xl px-4 py-12" aria-labelledby="sample-week-heading">
         <div className="flex flex-col gap-6 rounded-[2rem] border-2 border-orange-100 bg-white p-7 md:flex-row md:items-center md:justify-between md:p-10">
           <div className="max-w-2xl"><p className="text-sm font-bold text-[var(--text-light)]">A complete sample week · No account needed</p><h2 id="sample-week-heading" className="mt-2 text-2xl md:text-3xl">Experience learning on Ignite.</h2><p className="mt-3 text-[var(--text-light)]">Explore Week {featuredCourse.weekNumber} of {featuredCourse.course.title}. {featuredCourse.summary} {featuredCourse.workload}, at your pace.</p></div>
-          <Link to={featuredCourse.path} className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-7 py-4 font-sans font-bold text-white transition-colors hover:bg-[var(--primary-orange-dark)]">Explore a sample week<RedirectArrow /></Link>
+          <Link to={featuredCourse.path} className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-7 py-4 text-white transition-colors hover:bg-[var(--primary-orange-dark)] font-sans font-bold text-button">Explore a sample week<RedirectArrow /></Link>
         </div>
       </section>
 

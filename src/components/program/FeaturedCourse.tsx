@@ -16,7 +16,7 @@ export default function FeaturedCourse() {
         <div className="flex flex-col items-start justify-center p-6 sm:p-8 lg:p-10">
           <h3 className="font-display text-2xl font-bold leading-snug sm:text-3xl">{course.title}</h3>
           <CourseCreators course={course} className="mt-5" />
-          <Link to={path} className="mt-7 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-7 py-4 font-sans font-bold text-white transition-colors hover:bg-[var(--primary-orange-dark)]">Try a sample week<RedirectArrow /></Link>
+          <Link to={path} className="mt-7 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-7 py-4 text-white transition-colors hover:bg-[var(--primary-orange-dark)] font-sans font-bold text-button">Try a sample week<RedirectArrow /></Link>
         </div>
       </article>
     </div>

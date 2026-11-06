@@ -18,7 +18,7 @@ const NotFound = () => {
         <div className="pt-8">
           <Link 
             to="/" 
-            className="inline-block bg-[var(--primary-orange)] text-white px-12 py-5 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-orange-200"
+            className="inline-block bg-[var(--primary-orange)] text-white px-12 py-5 rounded-full hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-orange-200 font-sans font-bold text-button"
           >
             Back Home
           </Link>

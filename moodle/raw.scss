@@ -147,6 +147,8 @@ $ignite-catalog-description-lines: 2;
                 background: $ignite-catalog-orange;
                 color: #fff;
                 font-family: $ignite-catalog-body;
+                font-size: var(--button-font-size, 1.25rem);
+                line-height: 1.4;
                 font-weight: 700;
                 transition: background-color .18s ease;
 
@@ -804,7 +806,7 @@ $ignite-catalog-description-lines: 2;
             padding: .6rem .9rem;
             border-radius: .75rem;
             color: $ignite-catalog-text;
-            font-family: $ignite-catalog-heading;
+            font-family: $ignite-catalog-body;
             font-weight: 700;
             text-decoration: none;
 
@@ -888,7 +890,7 @@ $ignite-catalog-description-lines: 2;
         gap: .75rem 1.25rem;
         margin-top: 1.5rem;
 
-        a { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; color: #fff; font-family: $ignite-catalog-body; font-size: .875rem; font-weight: 700; }
+        a { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; color: #fff; font-family: $ignite-catalog-body; font-size: var(--button-font-size, 1.25rem); line-height: 1.4; font-weight: 700; }
         .ignite-learning-welcome__primary { padding: .8rem 1.1rem; border-radius: .75rem; background: $ignite-catalog-orange; color: #fff; text-decoration: none; }
         .ignite-learning-welcome__primary:hover { background: $ignite-catalog-orange-dark; }
     }
@@ -1021,7 +1023,7 @@ $ignite-catalog-description-lines: 2;
         margin-top: 1.5rem;
 
         .singlebutton, form { margin: 0; }
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 48px; padding: .8rem 1.1rem; border-radius: .75rem; font-family: $ignite-catalog-heading; font-weight: 700; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 48px; padding: .8rem 1.1rem; border-radius: .75rem; font-family: $ignite-catalog-body; font-size: var(--button-font-size, 1.25rem); line-height: 1.4; font-weight: 700; }
         .btn:focus-visible { outline: 3px solid $ignite-catalog-ink; outline-offset: 3px; }
     }
 

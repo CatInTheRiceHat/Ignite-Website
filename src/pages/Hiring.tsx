@@ -55,7 +55,7 @@ const Hiring = () => {
             href={INTERN_FORM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-6 py-4 text-[1.1875rem] font-bold text-white shadow-lg transition-all hover:bg-[var(--primary-orange-dark)] motion-safe:hover:scale-105 motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 sm:w-auto sm:px-10 sm:text-xl"
+            className="inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-6 py-4 text-white shadow-lg transition-all hover:bg-[var(--primary-orange-dark)] motion-safe:hover:scale-105 motion-safe:active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-200 sm:w-auto sm:px-10 font-sans font-bold text-button"
           >
             Open Intern Application
             <RedirectArrow />

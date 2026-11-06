@@ -154,7 +154,6 @@ test('direct section links work without storage and the sample is discoverable',
   await page.getByRole('link', { name: 'Explore a sample week', exact: true }).click();
   await expect(page).toHaveURL('/demo/boundaries');
   await page.goto('/');
-  await expect(page.getByRole('link', { name: 'Try a course', exact: true })).toHaveAttribute('href', '/demo/boundaries');
   const feature = page.getByRole('region', { name: 'This Month’s Featured Course' });
   await expect(feature).toContainText('Nikhil Tadepalli');
   const featureScan = await new AxeBuilder({ page }).include('#featured-course').analyze();

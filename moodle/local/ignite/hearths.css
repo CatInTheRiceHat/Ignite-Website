@@ -7,7 +7,7 @@
 .ignite-hearths img { object-fit: contain; max-width: 100%; }
 .ignite-hearths__placeholder { display: flex; align-items: center; justify-content: center; width: 8rem; height: 8rem; padding: .5rem; border: 2px dashed #80674f; border-radius: 1rem; text-align: center; font-size: .9rem; }
 .ignite-hearths a { text-decoration: underline; color: #85370d; }
-.ignite-hearths__button { display: inline-block; padding: .7rem 1rem; background: #f07b2a; color: #fff !important; font-family: Nunito, sans-serif; border: 2px solid #85370d; border-radius: .6rem; font-weight: 600; text-align: start; white-space: normal; }
+.ignite-hearths__button { display: inline-block; padding: .7rem 1rem; background: #f07b2a; color: #fff !important; font-family: Nunito, sans-serif; border: 2px solid #85370d; border-radius: .6rem; font-weight: 700; text-align: start; white-space: normal; font-size: var(--button-font-size, 1.25rem); line-height: 1.4; }
 .ignite-hearths__button:hover { background: #d46a20; color: #fff !important; }
 .ignite-hearths :is(a, button, input, select):focus-visible { outline: 3px solid #214f9b; outline-offset: 4px; }
 .ignite-hearths__flame { width: 5rem; height: 6rem; margin: 1rem; overflow: visible; }

@@ -24,7 +24,7 @@
 .ignite-passport__detail { display: grid; grid-template-columns: minmax(12rem, 1fr) 2fr; gap: 2rem; margin-block: 1.5rem; }
 .ignite-passport__art--detail { border: 1px solid #b6a495; border-radius: 1rem; align-self: start; }
 .ignite-passport__art--detail img { height: auto; max-height: 15rem; }
-.ignite-passport__action { display: inline-block; border: 2px solid #d46a20; border-radius: .6rem; padding: .65rem 1rem; background: #f07b2a; color: #fff !important; font-family: Nunito, sans-serif; font-weight: 700; }
+.ignite-passport__action { display: inline-block; border: 2px solid #d46a20; border-radius: .6rem; padding: .65rem 1rem; background: #f07b2a; color: #fff !important; font-family: Nunito, sans-serif; font-weight: 700; font-size: var(--button-font-size, 1.25rem); line-height: 1.4; }
 .ignite-passport__celebration { border-inline-start: 4px solid #d46a20; background: #fff; padding: 1rem; font-weight: 700; }
 .ignite-passport select { max-width: 100%; }
 @media (max-width: 600px) { .ignite-passport__welcome img { width: 72px; height: 72px; } .ignite-passport__detail { grid-template-columns: 1fr; gap: 1rem; } }

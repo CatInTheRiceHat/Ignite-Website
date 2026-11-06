@@ -27,11 +27,14 @@ The current website palette is the source of truth for Ignite digital materials.
 
 Ignite uses a three-font hierarchy from Google Fonts:
 
+Use the same hierarchy throughout the website, course demo, Sol widget, Moodle, and legacy pages. Website font families are defined by `--font-title`, `--font-heading`, and `--font-body`; use the existing `font-rammetto`, `font-display`, and `font-sans` utilities rather than introducing new font families. Form input text uses Nunito. Keep supporting copy visually subordinate to headings and action labels.
+
 | Use | Font | Notes |
 | --- | --- | --- |
 | Display Titles | Rammetto One | Big page titles, hero headings, section moments, and playful display text. |
-| Headings | Poppins | Subheaders, card titles, nav labels, and bold UI labels. |
-| Buttons | Nunito | All button labels, including links styled as buttons. Orange backgrounds always use white text. |
+| Headings | Poppins | Subheaders, card titles, and bold UI labels. |
+| Navigation | Nunito | All navigation labels, including desktop and mobile menus, footer navigation, and the announcement bar. Use `font-sans` on the website. |
+| Buttons | Nunito | Bold, 1.25rem (20px), with 1.4 line height for all button labels and links styled as buttons, matching the home hero’s Apply Now. Orange backgrounds always use white text. |
 | Body Text | Nunito | Paragraphs, descriptions, form text, supporting copy, and general readable content. |
 
 ### Imagery And Icons
@@ -49,6 +52,7 @@ Ignite uses a three-font hierarchy from Google Fonts:
 - Layouts should be clean and spacious, with rounded cards, large headings, and clear visual hierarchy.
 - Cards should generally use large rounded corners, soft shadows, and orange accent borders or strips.
 - Buttons should be rounded, high-contrast, and action-oriented.
+- Standardize button labels at 1.25rem (20px), bold Nunito, with 1.4 line height on every screen size. Use the shared `--button-font-size` token and `text-button` utility on the website. Let long labels wrap instead of shrinking their text.
 - Every button with an orange background must use white (`#FFFFFF`) text in Nunito. This includes links styled as buttons and all orange hover, focus, active, or disabled states. Button icons and arrows inherit the white text color.
 - Avoid cluttered slides or pages. Use one main idea per section whenever possible.
 - Keep text readable on Zoom and mobile. Favor large font sizes and generous line spacing.
@@ -72,7 +76,7 @@ Use short sentences and friendly phrasing. Avoid corporate wording, dense academ
 ## 4. Component Style Notes
 
 - Buttons: Nunito labels; every orange background uses white text and white icons or arrows.
-- Navbar: white translucent surface with orange active links and a charcoal announcement bar.
+- Navbar: Nunito text throughout desktop and mobile navigation and the announcement bar; white translucent surface with orange active links and a charcoal announcement bar.
 - Hero sections: orange or image-led, with white display text.
 - Course cards: white cards with classroom-style image headers, course icons, mentor avatars, and compact descriptions.
 - Mentor cards: white cards with orange accents; co-founder cards can use orange treatment to stand apart.

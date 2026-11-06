@@ -16,7 +16,6 @@ import BlurFade from '../components/ui/blur-fade';
 import FadingCarousel from '../components/ui/fading-carousel';
 import { programCopy } from '../data/program';
 import { STUDENT_PREENROLLMENT_URL } from '../lib/links';
-import { featuredCourse } from '../config/courseDemo';
 import FeaturedCourse from '../components/program/FeaturedCourse';
 
 // ---------------------------------------------------------------------------
@@ -133,7 +132,7 @@ const Home = () => {
       <section className="relative pt-32 pb-24 md:pb-28 overflow-hidden flex items-center justify-center text-center px-4 min-h-[90vh]">
         <div className="absolute inset-0 z-10 pointer-events-none">
           <img
-            src="/backgrounds/Hero.png"
+            src="/backgrounds/Hero.png?v=4a8eec47"
             alt=""
             className="h-full w-full object-cover object-[center_52%] md:object-[center_50%] lg:object-center"
             loading="eager"
@@ -154,15 +153,12 @@ const Home = () => {
           </BlurFade>
           <BlurFade delay={0.25}>
             <div className="flex flex-wrap gap-4 justify-center">
-              <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex w-full max-w-xs items-center justify-center gap-2 bg-[var(--primary-orange)] text-white px-8 py-5 rounded-full font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-lg sm:w-auto sm:px-10">
+              <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex w-full max-w-xs items-center justify-center gap-2 bg-[var(--primary-orange)] text-white px-8 py-5 rounded-full hover:scale-105 active:scale-95 transition-all shadow-lg sm:w-auto sm:px-10 font-sans font-bold text-button">
                 Apply Now
                 <RedirectArrow />
               </a>
-              <Link to="/program" className="w-full max-w-xs bg-white text-[var(--primary-orange)] border-2 border-[var(--primary-orange)] px-8 py-5 rounded-full font-bold text-xl hover:bg-orange-50 transition-all sm:w-auto sm:px-10">
+              <Link to="/program" className="w-full max-w-xs bg-white text-[var(--primary-orange)] border-2 border-[var(--primary-orange)] px-8 py-5 rounded-full hover:bg-orange-50 transition-all sm:w-auto sm:px-10 font-sans font-bold text-button">
                 Explore Course Plans
-              </Link>
-              <Link to={featuredCourse.path} className="inline-flex w-full max-w-xs items-center justify-center gap-2 rounded-full border-2 border-white bg-white px-8 py-5 text-xl font-bold text-[var(--text-charcoal)] hover:bg-orange-50 sm:w-auto">
-                Try a course<RedirectArrow />
               </Link>
             </div>
           </BlurFade>
@@ -172,13 +168,22 @@ const Home = () => {
       <FeaturedCourse />
 
       {/* Summer 2026 Results */}
-      <section className="bg-white py-16 shadow-sm md:py-20" aria-labelledby="home-statistics-heading">
-        <div className="mx-auto max-w-7xl px-4">
+      <section className="relative grid overflow-hidden bg-[var(--text-charcoal)] shadow-sm" aria-labelledby="home-statistics-heading">
+        <img
+          src="/backgrounds/Summer.jpg?v=4f114139"
+          alt=""
+          className="col-start-1 row-start-2 -mt-8 block h-auto w-full self-end md:-mt-12 xl:row-start-1"
+          width={2752}
+          height={1536}
+          loading="lazy"
+        />
+        <div className="pointer-events-none absolute inset-x-0 top-0 hidden h-72 bg-gradient-to-b from-[var(--text-charcoal)]/80 via-[var(--text-charcoal)]/60 to-transparent xl:block" aria-hidden="true" />
+        <div className="relative z-10 col-start-1 row-start-1 mx-auto w-full max-w-7xl px-4 pt-12 pb-16 xl:self-center xl:py-6">
           <BlurFade>
             <div className="mx-auto mb-10 max-w-3xl text-center md:mb-12">
               <h2
                 id="home-statistics-heading"
-                className="font-rammetto text-4xl text-[var(--primary-orange)] md:text-5xl"
+                className="font-rammetto text-4xl text-white md:text-5xl drop-shadow-[0_3px_10px_rgba(0,0,0,0.4)]"
               >
                 Summer 2026 Results
               </h2>
@@ -202,7 +207,7 @@ const Home = () => {
       {/* Key Benefits Section */}
       <section className="py-24 md:py-32 min-h-[64vw] relative overflow-hidden">
         <img
-          src="/backgrounds/What%20You%27ll%20Get.png"
+          src="/backgrounds/Hero%202.jpg?v=ba7dbc62"
           alt=""
           className="absolute inset-0 h-full w-full object-cover object-top"
           loading="lazy"
@@ -235,20 +240,22 @@ const Home = () => {
 
 
       {/* Who Is Ignite For? */}
-      <section className="flex min-h-[min(54vw,64rem)] items-center py-24 md:py-32 relative overflow-hidden">
+      <section className="relative grid overflow-hidden bg-[var(--bg-cream)] xl:min-h-[64vw]" aria-labelledby="home-audience-heading">
         <img
-          src="/backgrounds/Who%20is%20Ignite%20For.png"
+          src="/backgrounds/Who.jpg?v=349dec28"
           alt=""
-          className="absolute inset-0 h-full w-full object-cover object-bottom"
+          className="col-start-1 row-start-2 block h-auto w-full self-end xl:row-start-1 xl:h-full xl:object-cover xl:object-bottom"
+          width={2752}
+          height={1536}
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-black/35 backdrop-blur-[1px]"></div>
-        <div className="relative z-10 w-full">
+        <div className="relative z-10 col-start-1 row-start-1 flex min-h-svh w-full flex-col justify-center py-24 md:py-28 xl:self-center xl:py-16">
           <BlurFade>
-            <h2 className="text-4xl md:text-6xl font-rammetto text-center text-white mb-14 md:mb-16 px-4 drop-shadow-[0_3px_10px_rgba(0,0,0,0.45)]">Who Is Ignite For?</h2>
+            <h2 id="home-audience-heading" className="text-4xl md:text-6xl font-rammetto text-center text-[var(--text-charcoal)] mb-10 px-4">Who Is Ignite For?</h2>
           </BlurFade>
           <FadingCarousel
-            variant="light"
+            size="large"
+            variant="dark"
             imageStyle="open"
             autoPlay={false}
             items={[
@@ -261,9 +268,9 @@ const Home = () => {
       </section>
 
       {/* Meet Our Team Section */}
-      <section className="min-h-[54vw] pt-16 pb-8 md:pt-24 md:pb-6 xl:pt-[8vw] relative overflow-hidden">
+      <section className="min-h-[40vw] pt-28 pb-8 md:pt-36 md:pb-6 xl:pt-[calc(4vw+5rem)] relative overflow-hidden">
         <img
-          src="/backgrounds/Meet%20Your%20Mentors.png"
+          src="/backgrounds/Mentors.jpg?v=f0898cf4"
           alt=""
           className="absolute inset-0 h-full w-full object-cover object-bottom"
           loading="lazy"
@@ -275,7 +282,7 @@ const Home = () => {
             Meet our 50+ interns helping students build skills and find their fire.
           </p>
           <div className="flex justify-center">
-            <Link to="/team" className="bg-[var(--primary-orange)] text-white px-12 py-5 rounded-full font-bold text-2xl hover:scale-105 transition-all shadow-xl">
+            <Link to="/team" className="bg-[var(--primary-orange)] text-white px-12 py-5 rounded-full hover:scale-105 transition-all shadow-xl font-sans font-bold text-button">
               Meet the Team
             </Link>
           </div>

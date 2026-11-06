@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontSize: {
+        button: ['var(--button-font-size)', { lineHeight: '1.4' }],
+      },
       animation: {
         'marquee': 'marquee 35s linear infinite',
         'marquee-reverse': 'marquee-reverse 35s linear infinite',
@@ -21,9 +24,9 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Nunito', 'sans-serif'],
-        display: ['Poppins', 'sans-serif'],
-        rammetto: ['"Rammetto One"', 'sans-serif'],
+        sans: ['var(--font-body)'],
+        display: ['var(--font-heading)'],
+        rammetto: ['var(--font-title)'],
       },
     },
   },

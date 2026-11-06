@@ -38,7 +38,7 @@ const Footer = () => {
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row sm:flex-wrap gap-4">
-              <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-white text-[var(--primary-orange)] px-8 py-4 rounded-full font-bold text-lg hover:scale-105 active:scale-95 transition-all shadow-lg">
+              <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-white text-[var(--primary-orange)] px-8 py-4 rounded-full hover:scale-105 active:scale-95 transition-all shadow-lg font-sans font-bold text-button">
                 Apply Now
                 <RedirectArrow />
               </a>
@@ -46,7 +46,7 @@ const Footer = () => {
                 href={LEARNING_HUB_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 border-2 border-white bg-transparent px-8 py-4 rounded-full font-bold text-lg text-white hover:bg-white hover:text-[var(--primary-orange)] active:scale-95 transition-all"
+                className="inline-flex items-center justify-center gap-2 border-2 border-white bg-transparent px-8 py-4 rounded-full text-white hover:bg-white hover:text-[var(--primary-orange)] active:scale-95 transition-all font-sans font-bold text-button"
               >
                 Learning Hub (Moodle Sign-in)
                 <RedirectArrow />
@@ -55,7 +55,7 @@ const Footer = () => {
                 href={INTERN_FORM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 border-2 border-white bg-transparent px-8 py-4 rounded-full font-bold text-lg text-white hover:bg-white hover:text-[var(--primary-orange)] active:scale-95 transition-all"
+                className="inline-flex items-center justify-center gap-2 border-2 border-white bg-transparent px-8 py-4 rounded-full text-white hover:bg-white hover:text-[var(--primary-orange)] active:scale-95 transition-all font-sans font-bold text-button"
               >
                 Apply as an Intern
                 <RedirectArrow />
@@ -71,7 +71,7 @@ const Footer = () => {
                   <Link
                     key={link.path}
                     to={link.path}
-                    className="text-lg font-semibold text-white/90 hover:text-white transition-colors"
+                    className="font-sans text-lg font-semibold text-white/90 hover:text-white transition-colors"
                   >
                     {link.name}
                   </Link>

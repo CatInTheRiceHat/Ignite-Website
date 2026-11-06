@@ -47,7 +47,8 @@
   border: 1px solid rgb(26 26 46 / 16%);
   border-radius: 999px;
   background: rgb(255 248 240 / 80%);
-  font-size: 0.8125rem;
+  font-size: var(--button-font-size);
+  line-height: 1.4;
   font-weight: 700;
   transition: background 0.2s;
 }
@@ -121,11 +122,23 @@ body[data-intro-loading] sol-widget {
     --text-light: #4A4A5E;
     --card-white: #FFFFFF;
     --success-green: #58CC02;
+    --button-font-size: 1.25rem;
+    --font-body: 'Nunito', sans-serif;
+    --font-heading: 'Poppins', sans-serif;
+    --font-title: 'Rammetto One', sans-serif;
   }
 
   body {
     @apply bg-[var(--bg-cream)] text-[var(--text-charcoal)] font-sans;
     overscroll-behavior-y: none;
+  }
+
+  button {
+    @apply font-sans text-button font-bold;
+  }
+
+  input, textarea, select {
+    @apply font-sans;
   }
 
   a:focus-visible, button:focus-visible {

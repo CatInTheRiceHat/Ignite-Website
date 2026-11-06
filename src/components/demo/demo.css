@@ -25,7 +25,7 @@ body[data-course-demo] sol-widget { display: none !important; }
 .demo-timeline button:hover, .demo-timeline button[aria-current] { background: var(--bg-cream); }
 .demo-timeline-number { position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; flex-shrink: 0; border-radius: 50%; background: var(--primary-orange); color: var(--card-white); font: 700 .875rem Nunito, sans-serif; }
 .demo-timeline-number.is-done { background: var(--success-green); }
-.demo-timeline strong { display: block; font: 700 .875rem/1.6 Poppins, sans-serif; }
+.demo-timeline strong { display: block; font: 700 var(--button-font-size)/1.4 Nunito, sans-serif; }
 .demo-timeline-kind { display: block; font: 400 .8125rem/1.6 Nunito, sans-serif; color: var(--text-light); }
 .demo-workspace { display: grid; grid-template-columns: 280px minmax(0, 1fr); align-items: start; gap: 2.5rem; max-width: 1280px; margin: auto; padding: 3.5rem 2rem 5rem; }
 .demo-sidebar { position: sticky; top: 10rem; max-height: calc(100dvh - 11rem); overflow-y: auto; scrollbar-width: thin; padding: .5rem .65rem .5rem 0; font-size: .9375rem; }
@@ -36,7 +36,7 @@ body[data-course-demo] sol-widget { display: none !important; }
 .demo-sidebar progress::-webkit-progress-bar { background: var(--demo-border); }
 .demo-sidebar progress::-webkit-progress-value { background: var(--primary-orange); }
 .demo-sidebar progress::-moz-progress-bar { background: var(--primary-orange); }
-.demo-outline-link { min-height: 44px; padding: .5rem; margin-bottom: .5rem; text-decoration: underline; text-decoration-color: var(--primary-orange); text-decoration-thickness: 2px; text-underline-offset: 5px; font-weight: 700; }
+.demo-outline-link { min-height: 44px; padding: .5rem; margin-bottom: .5rem; text-decoration: underline; text-decoration-color: var(--primary-orange); text-decoration-thickness: 2px; text-underline-offset: 5px; font-weight: 700; font-size: var(--button-font-size); }
 .demo-sidebar nav ol { display: grid; gap: .4rem; }
 .demo-sidebar nav button { display: flex; width: 100%; gap: .75rem; align-items: flex-start; text-align: left; border: 2px solid transparent; border-radius: 1.25rem; padding: .75rem .6rem; min-height: 64px; }
 .demo-sidebar nav button:hover { background: var(--demo-border); }
@@ -44,12 +44,12 @@ body[data-course-demo] sol-widget { display: none !important; }
 .demo-step-number { display: inline-flex; justify-content: center; align-items: center; flex: 0 0 30px; height: 30px; margin-top: 2px; background: var(--demo-border); border-radius: 50%; font-size: .75rem; font-weight: 700; }
 .demo-sidebar nav button[aria-current] .demo-step-number { background: var(--primary-orange); color: var(--card-white); }
 .demo-step-number.is-done { background: var(--success-green); }
-.demo-step-title { display: block; font-size: .875rem; font-weight: 700; line-height: 1.5; }
+.demo-step-title { display: block; font-size: var(--button-font-size); font-weight: 700; line-height: 1.4; }
 .demo-step-kind { display: block; color: var(--text-light); font: 400 .8125rem/1.6 Nunito, sans-serif; margin-top: .3rem; }
 .demo-save-note { display: flex; align-items: flex-start; gap: .6rem; padding: 1.25rem .5rem .5rem; color: var(--text-light); font-size: .875rem; line-height: 1.7; }
 .demo-save-note svg { flex-shrink: 0; margin-top: .2rem; }
 .demo-utility-actions { display: flex; gap: .75rem; padding: .5rem; flex-wrap: wrap; }
-.demo-utility-actions button { display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; text-decoration: underline; text-decoration-color: var(--primary-orange); text-underline-offset: 4px; font-size: .8125rem; font-weight: 700; }
+.demo-utility-actions button { display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; text-decoration: underline; text-decoration-color: var(--primary-orange); text-underline-offset: 4px; font-size: var(--button-font-size); font-weight: 700; }
 .demo-content { background: var(--card-white); border: 2px solid var(--demo-border); border-radius: 2rem; padding: 2.5rem; min-width: 0; box-shadow: 0 8px 24px rgb(26 26 46 / 5%); }
 .demo-part-header { padding-bottom: 1.75rem; margin-bottom: 2rem; border-bottom: 2px solid var(--demo-border); scroll-margin-top: 11rem; }
 .demo-part-header h2 { font: 700 clamp(1.6rem, 3vw, 2.25rem)/1.5 Poppins, sans-serif; margin: 1rem 0 .75rem; scroll-margin-top: 11rem; }
@@ -63,11 +63,11 @@ body[data-course-demo] sol-widget { display: none !important; }
 .demo-objectives { display: grid; gap: 1rem; }
 .demo-objectives li { display: flex; gap: .75rem; align-items: baseline; }
 .demo-objectives svg { flex-shrink: 0; align-self: flex-start; margin-top: .4rem; color: var(--primary-orange); }
-.demo-button { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 52px; border: 2px solid var(--primary-orange); border-radius: 999px; padding: .8rem 1.5rem; background: var(--primary-orange); color: var(--card-white); font: 700 1rem/1.5 Nunito, sans-serif; text-align: center; text-decoration: none; box-shadow: 0 4px 12px rgb(240 123 42 / 12%); }
+.demo-button { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 52px; border: 2px solid var(--primary-orange); border-radius: 999px; padding: .8rem 1.5rem; background: var(--primary-orange); color: var(--card-white); font: 700 var(--button-font-size)/1.4 Nunito, sans-serif; text-align: center; text-decoration: none; box-shadow: 0 4px 12px rgb(240 123 42 / 12%); }
 .demo-button:hover:not(:disabled) { background: var(--primary-orange-dark); border-color: var(--primary-orange-dark); }
 .demo-button-secondary { box-shadow: none; }
 .demo-button:disabled { background: var(--bg-cream); border-color: var(--demo-border); color: var(--text-light); cursor: not-allowed; box-shadow: none; }
-.demo-text-button, .demo-text-link { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; text-decoration: underline; text-decoration-color: var(--primary-orange); text-decoration-thickness: 2px; text-underline-offset: 4px; font: 700 .9375rem/1.7 Nunito, sans-serif; }
+.demo-text-button, .demo-text-link { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; text-decoration: underline; text-decoration-color: var(--primary-orange); text-decoration-thickness: 2px; text-underline-offset: 4px; font: 700 var(--button-font-size)/1.4 Nunito, sans-serif; }
 .demo-text-link { flex-wrap: wrap; }
 .demo-callout { padding: 1.5rem; border-left: 6px solid var(--primary-orange); border-radius: 1.25rem; background: var(--bg-cream); font-size: 1.0625rem; }
 .demo-callout h3 { margin: 0 0 .75rem; }
@@ -107,7 +107,7 @@ body[data-course-demo] sol-widget { display: none !important; }
 .demo-quiz-summary { display: flex; justify-content: space-between; gap: .75rem; flex-wrap: wrap; padding: 1.25rem; background: var(--bg-cream); border-radius: 1.25rem; margin-bottom: 1.25rem; font-size: .9375rem; }
 .demo-quiz > p { margin-bottom: 1.25rem; }
 .demo-question-nav { display: flex; gap: .5rem; flex-wrap: wrap; }
-.demo-question-nav button { border: 2px solid var(--demo-border); border-radius: .85rem; min-width: 46px; min-height: 46px; font-size: .9375rem; font-weight: 700; padding: .2rem .5rem; }
+.demo-question-nav button { border: 2px solid var(--demo-border); border-radius: .85rem; min-width: 46px; min-height: 46px; font-size: var(--button-font-size); font-weight: 700; padding: .2rem .5rem; }
 .demo-question-nav button[aria-current] { background: var(--primary-orange); border-color: var(--primary-orange-dark); color: var(--card-white); }
 .demo-question-nav .is-complete { background: color-mix(in srgb, var(--success-green) 12%, var(--card-white)); border-color: var(--success-green); color: var(--text-charcoal); }
 .demo-question-heading { margin-top: 1.5rem; font: 700 1.125rem Poppins, sans-serif; scroll-margin-top: 11rem; }
@@ -164,10 +164,10 @@ body[data-course-demo] sol-widget { display: none !important; }
   .demo-hero h1 { font-size: clamp(2.1rem, 9vw, 3.5rem); }
   .demo-workspace { display: block; padding: 1.5rem .75rem 3rem; }
   .demo-sidebar { position: static; max-height: none; overflow: visible; padding: .5rem; margin-bottom: 1.5rem; }
-  .demo-sidebar nav ol { grid-template-columns: 1fr 1fr; gap: .4rem; }
+  .demo-sidebar nav ol { grid-template-columns: 1fr; gap: .4rem; }
   .demo-sidebar nav button { padding: .65rem .35rem; height: 100%; gap: .5rem; }
   .demo-step-number { flex-basis: 26px; height: 26px; }
-  .demo-step-title { font-size: .8125rem; }
+  .demo-step-title { font-size: var(--button-font-size); }
   .demo-step-kind { font-size: .8125rem; }
   .demo-save-note { max-width: 32rem; }
   .demo-content { padding: 1.5rem 1rem; border-radius: 2rem; }
@@ -177,7 +177,7 @@ body[data-course-demo] sol-widget { display: none !important; }
   .demo-story { padding: 1.25rem; }
   .demo-table :is(th, td) { padding: .75rem; }
   .demo-pagination { align-items: stretch; }
-  .demo-pagination .demo-button { flex: 1; }
+  .demo-pagination .demo-button { flex: 1; font-size: var(--button-font-size); }
 }
 @media (min-width: 640px) and (max-width: 767px) {
   .demo-mobile-jump { top: 8rem; }

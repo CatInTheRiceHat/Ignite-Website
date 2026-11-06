@@ -48,7 +48,7 @@ const FAQ = () => {
             </p>
             <a 
               href="mailto:ignitefindyourfire@gmail.com" 
-              className="inline-block bg-[var(--primary-orange)] text-white px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform shadow-lg hover:shadow-orange-200"
+              className="inline-block bg-[var(--primary-orange)] text-white px-10 py-5 rounded-full hover:scale-105 transition-transform shadow-lg hover:shadow-orange-200 font-sans font-bold text-button"
             >
               Email Us
             </a>

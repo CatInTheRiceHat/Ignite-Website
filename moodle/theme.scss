@@ -62,15 +62,21 @@ body.pagelayout-incourse {
 .bg-primary,
 .text-bg-primary { color: #fff !important; }
 
-// Use the brand heading font for navigation and course headings.
-.navbar .nav-link,
+// Course headings use Poppins; navigation labels use Nunito.
 .dashboard-card .coursename {
     font-family: "Poppins", "Segoe UI", Arial, sans-serif;
     font-weight: 700;
 }
 
+.navbar .nav-link {
+    font-family: "Nunito", "Segoe UI", Arial, sans-serif;
+    font-weight: 700;
+}
+
 .btn {
     font-family: "Nunito", "Segoe UI", Arial, sans-serif;
+    font-size: var(--button-font-size, 1.25rem);
+    line-height: 1.4;
     font-weight: 700;
 }
 

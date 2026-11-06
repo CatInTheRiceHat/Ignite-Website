@@ -6,7 +6,7 @@
 .ignite-walk .form-check label { cursor: pointer; overflow-wrap: anywhere; }
 .ignite-walk__detail { display: block; margin-top: .35rem; }
 .ignite-walk .form-check:focus-within, .ignite-walk a:focus-visible, .ignite-walk button:focus-visible, .ignite-walk input:focus-visible { outline: 3px solid #6b3716; outline-offset: 3px; }
-.ignite-walk .btn-primary { background: #F07B2A; border-color: #934214; color: #fff; font-family: Nunito, sans-serif; }
+.ignite-walk .btn-primary { background: #F07B2A; border-color: #934214; color: #fff; font-family: Nunito, sans-serif; font-size: var(--button-font-size, 1.25rem); line-height: 1.4; font-weight: 700; }
 .ignite-walk .btn-primary:hover { background: #D46A20; color: #fff; }
 .ignite-walk .fitem { margin-bottom: .8rem; }
 @media (max-width: 480px) { .ignite-walk .ignite-home__card { padding: 1rem; } .ignite-walk .btn { white-space: normal; margin-block: .25rem; } }
