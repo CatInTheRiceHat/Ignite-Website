@@ -98,7 +98,7 @@ body[data-course-demo] sol-widget { display: none !important; }
 .demo-actions { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem; margin-top: 1.25rem; }
 .demo-feedback { margin-top: 1.25rem; padding: 1.5rem; border-radius: 1.25rem; background: var(--bg-cream); border: 2px solid var(--primary-orange); }
 .demo-feedback.is-correct { background: color-mix(in srgb, var(--success-green) 12%, var(--card-white)); border-color: var(--success-green); }
-.course-demo .demo-feedback.is-correct:focus { outline: none; box-shadow: none; }
+.course-demo .demo-feedback:focus { outline: none; box-shadow: none; }
 .demo-feedback-title { font: 700 1rem/1.6 Poppins, sans-serif; display: flex; gap: .6rem; align-items: center; }
 .demo-feedback-title svg { flex-shrink: 0; }
 .demo-feedback > p + p { margin-top: .85rem; }

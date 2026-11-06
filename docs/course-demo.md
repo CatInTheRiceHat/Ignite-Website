@@ -55,7 +55,7 @@ Review fixes:
 - Added five required fictional examples after the guided scenarios. Final item 527 is now a belongings scenario because the previous final check omitted that category. Its new ID, `q527-belongings`, prevents an earlier answer being mistaken for a response to the replacement question. Evaluating a healthy limit remains covered by practice and other final items.
 - Reset tries removing the saved record before falling back to replacement, so full/blocked writes do not resurrect an old draft after reload. If the browser denies both removal and replacement, the page truthfully warns that only this tab was reset and saved site data must be cleared in browser settings.
 - Required writing shows the remaining minimum length next to each field. These checks prevent empty work; the rubric is still needed to evaluate reasoning.
-- Correct feedback retains programmatic focus and its polite live announcement, with only the green feedback border visible. The extra orange focus outline is suppressed on that read-only status; interactive controls retain visible focus.
+- Feedback retains programmatic focus and its polite live announcement, with a single border: green for correct answers and orange for answers to review. The extra focus outline is suppressed on the read-only status; interactive controls retain visible focus, including the retry button and radio options.
 - Mobile outline text is larger, and a labelled sticky part selector makes navigation available during long lessons. Section scrolling keeps the heading and its introduction below both navigation bars.
 
 For the reusable authoring standard, see the [short course-developer guide](course-developer-guide.md).

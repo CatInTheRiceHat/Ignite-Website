@@ -239,22 +239,22 @@ const Home = () => {
 
 
       {/* Who Is Ignite For? */}
-      <section className="relative grid overflow-hidden bg-[var(--bg-cream)] xl:min-h-[64vw]" aria-labelledby="home-audience-heading">
+      <section className="relative grid overflow-hidden bg-[var(--text-charcoal)] xl:min-h-[64vw]" aria-labelledby="home-audience-heading">
         <img
-          src="/backgrounds/Who.jpg?v=349dec28"
+          src="/backgrounds/Hero%203.jpg?v=a3a5e919"
           alt=""
-          className="col-start-1 row-start-2 block h-auto w-full self-end xl:row-start-1 xl:h-full xl:object-cover xl:object-bottom"
+          className="absolute inset-0 h-full w-full object-cover object-bottom"
           width={2752}
           height={1536}
           loading="lazy"
         />
         <div className="relative z-10 col-start-1 row-start-1 flex min-h-svh w-full flex-col justify-center py-24 md:py-28 xl:self-center xl:py-16">
           <BlurFade>
-            <h2 id="home-audience-heading" className="text-4xl md:text-6xl font-rammetto text-center text-[var(--text-charcoal)] mb-10 px-4">Who Is Ignite For?</h2>
+            <h2 id="home-audience-heading" className="text-4xl md:text-6xl font-rammetto text-center text-white mb-10 px-4">Who Is Ignite For?</h2>
           </BlurFade>
           <FadingCarousel
             size="large"
-            variant="dark"
+            variant="light"
             imageStyle="open"
             autoPlay={false}
             items={[
@@ -269,7 +269,7 @@ const Home = () => {
       {/* Meet Our Team Section */}
       <section className="relative grid overflow-hidden">
         <img
-          src="/backgrounds/Mentors.jpg?v=f0898cf4"
+          src="/backgrounds/Hero%204.jpg?v=f0898cf4"
           alt=""
           className="col-start-1 row-start-1 -mt-[6vw] block h-auto w-full self-end"
           width={2752}
