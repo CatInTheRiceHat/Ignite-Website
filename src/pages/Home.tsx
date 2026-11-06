@@ -132,7 +132,7 @@ const Home = () => {
       <section className="relative pt-32 pb-24 md:pb-28 overflow-hidden flex items-center justify-center text-center px-4 min-h-[90vh]">
         <div className="absolute inset-0 z-10 pointer-events-none">
           <img
-            src="/backgrounds/Hero.png?v=4a8eec47"
+            src="/backgrounds/Hero.jpg?v=cada5551"
             alt=""
             className="h-full w-full object-cover object-[center_52%] md:object-[center_50%] lg:object-center"
             loading="eager"
