@@ -37,8 +37,11 @@ test('a visitor can complete the actual week, revise, resume, download and reset
   await expect(page).toHaveTitle('What Are Boundaries? · Try a Sample Week | Ignite');
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://ignitefindyourfire.org/demo/boundaries');
   await axe(page);
-  await page.getByRole('button', { name: 'Start the sample week', exact: true }).click();
-  await expect(page).toHaveURL(/utm_source=outreach&part=learn/);
+  await expect(page.getByRole('button', { name: 'Start the sample week', exact: true })).toHaveCount(0);
+  await expect(page.getByText('Your week at a glance', { exact: true })).toHaveCount(0);
+  await expect(page.locator('#part-title')).toHaveText('What are boundaries?');
+  await expect(page).toHaveURL('/demo/boundaries?utm_source=outreach');
+  expect(await page.evaluate(() => scrollY)).toBe(0);
   const first = page.locator('.demo-question').first();
   await first.getByRole('radio').first().focus();
   await page.keyboard.press('Space');
@@ -138,6 +141,7 @@ test('a visitor can complete the actual week, revise, resume, download and reset
   await expect(page.locator('.demo-progress-heading')).toContainText('0 / 8 complete');
   await page.reload();
   await expect(page.locator('.demo-progress-heading')).toContainText('0 / 8 complete');
+  await expect(page.locator('#part-title')).toHaveText('What are boundaries?');
 });
 
 test('direct section links work without storage and the sample is discoverable', async ({ page }) => {
@@ -159,7 +163,7 @@ test('direct section links work without storage and the sample is discoverable',
   const featureScan = await new AxeBuilder({ page }).include('#featured-course').analyze();
   expect(featureScan.violations).toEqual([]);
   await feature.getByRole('link', { name: 'Try a sample week', exact: true }).click();
-  await expect(page.locator('#part-title')).toContainText('Explore the week');
+  await expect(page.locator('#part-title')).toHaveText('What are boundaries?');
   const timeline = page.getByRole('navigation', { name: 'Sample week timeline' });
   await expect(timeline.getByRole('button')).toHaveCount(parts.length);
   for (const [index, item] of parts.entries()) {

@@ -1,11 +1,14 @@
 import { RedirectArrow } from '../ui/redirect-arrow';
-import { boundaryTypes, lessonChecks } from '../../data/demo/week';
+import { CheckCircle2 } from 'lucide-react';
+import { boundaryTypes, lessonChecks, objectives } from '../../data/demo/week';
 import { Question, type LearningProps } from './Question';
 import { NoteField } from './Writing';
 
 export function Lesson(props: LearningProps) {
   return <div className="demo-reader">
     <p className="demo-lead">Boundaries help you explain what you’re comfortable with, whether that involves your time, your belongings or something you want to keep private.</p>
+    <h3>What you will learn</h3>
+    <ul className="demo-objectives">{objectives.map(objective => <li key={objective}><CheckCircle2 size={20} aria-hidden="true" /><span>{objective}</span></li>)}</ul>
     <p>You probably already set boundaries without using that word, such as asking someone to stop reading your messages or saying you need to leave a call to get some sleep. Recognizing those limits can make it easier to explain your needs, although other people are still responsible for respecting them.</p>
     <div className="demo-callout">Imagine a character who feels uncomfortable with something a friend has done. Consider what might bother them and what they would like to change, using a fictional situation rather than an experience from your own life.</div>
 

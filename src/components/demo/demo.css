@@ -36,7 +36,6 @@ body[data-course-demo] sol-widget { display: none !important; }
 .demo-sidebar progress::-webkit-progress-bar { background: var(--demo-border); }
 .demo-sidebar progress::-webkit-progress-value { background: var(--primary-orange); }
 .demo-sidebar progress::-moz-progress-bar { background: var(--primary-orange); }
-.demo-outline-link { min-height: 44px; padding: .5rem; margin-bottom: .5rem; text-decoration: underline; text-decoration-color: var(--primary-orange); text-decoration-thickness: 2px; text-underline-offset: 5px; font-weight: 700; font-size: var(--button-font-size); }
 .demo-sidebar nav ol { display: grid; gap: .4rem; }
 .demo-sidebar nav button { display: flex; width: 100%; gap: .75rem; align-items: flex-start; text-align: left; border: 2px solid transparent; border-radius: 1.25rem; padding: .75rem .6rem; min-height: 64px; }
 .demo-sidebar nav button:hover { background: var(--demo-border); }
