@@ -95,17 +95,19 @@ const About = () => {
       </section>
 
       {/* Why It Matters */}
-      <section className="pt-24 pb-48 relative overflow-hidden">
+      <section className="relative grid overflow-hidden bg-[var(--bg-cream)]" aria-labelledby="why-matters-heading">
         <img
-          src="/backgrounds/Matters.png"
+          src="/backgrounds/Matters.jpg?v=426bc722"
           alt=""
-          className="absolute inset-0 h-full w-full object-cover object-top"
+          className="col-start-1 row-start-2 block h-auto w-full self-end xl:row-start-1"
+          width={2752}
+          height={1536}
           loading="lazy"
         />
-        <div className="max-w-5xl mx-auto px-4 relative z-10">
+        <div className="relative z-10 col-start-1 row-start-1 mx-auto w-full max-w-5xl self-center px-4 py-12 xl:py-8">
           <div className="bg-white/85 backdrop-blur-sm rounded-3xl p-10 md:p-14 shadow-xl">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)] mb-4">Why This Matters</h2>
+              <h2 id="why-matters-heading" className="text-4xl md:text-5xl font-rammetto text-[var(--primary-orange)] mb-4">Why This Matters</h2>
               <p className="text-xl text-[var(--text-light)]">Students everywhere ask: "What am I good at? What could I become?"</p>
             </div>
             <div className="grid gap-6">

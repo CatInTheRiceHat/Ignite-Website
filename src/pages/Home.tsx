@@ -177,7 +177,6 @@ const Home = () => {
           height={1536}
           loading="lazy"
         />
-        <div className="pointer-events-none absolute inset-x-0 top-0 hidden h-72 bg-gradient-to-b from-[var(--text-charcoal)]/80 via-[var(--text-charcoal)]/60 to-transparent xl:block" aria-hidden="true" />
         <div className="relative z-10 col-start-1 row-start-1 mx-auto w-full max-w-7xl px-4 pt-12 pb-16 xl:self-center xl:py-6">
           <BlurFade>
             <div className="mx-auto mb-10 max-w-3xl text-center md:mb-12">
@@ -268,21 +267,23 @@ const Home = () => {
       </section>
 
       {/* Meet Our Team Section */}
-      <section className="min-h-[40vw] pt-28 pb-8 md:pt-36 md:pb-6 xl:pt-[calc(4vw+5rem)] relative overflow-hidden">
+      <section className="relative grid overflow-hidden">
         <img
           src="/backgrounds/Mentors.jpg?v=f0898cf4"
           alt=""
-          className="absolute inset-0 h-full w-full object-cover object-bottom"
+          className="col-start-1 row-start-1 -mt-[6vw] block h-auto w-full self-end"
+          width={2752}
+          height={1536}
           loading="lazy"
         />
         <div className="absolute inset-0 bg-white/48"></div>
-        <BlurFade className="relative z-10 w-full max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-6xl font-rammetto text-white mb-4 drop-shadow-[0_3px_10px_rgba(0,0,0,0.4)]">Meet Our Team</h2>
-          <p className="text-xl md:text-2xl text-white mb-8 max-w-3xl mx-auto font-medium leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">
+        <BlurFade className="relative z-10 col-start-1 row-start-1 w-full max-w-7xl self-center mx-auto px-4 py-2 sm:-top-6 sm:py-8 lg:-top-12 xl:-top-28 text-center">
+          <h2 className="text-2xl sm:text-4xl md:text-6xl font-rammetto text-white mb-2 sm:mb-4 drop-shadow-[0_3px_10px_rgba(0,0,0,0.4)]">Meet Our Team</h2>
+          <p className="text-sm sm:text-xl md:text-2xl text-white mb-4 md:mb-8 max-w-3xl mx-auto font-medium leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">
             Meet our 50+ interns helping students build skills and find their fire.
           </p>
           <div className="flex justify-center">
-            <Link to="/team" className="bg-[var(--primary-orange)] text-white px-12 py-5 rounded-full hover:scale-105 transition-all shadow-xl font-sans font-bold text-button">
+            <Link to="/team" className="bg-[var(--primary-orange)] text-white px-6 py-3 sm:px-12 sm:py-5 rounded-full hover:scale-105 transition-all shadow-xl font-sans font-bold text-button">
               Meet the Team
             </Link>
           </div>
