@@ -172,7 +172,7 @@ const Home = () => {
         <img
           src="/backgrounds/Summer.jpg?v=4f114139"
           alt=""
-          className="col-start-1 row-start-2 -mt-8 block h-auto w-full self-end md:-mt-12 xl:row-start-1"
+          className="absolute inset-0 h-full w-full object-cover object-bottom xl:static xl:col-start-1 xl:row-start-1 xl:-mt-12 xl:h-auto xl:self-end"
           width={2752}
           height={1536}
           loading="lazy"
