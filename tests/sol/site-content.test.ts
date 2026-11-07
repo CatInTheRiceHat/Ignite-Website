@@ -1,6 +1,5 @@
 import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
-import { createRequire } from 'node:module';
 import { expect, it } from 'vitest';
 import { extractPublicText } from '../../scripts/index-sol-site';
 import { relevantSiteContent } from '../../server/sol/knowledge';
@@ -11,8 +10,7 @@ import { RECORDS_PAGE } from '../../src/config/records';
 import { DEMO_PATH } from '../../src/config/courseDemo';
 
 it('indexes every public page in a fresh production process without router or dependency-scan failures', () => {
-  const cli = createRequire(import.meta.url).resolve('tsx/cli');
-  const result = spawnSync(process.execPath, [cli, 'scripts/index-sol-site.ts'], {
+  const result = spawnSync(process.execPath, ['--import', 'tsx', 'scripts/index-sol-site.ts'], {
     cwd: process.cwd(), env: { PATH: process.env.PATH, NODE_ENV: 'production' },
     encoding: 'utf8', timeout: 30000,
   });
@@ -31,11 +29,20 @@ it('extracts readable public text while excluding scripts, attributes, icons and
   expect(text).toBe("Questions & Answers\n110\nApplications\nStudent's work\nLearning Hub");
 });
 
-it('covers every public page route, excluding redirects and error pages', () => {
+it('covers every indexable production page route', () => {
   const routes = readFileSync('src/App.tsx', 'utf8');
-  const literalPaths = [...routes.matchAll(/<Route path="([^"]+)"/g)].map(match => match[1])
-    .filter(path => path !== '/mentors' && path !== '/statistics' && path !== '/apply' && path !== '*');
-  expect(siteContent.map(page => page.path).sort()).toEqual([...literalPaths, RECORDS_PAGE.path, DEMO_PATH].sort());
+  const { routes: productionRoutes } = JSON.parse(readFileSync('vercel.json', 'utf8')) as {
+    routes: { src?: string; dest?: string; headers?: Record<string, string> }[];
+  };
+  const indexableRoutes = productionRoutes
+    .filter(route => route.src && route.dest && route.headers?.['X-Robots-Tag'] !== 'noindex')
+    .map(route => new RegExp(`^${route.src}$`));
+  const pagePaths = [...routes.matchAll(/<Route path="([^"]+)"/g)]
+    .map(match => match[1])
+    .filter(path => !['/mentors', '/statistics'].includes(path));
+  const expectedPaths = [...pagePaths, RECORDS_PAGE.path, DEMO_PATH]
+    .filter(path => path === '/' || indexableRoutes.some(route => route.test(path)));
+  expect(siteContent.map(page => page.path).sort()).toEqual(expectedPaths.sort());
   expect(new Set(siteContent.map(page => page.path)).size).toBe(siteContent.length);
   for (const page of siteContent) {
     expect(page.text.length).toBeGreaterThan(100);

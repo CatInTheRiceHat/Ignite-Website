@@ -18,6 +18,11 @@
       "dest": "/demo/boundaries/index.html"
     },
     {
+      "src": "/thank-you/?",
+      "dest": "/index.html",
+      "headers": { "X-Robots-Tag": "noindex" }
+    },
+    {
       "src": "/(about|team|mentors|program|faq|statistics|hiring|records|partnerships)/?",
       "dest": "/index.html"
     }

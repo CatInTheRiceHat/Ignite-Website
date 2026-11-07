@@ -13,6 +13,7 @@ import FAQ from './pages/FAQ';
 import Hiring from './pages/Hiring';
 import Partnerships from './pages/Partnerships';
 import Records from './pages/Records';
+import ThankYou from './pages/ThankYou';
 import NotFound from './pages/NotFound';
 import { DEMO_PATH } from './config/courseDemo';
 import { RECORDS_PAGE } from './config/records';
@@ -23,7 +24,7 @@ const Sponsors = lazy(() => import('./pages/Sponsors'));
 
 function App() {
   const [loading, setLoading] = useState(() => {
-    if ([DEMO_PATH, '/sponsors'].includes(window.location.pathname.replace(/\/+$/, ''))) return false;
+    if ([DEMO_PATH, '/sponsors', '/thank-you'].includes(window.location.pathname.replace(/\/+$/, ''))) return false;
     if (introBypassed) return false;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
     if (introDebugEnabled) return true;
@@ -61,6 +62,7 @@ function App() {
               <Route path={DEMO_PATH} element={<Suspense fallback={<p role="status" className="p-12 text-center">Opening your sample week…</p>}><CourseDemo /></Suspense>} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/apply" element={<Navigate to="/program" replace />} />
+              <Route path="/thank-you" element={<ThankYou />} />
               <Route path="/statistics" element={<Navigate to={RECORDS_PAGE.path} replace />} />
               <Route path="/hiring" element={<Hiring />} />
               <Route path="/partnerships" element={<Partnerships />} />
