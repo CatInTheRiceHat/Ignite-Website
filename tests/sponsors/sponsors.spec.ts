@@ -8,6 +8,69 @@ const tiers = [
   ['Nova', '$50,000+', 'rgb(206, 185, 243)'],
 ];
 
+test('arrow keys move one tier at a time in thermometer order and stop at each end', async ({ page }) => {
+  await page.goto('/sponsors');
+  const stage = page.locator('.sponsors-stage');
+  await expect(stage).toHaveAttribute('data-tier', 'Ember');
+  const stops = [0, 0.25, 0.44, 0.64, 0.96];
+  const settledAt = async (index: number) => {
+    await expect(stage).toHaveAttribute('data-tier', tiers[index][0]);
+    await expect.poll(() => page.evaluate((stop) => {
+      const journey = document.querySelector<HTMLElement>('.sponsors-journey')!;
+      const stage = document.querySelector<HTMLElement>('.sponsors-stage')!;
+      return Math.abs(window.scrollY - (journey.offsetTop + stop * (journey.offsetHeight - stage.clientHeight)));
+    }, stops[index])).toBeLessThanOrEqual(1);
+  };
+  await page.keyboard.press('ArrowDown');
+  await settledAt(0);
+  for (let i = 1; i < tiers.length; i++) {
+    await page.keyboard.press('ArrowUp');
+    await settledAt(i);
+  }
+  await expect(page.locator('.sponsors-scroll-overlay')).toHaveCSS('opacity', '0');
+  await page.keyboard.press('ArrowUp');
+  await settledAt(4);
+  for (let i = tiers.length - 2; i >= 0; i--) {
+    await page.keyboard.press('ArrowDown');
+    await settledAt(i);
+  }
+  await page.keyboard.press('ArrowDown');
+  await settledAt(0);
+});
+
+test('rapid arrow presses advance to separate tiers and leave text editing alone', async ({ page }) => {
+  await page.goto('/sponsors');
+  const stage = page.locator('.sponsors-stage');
+  await expect(stage).toHaveAttribute('data-tier', 'Ember');
+  await page.keyboard.press('ArrowUp');
+  await page.keyboard.press('ArrowUp');
+  await expect(stage).toHaveAttribute('data-tier', 'Solaris');
+  await expect.poll(() => page.evaluate(() => {
+    const journey = document.querySelector<HTMLElement>('.sponsors-journey')!;
+    const stage = document.querySelector<HTMLElement>('.sponsors-stage')!;
+    return Math.abs(window.scrollY - (journey.offsetTop + 0.44 * (journey.offsetHeight - stage.clientHeight)));
+  })).toBeLessThanOrEqual(1);
+  const repeatedWasAllowed = await page.evaluate(() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', repeat: true, cancelable: true })));
+  expect(repeatedWasAllowed).toBe(false);
+  await expect(stage).toHaveAttribute('data-tier', 'Solaris');
+  await page.evaluate(() => {
+    const input = document.createElement('input');
+    input.setAttribute('aria-label', 'Keyboard editing check');
+    input.style.cssText = 'position:fixed;top:0;left:0;z-index:100';
+    document.body.append(input);
+    input.focus();
+  });
+  await page.keyboard.press('ArrowUp');
+  await page.keyboard.press('ArrowDown');
+  await expect(stage).toHaveAttribute('data-tier', 'Solaris');
+  await page.getByRole('textbox', { name: 'Keyboard editing check' }).evaluate((input) => input.remove());
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.reload();
+  await expect(stage).toHaveAttribute('data-tier', 'Ember');
+  await page.keyboard.press('ArrowUp');
+  await expect(stage).toHaveAttribute('data-tier', 'Flare');
+});
+
 test('the camera climbs through the original PNGs and the five exact tiers', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));

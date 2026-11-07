@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
@@ -127,6 +127,7 @@ function Tier({ index, active, layer, anchor, width, height, progress, reduced }
 export default function Sponsors() {
   const journeyRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const navigationTarget = useRef<number | null>(null);
   const [size, setSize] = useState({ width: window.innerWidth, height: window.innerHeight });
   const [active, setActive] = useState(0);
   const [promptDismissed, setPromptDismissed] = useState(false);
@@ -155,6 +156,7 @@ export default function Sponsors() {
   useMotionValueEvent(progress, 'change', (p) => {
     if (p > 0.001) setPromptDismissed(true);
     setActive(tierAt(p));
+    if (navigationTarget.current !== null && Math.abs(p - stops[navigationTarget.current]) < 0.001) navigationTarget.current = null;
   });
   useEffect(() => {
     const p = progress.get();
@@ -162,10 +164,41 @@ export default function Sponsors() {
     setActive(tierAt(p));
   }, [progress]);
 
-  const goTo = (index: number) => {
+  const goTo = useCallback((index: number, behavior: ScrollBehavior = 'instant') => {
     const journey = journeyRef.current;
-    if (journey) window.scrollTo({ top: journey.offsetTop + stops[index] * (journey.offsetHeight - size.height), behavior: 'instant' });
-  };
+    if (!journey) return;
+    navigationTarget.current = index;
+    window.scrollTo({ top: journey.offsetTop + stops[index] * (journey.offsetHeight - size.height), behavior });
+  }, [size.height]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
+      const target = event.target;
+      if (target instanceof HTMLElement) {
+        if (target.isContentEditable || target.closest('input, textarea, select, [role="textbox"]')) return;
+        const textBox = target.closest<HTMLElement>('.sponsor-tier-card, .sponsor-nova-impact');
+        if (textBox && textBox.scrollHeight > textBox.clientHeight + 1) return;
+      }
+      event.preventDefault();
+      if (event.repeat) return;
+      const current = navigationTarget.current ?? tierAt(progress.get());
+      const next = Math.max(0, Math.min(tiers.length - 1, current + (event.key === 'ArrowUp' ? 1 : -1)));
+      if (next !== current) goTo(next, reduced ? 'instant' : 'smooth');
+    };
+    const cancelTarget = () => { navigationTarget.current = null; };
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('wheel', cancelTarget, { passive: true });
+    window.addEventListener('touchstart', cancelTarget, { passive: true });
+    window.addEventListener('pointerdown', cancelTarget, { passive: true });
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('wheel', cancelTarget);
+      window.removeEventListener('touchstart', cancelTarget);
+      window.removeEventListener('pointerdown', cancelTarget);
+    };
+  }, [goTo, progress, reduced]);
 
   return <div className="sponsors-journey" ref={journeyRef}>
     <div className="sponsors-stage" ref={stageRef} data-tier={tiers[active].name} style={{ '--nova-scale': NOVA_SCALE, '--mascot-size': `${novaLayout.size}px`, '--glass-half': `${glassWidth / 2}px`, '--nova-anchor': `${anchors[4]}px` } as CSSProperties}>
@@ -195,7 +228,7 @@ export default function Sponsors() {
         </a>
       </motion.div>
 
-      <nav className="sponsors-tier-nav" aria-label="Sponsorship thermometer">
+      <nav className="sponsors-tier-nav" aria-label="Sponsorship thermometer" aria-keyshortcuts="ArrowUp ArrowDown">
         <img className="sponsors-mini-thermometer" src={art('Thermometer.png')} width="1536" height="2995" alt="" draggable="false" />
         {tiers.map((tier, i) => <button key={tier.name} type="button" onClick={() => goTo(i)} aria-label={`${tier.name} Tier, ${tier.range}`} aria-current={active === i ? 'step' : undefined} style={{ '--stop': `${miniatureStops[i]}%`, '--horizontal-stop': `${100 - miniatureStops[i]}%` } as CSSProperties}><span className="sponsors-nav-label">{tier.name} Tier · {tier.temperature}</span></button>)}
         <motion.span className="sponsors-position-arrow sponsors-position-arrow--vertical" style={{ top: indicatorTop }} aria-hidden="true" />
@@ -204,7 +237,7 @@ export default function Sponsors() {
       </nav>
 
       <motion.div className="sponsors-scroll-overlay" initial={{ opacity: 1 }} animate={{ opacity: promptDismissed ? 0 : 1 }} transition={{ duration: reduced ? 0 : 0.5 }} aria-hidden={promptDismissed || undefined}>
-        <ArrowUp size={36} aria-hidden="true" /><p>Scroll up the thermometer<br />for more sponsorship options.</p>
+        <ArrowUp size={36} aria-hidden="true" /><p>Scroll or use ↑ / ↓<br />to explore sponsorship tiers.</p>
       </motion.div>
       <div className="sponsors-progress" aria-hidden="true"><motion.div style={{ scaleX: progress }} /></div>
     </div>
