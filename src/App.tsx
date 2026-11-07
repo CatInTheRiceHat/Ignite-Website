@@ -19,10 +19,11 @@ import { RECORDS_PAGE } from './config/records';
 
 const INTRO_SESSION_KEY = 'ignite:intro-seen';
 const CourseDemo = lazy(() => import('./pages/CourseDemo'));
+const Sponsors = lazy(() => import('./pages/Sponsors'));
 
 function App() {
   const [loading, setLoading] = useState(() => {
-    if (window.location.pathname.replace(/\/+$/, '') === DEMO_PATH) return false;
+    if ([DEMO_PATH, '/sponsors'].includes(window.location.pathname.replace(/\/+$/, ''))) return false;
     if (introBypassed) return false;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
     if (introDebugEnabled) return true;
@@ -63,6 +64,7 @@ function App() {
               <Route path="/statistics" element={<Navigate to={RECORDS_PAGE.path} replace />} />
               <Route path="/hiring" element={<Hiring />} />
               <Route path="/partnerships" element={<Partnerships />} />
+              <Route path="/sponsors" element={<Suspense fallback={<p role="status" className="p-12 text-center">A little spark is on its way…</p>}><Sponsors /></Suspense>} />
               <Route path={RECORDS_PAGE.path} element={<Records />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

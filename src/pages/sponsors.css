@@ -1,0 +1,148 @@
+.sponsors-journey {
+  --sponsor-ink: #352B29;
+  position: relative;
+  height: 400svh;
+  color: var(--sponsor-ink);
+  background: #29213f;
+}
+/* Keep the cinematic frame clear; this selector stops matching on other routes. */
+body:has(.sponsors-journey) > sol-widget { display: none !important; }
+.sponsors-stage {
+  color: #FFFFFF;
+  --nova-size: calc(var(--mascot-size) * var(--nova-scale));
+  --nova-copy-center: 75svh;
+  --tier-width: min(26vw, 340px);
+  --scene-gap: clamp(12px, 1vw, 16px);
+  --card-gap: clamp(48px, 4vw, 80px);
+  --intro-left: calc(50% - var(--mascot-size) * 0.75 - var(--scene-gap) - var(--tier-width));
+  --scene-left: calc(50% - var(--glass-half) - var(--scene-gap) - var(--tier-width));
+  --card-left: min(calc(50% + var(--glass-half) + var(--card-gap)), calc(93% - var(--tier-width)));
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+}
+.sponsors-world { position: absolute; inset: 0 0 auto; will-change: transform; }
+.sponsors-scenery { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; user-select: none; }
+.sponsor-glass { position: absolute; left: 50%; transform: translateX(-50%); filter: drop-shadow(0 8px 18px #2d255626); }
+.sponsor-glass img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.sponsors-cast { pointer-events: none; z-index: 2; }
+.sponsors-copy-layer { z-index: 4; }
+.sponsors-glass-layer { position: absolute; inset: 0; pointer-events: none; z-index: 3; }
+.sponsors-nova-atmosphere { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse 45% 50% at 50% 36%, #ceb9f326, transparent 80%); }
+.sponsor-tier, .sponsor-character { position: absolute; width: 100%; height: 0; }
+.sponsor-mascot-position { position: absolute; left: var(--scene-left); width: var(--mascot-size); transform: translateY(-50%); }
+.sponsor-mascot { position: relative; width: 100%; transform-origin: 50% 65%; filter: drop-shadow(0 14px 16px #30204b22); }
+.sponsor-mascot img { display: block; width: 100%; height: auto; user-select: none; }
+.sponsor-tier--nova .sponsor-mascot-position { left: 50%; transform: translate(-50%, -50%); }
+.sponsor-tier--nova .sponsor-mascot { filter: none; }
+.sponsor-tier--nova .sponsor-mascot img { mask-image: linear-gradient(to bottom, #000 0%, #000 74%, #000c 90%, transparent 100%); }
+.sponsor-nova-impact { position: absolute; left: var(--scene-left); width: var(--tier-width); padding: 20px; border-radius: 28px; border: 1px solid #fcf8ff40; background: #352b2959; backdrop-filter: blur(8px); color: #FFFFFF; font-size: clamp(14px, 1.1vw, 16px); line-height: 1.55; pointer-events: auto; }
+.sponsor-nova-impact h3 { font-size: 18px; line-height: 1.4; }
+.sponsor-nova-impact p { margin-top: 10px; }
+.sponsor-nova-impact ul { list-style: disc; margin: 12px 0 0; padding-left: 17px; }
+.sponsor-nova-impact li + li { margin-top: 8px; }
+.sponsor-tier--nova .sponsor-nova-impact,
+.sponsor-tier--nova .sponsor-tier-card { top: calc(var(--nova-copy-center) - var(--nova-anchor)); translate: 0 -50%; }
+.sponsor-nova-eyes { position: absolute; inset: 0; background: radial-gradient(ellipse 4.5% 6.5% at 40.8% 69%, #fcf8ff80, transparent 100%), radial-gradient(ellipse 4.5% 6.5% at 59.4% 69%, #fcf8ff80, transparent 100%); filter: blur(5px); }
+.sponsor-tier-card {
+  position: absolute;
+  left: var(--card-left);
+  top: 0;
+  translate: 0 -50%;
+  width: var(--card-width, var(--tier-width));
+  min-height: 240px;
+  padding: clamp(24px, 2.5vw, 40px);
+  border-radius: 28px;
+  border: 1px solid #ffffff60;
+  background: var(--tier-color);
+  box-shadow: 0 14px 48px #352b2912, inset 0 1px 1px #ffffff80;
+  color: #FFFFFF;
+  text-shadow: 0 1px 2px #352b2926;
+  pointer-events: auto;
+}
+.sponsor-tier-card h2 { color: inherit; margin: 0 0 5px; font-family: var(--font-title); font-size: clamp(25px, 2.6vw, 39px); line-height: 1.4; font-weight: 400; }
+.sponsor-tier-word { font: inherit; }
+.sponsor-tier-range { margin: 0; font-size: clamp(19px, 1.9vw, 28px); font-weight: 800; line-height: 1.4; white-space: nowrap; }
+.sponsor-tier-description { min-height: 3em; margin: 22px 0 0; font-size: clamp(15px, 1.2vw, 18px); line-height: 1.6; }
+.sponsor-founding { display: table; margin: 22px 0 0; padding: 7px 12px; border-radius: 8px; border: 1px solid #FCF8FF; background: transparent; font-size: clamp(14px, 1.3vw, 19px); font-weight: 800; }
+.sponsors-header { position: absolute; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: 28px 5%; z-index: 5; }
+.sponsors-brand { display: inline-flex; gap: 10px; align-items: center; font-family: var(--font-title); font-size: 23px; }
+.sponsors-brand img { object-fit: contain; }
+.sponsors-back { display: inline-flex; align-items: center; justify-content: flex-end; gap: 8px; min-height: 44px; color: #FFFFFF; text-align: right; font-size: clamp(11px, 1vw, 14px); line-height: 1.5; font-weight: 800; white-space: nowrap; }
+.sponsors-intro { position: absolute; left: var(--intro-left); top: 15%; pointer-events: none; z-index: 4; }
+.sponsors-intro h1 { font-family: var(--font-title); font-weight: 400; font-size: clamp(29px, 3vw, 46px); line-height: 1.4; letter-spacing: -0.025em; }
+.sponsors-intro > p:last-child { margin-top: 16px; font-size: clamp(14px, 1.3vw, 19px); font-weight: 600; line-height: 1.7; }
+.sponsors-tier-nav { position: absolute; top: 50%; right: clamp(44px, 4vw, 64px); transform: translateY(-50%); width: 54px; height: 240px; z-index: 5; }
+.sponsors-mini-thermometer { position: absolute; left: 50%; transform: translateX(-50%); display: block; width: calc(240px * 1536 / 2995); max-width: none; height: 240px; object-fit: contain; pointer-events: none; filter: drop-shadow(0 2px 8px #352b2933); }
+.sponsors-tier-nav button { position: absolute; top: var(--stop); left: 0; width: 100%; height: 36px; transform: translateY(-50%); border-radius: 8px; }
+.sponsors-position-arrow { position: absolute; left: -12px; translate: 0 -50%; width: 0; height: 0; border-top: 7px solid transparent; border-bottom: 7px solid transparent; border-left: 11px solid #FFFFFF; pointer-events: none; filter: drop-shadow(0 1px 2px #352b2980); }
+.sponsors-position-arrow--horizontal { display: none; }
+.sponsors-current-temperature { position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); font-family: var(--font-heading); font-size: 16px; line-height: 1.3; font-weight: 600; white-space: nowrap; }
+.sponsors-nav-label { pointer-events: none; position: absolute; right: 64px; top: 50%; transform: translateY(-50%); padding: 5px 9px; background: #fcf8ff; color: #352b29; border-radius: 6px; font-size: 12px; white-space: nowrap; opacity: 0; transition: opacity 0.2s; }
+.sponsors-tier-nav button:is(:hover, :focus-visible) .sponsors-nav-label { opacity: 1; }
+.sponsors-scroll-overlay { position: absolute; inset: 0; z-index: 8; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 16px; padding: 24px; text-align: center; color: #000; background: #fff8f0b3; backdrop-filter: blur(5px); pointer-events: none; }
+.sponsors-scroll-overlay p { font-size: clamp(20px, 2.4vw, 34px); font-weight: 800; line-height: 1.5; }
+.sponsors-progress { position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: #fcf8ff1a; z-index: 6; }
+.sponsors-progress > div { height: 100%; background: #CEB9F3; transform-origin: left; }
+.sponsors-stage:is([data-tier="Solaris"], [data-tier="Cobalt"], [data-tier="Nova"]) { color: #FCF8FF; }
+.sponsors-header, .sponsors-tier-nav { transition: color 0.6s; }
+.sponsors-stage a:focus-visible, .sponsors-stage button:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; box-shadow: none; }
+.sponsor-tier-card:focus-visible, .sponsor-nova-impact:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+
+@media (max-width: 900px) {
+  .sponsors-stage { --tier-width: 26vw; --scene-gap: 16px; }
+  .sponsor-tier-card { padding: 20px; min-height: 220px; }
+  .sponsors-tier-nav { right: 40px; }
+  .sponsors-intro h1 { font-size: clamp(25px, 3.2vw, 35px); }
+}
+@media (max-width: 639px) {
+  .sponsors-stage { --tier-width: 40vw; --scene-left: 2%; --card-left: 58%; --nova-copy-center: 68svh; }
+  .sponsors-header { padding: 16px 5%; }
+  .sponsors-brand { font-size: 19px; gap: 6px; padding: 4px 8px; margin-left: -8px; border-radius: 12px; color: #FFFFFF; }
+  .sponsors-brand img { width: 27px; height: 27px; }
+  .sponsors-back { font-size: 0; gap: 0; width: 44px; justify-content: center; }
+  .sponsors-back svg { width: 20px; height: 20px; }
+  .sponsors-intro { top: 17%; left: 5%; right: 5%; padding: 12px 16px; border-radius: 16px; background: #fff8f0b8; backdrop-filter: blur(10px); }
+  .sponsors-intro h1 { font-size: clamp(21px, 6vw, 30px); }
+  .sponsors-intro > p:last-child { font-size: 13px; margin-top: 12px; }
+  .sponsor-tier-card { min-height: 192px; max-height: 56svh; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; border-radius: 20px; padding: 20px 12px; }
+  .sponsor-tier--nova .sponsor-tier-card { min-height: 184px; max-height: 56svh; }
+  .sponsor-nova-impact { width: 40%; padding: 12px; border-radius: 20px; font-size: 12px; line-height: 1.5; }
+  .sponsor-nova-impact h3 { font-size: 13px; }
+  .sponsor-tier-card h2 { font-size: clamp(18px, 4.8vw, 25px); }
+  .sponsor-tier-range { font-size: clamp(11px, 3.45vw, 19px); }
+  .sponsor-tier-description { font-size: 12px; margin-top: 18px; line-height: 1.5; }
+  .sponsor-founding { padding: 6px; font-size: clamp(10px, 3vw, 12px); margin-top: 17px; white-space: nowrap; }
+  .sponsors-tier-nav { --mini-length: clamp(110px, 34vw, 150px); top: 23px; left: calc(50% + 30px); right: auto; width: var(--mini-length); height: 30px; transform: translateX(-50%); }
+  .sponsors-mini-thermometer { width: calc(var(--mini-length) * 1536 / 2995); height: var(--mini-length); left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(90deg); }
+  .sponsors-tier-nav button { top: 0; left: var(--horizontal-stop); width: 24px; height: 32px; transform: translateX(-50%); }
+  .sponsors-nav-label { right: 50%; top: 36px; transform: translateX(50%); font-size: 10px; }
+  .sponsors-position-arrow--vertical { display: none; }
+  .sponsors-position-arrow--horizontal { display: block; top: -6px; translate: -50% 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 9px solid #FFFFFF; border-bottom: 0; }
+  .sponsors-current-temperature { bottom: -12px; font-size: 10px; }
+}
+@media (max-width: 639px) and (max-height: 650px) {
+  .sponsor-nova-impact { padding: 8px; font-size: 10px; line-height: 1.4; }
+  .sponsor-nova-impact h3 { font-size: 12px; line-height: 1.25; }
+  .sponsor-nova-impact p { margin-top: 6px; }
+  .sponsor-nova-impact ul { margin-top: 8px; padding-left: 13px; }
+  .sponsor-nova-impact li + li { margin-top: 4px; }
+  .sponsors-intro > p:last-child { display: none; }
+  .sponsors-intro h1 { font-size: 19px; }
+}
+@media (max-height: 600px) and (min-width: 640px) {
+  .sponsors-stage { --nova-copy-center: 60svh; }
+  .sponsors-header { padding-top: 12px; }
+  .sponsors-intro { top: 24%; }
+  .sponsors-intro h1 { font-size: 26px; }
+  .sponsors-intro > p:last-child { font-size: 12px; }
+  .sponsor-tier-card { padding: 18px 24px; min-height: 180px; }
+  .sponsor-tier-card h2 { font-size: 25px; }
+  .sponsor-tier-range { font-size: 19px; }
+  .sponsor-tier-description, .sponsor-founding { margin-top: 12px; font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sponsors-journey *, .sponsors-journey *::before { transition-duration: 0s !important; }
+}

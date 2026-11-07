@@ -30,6 +30,7 @@ const navSections = [
     name: 'Get Involved',
     links: [
       { name: 'Partnerships', path: '/partnerships' },
+      { name: 'Sponsors', path: '/sponsors' },
       { name: 'Hiring', path: '/hiring' },
     ],
   },

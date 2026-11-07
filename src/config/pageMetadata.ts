@@ -13,5 +13,6 @@ export const pageMetadata: Record<string, { title: string; description: string }
   '/demo/boundaries': { title: 'What Are Boundaries? · Try a Sample Week | Ignite', description: 'Explore a complete week from Ignite’s Relationships, Boundaries & Social Skills course through lessons, a fictional case study and practice with feedback. Allow about 4½ hours, with no account needed.' },
   '/faq': { title: 'Program FAQ | Ignite', description: 'Learn about Ignite’s planned live and independent formats, estimated time commitments, development status, and learning opportunities for all students.' },
   '/partnerships': { title: 'Partnerships | Ignite', description: 'Bring practical learning to your community. Explore ways to partner with Ignite on free practical life skills learning and start a partnership conversation.' },
+  '/sponsors': { title: 'Sponsors · From a Spark to the Stars | Ignite', description: 'Explore Ignite’s five sponsorship tiers, from Ember to Nova. Help a little spark become a brighter future through free practical learning.' },
   [RECORDS_PAGE.path]: { title: RECORDS_PAGE.metaTitle, description: RECORDS_PAGE.metaDescription },
 };

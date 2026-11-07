@@ -10,6 +10,7 @@ const Footer = () => {
     { name: 'Team', path: '/team' },
     { name: 'Program', path: '/program' },
     { name: 'Partnerships', path: '/partnerships' },
+    { name: 'Sponsors', path: '/sponsors' },
     { name: 'FAQ', path: '/faq' },
     { name: RECORDS_PAGE.label, path: RECORDS_PAGE.path },
     { name: 'Hiring', path: '/hiring' },
