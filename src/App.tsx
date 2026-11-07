@@ -1,6 +1,6 @@
 import { lazy, Suspense, useCallback, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { BrowserRouter as Router, Navigate, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Navigate, Routes, Route, useLocation } from 'react-router-dom';
 import LoadingScreen from './components/LoadingScreen';
 import IntroDebug from './components/IntroDebug';
 import { introBypassed, introDebugEnabled, recordIntroEvent } from './lib/introDebug';
@@ -22,9 +22,14 @@ const INTRO_SESSION_KEY = 'ignite:intro-seen';
 const CourseDemo = lazy(() => import('./pages/CourseDemo'));
 const Sponsors = lazy(() => import('./pages/Sponsors'));
 
+function ConfirmationRedirect() {
+  const { search, hash } = useLocation();
+  return <Navigate to={{ pathname: '/confirmation', search, hash }} replace />;
+}
+
 function App() {
   const [loading, setLoading] = useState(() => {
-    if ([DEMO_PATH, '/sponsors', '/thank-you'].includes(window.location.pathname.replace(/\/+$/, ''))) return false;
+    if ([DEMO_PATH, '/sponsors', '/confirmation', '/thank-you'].includes(window.location.pathname.replace(/\/+$/, ''))) return false;
     if (introBypassed) return false;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
     if (introDebugEnabled) return true;
@@ -66,7 +71,8 @@ function App() {
               <Route path="/hiring" element={<Hiring />} />
               <Route path="/partnerships" element={<Partnerships />} />
               <Route path="/sponsors" element={<Suspense fallback={<p role="status" className="p-12 text-center">A little spark is on its way…</p>}><Sponsors /></Suspense>} />
-              <Route path="/thank-you" element={<ThankYou />} />
+              <Route path="/confirmation" element={<ThankYou />} />
+              <Route path="/thank-you" element={<ConfirmationRedirect />} />
               <Route path={RECORDS_PAGE.path} element={<Records />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

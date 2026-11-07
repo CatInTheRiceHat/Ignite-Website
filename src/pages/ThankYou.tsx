@@ -5,10 +5,11 @@ import './thank-you.css';
 
 export default function ThankYou() {
   useEffect(() => {
-    const robots = document.createElement('meta');
+    const existing = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
+    const robots = existing ?? document.createElement('meta');
     robots.name = 'robots';
     robots.content = 'noindex';
-    document.head.append(robots);
+    if (!existing) document.head.append(robots);
     return () => robots.remove();
   }, []);
 

@@ -237,7 +237,9 @@ export default function Sponsors() {
       </nav>
 
       <motion.div className="sponsors-scroll-overlay" initial={{ opacity: 1 }} animate={{ opacity: promptDismissed ? 0 : 1 }} transition={{ duration: reduced ? 0 : 0.5 }} aria-hidden={promptDismissed || undefined}>
-        <ArrowUp size={36} aria-hidden="true" /><p>Scroll or use ↑ / ↓<br />to explore sponsorship tiers.</p>
+        <button className="sponsors-scroll-dismiss" type="button" aria-label="Dismiss sponsorship navigation instructions" tabIndex={promptDismissed ? -1 : 0} style={{ pointerEvents: promptDismissed ? 'none' : 'auto' }} onClick={(event) => { event.currentTarget.blur(); setPromptDismissed(true); }}>
+          <ArrowUp size={36} aria-hidden="true" /><span>Scroll or use ↑ / ↓<br />to explore sponsorship tiers.</span>
+        </button>
       </motion.div>
       <div className="sponsors-progress" aria-hidden="true"><motion.div style={{ scaleX: progress }} /></div>
     </div>
