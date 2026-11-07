@@ -2,9 +2,11 @@ import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 test('partnerships is reachable from header navigation and footer', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
-  const homeToggle = page.getByRole('button', { name: 'Toggle menu', exact: true });
-  if (await homeToggle.isVisible()) await homeToggle.click();
+  const toggle = page.locator('button[aria-controls="navigation-links"]');
+  if (await toggle.isVisible()) await toggle.click();
+  await page.locator('nav').getByRole('button', { name: 'Get Involved', exact: true }).click();
   await page.locator('nav').getByRole('link', { name: 'Partnerships', exact: true }).filter({ visible: true }).click();
   await expect(page).toHaveURL(/\/partnerships$/);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Partnerships');
@@ -13,8 +15,8 @@ test('partnerships is reachable from header navigation and footer', async ({ pag
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://ignitefindyourfire.org/partnerships');
   await expect(page.locator('footer').getByRole('link', { name: 'Partnerships', exact: true })).toHaveAttribute('href', '/partnerships');
 
-  const toggle = page.getByRole('button', { name: 'Toggle menu', exact: true });
   if (await toggle.isVisible()) await toggle.click();
+  await page.locator('nav').getByRole('button', { name: 'Get Involved', exact: true }).click();
   const navLink = page.locator('nav').getByRole('link', { name: 'Partnerships', exact: true }).filter({ visible: true });
   await expect(navLink).toHaveAttribute('aria-current', 'page');
   await navLink.click();
