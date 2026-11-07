@@ -38,7 +38,7 @@ const Layout = ({ children }: LayoutProps) => {
     if (canonical) canonical.href = url;
   }, [pathname]);
 
-  if (pathname.replace(/\/+$/, '') === '/sponsors') return <main>{children}</main>;
+  if (['/sponsors', '/thank-you'].includes(pathname.replace(/\/+$/, ''))) return <main>{children}</main>;
 
   return (
     <div className="flex flex-col min-h-screen">

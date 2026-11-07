@@ -14,6 +14,7 @@ import Hiring from './pages/Hiring';
 import Partnerships from './pages/Partnerships';
 import Records from './pages/Records';
 import NotFound from './pages/NotFound';
+import ThankYou from './pages/ThankYou';
 import { DEMO_PATH } from './config/courseDemo';
 import { RECORDS_PAGE } from './config/records';
 
@@ -23,7 +24,7 @@ const Sponsors = lazy(() => import('./pages/Sponsors'));
 
 function App() {
   const [loading, setLoading] = useState(() => {
-    if ([DEMO_PATH, '/sponsors'].includes(window.location.pathname.replace(/\/+$/, ''))) return false;
+    if ([DEMO_PATH, '/sponsors', '/thank-you'].includes(window.location.pathname.replace(/\/+$/, ''))) return false;
     if (introBypassed) return false;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
     if (introDebugEnabled) return true;
@@ -65,6 +66,7 @@ function App() {
               <Route path="/hiring" element={<Hiring />} />
               <Route path="/partnerships" element={<Partnerships />} />
               <Route path="/sponsors" element={<Suspense fallback={<p role="status" className="p-12 text-center">A little spark is on its way…</p>}><Sponsors /></Suspense>} />
+              <Route path="/thank-you" element={<ThankYou />} />
               <Route path={RECORDS_PAGE.path} element={<Records />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

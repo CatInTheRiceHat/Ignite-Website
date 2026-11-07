@@ -21,5 +21,6 @@ export const pageMetadata: Record<string, { title: string; description: string }
   '/hiring': { title: 'Hiring | Ignite', description: 'Explore Ignite’s student internship roles and apply to help build free practical life skills courses.' },
   '/partnerships': { title: 'Partnerships | Ignite', description: 'Bring practical learning to your community. Explore ways to partner with Ignite on free practical life skills learning and start a partnership conversation.' },
   '/sponsors': { title: 'Sponsors | Ignite', description: 'Explore Ignite’s five sponsorship tiers, from Ember to Nova. Support our student team as we build free courses in practical life skills.' },
+  '/thank-you': { title: 'Confirmation | Ignite', description: 'Thank you for pre-enrolling with Ignite. Find out what happens next and explore our free courses in practical life skills.' },
   [RECORDS_PAGE.path]: { title: RECORDS_PAGE.metaTitle, description: RECORDS_PAGE.metaDescription },
 };
