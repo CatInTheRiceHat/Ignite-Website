@@ -5,6 +5,7 @@ import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform 
 import type { MotionValue } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
 import { RedirectArrow } from '../components/ui/redirect-arrow';
+import { PARTNERSHIP_MEETING_URL } from '../lib/links';
 import './sponsors.css';
 
 const ART = '/sponsors/sponsorship/';
@@ -134,6 +135,7 @@ export default function Sponsors() {
   const progress = scrollYProgress;
   const camera = useTransform(progress, (p) => cameraAt(p, size.width, size.height));
   const introOpacity = useTransform(progress, [0, 0.07, 0.15], [1, 1, 0]);
+  const introVisibility = useTransform(progress, (p): 'visible' | 'hidden' => p < 0.15 ? 'visible' : 'hidden');
   const atmosphereOpacity = useTransform(progress, [0, 0.79, 0.94, 1], [0, 0, 1, 1]);
   const indicatorTop = useTransform(progress, [0, 0.06, 0.25, 0.44, 0.64, 0.92, 1], ['82%', '82%', '67%', '55%', '37%', '15%', '15%']);
   const indicatorLeft = useTransform(progress, [0, 0.06, 0.25, 0.44, 0.64, 0.92, 1], ['18%', '18%', '33%', '45%', '63%', '85%', '85%']);
@@ -184,9 +186,13 @@ export default function Sponsors() {
         <Link to="/partnerships" className="sponsors-back">Not interested in sponsoring? Check out our partnership options <RedirectArrow size={16} /></Link>
       </header>
 
-      <motion.div className="sponsors-intro" style={{ opacity: introOpacity }}>
+      <motion.div className="sponsors-intro" style={{ opacity: introOpacity, visibility: introVisibility }}>
         <h1>Help us build<br />free courses.</h1>
         <p>We’re a student-led team creating lessons<br />in practical life skills. Your support helps us do it.</p>
+        <a className="sponsors-meeting-button" href={PARTNERSHIP_MEETING_URL} target="_blank" rel="noopener noreferrer">
+          Schedule a meeting <RedirectArrow size={18} />
+          <span className="sr-only"> (opens in a new tab)</span>
+        </a>
       </motion.div>
 
       <nav className="sponsors-tier-nav" aria-label="Sponsorship thermometer">

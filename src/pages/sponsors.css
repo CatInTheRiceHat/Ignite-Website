@@ -71,9 +71,11 @@ body:has(.sponsors-journey) > sol-widget { display: none !important; }
 .sponsors-brand { display: inline-flex; gap: 10px; align-items: center; font-family: var(--font-title); font-size: 23px; }
 .sponsors-brand img { object-fit: contain; }
 .sponsors-back { display: inline-flex; align-items: center; justify-content: flex-end; gap: 8px; min-height: 44px; color: #FFFFFF; text-align: right; font-size: clamp(11px, 1vw, 14px); line-height: 1.5; font-weight: 800; white-space: nowrap; }
-.sponsors-intro { position: absolute; left: var(--intro-left); top: 15%; pointer-events: none; z-index: 4; }
-.sponsors-intro h1 { font-family: var(--font-title); font-weight: 400; font-size: clamp(29px, 3vw, 46px); line-height: 1.4; letter-spacing: -0.025em; }
-.sponsors-intro > p:last-child { margin-top: 16px; font-size: clamp(14px, 1.3vw, 19px); font-weight: 600; line-height: 1.7; }
+.sponsors-intro { position: absolute; left: var(--intro-left); top: 12%; display: flex; flex-direction: column; align-items: flex-start; gap: 20px; pointer-events: none; z-index: 4; }
+.sponsors-intro h1 { font-family: var(--font-title); font-weight: 400; font-size: clamp(29px, 3vw, 46px); line-height: 1.3; letter-spacing: -0.025em; }
+.sponsors-intro > p { margin: 0; font-size: clamp(14px, 1.3vw, 19px); font-weight: 600; line-height: 1.6; }
+.sponsors-meeting-button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 12px 22px; border: 2px solid #FFFFFF; border-radius: 999px; background: transparent; color: #FFFFFF; font-size: 15px; line-height: 1.5; font-weight: 800; pointer-events: auto; transition: background 0.2s, transform 0.2s; }
+.sponsors-meeting-button:hover { background: #ffffff1a; transform: translateY(-2px); }
 .sponsors-tier-nav { position: absolute; top: 50%; right: clamp(44px, 4vw, 64px); transform: translateY(-50%); width: 54px; height: 240px; z-index: 5; }
 .sponsors-mini-thermometer { position: absolute; left: 50%; transform: translateX(-50%); display: block; width: calc(240px * 1536 / 2995); max-width: none; height: 240px; object-fit: contain; pointer-events: none; filter: drop-shadow(0 2px 8px #352b2933); }
 .sponsors-tier-nav button { position: absolute; top: var(--stop); left: 0; width: 100%; height: 36px; transform: translateY(-50%); border-radius: 8px; }
@@ -104,9 +106,9 @@ body:has(.sponsors-journey) > sol-widget { display: none !important; }
   .sponsors-brand img { width: 27px; height: 27px; }
   .sponsors-back { font-size: 0; gap: 0; width: 44px; justify-content: center; }
   .sponsors-back svg { width: 20px; height: 20px; }
-  .sponsors-intro { top: 17%; left: 5%; right: 5%; padding: 12px 16px; border-radius: 16px; background: #fff8f0b8; backdrop-filter: blur(10px); }
+  .sponsors-intro { top: 14%; left: 5%; right: 5%; gap: 16px; padding: 12px 16px; border-radius: 16px; background: #fff8f0b8; backdrop-filter: blur(10px); }
   .sponsors-intro h1 { font-size: clamp(21px, 6vw, 30px); }
-  .sponsors-intro > p:last-child { font-size: 13px; margin-top: 12px; }
+  .sponsors-intro > p { font-size: 13px; }
   .sponsor-tier-card { min-height: 192px; max-height: 56svh; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; border-radius: 20px; padding: 20px 12px; }
   .sponsor-tier--nova .sponsor-tier-card { min-height: 184px; max-height: 56svh; }
   .sponsor-nova-impact { width: 40%; padding: 12px; border-radius: 20px; font-size: 12px; line-height: 1.5; }
@@ -129,15 +131,16 @@ body:has(.sponsors-journey) > sol-widget { display: none !important; }
   .sponsor-nova-impact p { margin-top: 6px; }
   .sponsor-nova-impact ul { margin-top: 8px; padding-left: 13px; }
   .sponsor-nova-impact li + li { margin-top: 4px; }
-  .sponsors-intro > p:last-child { display: none; }
+  .sponsors-intro > p { display: none; }
   .sponsors-intro h1 { font-size: 19px; }
 }
 @media (max-height: 600px) and (min-width: 640px) {
   .sponsors-stage { --nova-copy-center: 60svh; }
   .sponsors-header { padding-top: 12px; }
-  .sponsors-intro { top: 24%; }
+  .sponsors-intro { top: 16%; gap: 12px; }
   .sponsors-intro h1 { font-size: 26px; }
-  .sponsors-intro > p:last-child { font-size: 12px; }
+  .sponsors-intro > p { font-size: 12px; }
+  .sponsors-meeting-button { min-height: 44px; padding: 10px 20px; }
   .sponsor-tier-card { padding: 18px 24px; min-height: 180px; }
   .sponsor-tier-card h2 { font-size: 25px; }
   .sponsor-tier-range { font-size: 19px; }

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import { defaultMetadata, pageMetadata } from '../../config/pageMetadata';
+import { notFoundMetadata, pageMetadata } from '../../config/pageMetadata';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -21,7 +21,7 @@ const Layout = ({ children }: LayoutProps) => {
 
   useEffect(() => {
     const canonicalPath = pathname.replace(/\/+$/, '') || '/';
-    const metadata = pageMetadata[canonicalPath] ?? defaultMetadata;
+    const metadata = pageMetadata[canonicalPath] ?? notFoundMetadata;
     const url = `https://ignitefindyourfire.org${canonicalPath}`;
     document.title = metadata.title;
     const values = {

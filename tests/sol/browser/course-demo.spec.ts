@@ -34,7 +34,7 @@ test('a visitor can complete the actual week, revise, resume, download and reset
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Relationships, Boundaries & Social Skills');
   await expect(page.locator('.loading-screen')).toHaveCount(0);
   await expect(page.locator('sol-widget')).toHaveCSS('display', 'none');
-  await expect(page).toHaveTitle('What Are Boundaries? · Try a Sample Week | Ignite');
+  await expect(page).toHaveTitle('Course Demo | Ignite');
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://ignitefindyourfire.org/demo/boundaries');
   await axe(page);
   await expect(page.getByRole('button', { name: 'Start the sample week', exact: true })).toHaveCount(0);

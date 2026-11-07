@@ -1,5 +1,6 @@
 export const STUDENT_PREENROLLMENT_URL = 'https://forms.fillout.com/t/oqB8WMKbJ6us';
 export const LEARNING_HUB_URL = 'https://learn.ignitefindyourfire.org';
+export const PARTNERSHIP_MEETING_URL = 'https://cal.com/ignitefindyourfire/partnership-meeting';
 export const INTERN_FORM_URL = import.meta.env.VITE_INTERN_FORM_URL ?? 'https://forms.gle/wV8e5edRNVNpUJvt7';
 // Use the supplied direct link: Google's embedded version requires cookie/sign-in access.
 export const PARTNERSHIP_FORM_URL = import.meta.env.VITE_PARTNERSHIP_FORM_URL?.trim()
