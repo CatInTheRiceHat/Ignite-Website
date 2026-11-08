@@ -69,13 +69,18 @@ test('real course editor formats copied fences and preserves typed and pasted co
     .toContain('tiny_ignite_markdown/plugin');
   await page.locator('#id_name').fill('Temporary Markdown save verification');
   const body = page.frameLocator('#id_page_ifr').locator('body');
-  // Native autosave may restore this disposable account's earlier failed verification draft.
+  // Mirror the reported preformatted editor state, replacing only this disposable account's draft.
   await page.evaluate(() => {
     const editor = window.tinyMCE.get('id_page');
-    editor.setContent('<p><br></p>');
-    editor.selection.setCursorLocation(editor.getBody().firstChild, 0);
+    editor.setContent('<pre>These classes are used for extending</pre>');
   });
-  await body.click();
+  await body.locator('pre').click();
+  await page.evaluate(() => {
+    const editor = window.tinyMCE.get('id_page');
+    editor.selection.select(editor.getBody().querySelector('pre'), true);
+    editor.selection.collapse(false);
+  });
+  await page.keyboard.press('Enter');
   await page.keyboard.type('```py');
   await page.keyboard.press('Enter');
   await page.keyboard.type('if True:');
@@ -89,6 +94,7 @@ test('real course editor formats copied fences and preserves typed and pasted co
     body: await page.evaluate(() => window.tinyMCE.get('id_page').getContent()), contentType: 'text/html',
   });
   await expect(body.locator('.ignite-code-block code')).toHaveText('if True:\n    print("hello")');
+  await expect(body.locator('pre:not(.ignite-code-block)')).toContainText('These classes are used for extending');
 
   await page.evaluate(() => {
     const markdown = '```py\nprint("pasted")\n```';
@@ -118,4 +124,41 @@ test('real course editor formats copied fences and preserves typed and pasted co
   await expect(reopened.locator('.ignite-code-block')).toHaveCount(2);
   await expect(reopened.locator('.ignite-code-block code').first()).toHaveText('if True:\n    print("hello")');
   await expect(reopened.locator('code span').filter({ hasText: '"pasted"' })).toHaveCSS('color', 'rgb(158, 214, 158)');
+  await expect(reopened.locator('pre:not(.ignite-code-block)')).toContainText('These classes are used for extending');
+
+  // Deleting a saved block and undoing must preserve the other block and its source text.
+  await page.evaluate(() => {
+    const editor = window.tinyMCE.get('id_page');
+    editor.focus();
+    editor.selection.select(editor.getBody().querySelector('.ignite-code-block'), true);
+  });
+  await page.keyboard.press('Backspace');
+  await expect(reopened.locator('.ignite-code-block')).toHaveCount(1);
+  await expect(reopened.locator('.ignite-code-block code')).toHaveText('print("pasted")');
+  await page.evaluate(() => window.tinyMCE.get('id_page').undoManager.undo());
+  await expect(reopened.locator('.ignite-code-block')).toHaveCount(2);
+  await expect(reopened.locator('.ignite-code-block code').first()).toHaveText('if True:\n    print("hello")');
+
+  await page.evaluate(() => {
+    const editor = window.tinyMCE.get('id_page');
+    editor.selection.select(editor.getBody().querySelector('.ignite-code-block'), true);
+    editor.selection.collapse(false);
+  });
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('Outside saved code');
+  await expect(reopened.locator('p').filter({ hasText: 'Outside saved code' })).toHaveCount(1);
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('```py');
+  await page.keyboard.press('Enter');
+  await expect(reopened.locator('.ignite-code-block')).toHaveCount(3);
+  await page.keyboard.press('Backspace');
+  await expect(reopened.locator('.ignite-code-block')).toHaveCount(2);
+  await page.keyboard.type('No empty box remains');
+  await page.getByRole('button', { name: 'Save and display', exact: true }).click();
+  await page.waitForURL(url => url.pathname === '/mod/page/view.php', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('.ignite-code-block')).toHaveCount(2);
+  await expect(page.locator('.ignite-code-block code').first()).toHaveText('if True:\n    print("hello")');
+  await expect(page.getByText('Outside saved code', { exact: true })).toBeVisible();
+  await expect(page.getByText('No empty box remains', { exact: true })).toBeVisible();
 });

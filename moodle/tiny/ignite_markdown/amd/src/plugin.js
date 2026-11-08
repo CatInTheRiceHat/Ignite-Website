@@ -93,10 +93,82 @@ define('tiny_ignite_markdown/plugin', [
         return container.innerHTML;
     };
 
+    const cleanEditorFragment = node => {
+        const copy = node.cloneNode(true);
+        copy.querySelectorAll('[data-mce-bogus="all"], [data-mce-type="bookmark"]').forEach(marker => marker.remove());
+        copy.querySelectorAll('[data-mce-bogus="1"]').forEach(marker => {
+            if (marker.nodeName === 'BR' || marker.textContent === '\uFEFF') {
+                marker.remove();
+            }
+        });
+        return copy;
+    };
+
+    const codeText = node => {
+        const copy = cleanEditorFragment(node);
+        copy.querySelectorAll('br').forEach(br => br.replaceWith(br.ownerDocument.createTextNode('\n')));
+        return copy.textContent;
+    };
+
+    const paragraph = editor => editor.dom.create('p', {}, '<br data-mce-bogus="1">');
+
+    const openCodeBlock = (editor, block, prefixRange, fence, language) => {
+        const before = cleanEditorFragment(prefixRange.cloneContents());
+        const tailRange = editor.selection.getRng().cloneRange();
+        tailRange.selectNodeContents(block);
+        const caret = editor.selection.getRng();
+        tailRange.setStart(caret.endContainer, caret.endOffset);
+        const after = cleanEditorFragment(tailRange.cloneContents());
+
+        // Remove only the typed fence from the cloned prefix; retain surrounding markup and text.
+        const walker = editor.getDoc().createTreeWalker(before, NodeFilter.SHOW_TEXT);
+        const nodes = [];
+        while (walker.nextNode()) {
+            nodes.push(walker.currentNode);
+        }
+        let remaining = fence.length;
+        for (const node of nodes.reverse()) {
+            const count = Math.min(remaining, node.data.length);
+            node.data = node.data.slice(0, node.data.length - count);
+            remaining -= count;
+            if (!remaining) {
+                break;
+            }
+        }
+        if (remaining) {
+            return;
+        }
+        const replacement = editor.getDoc().createDocumentFragment();
+        const appendOriginal = fragment => {
+            if (codeText(fragment).length) {
+                const original = block.cloneNode(false);
+                original.removeAttribute('id');
+                original.appendChild(fragment);
+                replacement.appendChild(original);
+            }
+        };
+        appendOriginal(before);
+        const codeBlock = createCodeBlock(editor, '', language);
+        // Keep the open block as editable PRE text, without inline CODE boundaries.
+        codeBlock.innerHTML = '<br data-mce-bogus="1">';
+        replacement.appendChild(codeBlock);
+        appendOriginal(after);
+        block.replaceWith(replacement);
+        editor.selection.setCursorLocation(codeBlock, 0);
+    };
+
+    const finishCodeBlock = (editor, pre, source) => {
+        const codeBlock = createCodeBlock(editor, source, codeLanguage(pre));
+        editor.dom.replace(codeBlock, pre);
+        const next = paragraph(editor);
+        editor.dom.insertAfter(next, codeBlock);
+        editor.selection.setCursorLocation(next, 0);
+    };
+
     const enableCodeFences = editor => {
         editor.on('keydown', event => {
             if (event.isDefaultPrevented() || event.isComposing || event.ctrlKey || event.metaKey ||
-                    event.altKey || editor.mode.isReadOnly() || !editor.selection.isCollapsed()) {
+                    event.altKey || editor.mode.isReadOnly()) {
                 return;
             }
             const node = editor.selection.getNode();
@@ -104,6 +176,27 @@ define('tiny_ignite_markdown/plugin', [
                 return;
             }
             const pre = editor.dom.getParent(node, 'pre');
+            const ownCode = pre && pre.classList.contains('ignite-code-block');
+            const media = 'img,video,audio,iframe,object,embed,svg,math';
+            const collapsed = editor.selection.isCollapsed();
+            const deleting = ['Backspace', 'Delete'].includes(event.key);
+            const allSelected = ownCode && deleting && !collapsed &&
+                codeText(editor.selection.getRng().cloneContents()) === codeText(pre);
+            if (ownCode && (allSelected || (collapsed && ['Backspace', 'Delete', 'Enter'].includes(event.key) &&
+                    !codeText(pre).trim())) && !event.shiftKey && !pre.querySelector(media)) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                editor.undoManager.transact(() => {
+                    const next = paragraph(editor);
+                    editor.dom.replace(next, pre);
+                    editor.selection.setCursorLocation(next, 0);
+                });
+                editor.nodeChanged();
+                return;
+            }
+            if (!collapsed) {
+                return;
+            }
             if (pre && event.key === 'Tab' && !event.shiftKey) {
                 event.preventDefault();
                 event.stopImmediatePropagation();
@@ -119,11 +212,22 @@ define('tiny_ignite_markdown/plugin', [
             }
             const range = editor.selection.getRng().cloneRange();
             range.setStart(block, 0);
-            const text = block.textContent;
-            const atEnd = range.toString() === text;
-            const opening = !pre && !event.shiftKey && atEnd && text.match(/^ {0,3}```([a-z0-9_+#.-]*)[ \t]*$/i);
+            const text = codeText(block);
+            const prefix = codeText(range.cloneContents());
+            const atEnd = prefix === text;
+            // Native preformatted fields and soft line breaks must support the same fence syntax.
+            const opening = !ownCode && !event.shiftKey &&
+                prefix.match(/(?:^|\n)( {0,3}```([a-z0-9_+#.-]*)[ \t]*)$/i);
             const closing = pre && !event.shiftKey && atEnd && text.match(/(?:^|\n) {0,3}```[ \t]*$/);
-            if (pre && !closing && pre.classList.contains('ignite-code-block')) {
+            const blankLine = ownCode && !event.shiftKey && atEnd && text.match(/\n[ \t]*$/);
+            if (blankLine) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                editor.undoManager.transact(() => finishCodeBlock(editor, pre, text.slice(0, blankLine.index)));
+                editor.nodeChanged();
+                return;
+            }
+            if (ownCode && !closing) {
                 // TinyMCE normally inserts BR elements; a code block needs literal newlines.
                 event.preventDefault();
                 event.stopImmediatePropagation();
@@ -140,25 +244,16 @@ define('tiny_ignite_markdown/plugin', [
                 editor.nodeChanged();
                 return;
             }
-            if ((!opening && !closing) || block.querySelector('img,video,audio,iframe')) {
+            if ((!opening && !closing) || block.querySelector(media)) {
                 return;
             }
             event.preventDefault();
             event.stopImmediatePropagation();
             editor.undoManager.transact(() => {
                 if (opening) {
-                    const codeBlock = createCodeBlock(editor, '', opening[1]);
-                    // Keep the open block as editable PRE text, without inline CODE boundaries.
-                    codeBlock.innerHTML = '<br data-mce-bogus="1">';
-                    editor.dom.replace(codeBlock, block);
-                    editor.selection.setCursorLocation(codeBlock, 0);
+                    openCodeBlock(editor, block, range, opening[1], opening[2]);
                 } else {
-                    const codeBlock = createCodeBlock(editor, text.slice(0, closing.index),
-                        codeLanguage(pre));
-                    editor.dom.replace(codeBlock, pre);
-                    const paragraph = editor.dom.create('p', {}, '<br data-mce-bogus="1">');
-                    editor.dom.insertAfter(paragraph, codeBlock);
-                    editor.selection.setCursorLocation(paragraph, 0);
+                    finishCodeBlock(editor, pre, text.slice(0, closing.index));
                 }
             });
             editor.nodeChanged();

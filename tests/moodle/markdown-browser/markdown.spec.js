@@ -185,3 +185,114 @@ test('pasted fenced code gets the same colors and survives an editor reload', as
   await page.evaluate(saved => window.testEditor.setContent(saved), saved);
   await expect(body.locator('pre code span').filter({ hasText: '"hello"' })).toHaveCSS('color', 'rgb(158, 214, 158)');
 });
+
+async function reopenCodeBlock(page) {
+  await page.keyboard.type('```py');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('print("hello")');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('```');
+  await page.keyboard.press('Enter');
+  await page.evaluate(() => {
+    const editor = window.testEditor;
+    const saved = editor.getContent().replace(/\sdata-ignite-language="[^"]*"/g, '');
+    editor.setContent(saved);
+    editor.undoManager.clear();
+    editor.undoManager.add();
+    editor.focus();
+  });
+}
+
+test('Backspace removes an emptied saved code box and allows a fresh block', async ({ page }) => {
+  await reopenCodeBlock(page);
+  const body = page.frameLocator('#markdown-test_ifr').locator('body');
+  await page.evaluate(() => {
+    const editor = window.testEditor;
+    editor.selection.select(editor.getBody().querySelector('pre'), true);
+  });
+  await page.keyboard.press('Backspace');
+  await page.keyboard.press('Backspace');
+  await expect(body.locator('pre')).toHaveCount(0);
+  await page.keyboard.type('```py');
+  await page.keyboard.press('Enter');
+  await expect(body.locator('pre.ignite-code-block')).toHaveCount(1);
+});
+
+test('two Enters at the end of saved code return to normal text without losing code', async ({ page }) => {
+  await reopenCodeBlock(page);
+  const body = page.frameLocator('#markdown-test_ifr').locator('body');
+  await page.evaluate(() => {
+    const editor = window.testEditor;
+    editor.selection.select(editor.getBody().querySelector('pre'), true);
+    editor.selection.collapse(false);
+  });
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('Outside the code');
+  await expect(body.locator('pre')).toHaveText('print("hello")');
+  await expect(body.locator('pre + p')).toHaveText('Outside the code');
+});
+
+test('a fenced code line inside existing preformatted prose creates a box and preserves the prose', async ({ page }) => {
+  await reset(page, '<pre>These classes are used for extending</pre>');
+  await page.evaluate(() => {
+    const editor = window.testEditor;
+    editor.selection.select(editor.getBody().querySelector('pre'), true);
+    editor.selection.collapse(false);
+  });
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('```py');
+  await page.keyboard.press('Enter');
+  const body = page.frameLocator('#markdown-test_ifr').locator('body');
+  await expect(body.locator('.ignite-code-block')).toHaveCount(1);
+  await page.keyboard.type('print("hello")');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('```');
+  await page.keyboard.press('Enter');
+  await expect(body.locator('.ignite-code-block code')).toHaveText('print("hello")');
+  await expect(body.locator('pre').first()).toContainText('These classes are used for extending');
+  expect(await content(page)).not.toContain('```py');
+});
+
+test('opening a fence in the middle of preformatted text preserves the following text', async ({ page }) => {
+  await reset(page, '<pre>Before\n```py\nAfter</pre>');
+  await page.evaluate(() => {
+    const editor = window.testEditor;
+    const text = editor.getBody().querySelector('pre').firstChild;
+    editor.selection.setCursorLocation(text, text.data.indexOf('\nAfter'));
+  });
+  await page.keyboard.press('Enter');
+  const body = page.frameLocator('#markdown-test_ifr').locator('body');
+  await expect(body.locator('.ignite-code-block')).toHaveCount(1);
+  await expect(body.locator('pre').first()).toContainText('Before');
+  await expect(body.locator('pre').last()).toContainText('After');
+  expect(await content(page)).not.toContain('```py');
+  await page.evaluate(() => window.testEditor.undoManager.undo());
+  await expect(body.locator('pre')).toHaveCount(1);
+  expect(await body.locator('pre').textContent()).toBe('Before\n```py\nAfter');
+});
+
+test('Backspace removes a newly opened empty box', async ({ page }) => {
+  await page.keyboard.type('```py');
+  await page.keyboard.press('Enter');
+  const body = page.frameLocator('#markdown-test_ifr').locator('body');
+  await expect(body.locator('.ignite-code-block')).toHaveCount(1);
+  await page.keyboard.press('Backspace');
+  await expect(body.locator('pre')).toHaveCount(0);
+  await page.keyboard.type('Normal text');
+  await expect(body.locator('p')).toHaveText('Normal text');
+});
+
+test('deleting a partial code selection preserves the remaining code and Undo restores it', async ({ page }) => {
+  await reopenCodeBlock(page);
+  await page.evaluate(() => {
+    const editor = window.testEditor;
+    editor.selection.select(editor.getBody().querySelector('pre code span'), true);
+  });
+  await page.keyboard.press('Backspace');
+  const body = page.frameLocator('#markdown-test_ifr').locator('body');
+  await expect(body.locator('.ignite-code-block')).toHaveCount(1);
+  await expect(body.locator('pre')).toHaveText('("hello")');
+  await page.evaluate(() => window.testEditor.undoManager.undo());
+  await expect(body.locator('pre')).toHaveText('print("hello")');
+});
