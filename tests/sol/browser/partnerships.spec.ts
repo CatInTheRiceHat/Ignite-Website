@@ -11,7 +11,7 @@ test('partnerships is reachable from header navigation and footer', async ({ pag
   await expect(page).toHaveURL(/\/partnerships$/);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Partnerships');
   await expect(page.getByRole('heading', { name: 'Bring practical learning to your community.', exact: true })).toBeVisible();
-  await expect(page).toHaveTitle('Partnerships | Ignite');
+  await expect(page).toHaveTitle('Partnerships | Ignite Education');
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://ignitefindyourfire.org/partnerships');
   await expect(page.locator('footer').getByRole('link', { name: 'Partnerships', exact: true })).toHaveAttribute('href', '/partnerships');
 
