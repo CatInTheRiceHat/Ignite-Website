@@ -43,6 +43,7 @@ async function mount(build: string) {
         { getTinyMCE: async() => ({ PluginManager: { add: (_id: string, value: typeof factory) => { factory = value; } } }) },
         { getPluginMetadata: async() => ({}), addToolbarButtons: vi.fn((toolbar) => toolbar) },
         { getContextId: () => 42 },
+        { languages: {} },
       );
     },
   });

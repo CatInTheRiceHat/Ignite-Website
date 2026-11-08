@@ -4,8 +4,9 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'tiny_ignite_markdown';
-$plugin->version = 2026110700;
+$plugin->version = 2026110701;
 $plugin->requires = 2026042000;
 $plugin->supported = [502, 502];
+$plugin->dependencies = ['filter_codehighlighter' => ANY_VERSION];
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = '1.1.0';
+$plugin->release = '1.2.0';

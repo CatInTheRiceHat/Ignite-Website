@@ -30,6 +30,18 @@ foreach (['<script', 'onerror', 'javascript:', '<iframe'] as $fragment) {
 check_markdown(convert::render('') === '', 'Empty input should stay empty');
 check_markdown(str_contains(convert::render('日本語 **点数** 😀'), '<strong>点数</strong>'), 'Unicode was damaged');
 check_markdown(str_contains(convert::render('`<script>`'), '&lt;script&gt;'), 'Code was not escaped');
+$python = convert::render("```py\nprint(\"hello\")\n```");
+check_markdown(str_contains($python, 'language-py'), 'Fenced-code language was lost');
+check_markdown(str_contains($python, 'print("hello")'), 'Fenced-code contents changed');
+$styledcode = '<pre class="ignite-code-block ignite-syntax-python" data-ignite-language="python" ' .
+    'style="background-color: #2b2d31; color: #e5e7eb; white-space: pre; overflow-x: auto;">' .
+    '<code>print(<span style="color: #9ed69e">&quot;hello&quot;</span>)</code></pre>';
+$cleanedcode = clean_text($styledcode, FORMAT_HTML);
+foreach (['ignite-syntax-python', '<pre', '<code>'] as $fragment) {
+    check_markdown(str_contains($cleanedcode, $fragment), 'Styled code did not survive sanitization: ' . $fragment);
+}
+check_markdown((bool)preg_match('/background-color\s*:\s*#2b2d31/i', $cleanedcode), 'Code background was lost');
+check_markdown((bool)preg_match('/color\s*:\s*#9ed69e/i', $cleanedcode), 'Code token colors were lost');
 try {
     convert::render(str_repeat('a', convert::MAX_BYTES + 1));
     throw new RuntimeException('Oversized input was accepted');

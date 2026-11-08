@@ -3,7 +3,8 @@
 
 define('tiny_ignite_markdown/plugin', [
     'core/ajax', 'core/str', 'editor_tiny/loader', 'editor_tiny/utils', 'editor_tiny/options',
-], function(Ajax, Str, Loader, Utils, Options) {
+    'filter_codehighlighter/prism',
+], function(Ajax, Str, Loader, Utils, Options, Prism) {
     const component = 'tiny_ignite_markdown';
     const pluginName = component + '/plugin';
     const button = component + '_markdown';
@@ -28,8 +29,141 @@ define('tiny_ignite_markdown/plugin', [
         {start: '-', cmd: 'InsertUnorderedList', trigger: 'space'},
         {start: '>', cmd: 'mceBlockQuote', trigger: 'space'},
         {start: '---', cmd: 'InsertHorizontalRule', trigger: 'space'},
-        {start: '```', format: 'pre', trigger: 'enter'},
     ];
+
+    const languageName = value => {
+        const name = (value || 'text').toLowerCase().replace(/[^a-z0-9_+#.-]/g, '');
+        const aliases = {py: 'python', js: 'javascript', ts: 'typescript', html: 'markup', xml: 'markup',
+            'c++': 'cpp', 'c#': 'csharp', sh: 'bash', txt: 'text', plaintext: 'text'};
+        return Object.prototype.hasOwnProperty.call(aliases, name) ? aliases[name] : name;
+    };
+
+    const tokenColors = {
+        comment: '#aeb4c0', prolog: '#aeb4c0', doctype: '#aeb4c0',
+        string: '#9ed69e', char: '#9ed69e', 'attr-value': '#9ed69e',
+        keyword: '#c6a5e8', boolean: '#c6a5e8', 'class-name': '#f5c18b',
+        number: '#f5c18b', constant: '#f5c18b', function: '#bbc8ff', builtin: '#bbc8ff',
+        tag: '#f2a4ad', property: '#f2a4ad', operator: '#e5e7eb', punctuation: '#e5e7eb',
+    };
+
+    const codeLanguage = pre => pre.getAttribute('data-ignite-language') ||
+        pre.className.match(/\bignite-syntax-([a-z0-9_+#.-]+)/i)?.[1];
+
+    const createCodeBlock = (editor, source, language) => {
+        const name = languageName(language);
+        const grammar = Object.prototype.hasOwnProperty.call(Prism.languages, name) &&
+            typeof Prism.languages[name] === 'object' && new TextEncoder().encode(source).length <= maxBytes &&
+            Prism.languages[name];
+        const render = token => {
+            if (typeof token === 'string') {
+                return editor.dom.encode(token);
+            }
+            if (Array.isArray(token)) {
+                return token.map(render).join('');
+            }
+            const content = render(token.content);
+            const color = tokenColors[token.type];
+            return color ? `<span style="color: ${color}">${content}</span>` : content;
+        };
+        const html = grammar ? render(Prism.tokenize(source, grammar)) : editor.dom.encode(source);
+        const pre = editor.dom.create('pre', {
+            class: `ignite-code-block ignite-syntax-${name}`, 'data-ignite-language': name,
+            style: 'background-color: #2b2d31; color: #e5e7eb; border: 1px solid #45474e; ' +
+                'border-radius: 8px; padding: 16px; font-family: monospace; font-size: 14px; ' +
+                'line-height: 1.6; white-space: pre; overflow-x: auto; tab-size: 4; text-shadow: none;',
+        });
+        pre.appendChild(editor.dom.create('code', {
+            style: 'background-color: transparent; color: inherit; padding: 0; font: inherit; text-shadow: none;',
+        }, html || '<br data-mce-bogus="1">'));
+        return pre;
+    };
+
+    const formatCodeBlocks = (editor, html) => {
+        if (!/<pre\b/i.test(html)) {
+            return html;
+        }
+        const container = editor.getDoc().createElement('div');
+        container.innerHTML = html;
+        container.querySelectorAll('pre').forEach(pre => {
+            const code = pre.querySelector('code');
+            const language = codeLanguage(pre) ||
+                `${code?.className || ''} ${pre.className}`.match(/\blanguage-([a-z0-9_+#.-]+)/i)?.[1];
+            pre.replaceWith(createCodeBlock(editor, (code || pre).textContent, language));
+        });
+        return container.innerHTML;
+    };
+
+    const enableCodeFences = editor => {
+        editor.on('keydown', event => {
+            if (event.isDefaultPrevented() || event.isComposing || event.ctrlKey || event.metaKey ||
+                    event.altKey || editor.mode.isReadOnly() || !editor.selection.isCollapsed()) {
+                return;
+            }
+            const node = editor.selection.getNode();
+            if (editor.dom.getParent(node, '[contenteditable="false"]')) {
+                return;
+            }
+            const pre = editor.dom.getParent(node, 'pre');
+            if (pre && event.key === 'Tab' && !event.shiftKey) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                editor.undoManager.transact(() => editor.insertContent('    '));
+                return;
+            }
+            if (event.key !== 'Enter') {
+                return;
+            }
+            const block = pre || editor.dom.getParent(node, 'p,div');
+            if (!block || block === editor.getBody()) {
+                return;
+            }
+            const range = editor.selection.getRng().cloneRange();
+            range.setStart(block, 0);
+            const text = block.textContent;
+            const atEnd = range.toString() === text;
+            const opening = !pre && !event.shiftKey && atEnd && text.match(/^ {0,3}```([a-z0-9_+#.-]*)[ \t]*$/i);
+            const closing = pre && !event.shiftKey && atEnd && text.match(/(?:^|\n) {0,3}```[ \t]*$/);
+            if (pre && !closing && pre.classList.contains('ignite-code-block')) {
+                // TinyMCE normally inserts BR elements; a code block needs literal newlines.
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                editor.undoManager.transact(() => {
+                    const caret = editor.selection.getRng();
+                    const newline = editor.getDoc().createTextNode('\n');
+                    caret.insertNode(newline);
+                    // A trailing newline needs a caret host or the browser types before it.
+                    if (atEnd && pre.lastElementChild?.nodeName !== 'BR') {
+                        pre.appendChild(editor.dom.create('br', {'data-mce-bogus': '1'}));
+                    }
+                    editor.selection.setCursorLocation(newline, 1);
+                });
+                editor.nodeChanged();
+                return;
+            }
+            if ((!opening && !closing) || block.querySelector('img,video,audio,iframe')) {
+                return;
+            }
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            editor.undoManager.transact(() => {
+                if (opening) {
+                    const codeBlock = createCodeBlock(editor, '', opening[1]);
+                    // Keep the open block as editable PRE text, without inline CODE boundaries.
+                    codeBlock.innerHTML = '<br data-mce-bogus="1">';
+                    editor.dom.replace(codeBlock, block);
+                    editor.selection.setCursorLocation(codeBlock, 0);
+                } else {
+                    const codeBlock = createCodeBlock(editor, text.slice(0, closing.index),
+                        codeLanguage(pre));
+                    editor.dom.replace(codeBlock, pre);
+                    const paragraph = editor.dom.create('p', {}, '<br data-mce-bogus="1">');
+                    editor.dom.insertAfter(paragraph, codeBlock);
+                    editor.selection.setCursorLocation(paragraph, 0);
+                }
+            });
+            editor.nodeChanged();
+        }, true);
+    };
 
     const looksLikeMarkdown = text => /(?:^|\n) {0,3}(?:#{1,6}[ \t]+|>[ \t]+|```|~~~|[-*+][ \t]+|\d+\.[ \t]+)|\*\*[^*\s][^*\n]*\*\*|__[^_\s][^_\n]*__|\[[^[\]\n]+\]\([^\s)]+\)|(?:^|\n)[ \t]*\|?[ \t]*:?-{3,}:?[ \t]*\||(?:^|\s)(?:\*[^*\s][^*\n]*\*|_[^_\s][^_\n]*_|`[^`\n]+`)/.test(text);
 
@@ -83,7 +217,7 @@ define('tiny_ignite_markdown/plugin', [
                 }
                 editor.undoManager.transact(() => {
                     editor.selection.select(placeholder);
-                    editor.insertContent(html);
+                    editor.insertContent(formatCodeBlocks(editor, html));
                 });
                 editor.nodeChanged();
             } catch {
@@ -177,7 +311,7 @@ define('tiny_ignite_markdown/plugin', [
                     }
                     editor.focus();
                     editor.selection.moveToBookmark(bookmark);
-                    editor.undoManager.transact(() => editor.insertContent(html));
+                    editor.undoManager.transact(() => editor.insertContent(formatCodeBlocks(editor, html)));
                     editor.nodeChanged();
                     dialog.close();
                 } catch {
@@ -222,6 +356,7 @@ define('tiny_ignite_markdown/plugin', [
             editor.ui.registry.addButton(button, {text: strings.markdown, tooltip: strings.markdown, onAction});
             editor.ui.registry.addMenuItem(button, {text: strings.markdown, onAction});
             enableDirectPaste(editor, strings);
+            enableCodeFences(editor);
             return metadata;
         });
         return [pluginName, {configure}];
