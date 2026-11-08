@@ -167,6 +167,21 @@ define('tiny_ignite_markdown/plugin', [
 
     const looksLikeMarkdown = text => /(?:^|\n) {0,3}(?:#{1,6}[ \t]+|>[ \t]+|```|~~~|[-*+][ \t]+|\d+\.[ \t]+)|\*\*[^*\s][^*\n]*\*\*|__[^_\s][^_\n]*__|\[[^[\]\n]+\]\([^\s)]+\)|(?:^|\n)[ \t]*\|?[ \t]*:?-{3,}:?[ \t]*\||(?:^|\s)(?:\*[^*\s][^*\n]*\*|_[^_\s][^_\n]*_|`[^`\n]+`)/.test(text);
 
+    const containsFencedCode = text => {
+        let fence;
+        for (const line of text.split(/\r\n?|\n/)) {
+            if (!fence) {
+                fence = line.match(/^ {0,3}(`{3,}|~{3,})[^\r\n]*$/)?.[1];
+                continue;
+            }
+            const closing = line.match(/^ {0,3}(`{3,}|~{3,})[ \t]*$/)?.[1];
+            if (closing && closing[0] === fence[0] && closing.length >= fence.length) {
+                return true;
+            }
+        }
+        return false;
+    };
+
     const enableDirectPaste = (editor, strings) => {
         // Prepend so TinyMCE's native paste handler cannot insert a second copy.
         editor.on('paste', async(event) => {
@@ -175,12 +190,17 @@ define('tiny_ignite_markdown/plugin', [
                     editor.dom.getParent(editor.selection.getNode(), 'pre,code,[contenteditable="false"]')) {
                 return;
             }
-            // Preserve copied rich content, images, and deliberate code pastes.
-            if (clipboard.files.length || (clipboard.getData('text/html') && !editor.options.get('paste_as_text'))) {
+            if (clipboard.files.length) {
                 return;
             }
             const markdown = clipboard.getData('text/plain');
-            if (new TextEncoder().encode(markdown).length > maxBytes || !looksLikeMarkdown(markdown)) {
+            if (new TextEncoder().encode(markdown).length > maxBytes) {
+                return;
+            }
+            // Discord and browsers also put HTML on the clipboard when copying literal fences.
+            // Keep normal rich content intact, but recognize an explicitly fenced code sample.
+            if ((clipboard.getData('text/html') && !editor.options.get('paste_as_text') && !containsFencedCode(markdown)) ||
+                    !looksLikeMarkdown(markdown)) {
                 return;
             }
             event.preventDefault();

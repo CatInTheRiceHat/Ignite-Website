@@ -175,6 +175,14 @@ describe.each(['src/plugin.js', 'build/plugin.min.js'])('Moodle Markdown %s', bu
     expect(editor.insertContent).not.toHaveBeenCalled();
   });
 
+  it.each(['```py\nprint("hello")\n```', '~~~py\nprint("hello")\n~~~'])('formats literal fenced Markdown copied with a rich HTML clipboard representation', async(markdown) => {
+    const { handlers, ajax } = await mount(build);
+    const event = pasteEvent(markdown, `<pre>${markdown}</pre>`);
+    await handlers.paste(event);
+    expect(event.preventDefault).toHaveBeenCalled();
+    expect(ajax.mock.calls[0][0][0].args.markdown).toBe(markdown);
+  });
+
   it.each(['code', 'readonly', 'file', 'handled'])('respects protected or already handled paste: %s', async(kind) => {
     const { handlers, editor, ajax } = await mount(build);
     const event = pasteEvent();

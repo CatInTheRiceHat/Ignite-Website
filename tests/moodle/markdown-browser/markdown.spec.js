@@ -176,7 +176,7 @@ test('pasted fenced code gets the same colors and survives an editor reload', as
   await page.evaluate(() => {
     window.markdownResponse = '<pre><code class="language-py">print("hello")\n</code></pre>';
   });
-  await paste(page, '```py\nprint("hello")\n```');
+  await paste(page, '```py\nprint("hello")\n```', '<pre>```py\nprint("hello")\n```</pre>');
   const body = page.frameLocator('#markdown-test_ifr').locator('body');
   await expect(body.locator('pre')).toHaveAttribute('data-ignite-language', 'python');
   const saved = await content(page);
