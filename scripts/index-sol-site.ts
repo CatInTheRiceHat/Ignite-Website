@@ -3,13 +3,14 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
 import type { ComponentType } from 'react';
 import { createServer } from 'vite';
+import { DEMO_PATH } from '../src/config/courseDemo';
 
 const publicPages = [
   { path: '/', source: 'src/pages/Home.tsx' },
   { path: '/about', source: 'src/pages/About.tsx' },
   { path: '/team', source: 'src/pages/Mentors.tsx' },
   { path: '/program', source: 'src/pages/Program.tsx' },
-  { path: '/demo/boundaries', source: 'src/pages/CourseDemo.tsx' },
+  { path: DEMO_PATH, source: 'src/pages/CourseDemo.tsx' },
   { path: '/faq', source: 'src/pages/FAQ.tsx' },
   { path: '/hiring', source: 'src/pages/Hiring.tsx' },
   { path: '/partnerships', source: 'src/pages/Partnerships.tsx' },

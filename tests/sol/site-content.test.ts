@@ -31,10 +31,10 @@ it('extracts readable public text while excluding scripts, attributes, icons and
   expect(text).toBe("Questions & Answers\n110\nApplications\nStudent's work\nLearning Hub");
 });
 
-it('covers every public page route, excluding redirects and error pages', () => {
+it('covers indexed public routes, excluding redirects, confirmation and immersive pages', () => {
   const routes = readFileSync('src/App.tsx', 'utf8');
   const literalPaths = [...routes.matchAll(/<Route path="([^"]+)"/g)].map(match => match[1])
-    .filter(path => path !== '/mentors' && path !== '/statistics' && path !== '/apply' && path !== '*');
+    .filter(path => !['/mentors', '/statistics', '/apply', '/thank-you', '/confirmation', '/sponsors', '*'].includes(path));
   expect(siteContent.map(page => page.path).sort()).toEqual([...literalPaths, RECORDS_PAGE.path, DEMO_PATH].sort());
   expect(new Set(siteContent.map(page => page.path)).size).toBe(siteContent.length);
   for (const page of siteContent) {

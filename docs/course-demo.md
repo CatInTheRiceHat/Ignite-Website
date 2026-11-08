@@ -1,6 +1,6 @@
 # Public sample week: Relationships, Boundaries & Social Skills
 
-Route: `/demo/boundaries`. This is the complete adapted Week 1, **What Are Boundaries?**, from Moodle course **25**, section **229**. The source week estimates **about 4½ hours**, including about **100 minutes** for case work. The website does not present a short walkthrough as completion of that workload. The source audience is grades 6–8 with support for grades 4–5; the fictional scenario and optional challenges also allow older visitors to participate.
+Route: `/demo`. The former `/demo/boundaries` URL redirects here, preserving section queries, campaign parameters, anchors and saved progress. This is the complete adapted Week 1, **What Are Boundaries?**, from Moodle course **25**, section **229**. The source week estimates **about 4½ hours**, including about **100 minutes** for case work. The website does not present a short walkthrough as completion of that workload. The source audience is grades 6–8 with support for grades 4–5; the fictional scenario and optional challenges also allow older visitors to participate.
 
 The introduction credits Nikhil Tadepalli with his existing public staff portrait. The credit follows the course assignment in `src/data/program.ts` and the profile image in `src/data/mentors.ts`, using the shared `StaffImage` component and its fallback.
 
@@ -62,7 +62,7 @@ For the reusable authoring standard, see the [short course-developer guide](cour
 
 ## Product and implementation
 
-The first lesson now appears directly below the course introduction at `/demo/boundaries`, with no start button or separate overview screen. The “Your week at a glance” label and overview navigation controls were removed. Objectives are part of the lesson, and the introduction states the estimated workload. The timeline and sidebar remain available immediately; explicit section links still focus and scroll to their heading. A fresh visit without a section query stays at the top of the introduction, and reset returns to the first lesson without changing progress keys or completion rules.
+The first lesson now appears directly below the course introduction at `/demo`, with no start button or separate overview screen. The “Your week at a glance” label and overview navigation controls were removed. Objectives are part of the lesson, and the introduction states the estimated workload. The timeline and sidebar remain available immediately; explicit section links still focus and scroll to their heading. A fresh visit without a section query stays at the top of the introduction, and reset returns to the first lesson without changing progress keys or completion rules.
 
 Validation of this entry-flow change passed lint, build and 138 unit tests (four existing skips). The unchanged accessibility assertions in the browser suite report existing contrast failures for the current primary orange against white/cream. A temporary copy of the same browser suite with only the color-contrast rule excluded passed all 12 scenarios across desktop Chromium, mobile Chromium and WebKit, covering full completion, initial rendering without a start button, direct links, focus, retries, refresh, download and reset. The repository's accessibility assertions remain intact, and the existing palette was not changed as part of this navigation request.
 
@@ -86,7 +86,7 @@ Storage key: `ignite:boundaries-week:v1`. Notes, checked answers, first-check re
 
 The `.txt` workbook contains current case responses, optional work, self-review, map and aggregate practice results. It does not contain hidden instructor notes or a separate answer key. Static answer explanations are learner-facing and are inspectable in the frontend, appropriate for a self-guided sample rather than a secure examination.
 
-`scripts/build-demo-entry.ts` reuses Vite's built shell to emit `/demo/boundaries/index.html` with route-specific title, description, canonical and Open Graph metadata before JavaScript runs. `vercel.json` maps direct visits to that shell. Client-side metadata follows the same existing page configuration. There is no new hosting project or hosting migration.
+`scripts/build-demo-entry.ts` reuses Vite's built shell to emit `/demo/index.html` with route-specific title, description, canonical and Open Graph metadata before JavaScript runs. `vercel.json` maps direct visits, including the old demo URL, to that shell. Client-side metadata follows the same existing page configuration. There is no new hosting project or hosting migration.
 
 ## Validation and remaining limits
 

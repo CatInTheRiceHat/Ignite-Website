@@ -1,4 +1,5 @@
 import { RECORDS_PAGE } from './records';
+import { DEMO_PATH } from './courseDemo';
 import { courseCounts, programCopy } from '../data/program';
 
 export const defaultMetadata = {
@@ -21,7 +22,7 @@ export const pageMetadata: Record<string, { title: string; description: string }
   '/about': { title: 'About | Ignite', description: `Meet the student-led initiative building free practical life skills learning. ${programCopy.expansion}` },
   '/team': { title: 'Team | Ignite', description: 'Meet the students, co-founders, directors, and interns building Ignite’s free practical life skills courses.' },
   '/program': { title: 'Program | Ignite', description: `Explore ${courseCounts.all} courses in development: ${courseCounts.live} live and ${courseCounts.independent} independent. Student pre-enrollment is open; launch dates and class schedules are being planned.` },
-  '/demo/boundaries': { title: 'Course Demo | Ignite', description: 'Explore a complete week from Ignite’s Relationships, Boundaries & Social Skills course through lessons, a fictional case study and practice with feedback. Allow about 4½ hours, with no account needed.' },
+  [DEMO_PATH]: { title: 'Course Demo | Ignite', description: 'Explore a complete week from Ignite’s Relationships, Boundaries & Social Skills course through lessons, a fictional case study and practice with feedback. Allow about 4½ hours, with no account needed.' },
   '/faq': { title: 'FAQ | Ignite', description: 'Learn about Ignite’s planned live and independent formats, estimated time commitments, development status, and learning opportunities for all students.' },
   '/hiring': { title: 'Hiring | Ignite', description: 'Explore Ignite’s student internship roles and apply to help build free practical life skills courses.' },
   '/partnerships': { title: 'Partnerships | Ignite', description: 'Bring practical learning to your community. Explore ways to partner with Ignite on free practical life skills learning and start a partnership conversation.' },

@@ -15,21 +15,21 @@ import Partnerships from './pages/Partnerships';
 import Records from './pages/Records';
 import NotFound from './pages/NotFound';
 import ThankYou from './pages/ThankYou';
-import { DEMO_PATH } from './config/courseDemo';
+import { DEMO_PATH, LEGACY_DEMO_PATH } from './config/courseDemo';
 import { RECORDS_PAGE } from './config/records';
 
 const INTRO_SESSION_KEY = 'ignite:intro-seen';
 const CourseDemo = lazy(() => import('./pages/CourseDemo'));
 const Sponsors = lazy(() => import('./pages/Sponsors'));
 
-function ConfirmationRedirect() {
+function PageRedirect({ to }: { to: string }) {
   const { search, hash } = useLocation();
-  return <Navigate to={{ pathname: '/confirmation', search, hash }} replace />;
+  return <Navigate to={{ pathname: to, search, hash }} replace />;
 }
 
 function App() {
   const [loading, setLoading] = useState(() => {
-    if ([DEMO_PATH, '/sponsors', '/confirmation', '/thank-you'].includes(window.location.pathname.replace(/\/+$/, ''))) return false;
+    if ([DEMO_PATH, LEGACY_DEMO_PATH, '/sponsors', '/confirmation', '/thank-you'].includes(window.location.pathname.replace(/\/+$/, ''))) return false;
     if (introBypassed) return false;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
     if (introDebugEnabled) return true;
@@ -65,6 +65,7 @@ function App() {
               <Route path="/mentors" element={<Navigate to="/team" replace />} />
               <Route path="/program" element={<Program />} />
               <Route path={DEMO_PATH} element={<Suspense fallback={<p role="status" className="p-12 text-center">Opening your sample week…</p>}><CourseDemo /></Suspense>} />
+              <Route path={LEGACY_DEMO_PATH} element={<PageRedirect to={DEMO_PATH} />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/apply" element={<Navigate to="/program" replace />} />
               <Route path="/statistics" element={<Navigate to={RECORDS_PAGE.path} replace />} />
@@ -72,7 +73,7 @@ function App() {
               <Route path="/partnerships" element={<Partnerships />} />
               <Route path="/sponsors" element={<Suspense fallback={<p role="status" className="p-12 text-center">A little spark is on its way…</p>}><Sponsors /></Suspense>} />
               <Route path="/confirmation" element={<ThankYou />} />
-              <Route path="/thank-you" element={<ConfirmationRedirect />} />
+              <Route path="/thank-you" element={<PageRedirect to="/confirmation" />} />
               <Route path={RECORDS_PAGE.path} element={<Records />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

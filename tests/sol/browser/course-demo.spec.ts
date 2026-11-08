@@ -30,17 +30,17 @@ async function axe(page: Page) {
 test('a visitor can complete the actual week, revise, resume, download and reset', async ({ page }) => {
   test.setTimeout(90000);
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/demo/boundaries?utm_source=outreach');
+  await page.goto('/demo?utm_source=outreach');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Relationships, Boundaries & Social Skills');
   await expect(page.locator('.loading-screen')).toHaveCount(0);
   await expect(page.locator('sol-widget')).toHaveCSS('display', 'none');
   await expect(page).toHaveTitle('Course Demo | Ignite');
-  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://ignitefindyourfire.org/demo/boundaries');
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://ignitefindyourfire.org/demo');
   await axe(page);
   await expect(page.getByRole('button', { name: 'Start the sample week', exact: true })).toHaveCount(0);
   await expect(page.getByText('Your week at a glance', { exact: true })).toHaveCount(0);
   await expect(page.locator('#part-title')).toHaveText('What are boundaries?');
-  await expect(page).toHaveURL('/demo/boundaries?utm_source=outreach');
+  await expect(page).toHaveURL('/demo?utm_source=outreach');
   expect(await page.evaluate(() => scrollY)).toBe(0);
   const first = page.locator('.demo-question').first();
   await first.getByRole('radio').first().focus();
@@ -144,10 +144,35 @@ test('a visitor can complete the actual week, revise, resume, download and reset
   await expect(page.locator('#part-title')).toHaveText('What are boundaries?');
 });
 
+test('homepage and program links open the shorter demo URL', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  for (const [path, label] of [['/', 'Try a sample week'], ['/program', 'Explore a sample week']]) {
+    await page.goto(path);
+    const link = page.getByRole('link', { name: label, exact: true });
+    await expect(link).toHaveAttribute('href', '/demo');
+    await link.click();
+    await expect(page).toHaveURL('/demo');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Relationships, Boundaries & Social Skills');
+    await expect(page).toHaveTitle('Course Demo | Ignite');
+  }
+});
+
+test('legacy demo links preserve section, campaign, hash and saved progress at the shorter URL', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('ignite:boundaries-week:v1', JSON.stringify({ version: 1, done: ['friends'], notes: { evidence: 'A saved fictional boundaries response.' } }));
+  });
+  await page.goto('/demo/boundaries/?part=case&utm_source=old-link#part-title');
+  await expect(page).toHaveURL('/demo?part=case&utm_source=old-link#part-title');
+  await expect(page.locator('.loading-screen')).toHaveCount(0);
+  await expect(page.locator('#part-title')).toHaveText('The Borrowed Hoodie');
+  await expect(page.locator('#note-evidence')).toHaveValue('A saved fictional boundaries response.');
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://ignitefindyourfire.org/demo');
+});
+
 test('direct section links work without storage and the sample is discoverable', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.addInitScript(() => { Storage.prototype.setItem = () => { throw new Error('Storage disabled'); }; });
-  await page.goto('/demo/boundaries/?part=case');
+  await page.goto('/demo/?part=case');
   await expect(page.locator('#part-title')).toHaveText('The Borrowed Hoodie');
   await expect(page.locator('#part-title')).toBeFocused();
   await expect(page.locator('#part-title')).toBeInViewport();
@@ -156,7 +181,7 @@ test('direct section links work without storage and the sample is discoverable',
   await expect(page.locator('#note-evidence')).toHaveValue(/fictional/);
   await page.goto('/program');
   await page.getByRole('link', { name: 'Explore a sample week', exact: true }).click();
-  await expect(page).toHaveURL('/demo/boundaries');
+  await expect(page).toHaveURL('/demo');
   await page.goto('/');
   const feature = page.getByRole('region', { name: 'This Month’s Featured Course' });
   await expect(feature).toContainText('Nikhil Tadepalli');
@@ -204,7 +229,7 @@ for (const denyRemoval of [false, true]) {
         remove.call(this, name);
       };
     }, { denyRemoval });
-    await page.goto('/demo/boundaries?part=case');
+    await page.goto('/demo?part=case');
     await expect(page.locator('#note-evidence')).toHaveValue('Private fictional draft for storage recovery.');
     await page.getByRole('button', { name: 'Reset progress', exact: true }).click();
     await page.getByRole('button', { name: 'Reset everything', exact: true }).click();

@@ -7,7 +7,7 @@ if (!boundariesCourse) throw new Error('The boundaries sample needs its course c
 
 export const courseSamples = {
   boundaries: {
-    path: '/demo/boundaries',
+    path: '/demo',
     course: boundariesCourse,
     weekNumber: 1,
     weekTitle: 'What are boundaries?',
@@ -18,3 +18,4 @@ export const courseSamples = {
 
 export const featuredCourse = courseSamples.boundaries;
 export const DEMO_PATH = courseSamples.boundaries.path;
+export const LEGACY_DEMO_PATH = '/demo/boundaries';

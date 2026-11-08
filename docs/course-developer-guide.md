@@ -1,6 +1,6 @@
 # The standard for an Ignite course week
 
-Use the **Relationships, Boundaries & Social Skills, Week 1** demo as a concrete example. Run `npm run dev` and open [the sample week locally](http://127.0.0.1:5173/demo/boundaries). The routes below refer to that local site. See the [source map and deliberate adaptations](course-demo.md) before reusing its content.
+Use the **Relationships, Boundaries & Social Skills, Week 1** demo as a concrete example. Run `npm run dev` and open [the sample week locally](http://127.0.0.1:5173/demo). The routes below refer to that local site. See the [source map and deliberate adaptations](course-demo.md) before reusing its content.
 
 | Standard | What a developer should demonstrate | Concrete example |
 | --- | --- | --- |

@@ -1,11 +1,12 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { pageMetadata } from '../src/config/pageMetadata';
+import { DEMO_PATH } from '../src/config/courseDemo';
 
 // Sharing and confirmation URLs get their own metadata before JavaScript executes.
 // Reuse Vite's emitted shell so script hashes and the existing app stay identical.
 const escape = (value: string) => value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;');
 const shell = await readFile(new URL('../dist/index.html', import.meta.url), 'utf8');
-for (const path of ['/demo/boundaries', '/confirmation']) {
+for (const path of [DEMO_PATH, '/confirmation']) {
   const metadata = pageMetadata[path];
   let html = shell;
   html = html.replace(/<title>[^<]*<\/title>/, `<title>${escape(metadata.title)}</title>`);
