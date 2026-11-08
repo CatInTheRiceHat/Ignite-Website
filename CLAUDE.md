@@ -237,8 +237,3 @@ npx @claude-flow/cli@latest doctor --fix
 - **MCP tools** (via ToolSearch) handle coordination: swarm, memory, hooks, routing, hive-mind
 - **CLI commands** (via Bash) are the same tools with terminal output
 - Use `ToolSearch("keyword")` to discover available MCP tools
-
-## Support
-
-- Documentation: https://github.com/ruvnet/ruflo
-- Issues: https://github.com/ruvnet/ruflo/issues
