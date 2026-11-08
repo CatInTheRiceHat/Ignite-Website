@@ -24,3 +24,11 @@ for (const [path, metadata] of Object.entries(pageMetadata)) {
   await mkdir(directory, { recursive: true });
   await writeFile(new URL('index.html', directory), html);
 }
+
+const publicPaths = Object.keys(pageMetadata).filter(path => !['/confirmation', '/thank-you'].includes(path));
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${publicPaths.map(path => `  <url><loc>https://ignitefindyourfire.org${escape(path)}</loc></url>`).join('\n')}
+</urlset>
+`;
+await writeFile(new URL('../dist/sitemap.xml', import.meta.url), sitemap);
