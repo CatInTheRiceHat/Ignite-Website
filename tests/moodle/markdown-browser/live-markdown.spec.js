@@ -1,164 +1,199 @@
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { expect, test } from '@playwright/test';
 
-// Opt in only with a disposable teacher fixture or a Course Developer who creates a hidden course here.
-// The fixture's owner must remove the course and deactivate its account after the run.
+// Only disposable fixtures are accepted. The owner removes the hidden course/account.
 const fixtureFile = process.env.IGNITE_MARKDOWN_LIVE_FIXTURE;
 test.skip(!fixtureFile, 'Requires a disposable Moodle authoring fixture.');
+test.setTimeout(240_000);
+const sample = '# Markdown round trip\n\nA [link](https://example.com) and **bold** text.  \nIntentional hard break\n\n- Parent\n    - Nested item\n\n```py\nif True:\n    print("hello 日本語 😀")\n\n```\n\n| Name | Score |\n| --- | --- |\n| Test | 1 |\n';
+const editor = page => page.locator('#id_page-markdown-edit .cm-content');
+const preview = page => page.locator('#id_page-markdown-preview');
+const source = page => page.evaluate(() => window.tinyMCE.get('id_page').getContent({format: 'text'}));
+const tab = (page, name) => page.locator('.ignite-markdown-editor').filter({has: page.locator('#id_page-markdown-edit')})
+  .getByRole('tab', {name, exact: true});
 
-async function waitForCourseEditor(page, id = 'id_page') {
-  await page.waitForFunction(id => window.tinyMCE?.get(id)?.initialized, id);
-  await page.evaluate(async () => {
-    window.markdownAutosaveOptions = await new Promise(resolve => window.require(['tiny_autosave/options'], resolve));
-  });
-  await page.waitForFunction(id => window.markdownAutosaveOptions.isInitialised(window.tinyMCE.get(id)), id);
+async function waitForEditor(page) {
+  await page.waitForFunction(() => window.tinyMCE?.get('id_page')?.initialized, null, {timeout: 30_000});
+  await expect(editor(page)).toHaveAttribute('contenteditable', 'true');
+}
+async function savedView(page) {
+  await page.waitForURL(url => url.pathname === '/mod/page/view.php', {waitUntil: 'domcontentloaded', timeout: 30_000})
+    .catch(async error => {
+      console.log('Native save diagnostic:', await page.evaluate(() => ({path: location.pathname,
+        errors: [...document.querySelectorAll('.invalid-feedback, [role=alert]')].map(el => el.textContent),
+        statuses: [...document.querySelectorAll('.ignite-markdown-editor [role=status]')].map(el => el.textContent),
+        textareas: [...document.querySelectorAll('textarea')].map(el => ({id: el.id, length: el.value.length}))})));
+      await page.screenshot({path: 'test-results/moodle-markdown-save-diagnostic.png', fullPage: true});
+      throw error;
+    });
+}
+async function revealMobileSaveControls(page) {
+  const viewport = page.viewportSize();
+  if (!viewport || viewport.width >= 768) return;
+  // Boost hides its mobile action footer while the page scrolls down. Scroll up
+  // outside CodeMirror to reveal the native controls before clicking Save.
+  await page.mouse.move(viewport.width - 5, Math.floor(viewport.height / 2));
+  await page.mouse.wheel(0, -160);
+  await expect(page.locator('body')).toHaveClass(/\bhasstickyfooter\b/);
+  await page.waitForFunction(() => !window.M.util.pending_js.includes('theme_boost/sticky-footer:enabling'));
+}
+async function paste(page, text) {
+  await editor(page).click({timeout: 15_000});
+  await expect(editor(page)).toBeFocused();
+  await page.keyboard.press('ControlOrMeta+a');
+  await expect(editor(page)).toBeFocused();
+  if (!text) { await page.keyboard.press('Backspace'); return; }
+  await editor(page).evaluate((element, text) => {
+    const clipboard = new DataTransfer();
+    clipboard.setData('text/plain', text);
+    clipboard.setData('text/html', `<pre>${text}</pre>`);
+    element.dispatchEvent(new ClipboardEvent('paste', {bubbles: true, cancelable: true, clipboardData: clipboard}));
+  }, text);
 }
 
-test('real course editor formats copied fences and preserves typed and pasted code after saving', async ({ page }) => {
-  const fixture = JSON.parse(readFileSync(fixtureFile, 'utf8'));
+async function login(page, fixture) {
   expect(fixture.username).toMatch(/^ignite_md_probe_/);
   expect(fixture.shortname).toMatch(/^IGNITE-MD-PROBE-/);
-  let courseid = Number(fixture.courseid);
-  expect(Number.isInteger(courseid) && (courseid > 1 || (courseid === 0 && fixture.role === 'course_developer'))).toBe(true);
-
-  await page.goto('/login/index.php', { waitUntil: 'domcontentloaded' });
+  await page.goto('/login/index.php');
   await page.locator('#username').fill(fixture.username);
   await page.locator('#password').fill(fixture.password);
-  await page.getByRole('button', { name: 'Log in', exact: true }).click();
-  await page.waitForURL(url => !url.pathname.includes('/login/'), { waitUntil: 'domcontentloaded' });
-  if (!courseid) {
-    const categoryid = Number(fixture.categoryid);
-    expect(Number.isInteger(categoryid) && categoryid > 0).toBe(true);
-    await page.goto(`/course/edit.php?category=${categoryid}`, { waitUntil: 'domcontentloaded' });
-    await page.locator('#id_fullname').fill(fixture.fullname);
-    await page.locator('#id_shortname').fill(fixture.shortname);
-    await page.locator('#id_visible').selectOption('0');
-    // This editor uses category context before Moodle assigns any course-level Teacher role.
-    await waitForCourseEditor(page, 'id_summary_editor');
-    const summary = page.frameLocator('#id_summary_editor_ifr').locator('body');
-    await summary.click();
-    await page.evaluate(() => {
-      const markdown = '```py\nprint("course developer")\n```';
-      const data = new DataTransfer();
-      data.setData('text/plain', markdown);
-      data.setData('text/html', `<pre>${markdown}</pre>`);
-      window.tinyMCE.get('id_summary_editor').getBody().dispatchEvent(new ClipboardEvent('paste', {
-        bubbles: true, cancelable: true, clipboardData: data,
-      }));
-    });
-    await expect(summary.locator('.ignite-code-block code')).toHaveText('print("course developer")');
-    await expect(summary.locator('code span').filter({ hasText: '"course developer"' }))
-      .toHaveCSS('color', 'rgb(158, 214, 158)');
-    await page.getByRole('button', { name: 'Save and display', exact: true }).click();
-    await page.waitForURL(url => url.pathname === '/course/view.php', { waitUntil: 'domcontentloaded' });
-    courseid = Number(new URL(page.url()).searchParams.get('id'));
-    expect(Number.isInteger(courseid) && courseid > 1).toBe(true);
-    fixture.courseid = courseid;
-    fixture.createdThroughDeveloperForm = true;
-    writeFileSync(fixtureFile, JSON.stringify(fixture), { mode: 0o600 });
-    await test.info().attach('course-developer-creation.json', {
-      body: JSON.stringify({ courseid, role: 'course_developer', createdThroughMoodleForm: true }),
-      contentType: 'application/json',
-    });
+  await page.getByRole('button', {name: 'Log in', exact: true}).click();
+  await page.waitForURL(url => !url.pathname.includes('/login/'));
+}
+
+test('native Page editor preserves source through legacy load, preview, save and reload', async ({page}) => {
+  const fixture = JSON.parse(readFileSync(fixtureFile, 'utf8'));
+  await login(page, fixture);
+  const route = fixture.moduleid ? `/course/modedit.php?update=${fixture.moduleid}&return=1` :
+    `/course/modedit.php?add=page&course=${fixture.courseid}&section=0&return=0`;
+  await page.goto(route);
+  await waitForEditor(page);
+  if (fixture.moduleid && fixture.legacy) {
+    expect(await source(page)).toBe(fixture.legacy);
+    await tab(page, 'Preview').click();
+    await expect(preview(page).locator('h2')).toHaveText('Legacy document');
+    await expect(preview(page).locator('pre')).toContainText('    print("legacy")');
+    await page.getByRole('button', {name: 'Save and display', exact: true}).click({timeout: 15_000});
+    await savedView(page);
+    await expect(page.locator('[role=main] h2').filter({hasText: 'Legacy document'})).toBeVisible();
+    await page.goto(route); await waitForEditor(page);
+    expect(await source(page)).toBe(fixture.legacy);
+    await page.goto(`/course/modedit.php?add=page&course=${fixture.courseid}&section=0&return=0`);
+    await waitForEditor(page);
   }
-  await page.goto(`/course/modedit.php?add=page&course=${courseid}&section=0&return=0`, {
-    waitUntil: 'domcontentloaded',
-  });
-  await waitForCourseEditor(page);
-  expect(await page.evaluate(() => window.tinyMCE.get('id_page').options.get('plugins')))
-    .toContain('tiny_ignite_markdown/plugin');
-  await page.locator('#id_name').fill('Temporary Markdown save verification');
-  const body = page.frameLocator('#id_page_ifr').locator('body');
-  // Mirror the reported preformatted editor state, replacing only this disposable account's draft.
-  await page.evaluate(() => {
-    const editor = window.tinyMCE.get('id_page');
-    editor.setContent('<pre>These classes are used for extending</pre>');
-  });
-  await body.locator('pre').click();
-  await page.evaluate(() => {
-    const editor = window.tinyMCE.get('id_page');
-    editor.selection.select(editor.getBody().querySelector('pre'), true);
-    editor.selection.collapse(false);
-  });
+  await page.locator('#id_name').fill('Temporary Markdown round trip');
+  await paste(page, sample);
+  expect(await source(page)).toBe(sample);
   await page.keyboard.press('Enter');
-  await page.keyboard.type('```py');
-  await page.keyboard.press('Enter');
-  await page.keyboard.type('if True:');
-  await page.keyboard.press('Enter');
-  await page.keyboard.press('Tab');
-  await page.keyboard.type('print("hello")');
-  await page.keyboard.press('Enter');
-  await page.keyboard.type('```');
-  await page.keyboard.press('Enter');
-  await test.info().attach('native-code-before-save.html', {
-    body: await page.evaluate(() => window.tinyMCE.get('id_page').getContent()), contentType: 'text/html',
-  });
-  await expect(body.locator('.ignite-code-block code')).toHaveText('if True:\n    print("hello")');
-  await expect(body.locator('pre:not(.ignite-code-block)')).toContainText('These classes are used for extending');
-
-  await page.evaluate(() => {
-    const markdown = '```py\nprint("pasted")\n```';
-    const data = new DataTransfer();
-    data.setData('text/plain', markdown);
-    data.setData('text/html', `<pre>${markdown}</pre>`);
-    window.tinyMCE.get('id_page').getBody().dispatchEvent(new ClipboardEvent('paste', {
-      bubbles: true, cancelable: true, clipboardData: data,
-    }));
-  });
-  await expect(body.locator('.ignite-code-block')).toHaveCount(2);
-  await expect(body.locator('.ignite-code-block code').nth(1)).toHaveText('print("pasted")');
-  await expect(body.locator('code span').filter({ hasText: '"pasted"' })).toHaveCSS('color', 'rgb(158, 214, 158)');
-
-  await page.getByRole('button', { name: 'Save and display', exact: true }).click();
-  await page.waitForURL(url => url.pathname === '/mod/page/view.php', { waitUntil: 'domcontentloaded' });
+  await page.keyboard.type('Unsaved edit');
+  const draft = sample + '\nUnsaved edit';
+  for (let i = 0; i < 3; i++) {
+    await tab(page, 'Preview').click();
+    await expect(preview(page).locator('h1')).toHaveText('Markdown round trip');
+    await expect(preview(page)).toContainText('Unsaved edit');
+    await expect(preview(page).locator('ul ul li')).toHaveText('Nested item');
+    await expect(preview(page).locator('table td').first()).toHaveText('Test');
+    await expect(preview(page).locator('code')).toHaveText('if True:\n    print("hello 日本語 😀")\n\n');
+    await tab(page, 'Edit').click();
+    expect(await source(page)).toBe(draft);
+  }
+  await editor(page).focus();
+  await page.keyboard.press('ControlOrMeta+z');
+  expect(await source(page)).toBe(sample);
+  await page.keyboard.press('ControlOrMeta+Shift+z');
+  expect(await source(page)).toBe(draft);
+  await page.keyboard.press('ArrowLeft');
+  await tab(page, 'Preview').click(); await tab(page, 'Edit').click();
+  await editor(page).focus(); await page.keyboard.type('X');
+  expect(await source(page)).toBe(draft.slice(0, -1) + 'X' + draft.slice(-1));
+  await page.keyboard.press('ControlOrMeta+z');
+  expect(await source(page)).toBe(draft);
+  await tab(page, 'Preview').click();
+  await expect(preview(page).locator('h1')).toHaveText('Markdown round trip');
+  const expected = await preview(page).innerText();
+  await page.screenshot({path: 'test-results/moodle-markdown-preview.png', fullPage: true});
+  await page.getByRole('button', {name: 'Save and display', exact: true}).click({timeout: 15_000});
+  await savedView(page);
   const moduleid = new URL(page.url()).searchParams.get('id');
-  await expect(page.locator('.ignite-code-block')).toHaveCount(2);
-  await expect(page.locator('.ignite-code-block code').first()).toHaveText('if True:\n    print("hello")');
-  await expect(page.locator('.ignite-code-block').first()).toHaveCSS('background-color', 'rgb(43, 45, 49)');
-  await expect(page.locator('code span').filter({ hasText: '"pasted"' })).toHaveCSS('color', 'rgb(158, 214, 158)');
-  await page.screenshot({ path: 'test-results/moodle-live-code-blocks.png', fullPage: true });
+  const content = page.locator('[role=main] .box.generalbox').filter({has: page.locator('h1')});
+  await expect(content.locator('h1')).toHaveText('Markdown round trip');
+  // Compare browser rendering, allowing Moodle's native overflow wrapper and inert
+  // source comment. Literal code whitespace and the Markdown source are checked separately.
+  expect(await content.innerText()).toBe(expected);
+  await expect(content.locator('code')).toHaveText('if True:\n    print("hello 日本語 😀")\n\n');
+  await page.reload();
+  await expect(content.locator('ul ul li')).toHaveText('Nested item');
+  await page.goto(`/course/modedit.php?update=${moduleid}&return=1`); await waitForEditor(page);
+  expect(await source(page)).toBe(draft);
+  const closeIndex = page.getByRole('button', {name: 'Close course index', exact: true});
+  if (await closeIndex.isVisible()) {
+    await closeIndex.click();
+    // Moodle returns focus to the drawer toggle after its close transition.
+    await page.waitForFunction(() => !window.M.util.pending_js.includes('theme_boost/drawers:close'));
+  }
+  await page.setViewportSize({width: 375, height: 812});
+  const line = 'A long line with soft wrapping. '.repeat(120);
+  await paste(page, line);
+  expect(await source(page)).toBe(line);
+  const width = await editor(page).evaluate(el => ({width: el.getBoundingClientRect().width, scroll: el.scrollWidth}));
+  expect(width.width).toBeLessThan(375);
+  expect(width.scroll).toBeLessThan(375);
+  await paste(page, ''); expect(await source(page)).toBe('');
+  await tab(page, 'Preview').click(); await expect(preview(page)).toHaveText('');
+  await tab(page, 'Edit').click();
+  await paste(page, draft);
+  // Save directly from Edit, without visiting Preview for this changed draft.
+  await revealMobileSaveControls(page);
+  await page.getByRole('button', {name: 'Save and display', exact: true}).click({timeout: 15_000});
+  await savedView(page);
+  await page.goto(`/course/modedit.php?update=${moduleid}&return=1`); await waitForEditor(page);
+  expect(await source(page)).toBe(draft);
+  await page.screenshot({path: 'test-results/moodle-markdown-source-mobile.png', fullPage: true});
+});
 
-  await page.goto(`/course/modedit.php?update=${moduleid}&return=1`, { waitUntil: 'domcontentloaded' });
-  await waitForCourseEditor(page);
-  const reopened = page.frameLocator('#id_page_ifr').locator('body');
-  await expect(reopened.locator('.ignite-code-block')).toHaveCount(2);
-  await expect(reopened.locator('.ignite-code-block code').first()).toHaveText('if True:\n    print("hello")');
-  await expect(reopened.locator('code span').filter({ hasText: '"pasted"' })).toHaveCSS('color', 'rgb(158, 214, 158)');
-  await expect(reopened.locator('pre:not(.ignite-code-block)')).toContainText('These classes are used for extending');
-
-  // Deleting a saved block and undoing must preserve the other block and its source text.
-  await page.evaluate(() => {
-    const editor = window.tinyMCE.get('id_page');
-    editor.focus();
-    editor.selection.select(editor.getBody().querySelector('.ignite-code-block'), true);
+test('native autosave restores the newest source after a delayed response and keeps document scopes separate', async ({page}) => {
+  const fixture = JSON.parse(readFileSync(fixtureFile, 'utf8'));
+  await login(page, fixture);
+  await page.goto(`/course/modedit.php?add=page&course=${fixture.courseid}&section=0&return=0`);
+  await waitForEditor(page);
+  let release;
+  let stored;
+  let finished;
+  const firstStored = new Promise(resolve => { stored = resolve; });
+  const secondFinished = new Promise(resolve => { finished = resolve; });
+  const held = new Promise(resolve => { release = resolve; });
+  let updates = 0;
+  const drafts = [];
+  await page.route('**/lib/ajax/service.php*', async route => {
+    const data = route.request().postDataJSON();
+    const update = Array.isArray(data) && data.find(item => item.methodname === 'tiny_autosave_update_session' &&
+      item.args.elementid === 'id_page');
+    if (!update) { await route.continue(); return; }
+    drafts.push(update.args);
+    const sequence = ++updates;
+    const response = await route.fetch();
+    if (sequence === 1) {
+      stored();
+      await held;
+    }
+    await route.fulfill({response});
+    if (sequence === 2) finished();
   });
-  await page.keyboard.press('Backspace');
-  await expect(reopened.locator('.ignite-code-block')).toHaveCount(1);
-  await expect(reopened.locator('.ignite-code-block code')).toHaveText('print("pasted")');
-  await page.evaluate(() => window.tinyMCE.get('id_page').undoManager.undo());
-  await expect(reopened.locator('.ignite-code-block')).toHaveCount(2);
-  await expect(reopened.locator('.ignite-code-block code').first()).toHaveText('if True:\n    print("hello")');
-
-  await page.evaluate(() => {
-    const editor = window.tinyMCE.get('id_page');
-    editor.selection.select(editor.getBody().querySelector('.ignite-code-block'), true);
-    editor.selection.collapse(false);
-  });
-  await page.keyboard.press('Enter');
-  await page.keyboard.press('Enter');
-  await page.keyboard.type('Outside saved code');
-  await expect(reopened.locator('p').filter({ hasText: 'Outside saved code' })).toHaveCount(1);
-  await page.keyboard.press('Enter');
-  await page.keyboard.type('```py');
-  await page.keyboard.press('Enter');
-  await expect(reopened.locator('.ignite-code-block')).toHaveCount(3);
-  await page.keyboard.press('Backspace');
-  await expect(reopened.locator('.ignite-code-block')).toHaveCount(2);
-  await page.keyboard.type('No empty box remains');
-  await page.getByRole('button', { name: 'Save and display', exact: true }).click();
-  await page.waitForURL(url => url.pathname === '/mod/page/view.php', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('.ignite-code-block')).toHaveCount(2);
-  await expect(page.locator('.ignite-code-block code').first()).toHaveText('if True:\n    print("hello")');
-  await expect(page.getByText('Outside saved code', { exact: true })).toBeVisible();
-  await expect(page.getByText('No empty box remains', { exact: true })).toBeVisible();
+  await paste(page, sample + 'First draft');
+  await expect.poll(() => updates, {timeout: 15_000}).toBe(1);
+  await firstStored;
+  await paste(page, sample + 'Newest draft');
+  await expect.poll(() => updates, {timeout: 15_000}).toBe(2);
+  await secondFinished;
+  release();
+  expect(await source(page)).toBe(sample + 'Newest draft');
+  expect(drafts[0].elementid).toBe('id_page');
+  expect(drafts[1].pagehash).toBe(drafts[0].pagehash);
+  await page.unroute('**/lib/ajax/service.php*');
+  await page.reload(); await waitForEditor(page);
+  expect(await source(page)).toBe(sample + 'Newest draft');
+  if (fixture.moduleid) {
+    await page.goto(`/course/modedit.php?update=${fixture.moduleid}&return=1`); await waitForEditor(page);
+    expect(await source(page)).toBe(fixture.legacy);
+  }
 });

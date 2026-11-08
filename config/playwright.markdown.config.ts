@@ -5,7 +5,7 @@ export default defineConfig({
   workers: 1,
   timeout: 60_000,
   use: {
-    baseURL: 'https://learn.ignitefindyourfire.org',
+    baseURL: process.env.IGNITE_MARKDOWN_BASE_URL || 'https://learn.ignitefindyourfire.org',
     trace: 'retain-on-failure',
   },
 });

@@ -1,298 +1,175 @@
 import { readFileSync } from 'node:fs';
 import { expect, test } from '@playwright/test';
 
-// Exercise Moodle's installed TinyMCE and Prism in an isolated page without signing in or saving content.
-// Conversion is controlled here; tests/moodle-markdown.php checks the real server converter.
-const source = readFileSync(new URL('../../../moodle/tiny/ignite_markdown/amd/build/plugin.min.js', import.meta.url), 'utf8');
+const plugin = readFileSync(new URL('../../../moodle/tiny/ignite_markdown/amd/build/plugin.min.js', import.meta.url), 'utf8');
+const source = readFileSync(new URL('../../../moodle/tiny/ignite_markdown/amd/build/source.min.js', import.meta.url), 'utf8');
+const sample = '# Heading\n\nParagraph with [a link](https://example.com).  \nNext line\n\n- Parent\n    - Nested\n\n```py\nif True:\n    print("hello")\n\n```\n\n| Name | Score |\n| --- | --- |\n| Test | 1 |\n';
+
+const input = page => page.locator('#markdown-test-markdown-edit .cm-content');
+const text = page => page.evaluate(() => window.testEditor.getContent({format: 'text'}));
+const body = page => page.locator('#markdown-test-markdown-preview');
+async function replace(page, value) {
+  await input(page).click();
+  await page.keyboard.press('ControlOrMeta+a');
+  if (!value) {
+    await page.keyboard.press('Backspace');
+    return;
+  }
+  await input(page).evaluate((element, text) => {
+    const clipboard = new DataTransfer();
+    clipboard.setData('text/plain', text);
+    clipboard.setData('text/html', `<pre>${text}</pre>`);
+    element.dispatchEvent(new ClipboardEvent('paste', {bubbles: true, cancelable: true, clipboardData: clipboard}));
+  }, value);
+}
 
 test.beforeEach(async ({ page }) => {
   await page.route('**/login/index.php', route => route.fulfill({
-    contentType: 'text/html', body: '<!doctype html><html><head></head><body></body></html>',
+    contentType: 'text/html', body: '<!doctype html><html><head><style>[hidden]{display:none!important}*{box-sizing:border-box}body{margin:8px}</style></head><body></body></html>',
   }));
   await page.goto('/login/index.php');
   const base = 'https://learn.ignitefindyourfire.org/lib/editor/tiny/js/tinymce';
-  await page.addScriptTag({ url: `${base}/tinymce.min.js` });
-  await page.evaluate(async ({ source, base }) => {
-    const prismResponse = await fetch('/filter/codehighlighter/amd/src/prism.js');
-    if (!prismResponse.ok) throw new Error('Could not load Moodle’s installed Prism engine');
-    const prismSource = await prismResponse.text();
-    const prism = new Function(prismSource.replace('export default prismjs;', 'return prismjs;'))();
+  await page.addScriptTag({url: `${base}/tinymce.min.js`});
+  await page.evaluate(async ({source, plugin, base}) => {
+    let engine;
+    new Function('define', source)((_name, _deps, factory) => { engine = factory(); });
     let registration;
     window.markdownCalls = [];
-    window.markdownResponse = '<h1>Rubric</h1><p><strong>Bold</strong></p>';
-    const define = (_name, _dependencies, factory) => {
+    window.markdownResponse = '<h1>Heading</h1><p>Current draft</p><ul><li>Parent<ul><li>Nested</li></ul></li></ul><pre><code>if True:\n    print("hello")\n</code></pre><table><tr><td>Test</td></tr></table>';
+    const define = (_name, _deps, factory) => {
       registration = factory(
-        { call: ([request]) => {
+        {call: ([request]) => {
           window.markdownCalls.push(request.args.markdown);
-          if (window.markdownDelayed) {
-            return [new Promise(resolve => { window.finishMarkdown = resolve; })];
-          }
+          if (window.markdownDelayed) return [new Promise(resolve => { window.finishMarkdown = resolve; })];
           return [window.markdownOffline ? Promise.reject(new Error('offline')) : Promise.resolve(window.markdownResponse)];
-        } },
-        { get_strings: async items => items.map(item => item.key) },
-        { getTinyMCE: async () => window.tinymce },
-        { getPluginMetadata: async () => ({}), addToolbarButtons: (toolbar, _group, buttons) => `${toolbar} ${buttons.join(' ')}` },
-        { getContextId: () => 1 },
-        prism,
+        }},
+        {get_strings: async items => items.map(item => ({edit: 'Edit', preview: 'Preview'}[item.key] || item.key))},
+        {getTinyMCE: async () => window.tinymce}, {getPluginMetadata: async () => ({})},
+        {getContextId: () => 1}, engine, {isInitialised: () => window.autosaveReady !== false},
       );
     };
-    new Function('define', source)(define);
-    const [plugin, configuration] = await registration;
-    document.body.innerHTML = '<textarea id="markdown-test" aria-label="Test editor"></textarea>';
-    const options = {
-      selector: '#markdown-test', base_url: base, suffix: '.min', license_key: 'gpl',
-      plugins: ['lists', 'link', plugin], toolbar: 'undo redo bold italic', promotion: false,
-      content_style: 'body { min-height: 180px; }',
-    };
-    [window.testEditor] = await window.tinymce.init({ ...options, ...configuration.configure(options) });
-    window.testEditor.focus();
-  }, { source, base });
-  await page.frameLocator('#markdown-test_ifr').locator('body').click();
+    new Function('define', plugin)(define);
+    const [name, configuration] = await registration;
+    document.body.innerHTML = '<form><textarea id="markdown-test"></textarea><button name="save">Save</button><button name="cancel">Cancel</button></form>';
+    const options = {selector: '#markdown-test', base_url: base, suffix: '.min', license_key: 'gpl',
+      plugins: [name], promotion: false};
+    [window.testEditor] = await window.tinymce.init({...options, ...configuration.configure(options)});
+    document.querySelector('form').addEventListener('submit', event => {
+      event.preventDefault(); window.submitted = {html: window.testEditor.getContent(), button: event.submitter?.name};
+    });
+  }, {source, plugin, base});
 });
 
-async function reset(page, html = '<p></p>') {
-  await page.evaluate(html => {
-    const editor = window.testEditor;
-    editor.setContent(html);
-    editor.undoManager.clear();
-    editor.undoManager.add();
-    editor.focus();
-    editor.selection.select(editor.getBody(), true);
-    editor.selection.collapse(false);
-  }, html);
-  await page.frameLocator('#markdown-test_ifr').locator('body').click();
-}
-
-async function paste(page, text, html = '') {
-  await page.evaluate(({ text, html }) => {
-    const clipboard = new DataTransfer();
-    clipboard.setData('text/plain', text);
-    if (html) clipboard.setData('text/html', html);
-    window.testEditor.getBody().dispatchEvent(new ClipboardEvent('paste', {
-      bubbles: true, cancelable: true, clipboardData: clipboard,
-    }));
-  }, { text, html });
-}
-
-const content = page => page.evaluate(() => window.testEditor.getContent());
-
-test('Markdown typing shortcuts work in the main editor with native Undo', async ({ page }) => {
-  await page.keyboard.type('# Heading');
-  expect(await content(page)).toContain('<h1>Heading</h1>');
-  await reset(page);
-  await page.keyboard.type('**Bold** ');
-  expect(await content(page)).toContain('<strong>Bold</strong>');
-  await page.evaluate(() => window.testEditor.undoManager.undo());
-  expect(await content(page)).toContain('**Bold**');
-  await reset(page);
-  await page.keyboard.type('_Italic_ ');
-  expect(await content(page)).toContain('<em>Italic</em>');
-  await reset(page);
-  await page.keyboard.type('`code` ');
-  expect(await content(page)).toContain('<code>code</code>');
-  await reset(page);
-  await page.keyboard.type('- First');
-  await page.keyboard.press('Enter');
-  await page.keyboard.type('Second');
-  expect(await content(page)).toContain('<ul>');
-  expect(await content(page)).toContain('<li>Second</li>');
+test('literal paste, repeated tabs, selection, undo and redo preserve the draft', async ({ page }) => {
+  await replace(page, sample);
+  expect(await text(page)).toBe(sample);
+  expect(await page.evaluate(() => window.testEditor.undoManager.hasUndo())).toBe(true);
+  await page.keyboard.type('Unsaved edit');
+  const edited = sample + 'Unsaved edit';
+  for (let i = 0; i < 3; i++) {
+    await page.getByRole('tab', {name: 'Preview', exact: true}).click();
+    await expect(body(page).locator('h1')).toHaveText('Heading');
+    await expect(body(page)).toHaveAttribute('contenteditable', 'false');
+    expect(await text(page)).toBe(edited);
+    await page.getByRole('tab', {name: 'Edit', exact: true}).click();
+    expect(await text(page)).toBe(edited);
+  }
+  await input(page).click();
+  await page.keyboard.press('ControlOrMeta+z');
+  expect(await text(page)).toBe(sample);
+  await page.keyboard.press('ControlOrMeta+Shift+z');
+  expect(await text(page)).toBe(edited);
 });
 
-test('direct Markdown paste formats in place and Undo recovers the source', async ({ page }) => {
-  await paste(page, '# Rubric\n\n**Bold**');
-  await expect.poll(() => content(page)).toContain('<h1>Rubric</h1>');
-  expect(await content(page)).toContain('<strong>Bold</strong>');
-  expect(await page.evaluate(() => window.markdownCalls)).toEqual(['# Rubric\n\n**Bold**']);
-  await page.evaluate(() => window.testEditor.undoManager.undo());
-  expect(await content(page)).toContain('# Rubric');
-  expect(await content(page)).toContain('**Bold**');
-  expect(await content(page)).not.toContain('ignite-markdown-paste');
-  await page.evaluate(() => window.testEditor.undoManager.undo());
-  expect(await content(page)).toBe('');
-
-  await reset(page);
-  await paste(page, '**Styled source**', '<p><em>Keep existing formatting</em></p>');
-  expect(await content(page)).toContain('<em>Keep existing formatting</em>');
-  expect(await page.evaluate(() => window.markdownCalls.length)).toBe(1);
-});
-
-test('offline and late conversions preserve text and later edits', async ({ page }) => {
-  await page.evaluate(() => { window.markdownOffline = true; });
-  await paste(page, '# Draft\n<script>alert(1)</script>');
-  await expect(page.getByText('pastefailed', { exact: true })).toBeVisible();
-  expect(await content(page)).toContain('# Draft');
-  expect(await content(page)).toContain('&lt;script&gt;');
-  expect(await content(page)).not.toContain('ignite-markdown-paste');
-
-  await reset(page);
-  await page.evaluate(() => { window.markdownOffline = false; window.markdownDelayed = true; });
-  await paste(page, '# Draft');
-  await page.keyboard.type(' continued typing');
-  const draft = await content(page);
-  await page.evaluate(() => window.finishMarkdown('<h1>Stale response</h1>'));
-  expect(await content(page)).toBe(draft);
-  expect(await content(page)).toContain('continued typing');
-});
-
-test('Discord-style Python fences open a code block and close back into normal text', async ({ page }) => {
-  await page.keyboard.type('```py');
-  await page.keyboard.press('Enter');
-  const body = page.frameLocator('#markdown-test_ifr').locator('body');
-  await expect(body.locator('pre')).toHaveAttribute('data-ignite-language', 'python');
-  await page.keyboard.type('print("hello")');
-  await page.keyboard.press('Enter');
-  await page.keyboard.type('```');
-  await page.keyboard.press('Enter');
-  await expect(body.locator('pre code')).toHaveText('print("hello")');
-  expect(await body.locator('pre').evaluate(node => getComputedStyle(node).backgroundColor)).toBe('rgb(43, 45, 49)');
-  await expect(body.locator('pre code span').filter({ hasText: '"hello"' })).toHaveCSS('color', 'rgb(158, 214, 158)');
-  await page.keyboard.type('Normal paragraph');
-  await expect(body.locator('pre + p')).toHaveText('Normal paragraph');
-  expect(await content(page)).not.toContain('```');
-  await page.locator('.tox-tinymce').screenshot({ path: 'test-results/moodle-code-block.png' });
-  await page.evaluate(() => window.testEditor.undoManager.undo());
-  await page.evaluate(() => window.testEditor.undoManager.undo());
-  expect(await content(page)).toContain('```');
-});
-
-test('code blocks preserve indentation, literal HTML, and unknown languages', async ({ page }) => {
-  await page.keyboard.type('```my-language');
-  await page.keyboard.press('Enter');
-  await page.keyboard.type('if x:');
-  await page.keyboard.press('Enter');
-  await page.keyboard.press('Tab');
-  await page.keyboard.type('<script>alert("not executed")</script>');
-  await page.keyboard.press('Enter');
-  await page.keyboard.type('```');
-  await page.keyboard.press('Enter');
-  const body = page.frameLocator('#markdown-test_ifr').locator('body');
-  await expect(body.locator('pre')).toHaveAttribute('data-ignite-language', 'my-language');
-  expect(await body.locator('pre code').textContent()).toBe('if x:\n    <script>alert("not executed")</script>');
-  expect(await content(page)).toContain('&lt;script&gt;');
-  await expect(body.locator('script')).toHaveCount(0);
-});
-
-test('pasted fenced code gets the same colors and survives an editor reload', async ({ page }) => {
-  await page.evaluate(() => {
-    window.markdownResponse = '<pre><code class="language-py">print("hello")\n</code></pre>';
-  });
-  await paste(page, '```py\nprint("hello")\n```', '<pre>```py\nprint("hello")\n```</pre>');
-  const body = page.frameLocator('#markdown-test_ifr').locator('body');
-  await expect(body.locator('pre')).toHaveAttribute('data-ignite-language', 'python');
-  const saved = await content(page);
-  expect(saved).toContain('color: #9ed69e');
-  expect(saved).toContain('background-color: #2b2d31');
+test('saving without Preview waits for rendering and round-trips exact source', async ({ page }) => {
+  await replace(page, sample);
+  await page.getByRole('button', {name: 'Save', exact: true}).click();
+  await expect.poll(() => page.evaluate(() => window.submitted?.button)).toBe('save');
+  const saved = await page.evaluate(() => window.submitted.html);
+  expect(saved).toContain('<h1>Heading</h1>');
   await page.evaluate(saved => window.testEditor.setContent(saved), saved);
-  await expect(body.locator('pre code span').filter({ hasText: '"hello"' })).toHaveCSS('color', 'rgb(158, 214, 158)');
+  expect(await text(page)).toBe(sample);
+  await page.getByRole('tab', {name: 'Preview', exact: true}).click();
+  await expect(body(page).locator('h1')).toHaveText('Heading');
 });
 
-async function reopenCodeBlock(page) {
-  await page.keyboard.type('```py');
-  await page.keyboard.press('Enter');
-  await page.keyboard.type('print("hello")');
-  await page.keyboard.press('Enter');
-  await page.keyboard.type('```');
-  await page.keyboard.press('Enter');
-  await page.evaluate(() => {
-    const editor = window.testEditor;
-    const saved = editor.getContent().replace(/\sdata-ignite-language="[^"]*"/g, '');
-    editor.setContent(saved);
-    editor.undoManager.clear();
-    editor.undoManager.add();
-    editor.focus();
-  });
-}
-
-test('Backspace removes an emptied saved code box and allows a fresh block', async ({ page }) => {
-  await reopenCodeBlock(page);
-  const body = page.frameLocator('#markdown-test_ifr').locator('body');
-  await page.evaluate(() => {
-    const editor = window.testEditor;
-    editor.selection.select(editor.getBody().querySelector('pre'), true);
-  });
-  await page.keyboard.press('Backspace');
-  await page.keyboard.press('Backspace');
-  await expect(body.locator('pre')).toHaveCount(0);
-  await page.keyboard.type('```py');
-  await page.keyboard.press('Enter');
-  await expect(body.locator('pre.ignite-code-block')).toHaveCount(1);
+test('late preview response cannot overwrite later typing or another document', async ({ page }) => {
+  await page.evaluate(() => { window.markdownDelayed = true; });
+  await replace(page, '# Old');
+  await page.getByRole('tab', {name: 'Preview', exact: true}).click();
+  await expect.poll(() => page.evaluate(() => window.markdownCalls.length)).toBe(1);
+  await page.getByRole('tab', {name: 'Edit', exact: true}).click();
+  await replace(page, '# New');
+  await page.evaluate(() => window.finishMarkdown('<h1>Stale</h1>'));
+  expect(await text(page)).toBe('# New');
+  await page.getByRole('tab', {name: 'Preview', exact: true}).click();
+  await expect.poll(() => page.evaluate(() => window.markdownCalls.length)).toBe(2);
+  await page.evaluate(() => window.testEditor.setContent('<p>Different document</p>'));
+  await page.evaluate(() => window.finishMarkdown('<h1>Wrong document</h1>'));
+  expect(await text(page)).toBe('<p>Different document</p>');
+  await expect(body(page)).not.toContainText('Wrong document');
 });
 
-test('two Enters at the end of saved code return to normal text without losing code', async ({ page }) => {
-  await reopenCodeBlock(page);
-  const body = page.frameLocator('#markdown-test_ifr').locator('body');
-  await page.evaluate(() => {
-    const editor = window.testEditor;
-    editor.selection.select(editor.getBody().querySelector('pre'), true);
-    editor.selection.collapse(false);
-  });
-  await page.keyboard.press('Enter');
-  await page.keyboard.press('Enter');
-  await page.keyboard.type('Outside the code');
-  await expect(body.locator('pre')).toHaveText('print("hello")');
-  await expect(body.locator('pre + p')).toHaveText('Outside the code');
+test('offline render blocks save, retains text and allows retry; Cancel remains available', async ({ page }) => {
+  await replace(page, sample);
+  await page.evaluate(() => { window.markdownOffline = true; });
+  await page.getByRole('button', {name: 'Save', exact: true}).click();
+  await expect(page.getByRole('status')).toHaveText('failed');
+  expect(await page.evaluate(() => window.submitted)).toBeUndefined();
+  expect(await text(page)).toBe(sample);
+  await page.getByRole('button', {name: 'Cancel', exact: true}).click();
+  expect(await page.evaluate(() => window.submitted.button)).toBe('cancel');
+  await page.evaluate(() => { window.submitted = undefined; });
+  await page.evaluate(() => { window.markdownOffline = false; });
+  await page.getByRole('button', {name: 'Save', exact: true}).click();
+  await expect.poll(() => page.evaluate(() => window.submitted?.button)).toBe('save');
 });
 
-test('a fenced code line inside existing preformatted prose creates a box and preserves the prose', async ({ page }) => {
-  await reset(page, '<pre>These classes are used for extending</pre>');
-  await page.evaluate(() => {
-    const editor = window.testEditor;
-    editor.selection.select(editor.getBody().querySelector('pre'), true);
-    editor.selection.collapse(false);
+test('Save waits for another editor on the form to finish restoring its draft', async ({page}) => {
+  await replace(page, sample);
+  await page.evaluate(async () => {
+    window.autosaveReady = false;
+    window.tinymce.PluginManager.add('tiny_autosave/plugin', () => ({}));
+    const textarea = document.createElement('textarea');
+    textarea.id = 'second-editor';
+    document.querySelector('form').append(textarea);
+    await window.tinymce.init({selector: '#second-editor',
+      base_url: 'https://learn.ignitefindyourfire.org/lib/editor/tiny/js/tinymce', suffix: '.min', license_key: 'gpl',
+      plugins: ['tiny_ignite_markdown/plugin', 'tiny_autosave/plugin'], promotion: false});
   });
-  await page.keyboard.press('Enter');
-  await page.keyboard.type('```py');
-  await page.keyboard.press('Enter');
-  const body = page.frameLocator('#markdown-test_ifr').locator('body');
-  await expect(body.locator('.ignite-code-block')).toHaveCount(1);
-  await page.keyboard.type('print("hello")');
-  await page.keyboard.press('Enter');
-  await page.keyboard.type('```');
-  await page.keyboard.press('Enter');
-  await expect(body.locator('.ignite-code-block code')).toHaveText('print("hello")');
-  await expect(body.locator('pre').first()).toContainText('These classes are used for extending');
-  expect(await content(page)).not.toContain('```py');
+  await page.getByRole('button', {name: 'Save', exact: true}).click();
+  expect(await page.evaluate(() => window.submitted)).toBeUndefined();
+  await page.evaluate(() => { window.autosaveReady = true; });
+  await expect.poll(() => page.evaluate(() => window.submitted?.button)).toBe('save');
+  expect(await text(page)).toBe(sample);
 });
 
-test('opening a fence in the middle of preformatted text preserves the following text', async ({ page }) => {
-  await reset(page, '<pre>Before\n```py\nAfter</pre>');
-  await page.evaluate(() => {
-    const editor = window.testEditor;
-    const text = editor.getBody().querySelector('pre').firstChild;
-    editor.selection.setCursorLocation(text, text.data.indexOf('\nAfter'));
-  });
-  await page.keyboard.press('Enter');
-  const body = page.frameLocator('#markdown-test_ifr').locator('body');
-  await expect(body.locator('.ignite-code-block')).toHaveCount(1);
-  await expect(body.locator('pre').first()).toContainText('Before');
-  await expect(body.locator('pre').last()).toContainText('After');
-  expect(await content(page)).not.toContain('```py');
-  await page.evaluate(() => window.testEditor.undoManager.undo());
-  await expect(body.locator('pre')).toHaveCount(1);
-  expect(await body.locator('pre').textContent()).toBe('Before\n```py\nAfter');
+test('legacy HTML previews and saves intact', async ({ page }) => {
+  const legacy = '<h2>Legacy</h2><pre class="ignite-code-block">    print("old")\n</pre><p><a href="https://example.com">Link</a></p>';
+  await page.evaluate(legacy => window.testEditor.setContent(legacy), legacy);
+  await page.getByRole('tab', {name: 'Preview', exact: true}).click();
+  await expect(body(page).locator('h2')).toHaveText('Legacy');
+  await expect(body(page).locator('pre')).toHaveText('    print("old")\n');
+  await page.getByRole('button', {name: 'Save', exact: true}).click();
+  expect(await page.evaluate(() => window.submitted.html)).toBe(legacy);
 });
 
-test('Backspace removes a newly opened empty box', async ({ page }) => {
-  await page.keyboard.type('```py');
-  await page.keyboard.press('Enter');
-  const body = page.frameLocator('#markdown-test_ifr').locator('body');
-  await expect(body.locator('.ignite-code-block')).toHaveCount(1);
-  await page.keyboard.press('Backspace');
-  await expect(body.locator('pre')).toHaveCount(0);
-  await page.keyboard.type('Normal text');
-  await expect(body.locator('p')).toHaveText('Normal text');
-});
-
-test('deleting a partial code selection preserves the remaining code and Undo restores it', async ({ page }) => {
-  await reopenCodeBlock(page);
-  await page.evaluate(() => {
-    const editor = window.testEditor;
-    editor.selection.select(editor.getBody().querySelector('pre code span'), true);
-  });
-  await page.keyboard.press('Backspace');
-  const body = page.frameLocator('#markdown-test_ifr').locator('body');
-  await expect(body.locator('.ignite-code-block')).toHaveCount(1);
-  await expect(body.locator('pre')).toHaveText('("hello")');
-  await page.evaluate(() => window.testEditor.undoManager.undo());
-  await expect(body.locator('pre')).toHaveText('print("hello")');
+test('empty source, long lines, narrow layout and keyboard tabs', async ({ page }) => {
+  await page.setViewportSize({width: 375, height: 812});
+  const line = 'Long line with no forced wrapping. '.repeat(180);
+  await replace(page, line);
+  expect(await text(page)).toBe(line);
+  const dimensions = await page.locator('.ignite-markdown-editor').evaluate(el => ({width: el.getBoundingClientRect().width, scroll: el.scrollWidth}));
+  expect(dimensions.width).toBeLessThanOrEqual(359);
+  expect(dimensions.scroll).toBeLessThanOrEqual(359);
+  expect(await page.locator('.cm-editor').evaluate(el => el.getBoundingClientRect().height)).toBeLessThanOrEqual(500);
+  const edit = page.getByRole('tab', {name: 'Edit', exact: true});
+  await edit.focus(); await page.keyboard.press('ArrowRight');
+  await expect(page.getByRole('tab', {name: 'Preview', exact: true})).toBeFocused();
+  await page.keyboard.press('Home'); await expect(edit).toBeFocused();
+  await replace(page, '');
+  await page.evaluate(() => { window.markdownResponse = ''; });
+  await page.getByRole('tab', {name: 'Preview', exact: true}).click();
+  await expect(body(page)).toHaveText('');
+  await expect(page.getByRole('status')).toHaveText('previewempty');
 });

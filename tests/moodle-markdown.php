@@ -30,6 +30,9 @@ foreach (['<script', 'onerror', 'javascript:', '<iframe'] as $fragment) {
 check_markdown(convert::render('') === '', 'Empty input should stay empty');
 check_markdown(str_contains(convert::render('日本語 **点数** 😀'), '<strong>点数</strong>'), 'Unicode was damaged');
 check_markdown(str_contains(convert::render('`<script>`'), '&lt;script&gt;'), 'Code was not escaped');
+$image = convert::render('![Diagram](https://example.com/diagram.png)');
+check_markdown(str_contains($image, 'src="https://example.com/diagram.png"') &&
+    str_contains($image, 'alt="Diagram"'), 'Markdown image was lost');
 $python = convert::render("```py\nprint(\"hello\")\n```");
 check_markdown(str_contains($python, 'language-py'), 'Fenced-code language was lost');
 check_markdown(str_contains($python, 'print("hello")'), 'Fenced-code contents changed');
