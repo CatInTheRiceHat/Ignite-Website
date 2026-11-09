@@ -10,6 +10,8 @@ Partnership content lives in `src/data/partnerships.ts`; add only confirmed part
 
 ## Intro debugging
 
+The intro is temporarily hidden on all platforms, including `/?intro=debug`; the website opens directly without downloading either video. Set `INTRO_ENABLED` to `true` in `src/config/intro.ts` to restore it and the playback checks. The debugging instructions below apply when the intro is enabled.
+
 Open `/?intro=debug` on the affected browser to replay the intro even if it has already been seen in this session. A diagnostic panel stays visible after the intro and offers Replay, Download report, and Test without intro. Reduced motion preferences still bypass the animation.
 
 Reproduce the bug, then download `ignite-intro-debug.json`. The report includes media readiness and buffering events, playback errors, rendering gaps over 250 ms, captured-frame timing, the reason the intro closed, page errors, and whether scrolling and page interaction were restored. Reports stay in browser memory until downloaded; they are not uploaded automatically. Two initial attach/cleanup sequences are expected in local development because React Strict Mode checks effect cleanup.

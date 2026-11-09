@@ -1,10 +1,12 @@
 import { expect, test } from '@playwright/test';
+import { INTRO_ENABLED } from '../../../src/config/intro';
 
 test.beforeEach(async ({ page }) => {
   await page.route('**/api/status', route => route.fulfill({ json: { available: false } }));
 });
 
 test('debug mode replays a seen intro and exports its completion and page errors', async ({ page }) => {
+  test.skip(!INTRO_ENABLED, 'The intro is temporarily hidden on all platforms.');
   await page.addInitScript(() => sessionStorage.setItem('ignite:intro-seen', 'true'));
   await page.goto('/?intro=debug');
   const panel = page.getByRole('complementary', { name: 'Intro diagnostics' });
@@ -38,6 +40,7 @@ test('debug mode replays a seen intro and exports its completion and page errors
 });
 
 test('debug report identifies a media failure and the website stays usable', async ({ page }) => {
+  test.skip(!INTRO_ENABLED, 'The intro is temporarily hidden on all platforms.');
   await page.route('**/backgrounds/Loading*.mp4*', route => route.abort());
   await page.goto('/?intro=debug');
   await expect(page.locator('.loading-screen')).toHaveCount(0);

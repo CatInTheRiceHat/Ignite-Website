@@ -1,6 +1,8 @@
+import { INTRO_ENABLED } from '../config/intro';
+
 const params = new URLSearchParams(window.location.search);
-export const introDebugEnabled = params.get('intro') === 'debug';
-export const introBypassed = params.get('intro') === 'skip';
+export const introDebugEnabled = INTRO_ENABLED && params.get('intro') === 'debug';
+export const introBypassed = !INTRO_ENABLED || params.get('intro') === 'skip';
 
 type DebugEvent = { atMs: number; event: string; details?: unknown };
 const startedAt = performance.now();

@@ -1,4 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
+import { INTRO_ENABLED } from '../../../src/config/intro';
+
+test.skip(!INTRO_ENABLED, 'The intro is temporarily hidden on all platforms.');
 
 function expectedVideo(page: Page) {
   const mobile = page.viewportSize()!.width < 768;
