@@ -401,7 +401,7 @@ export const interns: Intern[] = [
     educationLevel: "High School",
     graduatingClass: "Class of 2029",
     email: "emilycstarz@gmail.com",
-    image: DEFAULT_STAFF_IMAGE,
+    image: "/staff/emily_chen.png",
   },
   {
     initial: "K",
