@@ -18,6 +18,7 @@ import NotFound from './pages/NotFound';
 import ThankYou from './pages/ThankYou';
 import { DEMO_PATH, LEGACY_DEMO_PATH } from './config/courseDemo';
 import { RECORDS_PAGE } from './config/records';
+import { PAGE_LOADER_ENABLED } from './config/intro';
 
 const INTRO_SESSION_KEY = 'ignite:intro-seen';
 const CourseDemo = lazy(() => import('./pages/CourseDemo'));
@@ -58,7 +59,7 @@ function App() {
       </AnimatePresence>
       <div {...(loading ? { inert: '' } : {})} aria-hidden={loading || undefined}>
         <Router>
-          <PageLoader enabled={!loading}>
+          <PageLoader enabled={PAGE_LOADER_ENABLED && !loading}>
           <Layout>
             <Routes>
               <Route path="/" element={<Home />} />

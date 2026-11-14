@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import { PAGE_LOADER_ENABLED } from '../../../src/config/intro';
 
 const placeholder = '<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500"><rect width="500" height="500" fill="#f07b2a"/></svg>';
 
@@ -13,6 +14,7 @@ async function holdRequest(page: Page, pattern: string) {
 }
 
 test.beforeEach(async ({ page }) => {
+  test.skip(!PAGE_LOADER_ENABLED, 'The seasonal loading screen is temporarily disabled.');
   await page.route('**/*', route => route.request().resourceType() === 'image'
     ? route.fulfill({ contentType: 'image/svg+xml', body: placeholder })
     : route.continue());

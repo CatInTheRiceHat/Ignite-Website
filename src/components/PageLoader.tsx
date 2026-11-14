@@ -56,7 +56,7 @@ export default function PageLoader({ children, enabled = true }: { children: Rea
   const { pathname } = useLocation();
   const contentRef = useRef<HTMLDivElement>(null);
   const [phase, setPhase] = useState<Phase>('waiting');
-  const blocking = phase === 'loading' || phase === 'leaving';
+  const blocking = enabled && (phase === 'loading' || phase === 'leaving');
 
   useEffect(() => {
     if (!enabled) return;
