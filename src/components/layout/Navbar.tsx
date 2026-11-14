@@ -6,7 +6,7 @@ import { ChevronDown, Megaphone, Menu, X } from 'lucide-react';
 import { RECORDS_PAGE } from '../../config/records';
 import { STUDENT_PREENROLLMENT_URL } from '../../lib/links';
 
-const announcementText = 'Student pre-enrollment is open. Apply now!';
+const announcementText = 'Student pre-enrollment is open. Enroll Now!';
 const navSections = [
   {
     id: 'about',
@@ -188,7 +188,7 @@ const Navbar = () => {
             })}
           </ul>
           <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" onClick={closeMenus} className={`mt-3 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[var(--primary-orange)] px-5 py-2 text-white transition-colors hover:bg-[var(--primary-orange-dark)] font-sans font-bold text-xl lg:mt-0 ${focusStyles}`}>
-            Apply Now
+            Enroll Now
             <RedirectArrow size={16} />
           </a>
         </div>

@@ -40,7 +40,7 @@ const Footer = () => {
 
             <div className="mt-8 flex flex-col sm:flex-row sm:flex-wrap gap-4">
               <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-white text-[var(--primary-orange)] px-8 py-4 rounded-full hover:scale-105 active:scale-95 transition-all shadow-lg font-sans font-bold text-button">
-                Apply Now
+                Enroll Now
                 <RedirectArrow />
               </a>
               <a

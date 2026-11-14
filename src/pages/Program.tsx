@@ -82,7 +82,7 @@ const Program = () => {
           <p className="max-w-2xl mx-auto mt-6 text-lg leading-relaxed">Live and independent courses are being developed. Explore what’s planned below.</p>
           <p className="mt-6 text-lg font-bold">Student pre-enrollment is now open.</p>
           <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-[var(--primary-orange)] shadow-lg transition-transform hover:scale-105 active:scale-95 font-sans font-bold text-button">
-            Apply Now
+            Enroll Now
             <RedirectArrow />
           </a>
         </div>

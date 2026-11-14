@@ -13,7 +13,7 @@ const ProgramNextSteps = () => (
       </p>
       <div className="flex flex-wrap justify-center gap-4">
         <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-[var(--primary-orange)] text-white px-8 py-4 rounded-full hover:scale-105 active:scale-95 transition-all shadow-lg font-sans font-bold text-button">
-          Apply Now
+          Enroll Now
           <RedirectArrow />
         </a>
         <a href={LEARNING_HUB_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-orange-50 text-[var(--text-charcoal)] px-8 py-4 rounded-full hover:bg-orange-100 transition-colors font-sans font-bold text-button">

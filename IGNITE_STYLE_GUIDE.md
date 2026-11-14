@@ -34,7 +34,7 @@ Use the same hierarchy throughout the website, course demo, Sol widget, Moodle, 
 | Display Titles | Rammetto One | Big page titles, hero headings, section moments, and playful display text. |
 | Headings | Poppins | Subheaders, card titles, and bold UI labels. |
 | Navigation | Nunito | All navigation labels, including desktop and mobile menus, footer navigation, and the announcement bar. Use `font-sans` on the website. |
-| Buttons | Nunito | Bold, 1.25rem (20px), with 1.4 line height for all button labels and links styled as buttons, matching the home hero’s Apply Now. Orange backgrounds always use white text. |
+| Buttons | Nunito | Bold, 1.25rem (20px), with 1.4 line height for all button labels and links styled as buttons, matching the home hero’s Enroll Now. Orange backgrounds always use white text. |
 | Body Text | Nunito | Paragraphs, descriptions, form text, supporting copy, and general readable content. |
 
 ### Imagery And Icons
