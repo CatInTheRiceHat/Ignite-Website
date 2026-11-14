@@ -17,21 +17,21 @@ const navSections = [
     ],
   },
   {
-    id: 'about',
-    name: 'About',
-    links: [
-      { name: 'About Ignite', path: '/about' },
-      { name: 'Our Team', path: '/team' },
-      { name: RECORDS_PAGE.label, path: RECORDS_PAGE.path },
-    ],
-  },
-  {
     id: 'involved',
     name: 'Get Involved',
     links: [
       { name: 'Partnerships', path: '/partnerships' },
       { name: 'Sponsors', path: '/sponsors' },
       { name: 'Hiring', path: '/hiring' },
+    ],
+  },
+  {
+    id: 'about',
+    name: 'About',
+    links: [
+      { name: 'About Ignite', path: '/about' },
+      { name: 'Our Team', path: '/team' },
+      { name: RECORDS_PAGE.label, path: RECORDS_PAGE.path },
     ],
   },
 ];
