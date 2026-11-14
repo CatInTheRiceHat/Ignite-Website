@@ -9,20 +9,20 @@ import { STUDENT_PREENROLLMENT_URL } from '../../lib/links';
 const announcementText = 'Student pre-enrollment is open. Enroll Now!';
 const navSections = [
   {
+    id: 'program',
+    name: 'Program',
+    links: [
+      { name: 'Program Overview', path: '/program' },
+      { name: 'FAQ', path: '/faq' },
+    ],
+  },
+  {
     id: 'about',
     name: 'About',
     links: [
       { name: 'About Ignite', path: '/about' },
       { name: 'Our Team', path: '/team' },
       { name: RECORDS_PAGE.label, path: RECORDS_PAGE.path },
-    ],
-  },
-  {
-    id: 'program',
-    name: 'Program',
-    links: [
-      { name: 'Program Overview', path: '/program' },
-      { name: 'FAQ', path: '/faq' },
     ],
   },
   {
