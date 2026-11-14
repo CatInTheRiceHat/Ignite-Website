@@ -2,6 +2,7 @@ import { lazy, Suspense, useCallback, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { BrowserRouter as Router, Navigate, Routes, Route, useLocation } from 'react-router-dom';
 import LoadingScreen from './components/LoadingScreen';
+import PageLoader from './components/PageLoader';
 import IntroDebug from './components/IntroDebug';
 import { introBypassed, introDebugEnabled, recordIntroEvent } from './lib/introDebug';
 import Layout from './components/layout/Layout';
@@ -57,6 +58,7 @@ function App() {
       </AnimatePresence>
       <div {...(loading ? { inert: '' } : {})} aria-hidden={loading || undefined}>
         <Router>
+          <PageLoader enabled={!loading}>
           <Layout>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -64,20 +66,21 @@ function App() {
               <Route path="/team" element={<Mentors />} />
               <Route path="/mentors" element={<Navigate to="/team" replace />} />
               <Route path="/program" element={<Program />} />
-              <Route path={DEMO_PATH} element={<Suspense fallback={<p role="status" className="p-12 text-center">Opening your sample week…</p>}><CourseDemo /></Suspense>} />
+              <Route path={DEMO_PATH} element={<Suspense fallback={<p data-page-loading role="status" className="p-12 text-center">Opening your sample week…</p>}><CourseDemo /></Suspense>} />
               <Route path={LEGACY_DEMO_PATH} element={<PageRedirect to={DEMO_PATH} />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/apply" element={<Navigate to="/program" replace />} />
               <Route path="/statistics" element={<Navigate to={RECORDS_PAGE.path} replace />} />
               <Route path="/hiring" element={<Hiring />} />
               <Route path="/partnerships" element={<Partnerships />} />
-              <Route path="/sponsors" element={<Suspense fallback={<p role="status" className="p-12 text-center">A little spark is on its way…</p>}><Sponsors /></Suspense>} />
+              <Route path="/sponsors" element={<Suspense fallback={<p data-page-loading role="status" className="p-12 text-center">A little spark is on its way…</p>}><Sponsors /></Suspense>} />
               <Route path="/confirmation" element={<ThankYou />} />
               <Route path="/thank-you" element={<PageRedirect to="/confirmation" />} />
               <Route path={RECORDS_PAGE.path} element={<Records />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>
+          </PageLoader>
         </Router>
       </div>
       {introDebugEnabled && <IntroDebug />}

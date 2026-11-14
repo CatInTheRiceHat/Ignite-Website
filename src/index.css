@@ -2,6 +2,74 @@
 @tailwind components;
 @tailwind utilities;
 
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1.5rem;
+  overflow-y: auto;
+  isolation: isolate;
+  background: #493323;
+  color: white;
+  text-align: center;
+  opacity: 1;
+  transition: opacity 180ms ease-out;
+}
+
+.page-loader--leaving { opacity: 0; }
+
+.page-loader__background,
+.page-loader::before {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.page-loader__background {
+  z-index: -2;
+  object-fit: cover;
+  object-position: center;
+}
+
+.page-loader::before {
+  content: '';
+  z-index: -1;
+  background: rgb(26 26 46 / 42%);
+}
+
+.page-loader__art {
+  position: relative;
+  width: clamp(11rem, 30vw, 14rem);
+  aspect-ratio: 1;
+  margin: 0 auto 0.25rem;
+}
+
+.page-loader__art img {
+  position: absolute;
+  inset: 1.25rem;
+  width: calc(100% - 2.5rem);
+  height: calc(100% - 2.5rem);
+  object-fit: contain;
+}
+
+.page-loader__content h2 {
+  font-family: var(--font-title);
+  font-size: clamp(1.4rem, 5vw, 2rem);
+  font-weight: 400;
+  line-height: 1.5;
+  text-shadow: 0 2px 10px rgb(26 26 46 / 50%);
+}
+
+body[data-page-loading] sol-widget { visibility: hidden !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .page-loader { transition: none; }
+}
+
 .loading-screen {
   position: fixed;
   inset: 0;
