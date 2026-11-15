@@ -140,7 +140,7 @@ export const interns: Intern[] = [
   {
     initial: "A",
     name: "Anisa Doshi Chandra",
-    role: "Director of Human Resources",
+    role: "Director of Growth",
     school: "Notre Dame San Jose",
     country: "United States",
     educationLevel: "High School",
@@ -396,7 +396,7 @@ export const interns: Intern[] = [
   {
     initial: "E",
     name: "Emily Chen",
-    role: "Director of Growth",
+    role: "Director of Human Resources",
     school: "The Bronx High School of Science",
     educationLevel: "High School",
     graduatingClass: "Class of 2029",
