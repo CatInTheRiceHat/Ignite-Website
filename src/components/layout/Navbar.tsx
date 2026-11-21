@@ -6,7 +6,7 @@ import { ChevronDown, Megaphone, Menu, X } from 'lucide-react';
 import { RECORDS_PAGE } from '../../config/records';
 import { STUDENT_PREENROLLMENT_URL } from '../../lib/links';
 
-const announcementText = '700+ students have pre-enrolled. Enroll Now!';
+const announcementText = '2,500+ students have started enrolling. Join them!';
 const navSections = [
   {
     id: 'program',
