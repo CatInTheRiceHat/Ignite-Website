@@ -20,6 +20,10 @@ The managed Boost template override at `public/theme/boost/templates/block_myove
 
 Seasonal artwork comes from `public/backgrounds/Spring.jpg`, `Summer.jpg`, `Fall.jpg`, and `Winter.jpg`. Deployment publishes immutable copies under Moodle's `ignite-assets` directory and verifies their checksums before updating settings. Both authentication screens use **Europe/London** time, including British Summer Time: spring begins March 1, summer June 1, fall September 1, and winter December 1, each at 00:00. The page checks at minute boundaries and when a tab returns to view, so an open page can switch without a reload. Old image versions remain available for configuration restores. Without JavaScript, the existing fall artwork is the fallback.
 
+## Site administration layout
+
+The live Boost theme uses two templates from `moodle/templates/` for the expandable settings directory. When replacing or upgrading Boost, copy `core/settings_link_page.mustache` and `ignite_admin_group.mustache` to the same relative paths under `public/theme/boost/templates/`, then run `php admin/cli/purge_caches.php --theme` as the web user. To restore the stock layout, remove those two overrides and purge the theme cache. These templates are deployed separately from `moodle:deploy`.
+
 ## Staff CSV imports
 
 The `local_ignite_staffimports` plugin, sourced from `moodle/local/ignite_staffimports`, defaults new accounts created through Moodle's **Upload users** CSV page to `ignite_course_developer` when their rows contain no explicit role, course, category, group, or cohort assignment. Existing roles and explicit assignments take precedence. Public sign-ups, manually added accounts, and profile updates are unaffected. The uploader must already have permission to upload users and assign Course Developer.

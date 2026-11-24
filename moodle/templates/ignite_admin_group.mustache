@@ -1,0 +1,12 @@
+{{! The native disclosure supports keyboard access and works without JavaScript. }}
+<details class="border rounded mb-2">
+    <summary class="px-3 py-2 fw-bold">{{text}}</summary>
+    <div class="px-3 pb-2">
+        {{#action}}<p class="mb-1"><a href="{{action}}">{{text}}</a></p>{{/action}}
+        <ul class="list-unstyled mb-0">
+            {{#children}}
+                {{> core/settings_link_page_single }}
+            {{/children}}
+        </ul>
+    </div>
+</details>

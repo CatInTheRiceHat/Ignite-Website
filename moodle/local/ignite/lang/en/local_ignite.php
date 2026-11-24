@@ -392,5 +392,5 @@ $string['dash_dashboard']='Home';
 $string['dash_stuck']='A little stuck?';
 $string['dash_questions']='Questions are part of learning.';
 
-$string['nav_explore']='Explore Courses';
+$string['nav_explore']='Courses';
 $string['nav_hearth']='Hearth';

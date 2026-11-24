@@ -1,0 +1,41 @@
+{{!
+    Ignite's Boost override for Moodle's core/settings_link_page (GPL v3 or later).
+    Keep Moodle's tab targets and use its permission-filtered navigation nodes.
+}}
+{{^secondarynavigation}}
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" href="#link{{node.key}}" data-bs-toggle="tab" role="tab" aria-selected="true">{{node.text}}</a>
+        </li>
+        {{#node.children}}{{#display}}{{#children.count}}{{^is_short_branch}}
+            <li class="nav-item">
+                <a class="nav-link" href="#link{{key}}" data-bs-toggle="tab" role="tab" aria-selected="false" tabindex="-1">{{text}}</a>
+            </li>
+        {{/is_short_branch}}{{/children.count}}{{/display}}{{/node.children}}
+    </ul>
+{{/secondarynavigation}}
+<div class="tab-content mt-3 ignite-admin-directory">
+    <div class="tab-pane active" id="link{{node.key}}" {{^secondarynavigation}}role="tabpanel"{{/secondarynavigation}}>
+        <ul class="list-unstyled">
+            {{#node.children}}{{#display}}{{^children.count}}
+                <li class="mb-1"><a href="{{{action}}}">{{text}}</a></li>
+            {{/children.count}}{{/display}}{{/node.children}}
+        </ul>
+        {{#node.children}}{{#display}}{{#children.count}}{{#is_short_branch}}
+            {{> theme_boost/ignite_admin_group }}
+        {{/is_short_branch}}{{/children.count}}{{/display}}{{/node.children}}
+    </div>
+    {{#node.children}}{{#children.count}}
+        <div class="tab-pane" id="link{{key}}" {{^secondarynavigation}}role="tabpanel"{{/secondarynavigation}}>
+            {{#action}}<p><a href="{{action}}">{{text}}</a></p>{{/action}}
+            <ul class="list-unstyled">
+                {{#children}}{{#display}}{{^children.count}}
+                    <li class="mb-1"><a href="{{{action}}}">{{text}}</a></li>
+                {{/children.count}}{{/display}}{{/children}}
+            </ul>
+            {{#children}}{{#display}}{{#children.count}}
+                {{> theme_boost/ignite_admin_group }}
+            {{/children.count}}{{/display}}{{/children}}
+        </div>
+    {{/children.count}}{{/node.children}}
+</div>
