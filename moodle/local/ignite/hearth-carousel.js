@@ -5,23 +5,12 @@ for (const carousel of document.querySelectorAll('.hearth-carousel')) {
     const controls = carousel.querySelector('.hearth-carousel__controls');
     const [previous, next] = controls.querySelectorAll('button');
     const status = carousel.querySelector('[role="status"]');
-    let activeIndex = -1;
-
     const rtl = getComputedStyle(viewport).direction === 'rtl';
-    // Measure the card positions so navigation includes the gap and follows viewport resizes.
-    const offset = slide => slide.offsetLeft - slides[0].offsetLeft;
-    function update() {
-        const index = slides.reduce((nearest, slide, i) =>
-            Math.abs(offset(slide) - viewport.scrollLeft) < Math.abs(offset(slides[nearest]) - viewport.scrollLeft)
-                ? i : nearest, 0);
-        if (activeIndex === index) {
-            return;
-        }
+    let activeIndex = 0;
+
+    function show(index) {
         activeIndex = index;
-        slides.forEach((slide, i) => {
-            slide.inert = i !== index;
-            slide.setAttribute('aria-hidden', String(i !== index));
-        });
+        slides.forEach((slide, i) => { slide.hidden = i !== index; });
         setControl(previous, slides[index - 1]?.dataset.previous);
         setControl(next, slides[index + 1]?.dataset.next);
         const name = slides[index].querySelector('h3').textContent;
@@ -39,8 +28,7 @@ for (const carousel of document.querySelectorAll('.hearth-carousel')) {
             return;
         }
         viewport.focus({ preventScroll: true });
-        viewport.scrollLeft = offset(slides[index]);
-        update();
+        show(index);
     }
     controls.addEventListener('click', event => {
         const button = event.target.closest('button');
@@ -58,12 +46,23 @@ for (const carousel of document.querySelectorAll('.hearth-carousel')) {
             move((event.key === 'ArrowRight') !== rtl ? 1 : -1);
         }
     });
-    function reset() {
-        viewport.scrollLeft = 0;
-        update();
-    }
-    viewport.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('pageshow', reset);
-    reset();
+    let touchStart;
+    viewport.addEventListener('touchstart', event => {
+        touchStart = event.touches.length === 1 ? event.touches[0] : null;
+    }, { passive: true });
+    viewport.addEventListener('touchend', event => {
+        if (touchStart && event.touches.length === 0) {
+            const end = event.changedTouches[0];
+            const dx = end.clientX - touchStart.clientX;
+            const dy = end.clientY - touchStart.clientY;
+            if (Math.abs(dx) >= 40 && Math.abs(dx) > Math.abs(dy)) {
+                move((dx < 0) !== rtl ? 1 : -1);
+            }
+        }
+        touchStart = null;
+    });
+    viewport.addEventListener('touchcancel', () => { touchStart = null; });
+    window.addEventListener('pageshow', () => show(0));
+    show(0);
     controls.hidden = slides.length < 2;
 }

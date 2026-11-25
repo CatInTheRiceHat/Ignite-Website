@@ -58,7 +58,7 @@
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
-    max-width: 51rem;
+    min-height: calc(100svh - 2 * clamp(1rem, 3vw, 2rem));
     margin-inline: auto;
     color: #352b29;
 }
@@ -75,24 +75,29 @@
     border-radius: 1rem;
 }
 .hearth-carousel__viewport::-webkit-scrollbar { display: none; }
+.hearth-carousel__viewport:has(> [hidden]) {
+    display: block;
+    overflow: visible;
+    touch-action: pan-y pinch-zoom;
+}
 .hearth-slide {
     box-sizing: border-box;
     min-width: 0;
     scroll-snap-align: start;
     scroll-snap-stop: always;
     padding: clamp(8px, 2vw, 24px);
-    background: #fff;
-    border: 1px solid #d8cdc0;
-    border-top: 4px solid var(--accent);
-    border-radius: 1rem;
 }
 /* Intrinsic pixel heights of the 1320px-wide crest strips. */
 .hearth-slide--forgelings {
+    --wing-lift: 25px;
+    padding-top: var(--wing-lift);
     --top-height: 286; --bottom-height: 236;
+    --medal-offset: 15px;
     --box: #ffe5dd; --button: #f5a49b; --accent: #d97e77;
 }
 .hearth-slide--candlelings {
     --top-height: 197; --bottom-height: 217;
+    --medal-offset: -10px;
     --box: #fff0dc; --button: #ffbc87; --accent: #e99a60;
 }
 .hearth-slide--lanternlings {
@@ -100,11 +105,11 @@
     --box: #fff7d8; --button: #f8db8a; --accent: #ddb75d;
 }
 .hearth-slide__content {
+    --card-radius: clamp(16px, 2vw, 24px);
+    --crest-drop: 15px;
     display: grid;
     /* Each outer track reserves 5% of the illustration width for the crest tips. */
     grid-template-columns: 1fr minmax(0, 20fr) 1fr;
-    max-width: 660px;
-    margin-inline: auto;
 }
 .hearth-slide__content > * { grid-column: 2; }
 .hearth-slide__crest, .hearth-slide__illustration {
@@ -112,20 +117,40 @@
     width: 100%;
     height: auto;
 }
-.hearth-slide__content > .hearth-slide__crest { grid-column: 1 / -1; z-index: 1; }
-.hearth-slide__crest--top {
-    aspect-ratio: 1320 / var(--top-height);
+.hearth-slide__content > :is(.hearth-slide__top-border, .hearth-slide__crest) { grid-column: 1 / -1; z-index: 1; }
+.hearth-slide__top-border {
+    position: relative;
     margin-bottom: calc(-50% * var(--top-height) / 1320);
 }
+.hearth-slide__crest--top { aspect-ratio: 1320 / var(--top-height); }
+.hearth-slide--forgelings .hearth-slide__crest--top { transform: translateY(calc(-1 * var(--wing-lift))); }
+.hearth-slide__medal {
+    position: absolute;
+    top: calc(50% + var(--medal-offset, 0px));
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 14%;
+    height: auto;
+}
+.hearth-slide--candlelings .hearth-slide__top-border { transform: translateY(10px); }
 .hearth-slide__crest--bottom {
+    grid-row: 2;
+    align-self: end;
     aspect-ratio: 1320 / var(--bottom-height);
-    margin-top: calc(-50% * var(--bottom-height) / 1320);
+    transform: translateY(calc(4% + var(--crest-drop)));
+}
+.hearth-slide__illustration {
+    grid-row: 2;
+    border-radius: var(--card-radius) var(--card-radius) 0 0;
 }
 .hearth-slide__description {
-    margin-top: 16px;
-    padding: clamp(14px, 2vw, 22px);
+    --copy-padding: clamp(14px, 2vw, 22px);
+    padding: var(--copy-padding);
+    /* The crest is 110% of the box width. Leave room for its overhang above the title. */
+    padding-top: max(var(--copy-padding), calc(4.4% * var(--bottom-height) / 1320 + var(--crest-drop) + 4px));
     border: 1px solid var(--accent);
-    border-radius: .85rem;
+    border-top: 0;
+    border-radius: 0 0 var(--card-radius) var(--card-radius);
     background: var(--box);
     overflow-wrap: anywhere;
 }
@@ -137,11 +162,12 @@
 .hearth-slide__description p { margin: 0; color: inherit; line-height: 1.5; }
 .hearth-slide form { display: flex; justify-content: center; margin: 40px 0 0; }
 .hearth-carousel button { min-height: 44px; color: #352b29; box-shadow: none; font: 700 1rem/1.4 Nunito, sans-serif; cursor: pointer; }
-.hearth-slide__join {
+.hearth-carousel .hearth-slide__join {
     padding: .6rem 1.5rem;
     border: 2px solid var(--accent);
     border-radius: .7rem;
     background: var(--button);
+    box-shadow: 0 2px 0 var(--accent), 0 6px 12px -4px #51362e55;
 }
 .hearth-carousel__controls:not([hidden]) { display: contents; }
 .hearth-carousel__controls button {
@@ -149,21 +175,28 @@
     width: 44px;
     height: 44px;
     padding: 0;
-    border: 1px solid #a99a8f;
+    border: 1px solid #513b33;
     border-radius: 50%;
-    background: #fff;
+    background: #513b33;
+    color: #fff;
     font-size: 1.4rem;
 }
 .hearth-carousel__controls [data-step="-1"] { grid-column: 1; }
 .hearth-carousel__controls [data-step="1"] { grid-column: 3; }
 [dir="rtl"] .hearth-carousel__controls button > [aria-hidden] { display: inline-block; transform: scaleX(-1); }
-.hearth-carousel__controls button:disabled { opacity: .55; cursor: default; }
+.hearth-carousel__controls button:disabled { background: #81706a; border-color: #81706a; cursor: default; }
 .hearth-carousel button:enabled:hover { border-color: #352b29; }
 .hearth-carousel :is(button, [tabindex]):focus-visible { outline: 3px solid #214f9b; outline-offset: 2px; }
 @media (min-width: 601px) {
-    /* Leave space for the card padding and both controls around the artwork. */
-    .hearth-carousel { column-gap: .5rem; max-width: min(51rem, calc(53svh + 9.75rem)); }
+    /* Fit the landscape illustration while leaving room for the description and Join action. */
+    .hearth-carousel { column-gap: .5rem; max-width: clamp(46rem, calc(155svh - 18rem), 85rem); }
 }
 @media (max-width: 600px) {
+    .hearth-carousel { margin-inline: -.75rem; }
+    .hearth-slide { padding-inline: 0; }
     .hearth-slide form { margin-top: 32px; }
+}
+@media (max-width: 360px) {
+    .hearth-slide__description { --copy-padding: .65rem; }
+    .hearth-carousel .hearth-slide__join { padding-inline: .75rem; }
 }

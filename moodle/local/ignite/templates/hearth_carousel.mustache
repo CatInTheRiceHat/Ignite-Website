@@ -5,8 +5,12 @@
                 data-previous="{{#str}}previoushearthnamed, local_ignite, {{name}}{{/str}}"
                 data-next="{{#str}}nexthearthnamed, local_ignite, {{name}}{{/str}}">
             <div class="hearth-slide__content">
-                <img class="hearth-slide__crest hearth-slide__crest--top" src="{{topcrest}}" alt="">
-                <img class="hearth-slide__illustration" src="{{art}}" alt="" width="640" height="357">
+                <div class="hearth-slide__top-border">
+                    <img class="hearth-slide__crest hearth-slide__crest--top" src="{{topcrest}}" alt="">
+                    <img class="hearth-slide__medal" src="{{medal}}" alt="" width="384" height="384">
+                </div>
+                <img class="hearth-slide__illustration" src="{{art}}" alt="" width="640" height="357"
+                     srcset="{{art}} 640w, {{artlarge}} 1920w" sizes="(max-width: 600px) calc(91vw - 5rem), min(90vw, 120svh, 70rem)">
                 <img class="hearth-slide__crest hearth-slide__crest--bottom" src="{{bottomcrest}}" alt="">
                 <div class="hearth-slide__description">
                     <h3 id="hearth-preview-{{team}}">{{name}}</h3>
