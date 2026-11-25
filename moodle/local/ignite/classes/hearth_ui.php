@@ -62,7 +62,9 @@ final class hearth_ui {
             }
             $slides[] = ['id' => $id, 'team' => $team, 'name' => $available[$id]->name,
                 'description' => get_string('preview_' . $team, 'local_ignite'),
-                'art' => $OUTPUT->image_url('campfire/' . $team, 'local_ignite')->out(false)];
+                'art' => $OUTPUT->image_url('campfire/' . $team, 'local_ignite')->out(false),
+                'topcrest' => $OUTPUT->image_url('campfire/' . $team . '-top', 'local_ignite')->out(false),
+                'bottomcrest' => $OUTPUT->image_url('campfire/' . $team . '-bottom', 'local_ignite')->out(false)];
         }
         return $slides;
     }

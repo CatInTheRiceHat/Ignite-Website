@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 
 const fixture = JSON.parse(process.env.IGNITE_BOARD_DATA || '{}') as {
   user: string; solo: string; joiner: string; cmid: number; manualcmid: number; past: string; empty: string;
+  teamids: Record<string, number>;
 };
 test.skip(!fixture.user, 'Requires the private monthly Campfire fixture.');
 test.use({ baseURL: 'http://127.0.0.1:8796' });
@@ -62,13 +63,16 @@ test('teamless activity completion links directly to the three Campfire choices'
   const chooser = page.getByRole('region', { name: 'Browse Hearths' });
   const join = chooser.getByRole('button', { name: /^Join / });
   await expect(join).toHaveText('Join Forgelings');
+  await expect(join).toHaveAttribute('value', String(fixture.teamids.forgelings));
   await expect(chooser.getByRole('button', { name: 'Previous Hearth' })).toBeDisabled();
-  await chooser.getByRole('button', { name: 'Next Hearth' }).click();
+  await chooser.getByRole('button', { name: 'Next: Candlelings' }).click();
   await expect(join).toHaveText('Join Candlelings');
-  await chooser.locator('.hearth-carousel__viewport').press('ArrowDown');
+  await expect(join).toHaveAttribute('value', String(fixture.teamids.candlelings));
+  await chooser.locator('.hearth-carousel__viewport').press('ArrowRight');
   await expect(join).toHaveText('Join Lanternlings');
+  await expect(join).toHaveAttribute('value', String(fixture.teamids.lanternlings));
   await expect(chooser.getByRole('button', { name: 'Next Hearth' })).toBeDisabled();
-  await chooser.getByRole('button', { name: 'Previous Hearth' }).click();
+  await chooser.getByRole('button', { name: 'Previous: Candlelings' }).click();
   await expect(join).toHaveText('Join Candlelings');
   await page.reload();
   await expect(join).toHaveText('Join Forgelings');
@@ -89,8 +93,6 @@ test('choose a Campfire and support it through an eligible activity', async ({ p
   await intro.getByRole('link', { name: 'View standings and choose later' }).click();
   await expect(page.locator('#campfire-standings')).toBeInViewport();
   await intro.getByRole('button', { name: 'Join Forgelings' }).click();
-  await expect(page.getByRole('heading', { name: 'Join Forgelings?' })).toBeVisible();
-  await page.getByRole('button', { name: 'Confirm my choice' }).click();
   await expect(page).toHaveURL(/\/local\/ignite\/passport\.php$/);
   await expect(intro).toHaveCount(0);
   const forge = page.locator('.campfire-team').filter({ hasText: 'Forgelings' });

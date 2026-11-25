@@ -5,30 +5,41 @@ for (const carousel of document.querySelectorAll('.hearth-carousel')) {
     const controls = carousel.querySelector('.hearth-carousel__controls');
     const [previous, next] = controls.querySelectorAll('button');
     const status = carousel.querySelector('[role="status"]');
+    let activeIndex = -1;
 
-    // Each slide fills one viewport. Its own scrolling area keeps long copy and the Join action together.
-    const position = () => Math.min(slides.length - 1, Math.max(0, Math.round(viewport.scrollTop / viewport.clientHeight)));
+    const rtl = getComputedStyle(viewport).direction === 'rtl';
+    // Measure the card positions so navigation includes the gap and follows viewport resizes.
+    const offset = slide => slide.offsetLeft - slides[0].offsetLeft;
     function update() {
-        const index = position();
+        const index = slides.reduce((nearest, slide, i) =>
+            Math.abs(offset(slide) - viewport.scrollLeft) < Math.abs(offset(slides[nearest]) - viewport.scrollLeft)
+                ? i : nearest, 0);
+        if (activeIndex === index) {
+            return;
+        }
+        activeIndex = index;
         slides.forEach((slide, i) => {
             slide.inert = i !== index;
             slide.setAttribute('aria-hidden', String(i !== index));
         });
-        previous.disabled = index === 0;
-        next.disabled = index === slides.length - 1;
+        setControl(previous, slides[index - 1]?.dataset.previous);
+        setControl(next, slides[index + 1]?.dataset.next);
         const name = slides[index].querySelector('h3').textContent;
         if (status.textContent !== name) {
             status.textContent = name;
         }
     }
+    function setControl(button, label) {
+        button.disabled = !label;
+        button.querySelector('.hearth-carousel__label').textContent = label || button.dataset.default;
+    }
     function move(step) {
-        const index = position() + step;
+        const index = activeIndex + step;
         if (index < 0 || index >= slides.length) {
             return;
         }
         viewport.focus({ preventScroll: true });
-        slides[index].scrollTop = 0;
-        viewport.scrollTop = index * viewport.clientHeight;
+        viewport.scrollLeft = offset(slides[index]);
         update();
     }
     controls.addEventListener('click', event => {
@@ -37,30 +48,18 @@ for (const carousel of document.querySelectorAll('.hearth-carousel')) {
             move(Number(button.dataset.step));
         }
     });
-    document.addEventListener('keydown', event => {
+    carousel.addEventListener('keydown', event => {
         if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey ||
-                !['ArrowUp', 'ArrowDown'].includes(event.key)) {
-            return;
-        }
-        if (!carousel.contains(event.target) && !(event.target === document.body &&
-                carousel.closest('.ignite-hearths'))) {
+                !['ArrowLeft', 'ArrowRight'].includes(event.key)) {
             return;
         }
         event.preventDefault();
-        const slide = slides[position()];
-        const step = event.key === 'ArrowDown' ? 1 : -1;
-        const remaining = step > 0 ? slide.scrollHeight - slide.clientHeight - slide.scrollTop : slide.scrollTop;
-        if (remaining > 1) {
-            slide.scrollTop += step * Math.min(remaining, Math.max(40, slide.clientHeight / 2));
-        } else if (!event.repeat) {
-            move(step);
+        if (!event.repeat) {
+            move((event.key === 'ArrowRight') !== rtl ? 1 : -1);
         }
     });
     function reset() {
-        viewport.scrollTop = 0;
-        for (const slide of slides) {
-            slide.scrollTop = 0;
-        }
+        viewport.scrollLeft = 0;
         update();
     }
     viewport.addEventListener('scroll', update, { passive: true });

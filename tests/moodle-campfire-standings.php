@@ -123,5 +123,5 @@ check($progress->xp === 55 && $progress->level === 1 && $progress->withinlevel =
 check(xp::receipts([$cmids[0]])[$cmids[0]]['label'] === '+20 Regular XP · +10 Team XP for the Candlelings',
     'The completion receipt names the team that received the original credit');
 echo 'BOARD_FIXTURE=' . json_encode(['user' => $users['switch']->username, 'solo' => $users['solo']->username,
-    'joiner' => $users['joiner']->username,
+    'joiner' => $users['joiner']->username, 'teamids' => $ids,
     'cmid' => $cmids[0], 'manualcmid' => $cmids[2], 'past' => $past->format('Y-m'), 'empty' => $empty->format('Y-m')]) . "\n";

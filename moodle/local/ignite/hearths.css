@@ -54,38 +54,116 @@
     100% { opacity: 0; transform: scale(1.1) rotate(10deg); }
 }
 
-.hearth-carousel { position: relative; margin-inline: auto; max-width: 45rem; background: #fff; border: 1px solid #d8cdc0; border-radius: .9rem; }
+.hearth-carousel {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    max-width: 51rem;
+    margin-inline: auto;
+    color: #352b29;
+}
 .hearth-carousel__viewport {
-    height: min(43rem, 72vh); height: min(43rem, 72svh);
-    overflow-y: auto; scroll-snap-type: y mandatory; scrollbar-width: none;
+    grid-area: 1 / 2;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    gap: 1rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    border-radius: 1rem;
 }
 .hearth-carousel__viewport::-webkit-scrollbar { display: none; }
 .hearth-slide {
-    box-sizing: border-box; height: 100%; overflow-y: auto;
-    scroll-snap-align: start; scroll-snap-stop: always;
-    padding: clamp(.8rem, 2.5vw, 1.8rem); align-content: safe center;
+    box-sizing: border-box;
+    min-width: 0;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    padding: clamp(8px, 2vw, 24px);
+    background: #fff;
+    border: 1px solid #d8cdc0;
+    border-top: 4px solid var(--accent);
+    border-radius: 1rem;
 }
-.hearth-slide--forgelings { --edge: #a53426; --trim: #e47b62; --ink: #922c20; }
-.hearth-slide--candlelings { --edge: #bc5c1d; --trim: #ffad63; --ink: #924207; }
-.hearth-slide--lanternlings { --edge: #b98418; --trim: #f5c950; --ink: #795511; }
-.hearth-slide__content { max-width: 37rem; margin-inline: auto; }
-.hearth-slide__frame {
-    padding: .48rem; border: 3px double var(--edge);
-    background: radial-gradient(circle at center, var(--edge) 2px, transparent 3px) left top / .48rem .48rem no-repeat,
-        radial-gradient(circle at center, var(--edge) 2px, transparent 3px) right top / .48rem .48rem no-repeat,
-        radial-gradient(circle at center, var(--edge) 2px, transparent 3px) left bottom / .48rem .48rem no-repeat,
-        radial-gradient(circle at center, var(--edge) 2px, transparent 3px) right bottom / .48rem .48rem no-repeat, var(--trim);
+/* Intrinsic pixel heights of the 1320px-wide crest strips. */
+.hearth-slide--forgelings {
+    --top-height: 286; --bottom-height: 236;
+    --box: #ffe5dd; --button: #f5a49b; --accent: #d97e77;
 }
-.hearth-slide__frame img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; background: var(--edge); }
-.hearth-carousel .hearth-slide h3 { margin: 1rem 0 .5rem; font: 700 clamp(1.5rem, 4vw, 2rem)/1.15 Poppins, sans-serif; color: var(--ink); }
-.hearth-slide p { margin: 0 0 1rem; color: #302b27; line-height: 1.55; }
-.hearth-carousel button { box-shadow: none; color: #fff; font-weight: 700; cursor: pointer; }
-.hearth-slide__join { font: 700 1rem/1.4 Nunito, sans-serif; min-height: 44px; padding: .5rem 1.25rem; border: 2px solid var(--ink); border-radius: .65rem; background: var(--ink); }
-.hearth-carousel__controls:not([hidden]) { display: flex; justify-content: center; gap: .5rem; padding: .5rem; }
-.hearth-carousel__controls button { width: 44px; height: 44px; background: #42382f; border: 0; border-radius: 50%; font: 700 1.5rem/1 sans-serif; }
-.hearth-carousel__controls button:disabled { background: #746e69; cursor: default; }
+.hearth-slide--candlelings {
+    --top-height: 197; --bottom-height: 217;
+    --box: #fff0dc; --button: #ffbc87; --accent: #e99a60;
+}
+.hearth-slide--lanternlings {
+    --top-height: 237; --bottom-height: 269;
+    --box: #fff7d8; --button: #f8db8a; --accent: #ddb75d;
+}
+.hearth-slide__content {
+    display: grid;
+    /* Each outer track reserves 5% of the illustration width for the crest tips. */
+    grid-template-columns: 1fr minmax(0, 20fr) 1fr;
+    max-width: 660px;
+    margin-inline: auto;
+}
+.hearth-slide__content > * { grid-column: 2; }
+.hearth-slide__crest, .hearth-slide__illustration {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+.hearth-slide__content > .hearth-slide__crest { grid-column: 1 / -1; z-index: 1; }
+.hearth-slide__crest--top {
+    aspect-ratio: 1320 / var(--top-height);
+    margin-bottom: calc(-50% * var(--top-height) / 1320);
+}
+.hearth-slide__crest--bottom {
+    aspect-ratio: 1320 / var(--bottom-height);
+    margin-top: calc(-50% * var(--bottom-height) / 1320);
+}
+.hearth-slide__description {
+    margin-top: 16px;
+    padding: clamp(14px, 2vw, 22px);
+    border: 1px solid var(--accent);
+    border-radius: .85rem;
+    background: var(--box);
+    overflow-wrap: anywhere;
+}
+.hearth-carousel .hearth-slide h3 {
+    margin: 0 0 .45rem;
+    color: inherit;
+    font: 700 clamp(1.5rem, 3vw, 2rem)/1.15 Poppins, sans-serif;
+}
+.hearth-slide__description p { margin: 0; color: inherit; line-height: 1.5; }
+.hearth-slide form { display: flex; justify-content: center; margin: 40px 0 0; }
+.hearth-carousel button { min-height: 44px; color: #352b29; box-shadow: none; font: 700 1rem/1.4 Nunito, sans-serif; cursor: pointer; }
+.hearth-slide__join {
+    padding: .6rem 1.5rem;
+    border: 2px solid var(--accent);
+    border-radius: .7rem;
+    background: var(--button);
+}
+.hearth-carousel__controls:not([hidden]) { display: contents; }
+.hearth-carousel__controls button {
+    grid-row: 1;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid #a99a8f;
+    border-radius: 50%;
+    background: #fff;
+    font-size: 1.4rem;
+}
+.hearth-carousel__controls [data-step="-1"] { grid-column: 1; }
+.hearth-carousel__controls [data-step="1"] { grid-column: 3; }
+[dir="rtl"] .hearth-carousel__controls button > [aria-hidden] { display: inline-block; transform: scaleX(-1); }
+.hearth-carousel__controls button:disabled { opacity: .55; cursor: default; }
+.hearth-carousel button:enabled:hover { border-color: #352b29; }
 .hearth-carousel :is(button, [tabindex]):focus-visible { outline: 3px solid #214f9b; outline-offset: 2px; }
-@media (min-width: 52rem) {
-    .hearth-carousel { padding-right: 3.75rem; }
-    .hearth-carousel__controls:not([hidden]) { position: absolute; right: .25rem; top: 50%; transform: translateY(-50%); flex-direction: column; }
+@media (min-width: 601px) {
+    /* Leave space for the card padding and both controls around the artwork. */
+    .hearth-carousel { column-gap: .5rem; max-width: min(51rem, calc(53svh + 9.75rem)); }
+}
+@media (max-width: 600px) {
+    .hearth-slide form { margin-top: 32px; }
 }

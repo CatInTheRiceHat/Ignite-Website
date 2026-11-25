@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($available[$selected])) {
         throw new moodle_exception('invalidhearth', 'local_ignite');
     }
-    if ($confirm) {
+    if ($confirm || (!$current && optional_param('firstjoin', 0, PARAM_BOOL))) {
         \local_ignite\houses::set_current($selected);
         redirect($return, get_string('representingcampfire', 'local_ignite', $available[$selected]->name), null, \core\output\notification::NOTIFY_SUCCESS);
     }
@@ -36,7 +36,7 @@ $data = ['action' => $PAGE->url->out(false), 'sesskey' => sesskey(), 'cards' => 
     'hascards' => (bool)$available, 'switching' => (bool)$current,
     'challenge' => $challenge ? $challenge->name : '',
     'continueurl' => (new moodle_url('/local/ignite/index.php'))->out(false)];
-// Confirmation is a separate POST step; a GET can never join/switch.
+// Existing members confirm switches, including submissions from a stale first-join preview.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $selected && !$confirm) {
     $data['confirmation'] = true;
     $data['selected'] = $selected;
