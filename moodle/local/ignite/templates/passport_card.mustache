@@ -3,7 +3,7 @@
     Native badge collectible. Example context (json):
     {"badgeid":1,"name":"First Spark","statuslabel":"Not earned","category":"Starter","placeholder":true,"detailurl":"badge.php?id=1"}
 }}
-<article class="ignite-passport__card" data-badgeid="{{badgeid}}" data-state="{{state}}">
+<article class="ignite-passport__card{{#iscup}} campfire-collectible{{/iscup}}" data-badgeid="{{badgeid}}" data-state="{{state}}">
     <div class="ignite-passport__art">
         {{#imageurl}}<img src="{{imageurl}}" alt="" width="144" height="144" loading="lazy">{{/imageurl}}
         {{#placeholder}}<span class="ignite-passport__placeholder">{{#str}}passport_artplaceholder, local_ignite{{/str}}</span>{{/placeholder}}

@@ -148,16 +148,16 @@ const Home = () => {
           </BlurFade>
           <BlurFade delay={0.15}>
             <p className="text-lg sm:text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto font-medium leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
-              Ignite’s 50+ interns are building free live and independent courses in practical life skills. Student pre-enrollment is now open. Find what sparks your curiosity.
+              Ignite’s 50+ interns are building free live and independent courses in practical life skills. 5,000+ students have started enrolling. Find what sparks your curiosity.
             </p>
           </BlurFade>
           <BlurFade delay={0.25}>
             <div className="flex flex-wrap gap-4 justify-center">
-              <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex w-full max-w-xs items-center justify-center gap-2 bg-[var(--primary-orange)] text-white px-8 py-5 rounded-full hover:scale-105 active:scale-95 transition-all shadow-lg sm:w-auto sm:px-10 font-sans font-bold text-button">
+              <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex w-full max-w-xs items-center justify-center gap-2 bg-[var(--primary-orange-dark)] text-white px-8 py-5 rounded-full hover:scale-105 active:scale-95 transition-transform sm:w-auto sm:px-10 font-sans font-bold text-button">
                 Enroll Now
                 <RedirectArrow />
               </a>
-              <Link to="/program" className="w-full max-w-xs bg-white text-[var(--primary-orange)] border-2 border-[var(--primary-orange)] px-8 py-5 rounded-full hover:bg-orange-50 transition-all sm:w-auto sm:px-10 font-sans font-bold text-button">
+              <Link to="/program" className="w-full max-w-xs bg-[var(--text-charcoal)] text-white px-8 py-5 rounded-full hover:scale-105 active:scale-95 transition-transform sm:w-auto sm:px-10 font-sans font-bold text-button">
                 Explore Course Plans
               </Link>
             </div>

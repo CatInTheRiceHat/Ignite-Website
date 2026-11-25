@@ -1,23 +1,28 @@
 <section id="campfire-standings" aria-labelledby="campfire-board-title">
-    <h2 id="campfire-board-title">{{#str}}monthlystandings, local_ignite{{/str}}</h2>
     <div class="campfire-month">
-        <h3>{{month}}</h3>
-        {{#archives}}<nav aria-label="{{#str}}standingsmonths, local_ignite{{/str}}">
-            {{#previousurl}}<a rel="prev" href="{{.}}">{{#str}}previousmonth, local_ignite{{/str}}</a>{{/previousurl}}
-            {{#nexturl}}<a rel="next" href="{{.}}">{{#str}}nextmonth, local_ignite{{/str}}</a>{{/nexturl}}
-        </nav>{{/archives}}
+        <div class="campfire-heading">
+            <h2 id="campfire-board-title">{{#str}}monthlystandings, local_ignite{{/str}}</h2>
+            <h3>{{month}}</h3>
+            {{#archives}}<nav aria-label="{{#str}}standingsmonths, local_ignite{{/str}}">
+                {{#previousurl}}<a rel="prev" href="{{.}}">{{#str}}previousmonth, local_ignite{{/str}}</a>{{/previousurl}}
+                {{#nexturl}}<a rel="next" href="{{.}}">{{#str}}nextmonth, local_ignite{{/str}}</a>{{/nexturl}}
+            </nav>{{/archives}}
+        </div>
+        {{#cupart}}<span class="campfire-cup-art" aria-hidden="true"><img src="{{.}}" alt="" width="104" height="106"></span>{{/cupart}}
     </div>
     {{#reviewneeded}}<p>{{#str}}cupunderreview, local_ignite{{/str}}</p>{{/reviewneeded}}
     {{#awaitingclose}}<p>{{#str}}cupawaiting, local_ignite{{/str}}</p>{{/awaitingclose}}
     <ol class="campfire-ranks">
-        {{#rows}}<li class="campfire-team" value="{{rank}}">
+        {{#rows}}<li class="campfire-team{{#trophy}} campfire-team--winner{{/trophy}}" value="{{rank}}">
             <img src="{{art}}" alt="" width="640" height="357">
+            <span class="campfire-rank">{{#str}}teamrank, local_ignite, {{rank}}{{/str}}</span>
             <div class="campfire-score">
-                <span>{{#str}}teamrank, local_ignite, {{rank}}{{/str}}</span>
                 <h4>{{name}}</h4>
+                {{#representing}}<p class="campfire-supporting">{{#str}}yourcampfire, local_ignite{{/str}}</p>{{/representing}}
                 <strong>{{#str}}teamxptotal, local_ignite, {{total}}{{/str}}</strong>
                 <p>{{#str}}yourteamxp, local_ignite, {{own}}{{/str}}</p>
-                {{#trophy}}<strong><span aria-hidden="true">🏆</span> {{.}}</strong>{{/trophy}}
+                {{#representing}}<a class="campfire-learn" href="{{learnurl}}">{{#str}}learnforteam, local_ignite{{/str}}</a>{{/representing}}
+                {{#trophy}}<strong class="campfire-cup-ribbon"><span aria-hidden="true">🏆</span> {{.}}</strong>{{/trophy}}
             </div>
         </li>{{/rows}}
     </ol>

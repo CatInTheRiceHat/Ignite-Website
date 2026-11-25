@@ -65,7 +65,7 @@ $generator = new testing_data_generator();
 $tag = 'campfire_' . bin2hex(random_bytes(4));
 $course = $generator->create_course(['shortname' => $tag, 'enablecompletion' => 1]);
 $users = [];
-foreach (['switch', 'other', 'solo'] as $key) {
+foreach (['switch', 'other', 'solo', 'joiner'] as $key) {
     $user = $generator->create_user(['username' => $tag . '_' . $key, 'password' => 'FixtureOnly!4829aZ',
         'firstname' => 'Campfire', 'lastname' => $key, 'policyagreed' => 1]);
     $generator->enrol_user($user->id, $course->id, 'student');
@@ -123,4 +123,5 @@ check($progress->xp === 55 && $progress->level === 1 && $progress->withinlevel =
 check(xp::receipts([$cmids[0]])[$cmids[0]]['label'] === '+20 Regular XP · +10 Team XP for the Candlelings',
     'The completion receipt names the team that received the original credit');
 echo 'BOARD_FIXTURE=' . json_encode(['user' => $users['switch']->username, 'solo' => $users['solo']->username,
+    'joiner' => $users['joiner']->username,
     'cmid' => $cmids[0], 'manualcmid' => $cmids[2], 'past' => $past->format('Y-m'), 'empty' => $empty->format('Y-m')]) . "\n";

@@ -41,7 +41,7 @@ final class campfire {
     }
 
     public static function standings(string $month = ''): array {
-        global $DB, $OUTPUT;
+        global $DB, $OUTPUT, $CFG;
         $userid = access::learner('passport');
         $now = time();
         $current = self::period($now);
@@ -66,17 +66,8 @@ final class campfire {
         foreach ($ids as $code => $id) {
             $scores[$code] ??= (int)($totals[$id]->total ?? 0);
         }
-        $rows = [];
-        foreach (self::ranks($scores) as $code => $rank) {
-            $champion = $published && $rank === 1 && $scores[$code] > 0;
-            $rows[] = ['name' => self::TEAMS[$code], 'halves' => $scores[$code], 'rank' => $rank,
-                'champion' => $champion, 'trophy' => $champion ? campfire_cup::title($params['month']) : '',
-                'total' => xp::team_points($scores[$code]), 'own' => xp::team_points((int)($totals[$ids[$code]]->own ?? 0)),
-                'art' => $OUTPUT->image_url('campfire/' . $code, 'local_ignite')->out(false)];
-        }
-        $url = static fn($date) => (new \moodle_url('/local/ignite/passport.php',
-            $date == $current ? [] : ['month' => $date->format('Y-m')], 'campfire-standings'))->out(false);
         $chooseurl = '';
+        $houseid = 0;
         if (access::enabled('houses')) {
             $houseid = $DB->get_field('local_ignite_member', 'houseid', ['userid' => $userid]);
             if (!in_array((int)$houseid, $ids, true)) {
@@ -84,7 +75,20 @@ final class campfire {
                     ['returnurl' => '/local/ignite/passport.php']))->out(false);
             }
         }
+        $rows = [];
+        foreach (self::ranks($scores) as $code => $rank) {
+            $champion = $published && $rank === 1 && $scores[$code] > 0;
+            $rows[] = ['name' => self::TEAMS[$code], 'halves' => $scores[$code], 'rank' => $rank,
+                'representing' => $period == $current && (int)$houseid === (int)$ids[$code],
+                'champion' => $champion, 'trophy' => $champion ? campfire_cup::title($params['month']) : '',
+                'total' => xp::team_points($scores[$code]), 'own' => xp::team_points((int)($totals[$ids[$code]]->own ?? 0)),
+                'art' => $OUTPUT->image_url('campfire/' . $code, 'local_ignite')->out(false)];
+        }
+        $url = static fn($date) => (new \moodle_url('/local/ignite/passport.php',
+            $date == $current ? [] : ['month' => $date->format('Y-m')], 'campfire-standings'))->out(false);
         return ['chooseurl' => $chooseurl,
+            'learnurl' => (new \moodle_url(empty($CFG->enablemycourses) ? '/course/index.php' : '/my/courses.php'))->out(false),
+            'cupart' => $rows[0]['champion'] ? $OUTPUT->image_url('campfire/cup', 'local_ignite')->out(false) : '',
             'reviewneeded' => !empty($published->reviewneeded), 'awaitingclose' => $period < $current && !$published,
             'live' => $month === '', 'archives' => $current > $first,
             'rolloverseconds' => $current->modify('+1 month')->getTimestamp() - $now,

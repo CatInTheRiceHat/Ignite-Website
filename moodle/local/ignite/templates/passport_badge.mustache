@@ -6,7 +6,7 @@
 <div class="ignite-passport">
     <p><a href="{{passporturl}}">{{#str}}passport_back, local_ignite{{/str}}</a></p>
     {{#earned}}<p class="ignite-passport__celebration" role="status">{{#str}}passport_celebrate, local_ignite{{/str}}</p>{{/earned}}
-    <div class="ignite-passport__detail">
+    <div class="ignite-passport__detail{{#iscup}} campfire-collectible{{/iscup}}">
         <div class="ignite-passport__art ignite-passport__art--detail">
             {{#imageurl}}<img src="{{imageurl}}" alt="" width="240" height="240">{{/imageurl}}
             {{#placeholder}}<span class="ignite-passport__placeholder">{{#str}}passport_artplaceholder, local_ignite{{/str}}</span>{{/placeholder}}

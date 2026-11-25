@@ -1,0 +1,22 @@
+<div class="hearth-carousel" role="region" aria-label="{{#str}}browsehearths, local_ignite{{/str}}">
+    <div class="hearth-carousel__viewport" tabindex="0" role="group" aria-label="{{#str}}browsehearths, local_ignite{{/str}}">
+        {{#slides}}
+        <article class="hearth-slide hearth-slide--{{team}}" aria-labelledby="hearth-preview-{{team}}">
+            <div class="hearth-slide__content">
+                <div class="hearth-slide__frame"><img src="{{art}}" alt="" width="640" height="357"></div>
+                <h3 id="hearth-preview-{{team}}">{{name}}</h3>
+                <p>{{description}}</p>
+                <form method="post" action="{{action}}">
+                    <input type="hidden" name="sesskey" value="{{sesskey}}">
+                    <button class="hearth-slide__join" name="hearthid" value="{{id}}">{{#str}}joinhearthpreview, local_ignite, {{name}}{{/str}}</button>
+                </form>
+            </div>
+        </article>
+        {{/slides}}
+    </div>
+    <div class="hearth-carousel__controls" hidden>
+        <button type="button" data-step="-1" aria-label="{{#str}}previoushearth, local_ignite{{/str}}"><span aria-hidden="true">↑</span></button>
+        <button type="button" data-step="1" aria-label="{{#str}}nexthearth, local_ignite{{/str}}"><span aria-hidden="true">↓</span></button>
+    </div>
+    <span class="sr-only visually-hidden" role="status"></span>
+</div>

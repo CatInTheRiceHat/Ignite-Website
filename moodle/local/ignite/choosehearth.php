@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($confirm) {
         \local_ignite\houses::set_current($selected);
-        redirect($return, get_string('hearthjoined', 'local_ignite'), null, \core\output\notification::NOTIFY_SUCCESS);
+        redirect($return, get_string('representingcampfire', 'local_ignite', $available[$selected]->name), null, \core\output\notification::NOTIFY_SUCCESS);
     }
 }
 $data = ['action' => $PAGE->url->out(false), 'sesskey' => sesskey(), 'cards' => [],
@@ -41,12 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $selected && !$confirm) {
     $data['confirmation'] = true;
     $data['selected'] = $selected;
     $data['selectedname'] = $available[$selected]->name;
+} else if (!$current && $available) {
+    $data['carousel'] = true;
+    $data['slides'] = \local_ignite\hearth_ui::preview_slides($available);
+    $PAGE->requires->js('/local/ignite/hearth-carousel.js');
 } else {
-    foreach ($available as $house) {
-        $card = \local_ignite\hearth_ui::identity($house);
-        $card['current'] = $current && (int)$current->id === (int)$house->id;
-        $data['cards'][] = $card;
-    }
+    $data['cards'] = \local_ignite\hearth_ui::choice_cards($available, $current);
 }
 echo $OUTPUT->header();
 echo $OUTPUT->render_from_template('local_ignite/choosehearth', $data);

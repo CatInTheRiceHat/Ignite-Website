@@ -13,6 +13,20 @@ $PAGE->set_heading(get_string('passport', 'local_ignite'));
 $PAGE->requires->css(new moodle_url('/local/ignite/passport.css'));
 $data = \local_ignite\passport::collection_current();
 $data['standings'] = \local_ignite\campfire::standings($month);
+if ($month === '' && $data['standings']['chooseurl']) {
+    $available = \local_ignite\houses::available();
+    if ($available) {
+        $PAGE->requires->css('/local/ignite/hearths.css');
+        $current = \local_ignite\houses::get_current();
+        if (!$current) {
+            $PAGE->requires->js('/local/ignite/hearth-carousel.js');
+        }
+        $data['teamintro'] = ['carousel' => !$current,
+            'cards' => $current ? \local_ignite\hearth_ui::choice_cards($available) : [],
+            'slides' => $current ? [] : \local_ignite\hearth_ui::preview_slides($available),
+            'action' => $data['standings']['chooseurl'], 'sesskey' => sesskey()];
+    }
+}
 echo $OUTPUT->header();
 echo $OUTPUT->render_from_template('local_ignite/passport', $data);
 echo $OUTPUT->footer();

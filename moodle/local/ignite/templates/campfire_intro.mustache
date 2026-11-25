@@ -1,0 +1,9 @@
+<section class="campfire-intro" aria-labelledby="campfire-intro-title">
+    <div class="campfire-intro-heading">
+        <h2 id="campfire-intro-title">{{#str}}campfireintrotitle, local_ignite{{/str}}</h2>
+        <p>{{#str}}campfiresupporthelp, local_ignite{{/str}}</p>
+    </div>
+    {{#carousel}}{{> local_ignite/hearth_carousel}}{{/carousel}}
+    {{^carousel}}{{> local_ignite/campfire_choices}}{{/carousel}}
+    <p><a href="#campfire-standings">{{#str}}browsestandings, local_ignite{{/str}}</a></p>
+</section>

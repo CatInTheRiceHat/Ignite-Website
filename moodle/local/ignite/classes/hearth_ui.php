@@ -40,6 +40,33 @@ final class hearth_ui {
         return new \moodle_url($path);
     }
 
+    public static function choice_cards(array $available, ?\stdClass $current = null): array {
+        $cards = [];
+        foreach ($available as $house) {
+            $card = self::identity($house);
+            $card['current'] = $current && (int)$current->id === (int)$house->id;
+            $cards[] = $card;
+        }
+        return $cards;
+    }
+
+    /** Preview the available Campfires in reading order, using their stable membership IDs. */
+    public static function preview_slides(array $available): array {
+        global $OUTPUT;
+        $ids = campfire::ids();
+        $slides = [];
+        foreach (['forgelings', 'candlelings', 'lanternlings'] as $team) {
+            $id = $ids[$team] ?? null;
+            if (!isset($available[$id])) {
+                continue;
+            }
+            $slides[] = ['id' => $id, 'team' => $team, 'name' => $available[$id]->name,
+                'description' => get_string('preview_' . $team, 'local_ignite'),
+                'art' => $OUTPUT->image_url('campfire/' . $team, 'local_ignite')->out(false)];
+        }
+        return $slides;
+    }
+
     public static function identity(\stdClass $house): array {
         global $OUTPUT;
         return [

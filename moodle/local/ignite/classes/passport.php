@@ -125,13 +125,15 @@ final class passport {
         }
         $badge = learner_read_model::badge($badgeid);
         $context = $badge->get_context();
-        if ($state['owned'] && isset(cup_badges::owned_current()[$badgeid])) {
+        $iscup = $state['owned'] && isset(cup_badges::owned_current()[$badgeid]);
+        if ($iscup) {
             $metadata['artwork'] = 'native';
             $metadata['caption'] = $details ? '' : content_to_text($badge->description, false);
             $metadata['category'] = 'collaborator';
         }
         $category = $metadata['category'] ?? 'other';
         $data = $state + [
+            'iscup' => $iscup,
             'name' => content_to_text(format_string($badge->name, true, ['context' => $context]), false),
             'category' => get_string('passport_category_' . $category, 'local_ignite'),
             'statuslabel' => get_string('passport_state_' . $state['state'], 'local_ignite'),

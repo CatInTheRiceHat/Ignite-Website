@@ -1,0 +1,17 @@
+<div class="ignite-hearths__grid campfire-choices">
+    {{#cards}}
+    <section class="ignite-hearths__card">
+        {{#mascoturl}}<img class="campfire-choice-art" src="{{.}}" alt="" width="640" height="357">{{/mascoturl}}
+        {{^mascoturl}}<img class="campfire-choice-art" src="{{emblemurl}}" alt="" width="128" height="128">{{/mascoturl}}
+        <h3>{{name}}</h3>
+        {{#personality}}<p>{{.}}</p>{{/personality}}
+        {{#description}}<p>{{.}}</p>{{/description}}
+        {{#challenge}}<p>{{#str}}currentchallenge, local_ignite{{/str}}: {{challenge}}</p>{{/challenge}}
+        {{#current}}<p>{{#str}}currenthearth, local_ignite{{/str}}</p>{{/current}}
+        <form method="post" action="{{action}}">
+            <input type="hidden" name="sesskey" value="{{sesskey}}">
+            <button class="ignite-hearths__button" name="hearthid" value="{{id}}">{{#str}}chooseidentity, local_ignite, {{name}}{{/str}}</button>
+        </form>
+    </section>
+    {{/cards}}
+</div>

@@ -441,3 +441,17 @@ $string['cupcorrected'] = 'Corrected champions';
 $string['cupnone'] = 'No champion';
 $string['cuprecipientcount'] = 'Students eligible under the corrected standings: {$a}';
 $string['cupapprove'] = 'Publish corrected standings and reconcile badges';
+$string['campfireintrotitle'] = 'Who will you represent?';
+$string['campfiresupporthelp'] = 'Choose a Campfire to support as you learn. When an activity earns you 20 Regular XP, you keep all 20 and your team earns 10 Team XP toward this month’s Cup.';
+$string['browsestandings'] = 'View standings and choose later';
+$string['representingcampfire'] = 'You’re representing the {$a}. Your next eligible activity will count toward the team’s monthly score.';
+$string['yourcampfire'] = 'Your Campfire';
+$string['learnforteam'] = 'Find a course to support your team';
+
+$string['browsehearths'] = 'Browse Hearths';
+$string['previoushearth'] = 'Previous Hearth';
+$string['nexthearth'] = 'Next Hearth';
+$string['joinhearthpreview'] = 'Join {$a}';
+$string['preview_forgelings'] = 'Have an idea you want to try, even if you’re still figuring out how it works? Forgelings are the builders of Ignite. They take on challenges, test things out, and help each other make the next version better.';
+$string['preview_candlelings'] = 'Ever look up one question and end up reading about five more? Candlelings are the curious minds of Ignite. They trade discoveries, explore ideas together, and make room for anyone who wants to think out loud.';
+$string['preview_lanternlings'] = 'Are you the one who waves someone over when they don’t know where to sit? Lanternlings bring people together. They start conversations, cheer each other on, and make it easier to try something new with a friend.';

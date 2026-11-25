@@ -30,20 +30,110 @@
 @media (max-width: 600px) { .ignite-passport__welcome img { width: 72px; height: 72px; } .ignite-passport__detail { grid-template-columns: 1fr; gap: 1rem; } }
 @media (prefers-reduced-motion: reduce) { .ignite-passport, .ignite-passport *, .ignite-passport *::before, .ignite-passport *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 
-#campfire-standings { margin: 0 0 2rem; }
-.campfire-month, .campfire-month nav { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1rem; }
-.campfire-month { justify-content: space-between; margin-block: 1rem; }
-.campfire-month h3, .campfire-score p { margin: 0; }
+#campfire-standings, .campfire-intro { color: #1a1a2e; }
+#campfire-standings { margin: 0 0 2rem; scroll-margin-top: 5rem; }
+.campfire-month {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: clamp(1.25rem, 3vw, 2.25rem);
+    margin-bottom: 1.25rem;
+    border-radius: 1.1rem;
+    color: #fff8f0;
+    background: #1a1a2e;
+}
+.campfire-heading, .campfire-cup-art { position: relative; }
+.campfire-month #campfire-board-title {
+    margin: 0 0 .4rem;
+    color: #ffd166;
+    line-height: 1.4;
+    font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+    font-size: .81rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+.campfire-month h3 { margin: 0; color: #fff8f0; font: 400 clamp(1.65rem, 4.3vw, 2.9rem)/1.18 "Rammetto One", "Poppins", "Segoe UI", Arial, sans-serif; }
+.campfire-month nav { display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; margin-top: .85rem; }
+.ignite-passport .campfire-month nav a { color: #fff8f0; }
+.ignite-passport .campfire-month nav a:focus-visible { outline-color: #ffd166; }
+.campfire-cup-art { flex: 0 0 auto; margin-right: 3%; width: clamp(4rem, 12vw, 7rem); }
+.campfire-cup-art img { display: block; width: 100%; height: auto; filter: drop-shadow(0 .35rem .5rem #1a1a2e40); }
+.campfire-cup-art::before, .campfire-cup-art::after {
+    content: "";
+    position: absolute;
+    inset: -9% -18%;
+    transform: rotate(-19deg);
+    border: 1px solid #ffd16680;
+    border-radius: 50%;
+    z-index: -1;
+}
+.campfire-cup-art::after { inset: 0 -27%; transform: rotate(17deg); border-color: #f07b2a80; }
 .campfire-ranks { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); gap: 1rem; margin: 0; padding: 0; list-style: none; }
-.campfire-team { border: 1px solid #b6a495; border-radius: .9rem; overflow: hidden; background: white; }
+.campfire-team { position: relative; min-width: 0; border: 1px solid #4a4a5e; border-radius: .9rem; overflow: hidden; background: white; }
+.campfire-team--winner, .ignite-passport__card.campfire-collectible {
+    border: 1px solid #f07b2a;
+    background: white;
+    box-shadow: 0 .35rem 1rem #1a1a2e18;
+}
 .campfire-team img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+.campfire-rank {
+    position: absolute; top: .65rem; left: .65rem;
+    padding: .2rem .6rem; border: 1px solid #fff8f0; border-radius: 1rem;
+    color: white; background: #1a1a2e; font-size: .8rem; font-weight: 700;
+}
+.campfire-team--winner .campfire-rank { color: #1a1a2e; background: #ffd166; border-color: #fff8f0; }
 .campfire-score { padding: 1rem; }
-.campfire-score h4 { font-size: 1.25rem; margin: .2rem 0 .5rem; }
-.campfire-score p { margin-top: .25rem; }
-#campfire-standings { scroll-margin-top: 5rem; }
+.campfire-score h4 { font: 700 1.4rem/1.25 "Poppins", "Segoe UI", Arial, sans-serif; margin: 0 0 .5rem; }
+.campfire-score p { margin: .2rem 0 0; }
+.campfire-cup-ribbon {
+    display: inline-block;
+    max-width: 100%;
+    margin-top: .85rem;
+    padding: .45rem 1.1rem .45rem .65rem;
+    clip-path: polygon(0 0,100% 0,calc(100% - .5rem) 50%,100% 100%,0 100%);
+    color: #1a1a2e;
+    background: #ffd166;
+    border-block: 1px solid #f07b2a;
+    font-size: .9rem;
+    font-weight: 700;
+}
+.campfire-cup-shelf { list-style: none; display: flex; flex-wrap: wrap; gap: .5rem; margin: 0; padding: 0; }
+.campfire-cup-shelf .campfire-cup-ribbon { margin-top: 0; }
+.campfire-collectible .ignite-passport__art {
+    position: relative;
+    isolation: isolate;
+    padding: 1.65rem 1rem 2rem;
+    background: #1a1a2e;
+}
+.campfire-collectible .ignite-passport__art img {
+    position: relative;
+    width: 9rem; height: 9rem; max-width: 100%; object-fit: cover;
+    border: .32rem double #fff8f0; border-radius: 50%;
+    box-shadow: 0 0 0 .22rem #f07b2a, 0 0 0 .36rem #ffd166, 0 .55rem 1rem #1a1a2e40;
+}
+.campfire-collectible .ignite-passport__art--detail img { width: min(100%, 13rem); height: auto; aspect-ratio: 1; }
 @media (max-width: 600px) {
     .campfire-ranks { grid-template-columns: 1fr; gap: .65rem; }
     .campfire-team { display: grid; grid-template-columns: 30% minmax(0, 1fr); }
     .campfire-team img { height: 100%; aspect-ratio: auto; }
     .campfire-score { padding: .75rem; }
+    .campfire-rank { top: .4rem; left: .4rem; }
+    .campfire-cup-ribbon { margin-top: .5rem; }
 }
+
+.ignite-passport .campfire-intro { margin: 0 0 2rem; }
+.campfire-intro-heading {
+    margin-bottom: 1rem; padding: clamp(1.25rem, 3vw, 2rem); border-radius: 1rem;
+    color: #1a1a2e; background: #f07b2a;
+}
+.campfire-intro-heading h2 { margin: 0; color: inherit; font: 400 clamp(1.5rem, 4vw, 2.4rem)/1.25 "Rammetto One", Poppins, sans-serif; }
+.campfire-intro-heading p { max-width: 62ch; margin: .65rem 0 0; }
+.campfire-intro .campfire-choices section { margin-top: 0; }
+.campfire-intro > p { margin-top: 1rem; }
+.campfire-score .campfire-supporting { font-weight: 700; color: #1a1a2e; }
+.campfire-learn { display: inline-block; margin-top: .65rem; }
