@@ -1,6 +1,8 @@
 # Moodle deployment
 
-Ignite Moodle runs at `https://learn.ignitefindyourfire.org` on the DigitalOcean server `159.89.158.200`. The confirmed installation is Moodle 5.2.4, with code at `/var/www/moodle`, public code at `/var/www/moodle/public`, and PHP running as `www-data`. The website's Vercel deployment and this Moodle deployment are separate.
+Ignite Moodle runs at `https://learn.ignitefindyourfire.org` on the DigitalOcean server `159.89.158.200`. The confirmed installation is Moodle 5.2.5+ (Build 20261124), with code at `/var/www/moodle`, public code at `/var/www/moodle/public`, and PHP running as `www-data`. The website's Vercel deployment and this Moodle deployment are separate.
+
+The November 25, 2026 core update from 5.2.4 used PostgreSQL 16.15. The pre-upgrade database dump, Moodle data and code archives, checksums, and upgrade log are under `/var/backups/ignite-moodle/core-5025-20261125-NDe6zCO0/` on the Moodle host. The backup captures the site in CLI maintenance mode with cron paused.
 
 ## Connection
 
