@@ -92,6 +92,7 @@ test('choose a Campfire and support it through an eligible activity', async ({ p
   await expect(intro.getByRole('button', { name: /^Join / })).toHaveText('Join Forgelings');
   await intro.getByRole('link', { name: 'View standings and choose later' }).click();
   await expect(page.locator('#campfire-standings')).toBeInViewport();
+  await page.goBack();
   await intro.getByRole('button', { name: 'Join Forgelings' }).click();
   await expect(page).toHaveURL(/\/local\/ignite\/passport\.php$/);
   await expect(intro).toHaveCount(0);
