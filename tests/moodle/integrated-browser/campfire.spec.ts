@@ -90,9 +90,7 @@ test('choose a Campfire and support it through an eligible activity', async ({ p
   await page.goto('/local/ignite/passport.php');
   const intro = page.getByRole('region', { name: 'Who will you represent?' });
   await expect(intro.getByRole('button', { name: /^Join / })).toHaveText('Join Forgelings');
-  await intro.getByRole('link', { name: 'View standings and choose later' }).click();
-  await expect(page.locator('#campfire-standings')).toBeInViewport();
-  await page.goBack();
+  await expect(intro.getByRole('link', { name: /choose later/i })).toHaveCount(0);
   await intro.getByRole('button', { name: 'Join Forgelings' }).click();
   await expect(page).toHaveURL(/\/local\/ignite\/passport\.php$/);
   await expect(intro).toHaveCount(0);

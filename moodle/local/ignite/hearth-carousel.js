@@ -28,6 +28,7 @@ for (const carousel of document.querySelectorAll('.hearth-carousel')) {
             return;
         }
         viewport.focus({ preventScroll: true });
+        carousel.classList.add('hearth-carousel--browsing');
         show(index);
     }
     controls.addEventListener('click', event => {
@@ -46,6 +47,28 @@ for (const carousel of document.querySelectorAll('.hearth-carousel')) {
             move((event.key === 'ArrowRight') !== rtl ? 1 : -1);
         }
     });
+    // Trackpads emit a burst of wheel events, including momentum after the gesture ends.
+    let lastWheelTime = -Infinity;
+    let wheelDistance = 0;
+    let wheelMoved = false;
+    viewport.addEventListener('wheel', event => {
+        const delta = event.shiftKey && !event.deltaX ? event.deltaY : event.deltaX;
+        if (event.ctrlKey || !delta || (!event.shiftKey && Math.abs(delta) <= Math.abs(event.deltaY))) {
+            return;
+        }
+        event.preventDefault();
+        if (event.timeStamp - lastWheelTime > 180) {
+            wheelDistance = 0;
+            wheelMoved = false;
+        }
+        lastWheelTime = event.timeStamp;
+        const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? viewport.clientWidth : 1;
+        wheelDistance += delta * unit;
+        if (!wheelMoved && Math.abs(wheelDistance) >= 40) {
+            wheelMoved = true;
+            move((wheelDistance > 0) !== rtl ? 1 : -1);
+        }
+    }, { passive: false });
     let touchStart;
     viewport.addEventListener('touchstart', event => {
         touchStart = event.touches.length === 1 ? event.touches[0] : null;

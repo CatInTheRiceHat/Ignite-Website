@@ -87,6 +87,16 @@
     scroll-snap-stop: always;
     padding: clamp(8px, 2vw, 24px);
 }
+@media (prefers-reduced-motion: no-preference) {
+    .hearth-carousel--browsing .hearth-slide:not([hidden]) {
+        animation: hearth-card-enter .24s ease-out;
+    }
+}
+@keyframes hearth-card-enter {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 /* Intrinsic pixel heights of the 1320px-wide crest strips. */
 .hearth-slide--forgelings {
     --wing-lift: 25px;
@@ -175,16 +185,16 @@
     width: 44px;
     height: 44px;
     padding: 0;
-    border: 1px solid #513b33;
+    border: 0;
     border-radius: 50%;
-    background: #513b33;
-    color: #fff;
+    background: transparent;
+    color: inherit;
     font-size: 1.4rem;
 }
 .hearth-carousel__controls [data-step="-1"] { grid-column: 1; }
 .hearth-carousel__controls [data-step="1"] { grid-column: 3; }
 [dir="rtl"] .hearth-carousel__controls button > [aria-hidden] { display: inline-block; transform: scaleX(-1); }
-.hearth-carousel__controls button:disabled { background: #81706a; border-color: #81706a; cursor: default; }
+.hearth-carousel__controls button:disabled { opacity: .5; cursor: default; }
 .hearth-carousel button:enabled:hover { border-color: #352b29; }
 .hearth-carousel :is(button, [tabindex]):focus-visible { outline: 3px solid #214f9b; outline-offset: 2px; }
 @media (min-width: 601px) {

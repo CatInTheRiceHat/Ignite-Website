@@ -23,18 +23,23 @@
     font: 16px/1.5 system-ui, sans-serif;
 }
 .campfire-chooser-screen .hearth-carousel {
-    /* Reserve space for Moodle navigation and the optional route past the chooser. */
+    /* Keep the card centered below the Moodle navigation. */
     min-height: calc(100svh - 9rem);
 }
-.campfire-chooser-later { margin: .5rem 0 0; text-align: center; }
-.campfire-chooser-later a {
-    display: inline-block;
-    padding: .4em .85em;
-    border-radius: 1rem;
-    color: #513b33;
-    background: #fff8f0;
-    text-decoration: underline;
+.campfire-chooser-screen .hearth-carousel__controls button {
+    color: white;
+    text-shadow: 0 1px 3px #15101b;
 }
+html:has(body.ignite-campfire-choosing) {
+    background: #0c1225 url("pix/campfire/hero-3.jpg") center / cover no-repeat fixed;
+    overscroll-behavior-y: none;
+}
+body.ignite-campfire-choosing,
+.ignite-campfire-choosing #page.drawers,
+.ignite-campfire-choosing #page-footer {
+    background: transparent !important;
+}
+.ignite-campfire-choosing #page-content { padding-bottom: 0 !important; }
 @media (min-width: 601px) {
     .campfire-chooser-screen { padding-block: 1rem; }
     .campfire-chooser-screen .hearth-carousel {

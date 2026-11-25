@@ -14,7 +14,7 @@ if ($browse) {
 $PAGE->set_url('/local/ignite/passport.php', $params);
 $PAGE->set_pagelayout('standard');
 $PAGE->add_body_class('ignite-campfire-page');
-$PAGE->requires->css('/local/ignite/campfire-page.css');
+$PAGE->requires->css(new moodle_url('/local/ignite/campfire-page.css', ['rev' => filemtime(__DIR__ . '/campfire-page.css')]));
 $template = 'local_ignite/passport';
 $PAGE->set_title(get_string('passport', 'local_ignite'));
 $PAGE->set_heading(get_string('passport', 'local_ignite'));
@@ -24,7 +24,7 @@ $data['standings'] = \local_ignite\campfire::standings($month);
 if (!$browse && $month === '' && $data['standings']['chooseurl']) {
     $available = \local_ignite\houses::available();
     if ($available) {
-        $PAGE->requires->css('/local/ignite/hearths.css');
+        $PAGE->requires->css(new moodle_url('/local/ignite/hearths.css', ['rev' => filemtime(__DIR__ . '/hearths.css')]));
         $current = \local_ignite\houses::get_current();
         $choice = ['action' => $data['standings']['chooseurl'], 'sesskey' => sesskey()];
         if ($current) {
@@ -35,9 +35,7 @@ if (!$browse && $month === '' && $data['standings']['chooseurl']) {
                 $PAGE->requires->js('/local/ignite/hearth-carousel.js');
                 $PAGE->add_body_class('ignite-campfire-choosing');
                 $template = 'local_ignite/campfire_chooser';
-                $data = $choice + ['slides' => $slides,
-                    'laterurl' => (new moodle_url('/local/ignite/passport.php', ['browse' => 1], 'campfire-standings'))->out(false),
-                    'laterlabel' => get_string('browsestandings', 'local_ignite')];
+                $data = $choice + ['slides' => $slides];
             }
         }
     }

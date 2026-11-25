@@ -14,7 +14,7 @@ $PAGE->set_url('/local/ignite/choosehearth.php', ['returnurl' => $return->out(fa
 $PAGE->set_context(context_system::instance());
 $PAGE->set_title(get_string('choosehearth', 'local_ignite'));
 $PAGE->set_heading(get_string('choosehearth', 'local_ignite'));
-$PAGE->requires->css('/local/ignite/hearths.css');
+$PAGE->requires->css(new moodle_url('/local/ignite/hearths.css', ['rev' => filemtime(__DIR__ . '/hearths.css')]));
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_sesskey();
     if (optional_param('defer', 0, PARAM_BOOL)) {
