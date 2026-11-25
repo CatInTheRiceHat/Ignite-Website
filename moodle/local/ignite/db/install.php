@@ -4,5 +4,6 @@
 defined('MOODLE_INTERNAL') || die();
 
 function xmldb_local_ignite_install(): void {
+    set_config('xpstart', time(), 'local_ignite');
     \local_ignite\installation::seed_houses();
 }

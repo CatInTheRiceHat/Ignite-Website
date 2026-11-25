@@ -1,0 +1,24 @@
+<div id="ignite-activity-award" aria-live="polite">{{#receipt}}{{> local_ignite/xp_receipt}}{{/receipt}}</div>
+{{#js}}
+require(['core_course/events', 'core/fragment', 'core/notification'], function(events, fragment, notification) {
+    const region = document.getElementById('ignite-activity-award');
+    let revision = 0;
+    document.addEventListener(events.manualCompletionToggled, async function(event) {
+        if (Number(event.detail.cmid) !== {{cmid}}) {
+            return;
+        }
+        const request = ++revision;
+        region.replaceChildren();
+        if (event.detail.completed) {
+            try {
+                const html = await fragment.loadFragment('local_ignite', 'xp_receipt', {{contextid}}, {});
+                if (request === revision) {
+                    region.innerHTML = html;
+                }
+            } catch (error) {
+                notification.exception(error);
+            }
+        }
+    });
+});
+{{/js}}

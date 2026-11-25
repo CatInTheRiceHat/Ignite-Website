@@ -1,0 +1,40 @@
+<section id="campfire-standings" aria-labelledby="campfire-board-title">
+    <h2 id="campfire-board-title">{{#str}}monthlystandings, local_ignite{{/str}}</h2>
+    <div class="campfire-month">
+        <h3>{{month}}</h3>
+        {{#archives}}<nav aria-label="{{#str}}standingsmonths, local_ignite{{/str}}">
+            {{#previousurl}}<a rel="prev" href="{{.}}">{{#str}}previousmonth, local_ignite{{/str}}</a>{{/previousurl}}
+            {{#nexturl}}<a rel="next" href="{{.}}">{{#str}}nextmonth, local_ignite{{/str}}</a>{{/nexturl}}
+        </nav>{{/archives}}
+    </div>
+    {{#reviewneeded}}<p>{{#str}}cupunderreview, local_ignite{{/str}}</p>{{/reviewneeded}}
+    {{#awaitingclose}}<p>{{#str}}cupawaiting, local_ignite{{/str}}</p>{{/awaitingclose}}
+    <ol class="campfire-ranks">
+        {{#rows}}<li class="campfire-team" value="{{rank}}">
+            <img src="{{art}}" alt="" width="640" height="357">
+            <div class="campfire-score">
+                <span>{{#str}}teamrank, local_ignite, {{rank}}{{/str}}</span>
+                <h4>{{name}}</h4>
+                <strong>{{#str}}teamxptotal, local_ignite, {{total}}{{/str}}</strong>
+                <p>{{#str}}yourteamxp, local_ignite, {{own}}{{/str}}</p>
+                {{#trophy}}<strong><span aria-hidden="true">🏆</span> {{.}}</strong>{{/trophy}}
+            </div>
+        </li>{{/rows}}
+    </ol>
+    {{#empty}}<p>{{#closed}}{{#str}}nochampion, local_ignite{{/str}}{{/closed}}{{^closed}}{{#str}}noteamxpyet, local_ignite{{/str}}{{/closed}}</p>{{/empty}}
+    {{#chooseurl}}<p><a href="{{.}}">{{#str}}choosecampfire, local_ignite{{/str}}</a></p>{{/chooseurl}}
+</section>
+{{#live}}
+{{#js}}
+const deadline = Date.now() + {{rolloverseconds}} * 1000;
+function nextCampfireMonth() {
+    const remaining = deadline - Date.now();
+    if (remaining <= 0) {
+        window.location.reload();
+    } else {
+        window.setTimeout(nextCampfireMonth, Math.min(remaining, 2147483647));
+    }
+}
+nextCampfireMonth();
+{{/js}}
+{{/live}}

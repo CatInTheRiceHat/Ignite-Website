@@ -47,6 +47,14 @@ function local_ignite_pluginfile($course, $cm, $context, $filearea, $args, $forc
 
 /** Profile action is optional navigation; the direct routes work without any sibling feature. */
 function local_ignite_myprofile_navigation(\core_user\output\myprofile\tree $tree, $user, $iscurrentuser, $course): void {
+    if ($iscurrentuser && \local_ignite\access::enabled() && isloggedin() && !isguestuser() &&
+            has_capability('local/ignite:use', context_system::instance())) {
+        $progress = \local_ignite\xp::profile_current();
+        $tree->add_node(new \core_user\output\myprofile\node('miscellaneous', 'ignitexp',
+            get_string('lifetimexp', 'local_ignite'), null, null,
+            get_string('xpprogress', 'local_ignite', $progress) . html_writer::tag('p',
+                get_string('xpnextlevel', 'local_ignite', $progress))));
+    }
     if ($iscurrentuser && \local_ignite\access::enabled('houses') &&
             has_capability('local/ignite:use', context_system::instance())) {
         $tree->add_node(new \core_user\output\myprofile\node('miscellaneous', 'ignitehearth',
@@ -61,4 +69,17 @@ function local_ignite_extend_navigation_course($navigation, $course, $context): 
         $navigation->add(get_string('missions','local_ignite'),
             new moodle_url('/local/ignite/missions.php',['courseid'=>$course->id]), navigation_node::TYPE_SETTING);
     }
+}
+
+/** Refresh the signed-in learner's receipt after Moodle confirms a manual activity completion. */
+function local_ignite_output_fragment_xp_receipt(array $args): string {
+    global $OUTPUT;
+    $context = $args['context'];
+    if (!$context instanceof context_module) {
+        throw new invalid_parameter_exception('Expected an activity context');
+    }
+    [$course, $cm] = get_course_and_cm_from_cmid($context->instanceid);
+    require_login($course, false, $cm);
+    $receipt = \local_ignite\xp::receipts([(int)$cm->id])[$cm->id] ?? null;
+    return $receipt ? $OUTPUT->render_from_template('local_ignite/xp_receipt', $receipt) : '';
 }

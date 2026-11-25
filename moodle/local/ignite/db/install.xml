@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="local/ignite/db" VERSION="20261107" COMMENT="Ignite learner services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd">
+<XMLDB PATH="local/ignite/db" VERSION="20261124" COMMENT="Ignite learner services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd">
   <TABLES>
     <TABLE NAME="local_ignite_prefs" COMMENT="Private learner preferences; independent of enrollment">
       <FIELDS>
@@ -202,6 +202,51 @@
       </FIELDS>
       <KEYS><KEY NAME="primary" TYPE="primary" FIELDS="id"/></KEYS>
       <INDEXES><INDEX NAME="daterange" UNIQUE="true" FIELDS="timestart, timeend"/></INDEXES>
+    </TABLE>
+    <TABLE NAME="local_ignite_xp" COMMENT="First verified activity XP with immutable Campfire and earning month">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="cmid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="completionid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="conditiontype" TYPE="char" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="regularxp" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="houseid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="timeearned" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="earnmonth" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="reversed" TYPE="int" LENGTH="1" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="user" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="once" UNIQUE="true" FIELDS="userid, cmid"/>
+        <INDEX NAME="teammonth" UNIQUE="false" FIELDS="houseid, earnmonth, reversed"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="local_ignite_cup" COMMENT="Published calendar month standings in exact Team XP half-points">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="earnmonth" TYPE="int" LENGTH="6" NOTNULL="true"/>
+        <FIELD NAME="totals" TYPE="text" NOTNULL="true"/>
+        <FIELD NAME="reviewneeded" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0"/>
+      </FIELDS>
+      <KEYS><KEY NAME="primary" TYPE="primary" FIELDS="id"/></KEYS>
+      <INDEXES><INDEX NAME="month" UNIQUE="true" FIELDS="earnmonth"/></INDEXES>
+    </TABLE>
+    <TABLE NAME="local_ignite_cupbadge" COMMENT="Native badge definition for a winning Campfire and month">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="earnmonth" TYPE="int" LENGTH="6" NOTNULL="true"/>
+        <FIELD NAME="team" TYPE="char" LENGTH="20" NOTNULL="true"/>
+        <FIELD NAME="badgeid" TYPE="int" LENGTH="10" NOTNULL="true"/>
+      </FIELDS>
+      <KEYS><KEY NAME="primary" TYPE="primary" FIELDS="id"/></KEYS>
+      <INDEXES>
+        <INDEX NAME="monthteam" UNIQUE="true" FIELDS="earnmonth, team"/>
+        <INDEX NAME="badge" UNIQUE="true" FIELDS="badgeid"/>
+      </INDEXES>
     </TABLE>
   </TABLES>
 </XMLDB>

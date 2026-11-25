@@ -7,6 +7,11 @@
             <img src="{{emblemurl}}" alt="" width="48" height="48">
         </div>
         <h2>{{name}}</h2><p>{{personality}}</p><p>{{description}}</p>
+        <p>{{teamxp}}</p>
+        {{#hastrophies}}
+        <h3>{{#str}}cuptrophies, local_ignite{{/str}}</h3>
+        <ul>{{#trophies}}<li><span aria-hidden="true">🏆</span> {{title}}</li>{{/trophies}}</ul>
+        {{/hastrophies}}
         {{#inactive}}<p>{{#str}}inactivehouse, local_ignite{{/str}}</p>{{/inactive}}
     </section>
     {{#challenge}}
@@ -31,6 +36,10 @@
     <p>{{#str}}switchhelp, local_ignite{{/str}}</p>
     {{/house}}
     {{^house}}<p>{{#str}}nohouse, local_ignite{{/str}}</p><p><a class="ignite-hearths__button" href="{{chooseurl}}">{{#str}}choosehearth, local_ignite{{/str}}</a></p>{{/house}}
+    {{#hascups}}<section class="ignite-passport mt-3" aria-labelledby="my-cups-heading">
+        <h2 id="my-cups-heading">{{#str}}cupcollection, local_ignite{{/str}}</h2>
+        <div class="ignite-passport__grid">{{#cups}}{{> local_ignite/passport_card}}{{/cups}}</div>
+    </section>{{/hascups}}
     <p>{{#str}}houseaccess, local_ignite{{/str}}</p>
     <p><a href="{{homeurl}}">{{#str}}homeheading, local_ignite{{/str}}</a> · <a href="{{coursesurl}}">{{#str}}explorecourses, local_ignite{{/str}}</a></p>
 </div>

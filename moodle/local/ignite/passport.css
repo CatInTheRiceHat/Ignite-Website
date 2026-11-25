@@ -29,3 +29,21 @@
 .ignite-passport select { max-width: 100%; }
 @media (max-width: 600px) { .ignite-passport__welcome img { width: 72px; height: 72px; } .ignite-passport__detail { grid-template-columns: 1fr; gap: 1rem; } }
 @media (prefers-reduced-motion: reduce) { .ignite-passport, .ignite-passport *, .ignite-passport *::before, .ignite-passport *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+
+#campfire-standings { margin: 0 0 2rem; }
+.campfire-month, .campfire-month nav { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1rem; }
+.campfire-month { justify-content: space-between; margin-block: 1rem; }
+.campfire-month h3, .campfire-score p { margin: 0; }
+.campfire-ranks { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); gap: 1rem; margin: 0; padding: 0; list-style: none; }
+.campfire-team { border: 1px solid #b6a495; border-radius: .9rem; overflow: hidden; background: white; }
+.campfire-team img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+.campfire-score { padding: 1rem; }
+.campfire-score h4 { font-size: 1.25rem; margin: .2rem 0 .5rem; }
+.campfire-score p { margin-top: .25rem; }
+#campfire-standings { scroll-margin-top: 5rem; }
+@media (max-width: 600px) {
+    .campfire-ranks { grid-template-columns: 1fr; gap: .65rem; }
+    .campfire-team { display: grid; grid-template-columns: 30% minmax(0, 1fr); }
+    .campfire-team img { height: 100%; aspect-ratio: auto; }
+    .campfire-score { padding: .75rem; }
+}

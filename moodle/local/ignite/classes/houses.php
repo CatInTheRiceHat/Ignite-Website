@@ -21,7 +21,8 @@ final class houses {
     public static function available(): array {
         global $DB;
         access::learner('houses');
-        return $DB->get_records('local_ignite_house', ['active' => 1], 'id');
+        return array_intersect_key($DB->get_records('local_ignite_house', ['active' => 1], 'id'),
+            array_flip(campfire::ids()));
     }
 
     /** Idempotent assignment; the unique user key is a second line of concurrency protection. */
@@ -29,16 +30,16 @@ final class houses {
         global $DB;
         $userid = access::learner('houses');
         require_sesskey();
-        // Shared config lock serializes deactivation with membership changes.
-        access::locked('houses', static function() use ($DB, $userid, $houseid) {
-            access::locked('user:' . $userid, static function() use ($DB, $userid, $houseid) {
+        // Hold the learner lock through commit so an XP award sees the committed membership history.
+        access::locked('user:' . $userid, static function() use ($DB, $userid, $houseid) {
+            access::locked('houses', static function() use ($DB, $userid, $houseid) {
                 $existing = $DB->get_record('local_ignite_member', ['userid' => $userid]);
                 $house = $houseid === null ? null :
                     $DB->get_record('local_ignite_house', ['id' => $houseid], '*', MUST_EXIST);
                 if (($existing && (int)$existing->houseid === $houseid) || (!$existing && $houseid === null)) {
                     return;
                 }
-                if ($house && !$house->active) {
+                if ($house && (!$house->active || !in_array($houseid, campfire::ids(), true))) {
                     throw new \invalid_parameter_exception('Inactive house');
                 }
                 $now = time();

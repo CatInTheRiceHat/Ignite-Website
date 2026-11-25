@@ -2,7 +2,7 @@
     <h2>{{title}}</h2><p><strong>{{outcome}}</strong></p><p>{{#str}}mission_time_label, local_ignite{{/str}}: {{duration}}</p>
     <section class="ignite-dashboard__card"><h3>{{#str}}mission_intro_heading, local_ignite{{/str}}</h3><p>{{explanation}}</p>
         <h3>{{#str}}mission_rules_heading, local_ignite{{/str}}</h3><p>{{requirements}}</p>
-        <p>{{#str}}mission_nativerules, local_ignite{{/str}}</p><ul>{{#nativerules}}<li>{{description}}</li>{{/nativerules}}</ul><ol>{{#steps}}<li>{{name}} — {{status}}</li>{{/steps}}</ol>
+        <p>{{#str}}mission_nativerules, local_ignite{{/str}}</p><ul>{{#nativerules}}<li>{{description}}</li>{{/nativerules}}</ul><ol>{{#steps}}<li>{{name}} — {{status}}{{#receipt}}{{> local_ignite/xp_receipt}}{{/receipt}}</li>{{/steps}}</ol>
         <p><strong>{{state}}</strong></p>{{#trackingunavailable}}<p>{{#str}}mission_trackingoff, local_ignite{{/str}}</p>{{/trackingunavailable}}
         {{#action}}<p><a class="ignite-dashboard__primary" href="{{url}}">{{name}}<span class="ignite-dashboard__arrow" aria-hidden="true"></span></a></p>{{/action}}
         {{#unavailable}}<p>{{#str}}mission_locked, local_ignite{{/str}}</p>{{/unavailable}}

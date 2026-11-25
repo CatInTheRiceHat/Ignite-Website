@@ -8,4 +8,7 @@ $tasks = [[
 ],[
     'classname' => '\local_ignite\task\hearth_totals', 'blocking' => 0,
     'minute' => '*', 'hour' => '*', 'day' => '*', 'month' => '*', 'dayofweek' => '*',
+],[
+    'classname' => '\local_ignite\task\campfire_cups', 'blocking' => 0,
+    'minute' => '5', 'hour' => '*', 'day' => '*', 'month' => '*', 'dayofweek' => '*',
 ]];

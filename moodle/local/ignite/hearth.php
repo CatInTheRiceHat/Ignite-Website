@@ -9,12 +9,29 @@ $PAGE->set_context(context_system::instance());
 $PAGE->set_title(get_string('hearthhub', 'local_ignite'));
 $PAGE->set_heading(get_string('hearthhub', 'local_ignite'));
 $PAGE->requires->css('/local/ignite/hearths.css');
+$PAGE->requires->css('/local/ignite/passport.css');
 $house = \local_ignite\houses::get_current();
 $challenge = \local_ignite\challenges::current();
 $data = ['house' => $house ? \local_ignite\hearth_ui::identity($house) : null,
     'chooseurl' => (new moodle_url('/local/ignite/choosehearth.php', ['returnurl' => '/local/ignite/hearth.php']))->out(false),
     'homeurl' => (new moodle_url('/local/ignite/index.php'))->out(false),
     'coursesurl' => (new moodle_url('/course/index.php'))->out(false)];
+if (\local_ignite\access::enabled('passport') && !empty($CFG->enablebadges)) {
+    $cards = [];
+    foreach (\local_ignite\cup_badges::owned_current() as $cup) {
+        $card = \local_ignite\passport::badge_current((int)$cup->badgeid, false);
+        if ($card && $card['owned']) {
+            $cards[] = $card;
+        }
+    }
+    $data['cups'] = $cards;
+    $data['hascups'] = (bool)$cards;
+}
+if ($house) {
+    $data['trophies'] = \local_ignite\campfire_cup::trophies((int)$house->id);
+    $data['hastrophies'] = (bool)$data['trophies'];
+    $data['teamxp'] = get_string('monthlyteamxp', 'local_ignite', \local_ignite\xp::team_current());
+}
 if ($house && $challenge) {
     $progress = \local_ignite\challenges::progress((int)$challenge->id, (int)$house->id);
     $fillheight = min(120, (int)floor($progress['total'] / $challenge->target * 120));

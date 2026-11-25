@@ -149,6 +149,7 @@ final class missions {
         $evidence=learner_read_model::evidence([(int)$course->id]);
         $starters=[];
         foreach (onboarding_config::get()['starters'] as $starter) { $starters[$starter['cmid']]=$starter['requirepass']; }
+        $receipts = xp::receipts($ids);
         $steps=[]; $next=false; $complete=true; $tracked=true; $completion=new \completion_info($course);
         foreach ($ids as $cmid) {
             $cm=$modinfo->get_cms()[$cmid] ?? null;
@@ -158,7 +159,7 @@ final class missions {
             $tracked=$tracked && $known;
             $done=$known && activity_evidence::valid($cm,$course,(int)($evidence[$cmid]->completionstate ?? 0),$userid,$starters[$cmid] ?? false);
             $available=self::activity($cmid);
-            $steps[]=['name'=>$available ? dashboard::plain($cm->name) : get_string('mission_locked','local_ignite'),
+            $steps[]=['receipt' => $available && $done ? ($receipts[$cmid] ?? false) : false, 'name'=>$available ? dashboard::plain($cm->name) : get_string('mission_locked','local_ignite'),
                 'status'=>get_string(!$known ? 'mission_trackingoff' : ($done ? 'mission_complete' : 'mission_incomplete'),'local_ignite')];
             if (!$done && $complete) {
                 $next=$available ? ['url'=>$cm->url->out(false),'name'=>$mission->practice,'cmid'=>$cmid] : false;

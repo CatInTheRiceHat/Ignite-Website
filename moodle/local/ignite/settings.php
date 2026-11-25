@@ -21,6 +21,10 @@ if ($hassiteconfig && has_capability('local/ignite:configure', context_system::i
             'initial' => get_string('timing_initial', 'local_ignite')]));
     $settings->add(new \local_ignite\admin\selection_route_setting('local_ignite/hearthselectionroute',
         get_string('selectionroute', 'local_ignite'), get_string('selectionroute_desc', 'local_ignite'), '', PARAM_RAW));
+    foreach (['xpaward' => \local_ignite\xp::DEFAULT_AWARD, 'xplevelstep' => \local_ignite\xp::DEFAULT_LEVEL_STEP] as $key => $default) {
+        $settings->add(new admin_setting_configtext('local_ignite/' . $key, get_string($key, 'local_ignite'),
+            get_string($key . '_desc', 'local_ignite'), $default, '/^[1-9][0-9]{0,8}$/', 9));
+    }
     $onboardingsetting = new \local_ignite\admin\onboarding_setting('local_ignite/onboardingconfig',
         get_string('onboardingconfig', 'local_ignite'), get_string('onboardingconfig_desc', 'local_ignite'),
         \local_ignite\onboarding_config::EMPTY, PARAM_RAW, 80, 12);
@@ -45,7 +49,7 @@ if ($hassiteconfig && has_capability('local/ignite:configure', context_system::i
         new moodle_url('/local/ignite/report.php'),'local/ignite:viewreport'));
     $ADMIN->add('localplugins',new admin_externalpage('local_ignite_setup',get_string('setup_title','local_ignite'),
         new moodle_url('/local/ignite/setup.php'),['moodle/site:config','local/ignite:configure']));
-    foreach (['hearthsetup' => 'draftsetup', 'hearthchallenges' => 'hearthchallenges'] as $route => $label) {
+    foreach (['cupreview' => 'cupreview', 'hearthsetup' => 'draftsetup', 'hearthchallenges' => 'hearthchallenges'] as $route => $label) {
         $ADMIN->add('localplugins', new admin_externalpage('local_ignite_' . $route,
             get_string($label, 'local_ignite'), new moodle_url('/local/ignite/' . $route . '.php'),
             ['moodle/site:config', 'local/ignite:configure']));

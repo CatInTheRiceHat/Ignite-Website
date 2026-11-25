@@ -4,6 +4,7 @@
     {"nativeenabled":true,"canview":true,"earned":[],"pursue":[],"featured":[],"framecolor":"#62564D"}
 }}
 <div class="ignite-passport" style="--passport-frame: {{framecolor}};">
+    {{#standings}}{{> local_ignite/campfire_standings}}{{/standings}}
     <div class="ignite-passport__welcome">
         <div>
             <p class="ignite-passport__eyebrow">{{#str}}passport_eyebrow, local_ignite{{/str}}</p>

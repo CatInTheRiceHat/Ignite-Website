@@ -45,6 +45,11 @@ final class provider implements \core_privacy\local\metadata\provider,
             'issuedid' => 'privacy:passportissuedid', 'slot' => 'privacy:passportslot',
             'timemodified' => 'privacy:timemodified',
         ], 'privacy:passportfeatures');
+        $collection->add_database_table('local_ignite_xp', [
+            'userid' => 'privacy:userid', 'cmid' => 'privacy:cmid', 'completionid' => 'privacy:completionid',
+            'conditiontype' => 'privacy:conditiontype', 'regularxp' => 'privacy:regularxp', 'houseid' => 'privacy:houseid',
+            'timeearned' => 'privacy:timequalified', 'earnmonth' => 'privacy:earnmonth', 'reversed' => 'privacy:reversed',
+        ], 'privacy:xp');
         return $collection;
     }
 
@@ -56,6 +61,7 @@ final class provider implements \core_privacy\local\metadata\provider,
                 $DB->record_exists('local_ignite_invite', ['userid' => $userid]) ||
                 $DB->record_exists('local_ignite_history', ['userid' => $userid]) ||
                 $DB->record_exists('local_ignite_feature', ['userid' => $userid]) ||
+                $DB->record_exists('local_ignite_xp', ['userid' => $userid]) ||
                 $DB->record_exists('local_ignite_credit', ['userid' => $userid])) {
             $list->add_user_context($userid);
         }
@@ -71,6 +77,7 @@ final class provider implements \core_privacy\local\metadata\provider,
                 $DB->record_exists('local_ignite_invite', ['userid' => $context->instanceid]) ||
                 $DB->record_exists('local_ignite_history', ['userid' => $context->instanceid]) ||
                 $DB->record_exists('local_ignite_feature', ['userid' => $context->instanceid]) ||
+                $DB->record_exists('local_ignite_xp', ['userid' => $context->instanceid]) ||
                 $DB->record_exists('local_ignite_credit', ['userid' => $context->instanceid]))) {
             $userlist->add_user($context->instanceid);
         }
@@ -99,7 +106,7 @@ final class provider implements \core_privacy\local\metadata\provider,
             unset($invitation->id, $invitation->userid);
             $data->invitation = $invitation;
         }
-        foreach (['history', 'credit'] as $table) {
+        foreach (['history', 'credit', 'xp'] as $table) {
             $records = $DB->get_records('local_ignite_' . $table, ['userid' => $userid], 'id');
             foreach ($records as $record) {
                 unset($record->id, $record->userid);
@@ -146,6 +153,7 @@ final class provider implements \core_privacy\local\metadata\provider,
                 $DB->delete_records('local_ignite_prefs', ['userid' => $userid]);
                 $DB->delete_records('local_ignite_member', ['userid' => $userid]);
                 $DB->delete_records('local_ignite_history', ['userid' => $userid]);
+                $DB->delete_records('local_ignite_xp', ['userid' => $userid]);
                 $DB->delete_records('local_ignite_credit', ['userid' => $userid]);
                 // Do not serve stale totals containing erased contributions. The next task republishes totals.
                 $DB->delete_records('local_ignite_total');

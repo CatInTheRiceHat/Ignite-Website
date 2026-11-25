@@ -53,6 +53,13 @@ final class hearth_ui {
         ];
     }
 
+    public static function campfire_emblem(string $team, string $emblem): string {
+        if ($emblem !== 'sol' && in_array($emblem, houses::EMBLEMS, true)) {
+            return $emblem . '.png';
+        }
+        return 'campfire/' . $team . '.jpg';
+    }
+
     private static function asset_url(\stdClass $house, string $area): string {
         global $OUTPUT;
         $files = get_file_storage()->get_area_files(\context_system::instance()->id, 'local_ignite',
@@ -61,6 +68,14 @@ final class hearth_ui {
             $file = reset($files);
             return \moodle_url::make_pluginfile_url(\context_system::instance()->id, 'local_ignite', $area,
                 $house->id, '/', $file->get_filename())->out(false);
+        }
+        $team = array_search((int)$house->id, campfire::ids(), true);
+        if ($area === 'emblem' && $team !== false) {
+            $art = self::campfire_emblem($team, $house->emblem);
+            return $OUTPUT->image_url(substr($art, 0, -4), 'local_ignite')->out(false);
+        }
+        if ($area === 'mascot' && $team !== false && $house->mascot === 'placeholder') {
+            return $OUTPUT->image_url('campfire/' . $team, 'local_ignite')->out(false);
         }
         $key = $house->$area ?? 'placeholder';
         return in_array($key, houses::EMBLEMS, true) ? $OUTPUT->image_url($key, 'local_ignite')->out(false) : '';

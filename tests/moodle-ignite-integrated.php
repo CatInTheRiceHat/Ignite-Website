@@ -15,6 +15,7 @@ use local_ignite\access; use local_ignite\missions; use local_ignite\onboarding;
 use local_ignite\preferences; use local_ignite\invitations; use local_ignite\houses;
 use local_ignite\challenges; use local_ignite\badge_state; use local_ignite\learner_read_model;
 use local_ignite\reports; use local_ignite\onboarding_policy;
+use local_ignite\xp;
 $checks=0;
 function check(bool $ok,string $message): void { global $checks; if (!$ok) { throw new RuntimeException($message); } $checks++; echo "PASS $message\n"; }
 function rejected(callable $call,string $message): void { try { $call(); } catch (moodle_exception $e) { check(true,$message); return; } throw new RuntimeException('Expected rejection: '.$message); }
@@ -69,7 +70,11 @@ set_config('noreplyaddress','noreply@example.invalid'); $CFG->noreplyaddress='no
 if (($argv[2] ?? '')==='--worker') {
     as_user(core_user::get_user((int)$argv[3]));
     $record=$DB->get_record('course_modules_completion',['userid'=>(int)$argv[3],'coursemoduleid'=>(int)$argv[4]],'*',MUST_EXIST);
-    for ($n=0;$n<6;$n++) { challenges::observe(snapshot($record)); }
+    for ($n=0;$n<6;$n++) {
+        $event = snapshot($record);
+        challenges::observe($event);
+        xp::observe($event);
+    }
     exit;
 }
 if (($argv[2] ?? '')==='--configuration') {
@@ -248,13 +253,18 @@ onboarding::save('next','path',['targetkey'=>'activity:'.$q->coursemodule]);
 $url=onboarding::save('start','finish');
 check(str_contains($url->out(false),'/local/ignite/mission.php?id='.$missionid),'Prompt 2 wraps the same starter ID through its mission presentation');
 check(preferences::get_current()->status==='complete' && !invitations::can_offer(),'Finishing onboarding does not fabricate starter completion or invite early');
+check(xp::profile_current()->xp === 0 && xp::profile_current()->level === 1, 'New learner begins at zero XP and level 1');
 $wrong=attempt($quiz,1,false);
 check(local_ignite\recommendations::completed_starter()===null && !missions::current($missionid)['complete'],'Incorrect native answer does not complete the starter mission');
+check(xp::profile_current()->xp === 0, 'Failing the starter earns no XP');
 check(!str_contains(json_encode(missions::current($missionid)),'BUDGET_FEEDBACK'),'Withheld Quiz feedback is never copied into mission teaching text');
 $settings=\mod_quiz\quiz_settings::create($quiz->id,$USER->id);
 check(!$settings->get_access_manager(time())->is_finished(1,$wrong),'Native attempt rules allow the remaining retry');
 $correct=attempt($quiz,2,true);
 check(local_ignite\recommendations::completed_starter()===(int)$q->coursemodule && missions::current($missionid)['complete'],'Correct native answer satisfies the shared starter/mission evidence');
+check(xp::profile_current()->xp === 20 &&
+    $DB->get_field('local_ignite_xp', 'houseid', ['userid' => $USER->id, 'cmid' => $q->coursemodule]) == 0,
+    'Passing the starter before joining earns 20 lifetime XP without a team contribution');
 check($settings->get_access_manager(time())->is_finished(2,$correct),'Native attempt limit prevents a third attempt');
 set_config('dashboard',0,'local_ignite');
 check(missions::current($missionid)['complete'],'Missions remain usable when the separate dashboard feature is off');
@@ -271,6 +281,7 @@ as_user($users['learner']); houses::set_current((int)$hearths[0]->id);
 fixture_write(fn()=>$DB->set_field('local_ignite_history','timebegin',time()-100,['userid'=>$USER->id,'timeend'=>0]));
 check(challenges::progress($period,(int)$hearths[0]->id)['own']===0 && local_ignite\recommendations::completed_starter()===(int)$q->coursemodule,
     'Pre-membership starter keeps personal completion and receives no retroactive Hearth credit');
+check(xp::team_current() === '0' && xp::profile_current()->xp === 20, 'Joining preserves the starter balance without backfill');
 as_user($users['editor']); confirm_badge((int)$badge->id,(int)$users['learner']->id);
 advance(); as_user($users['learner']);
 check(badge_state::get_current((int)$badge->id)['earned'],'Native completion/badge background processing confirms issuance');
@@ -291,6 +302,8 @@ as_user($users['editor']); $gradedata->workflowstate=ASSIGN_MARKING_WORKFLOW_STA
 as_user($users['learner']);
 check(str_contains(missions::current($laterid)['feedback'],'MENTOR_FEEDBACK') && missions::current($laterid)['complete'],'Released native mentor feedback and completion are shown accurately');
 $evidence=$DB->get_record('course_modules_completion',['userid'=>$USER->id,'coursemoduleid'=>$a->coursemodule],'*',MUST_EXIST);
+check(xp::profile_current()->xp === 40 && xp::team_current() === '10',
+    'First eligible award after joining adds all 20 to the profile and exactly 10 to the first team');
 $delayed=snapshot($evidence);
 // Simulate transport delay: retain genuine native evidence, remove only this fixture's already-delivered ledger row.
 $DB->delete_records('local_ignite_credit',['userid'=>$USER->id,'cmid'=>$a->coursemodule,'challengeid'=>$period]); challenges::refresh();
@@ -298,6 +311,7 @@ sleep(2); houses::set_current((int)$hearths[1]->id); challenges::observe($delaye
 check((int)$DB->get_field('local_ignite_credit','houseid',['userid'=>$USER->id,'cmid'=>$a->coursemodule,'challengeid'=>$period])===(int)$hearths[0]->id,
     'Delayed native event uses membership at qualifying completion time, not current membership');
 $DB->delete_records('local_ignite_credit',['userid'=>$USER->id,'cmid'=>$a->coursemodule,'challengeid'=>$period]); challenges::refresh();
+$DB->delete_records('local_ignite_xp', ['userid' => $USER->id, 'cmid' => $a->coursemodule]);
 $workers=[];
 for ($n=0;$n<3;$n++) {
     $workers[]=proc_open([PHP_BINARY,__FILE__,$argv[1],'--worker',$USER->id,$a->coursemodule],
@@ -306,11 +320,17 @@ for ($n=0;$n<3;$n++) {
 $ok=true; foreach ($workers as $worker) { $ok=$ok && proc_close($worker)===0; }
 check($ok && $DB->count_records('local_ignite_credit',['userid'=>$USER->id,'cmid'=>$a->coursemodule,'challengeid'=>$period])===1,
     'Concurrent duplicate events produce one credit under native locks and the unique database key');
+check(xp::profile_current()->xp === 40 && xp::team_current() === '0' &&
+    (int)$DB->get_field('local_ignite_xp', 'houseid', ['userid' => $USER->id, 'cmid' => $a->coursemodule]) === (int)$hearths[0]->id,
+    'Concurrent delayed deliveries credit only the team at earning time and award personal XP once');
 houses::set_current((int)$hearths[0]->id);
 $issued=$DB->get_records('badge_issued',['userid'=>$USER->id]);
 as_user($users['editor']); revise_grade($cm,$course,(int)$users['learner']->id,$gradedata,20);
 as_user($users['learner']);
 check(!missions::current($laterid)['complete'] && $DB->get_records('badge_issued',['userid'=>$USER->id])==$issued,'Changed failing grade reverses mission completion without revoking a native badge');
+xp::observe($delayed);
+check(xp::profile_current()->xp === 20 && xp::team_current() === '0',
+    'A failing grade reverses the original award and a replay cannot restore it');
 as_user(get_admin()); $manual->update_user_enrol($instance,$users['learner']->id,ENROL_USER_SUSPENDED);
 as_user($users['learner']); check(missions::current($missionid)===null,'Revoked enrollment invalidates direct mission access immediately');
 as_user(get_admin()); $manual->update_user_enrol($instance,$users['learner']->id,ENROL_USER_ACTIVE);
@@ -355,14 +375,66 @@ $deleted=add_moduleinfo((object)['modulename'=>'page','module'=>$DB->get_field('
     'course'=>$course->id,'section'=>0,'name'=>'Disposable access fixture','intro'=>'','introformat'=>FORMAT_HTML,
     'content'=>'A private access check.','contentformat'=>FORMAT_HTML,'display'=>5,'visible'=>1,
     'printintro'=>0,'printlastmodified'=>0,'completion'=>1],$course);
+// Designate a practice activity and cross the default 100 XP threshold through native completion.
+$cmid = (int)$deleted->coursemodule;
+$heatconfig = get_config('local_ignite', 'heatconfig');
+set_config('heatconfig', json_encode(['thresholds' => [0,1,3,6,10], 'milestones' => [$cmid => 'complete']]), 'local_ignite');
+set_config('xpaward', 80, 'local_ignite');
+as_user($users['learner']);
+$practice = get_fast_modinfo($course)->get_cm($cmid);
+$completion = new completion_info($course);
+$completion->update_state($practice, COMPLETION_COMPLETE, $USER->id, false, true);
+check(xp::profile_current()->xp === 100 && xp::profile_current()->level === 2 && xp::team_current() === '40',
+    'An 80 XP award advances the existing 20 XP profile to level 2 at exactly 100 XP');
+$tree = \core_user\output\myprofile\manager::build_tree($USER, true);
+$profile = $PAGE->get_renderer('core_user', 'myprofile')->render($tree);
+check(str_contains($profile, get_string('xpprogress', 'local_ignite', xp::profile_current())),
+    'Native learner profile renders the lifetime XP and level');
+// Replay a held native delivery across a month boundary, using a controlled fixture clock.
+$previous = new DateTimeImmutable('last day of last month 12:00', new DateTimeZone(local_ignite\campfire::TIMEZONE));
+$earned = $previous->getTimestamp();
+$key = ['userid' => $USER->id, 'cmid' => $cmid];
+$record = $DB->get_record('course_modules_completion', ['userid' => $USER->id, 'coursemoduleid' => $cmid], '*', MUST_EXIST);
+$record->timemodified = $earned;
+$DB->update_record('course_modules_completion', $record);
+$DB->delete_records('local_ignite_xp', $key);
+$held = snapshot($record);
+xp::observe($held);
+check(!$DB->record_exists('local_ignite_xp', $key), 'Replaying a pre-install completion awards no historical XP');
+$start = get_config('local_ignite', 'xpstart');
+set_config('xpstart', $earned - 100, 'local_ignite');
+$DB->insert_record('local_ignite_history', ['userid' => $USER->id, 'houseid' => $hearths[1]->id,
+    'timebegin' => $earned - 20, 'timeend' => $earned + 20]);
+xp::observe($held);
+$original = $DB->get_record('local_ignite_xp', $key, '*', MUST_EXIST);
+check((int)$original->houseid === (int)$hearths[1]->id && (int)$original->earnmonth === (int)$previous->format('Ym') &&
+    xp::profile_current()->xp === 100 && xp::team_current() === '0',
+    'Delayed credit belongs to the prior month and prior team while the full award appears on the profile');
+set_config('xpaward', 15, 'local_ignite');
+$completion->update_state($practice, COMPLETION_INCOMPLETE);
+xp::observe($held);
+$original->reversed = 1;
+check($DB->get_record('local_ignite_xp', $key) == $original && xp::profile_current()->xp === 20,
+    'Later reversal retains the original 80 XP amount, team and month, including after a duplicate delivery');
+set_config('xpstart', $start, 'local_ignite');
+set_config('heatconfig', $heatconfig, 'local_ignite');
+set_config('xpaward', xp::DEFAULT_AWARD, 'local_ignite');
+as_user(get_admin());
 $temporary=$metadata; $temporary['title']='Temporary access fixture'; $temporary['cmids']=[(int)$deleted->coursemodule];
 $temporary['nextcmid']=0; $temporary['badgeid']=0; $deletedmission=missions::save(0,(int)$course->id,$temporary);
 course_delete_module($deleted->coursemodule);
 as_user($users['learner']); check(missions::current($deletedmission)===null,'A native activity deletion makes its direct mission URL safely unavailable');
 // The new report invalidation participates in native privacy erasure without touching native credentials.
 as_user($users['privacy']); preferences::save_current(['interests'=>['money'],'status'=>'complete','currentstep'=>'done']);
-houses::set_current((int)$hearths[0]->id); invitations::current();
+houses::set_current((int)$hearths[1]->id); invitations::current();
+set_config('xpaward', 15, 'local_ignite');
 attempt($quiz,1,true);
+check(xp::profile_current()->xp === 15 && xp::team_current() === '7.5',
+    'A 15 XP quiz award gives the learner 15 and the second team exactly 7.5');
+$campfire = $OUTPUT->render_from_template('local_ignite/campfire_standings', local_ignite\campfire::standings());
+check(str_contains($campfire, get_string('yourteamxp', 'local_ignite', '7.5')),
+    'Campfire displays the exact monthly half-point total');
+set_config('xpaward', xp::DEFAULT_AWARD, 'local_ignite');
 as_user($users['editor']); confirm_badge((int)$badge->id,(int)$users['privacy']->id);
 as_user($users['privacy']); local_ignite\passport::save_featured_current([(int)$badge->id]);
 $nativecredentials=$DB->get_records('badge_issued',['userid'=>$USER->id]);
@@ -373,7 +445,7 @@ $zip=\core_privacy\local\request\writer::with_context($privacycontext)->finalise
 check(is_file($zip),'Native privacy export still succeeds with missions/reporting installed');
 set_config('enabled',0,'local_ignite'); local_ignite\privacy\provider::delete_data_for_user($approved);
 check(!$DB->record_exists('local_ignite_prefs',['userid'=>$USER->id]) && !$DB->record_exists('local_ignite_history',['userid'=>$USER->id]) &&
-    !$DB->record_exists('local_ignite_feature',['userid'=>$USER->id]) && $DB->get_records('badge_issued',['userid'=>$USER->id])==$nativecredentials,
+    !$DB->record_exists('local_ignite_feature',['userid'=>$USER->id]) && !$DB->record_exists('local_ignite_xp',['userid'=>$USER->id]) && $DB->get_records('badge_issued',['userid'=>$USER->id])==$nativecredentials,
     'Privacy erasure while disabled removes Ignite personal data and preserves native badge ownership');
 check((int)$DB->get_field('local_ignite_report','timeupdated',['id'=>$report->id])===0,'Privacy erasure invalidates aggregate snapshots');
 set_config('enabled',1,'local_ignite');

@@ -9,5 +9,6 @@ final class hearth_totals extends \core\task\scheduled_task {
     }
     public function execute(): void {
         \local_ignite\challenges::refresh();
+        \local_ignite\xp::reconcile();
     }
 }

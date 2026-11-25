@@ -102,5 +102,42 @@ function xmldb_local_ignite_upgrade(int $oldversion): bool {
             upgrade_plugin_savepoint(true,$version,'local','ignite');
         }
     }
+    if ($oldversion < 2026112400) {
+        $file = new xmldb_file(__DIR__ . '/install.xml');
+        $file->loadXMLStructure();
+        $table = $file->getStructure()->getTable('local_ignite_xp');
+        if (!$DB->get_manager()->table_exists($table)) {
+            $DB->get_manager()->create_table($table);
+        }
+        set_config('xpstart', time(), 'local_ignite');
+        upgrade_plugin_savepoint(true, 2026112400, 'local', 'ignite');
+    }
+    if ($oldversion < 2026112401) {
+        \local_ignite\installation::seed_houses();
+        // Correct Prompt 1's site-timezone month keys without touching any award amounts or membership.
+        $range = $DB->get_record_sql('SELECT MIN(timeearned) AS oldest, MAX(timeearned) AS newest FROM {local_ignite_xp}');
+        if ($range->oldest !== null) {
+            $month = \local_ignite\campfire::period((int)$range->oldest);
+            while ($month->getTimestamp() <= $range->newest) {
+                $next = $month->modify('+1 month');
+                $key = (int)$month->format('Ym');
+                $DB->set_field_select('local_ignite_xp', 'earnmonth', $key,
+                    'timeearned >= ? AND timeearned < ? AND earnmonth <> ?', [$month->getTimestamp(), $next->getTimestamp(), $key]);
+                $month = $next;
+            }
+        }
+        upgrade_plugin_savepoint(true, 2026112401, 'local', 'ignite');
+    }
+    if ($oldversion < 2026112402) {
+        $file = new xmldb_file(__DIR__ . '/install.xml');
+        $file->loadXMLStructure();
+        foreach (['local_ignite_cup', 'local_ignite_cupbadge'] as $name) {
+            $table = $file->getStructure()->getTable($name);
+            if (!$DB->get_manager()->table_exists($table)) {
+                $DB->get_manager()->create_table($table);
+            }
+        }
+        upgrade_plugin_savepoint(true, 2026112402, 'local', 'ignite');
+    }
     return true;
 }
