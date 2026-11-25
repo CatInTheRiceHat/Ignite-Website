@@ -12,7 +12,6 @@ final class navigation {
                 !has_capability('local/ignite:use', \context_system::instance())) { return []; }
         $items = ['local_ignite' => ['label' => get_string('dash_dashboard', 'local_ignite'), 'path' => !empty($CFG->enabledashboard) ? '/my/' : '/local/ignite/index.php'],
             'local_ignite_explore' => ['label' => get_string('nav_explore', 'local_ignite'), 'path' => '/course/index.php']];
-        if (access::enabled('houses')) { $items['local_ignite_hearth'] = ['label' => get_string('nav_hearth', 'local_ignite'), 'path' => '/local/ignite/hearth.php']; }
         if (access::enabled('passport')) { $items['local_ignite_passport'] = ['label' => get_string('passport', 'local_ignite'), 'path' => '/local/ignite/passport.php']; }
         return $items;
     }

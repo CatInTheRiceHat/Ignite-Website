@@ -160,7 +160,7 @@
     font: 700 clamp(1.5rem, 3vw, 2rem)/1.15 Poppins, sans-serif;
 }
 .hearth-slide__description p { margin: 0; color: inherit; line-height: 1.5; }
-.hearth-slide form { display: flex; justify-content: center; margin: 40px 0 0; }
+.hearth-slide form { display: flex; justify-content: center; margin: 24px 0 0; }
 .hearth-carousel button { min-height: 44px; color: #352b29; box-shadow: none; font: 700 1rem/1.4 Nunito, sans-serif; cursor: pointer; }
 .hearth-carousel .hearth-slide__join {
     padding: .6rem 1.5rem;
@@ -194,7 +194,7 @@
 @media (max-width: 600px) {
     .hearth-carousel { margin-inline: -.75rem; }
     .hearth-slide { padding-inline: 0; }
-    .hearth-slide form { margin-top: 32px; }
+    .hearth-slide form { margin-top: 20px; }
 }
 @media (max-width: 360px) {
     .hearth-slide__description { --copy-padding: .65rem; }

@@ -3,7 +3,7 @@ import AxeBuilder from '@axe-core/playwright';
 
 test.skip(process.env.IGNITE_LAYOUT_FIXTURE !== '1', 'Requires the isolated Moodle preview or integrated fixture.');
 
-test('simple dashboard retains native Timeline and four navigation destinations', async ({ page }) => {
+test('simple dashboard retains native Timeline and three navigation destinations', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/login/index.php');
   await expect(page.getByText(/^Log in to Ignite (local preview|integrated fixture)$/)).toBeVisible();
@@ -16,11 +16,12 @@ test('simple dashboard retains native Timeline and four navigation destinations'
   await expect(root.locator('.ignite-dashboard__sidebar, .ignite-dashboard__rail, .ignite-dashboard__grid')).toHaveCount(0);
   await expect(root.locator('.ignite-dashboard__learning, .ignite-dashboard__hearth-card, .ignite-dashboard__passport, .ignite-dashboard__recommendations')).toHaveCount(0);
   const primary = page.locator('.primary-navigation');
-  for (const [name, path] of [['Home', '/my/'], ['Courses', '/course/index.php'], ['Hearth', '/local/ignite/hearth.php'], ['Campfire', '/local/ignite/passport.php']]) {
+  for (const [name, path] of [['Home', '/my/'], ['Courses', '/course/index.php'], ['Campfire', '/local/ignite/passport.php']]) {
     const link = primary.getByRole('menuitem', { name, exact: true });
     await expect(link).toHaveCount(1);
     await expect(link).toHaveAttribute('href', new RegExp(`${path.replace(/[.?]/g, '\\$&')}$`));
   }
+  await expect(primary.locator('a[href$="/local/ignite/hearth.php"]')).toHaveCount(0);
   const timeline = root.locator('.ignite-dashboard__timeline');
   await expect(timeline.locator('[data-region="timeline"]')).toBeVisible();
   const filter = timeline.locator('[data-region="day-filter"]');

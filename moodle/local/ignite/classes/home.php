@@ -59,7 +59,6 @@ final class home {
             'invitestate' => $invitation ? get_string('invitestate_' . $invitation->state, 'local_ignite') : '',
             'onboarding' => access::enabled('onboarding'),
             'onboardingstatus' => get_string('status_' . $prefs->status, 'local_ignite'),
-            'hearthurl' => (new \moodle_url('/local/ignite/hearth.php'))->out(false),
             'choosehearthurl' => (new \moodle_url('/local/ignite/choosehearth.php'))->out(false),
             'houses' => access::enabled('houses'), 'hashouse' => (bool)$house,
             'housename' => $house ? $house->name : '',
