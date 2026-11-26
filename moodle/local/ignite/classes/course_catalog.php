@@ -87,7 +87,8 @@ final class course_catalog {
     public static function self_instance(int $courseid): ?\stdClass {
         $plugin = enrol_get_plugin('self');
         foreach (enrol_get_instances($courseid, true) as $instance) {
-            if ($instance->enrol === 'self' && $instance->password === '' &&
+            // Moodle stores "no enrolment key" as NULL or an empty string.
+            if ($instance->enrol === 'self' && (string)$instance->password === '' &&
                     empty($instance->customint1) && $plugin->can_self_enrol($instance) === true) {
                 return $instance;
             }

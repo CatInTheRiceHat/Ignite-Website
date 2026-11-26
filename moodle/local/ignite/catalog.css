@@ -71,3 +71,6 @@
 :is(#page-course-index, #page-course-index-category, #page-course-search) #region-main .coursebox .content .teachers { grid-template-columns: none !important; }
 :is(#page-course-index, #page-course-index-category, #page-course-search) #region-main .coursebox .content .teachers li > span:first-child { display: none !important; }
 :is(#page-course-index, #page-course-index-category, #page-course-search) #region-main .coursebox .content > .d-flex > .flex-grow-1 { overflow: hidden; }
+
+/* The card's button already says whether you can enrol, so Moodle's enrolment-method icons are not shown. */
+:is(#page-course-index, #page-course-index-category, #page-course-search) #region-main .coursebox .enrolmenticons { display: none !important; }
