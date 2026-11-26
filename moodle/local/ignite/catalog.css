@@ -1,0 +1,65 @@
+/* Course catalog: filter bar, fact chips, and the one-click action. Loaded after the theme's catalog styles. */
+.ignite-cat__filters {
+    display: grid;
+    gap: .9rem;
+    max-width: 76rem;
+    margin: 0 0 1.25rem;
+    padding: 1.1rem 1.25rem;
+    border: 1px solid #f2d5bb;
+    border-radius: 1.25rem;
+    background: #fff;
+    font-family: Nunito, system-ui, sans-serif;
+}
+.ignite-cat__group { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .6rem; margin: 0; padding: 0; border: 0; }
+.ignite-cat__group legend {
+    float: none; width: auto; margin: 0 .35rem 0 0; padding: 0;
+    color: #1a1a2e; font: 700 .95rem/1.4 Poppins, sans-serif;
+}
+.ignite-cat__pill {
+    min-height: 2.5rem; padding: .35rem 1rem;
+    border: 0; border-radius: 2rem; background: #ffe9d6;
+    color: #1a1a2e; font: 700 .95rem/1.4 Nunito, sans-serif; cursor: pointer;
+    transition: border-color .15s ease, background-color .15s ease;
+}
+.ignite-cat__pill:hover { background: #ffd9b8; }
+.ignite-cat__pill[aria-pressed="true"] { background: #f07b2a; color: #fff; }
+.ignite-cat__pill:focus-visible { outline: 3px solid #214f9b; outline-offset: 2px; }
+.ignite-cat__count { margin: 0; color: #4a4a5e; font-size: .95rem; }
+.ignite-cat__none { max-width: 76rem; margin: 1rem 0; padding: 1.25rem; border-radius: 1rem; background: #fff8f0; color: #1a1a2e; font-weight: 700; }
+
+.ignite-cat__foot { grid-column: 1; grid-row: 4; display: grid; gap: 1.25rem; margin: .25rem 1.25rem 1.5rem; padding-inline: .25rem; }
+.ignite-cat__chips { display: flex; flex-wrap: wrap; gap: .4rem; margin: 0; padding: 0; list-style: none; }
+.ignite-cat__chip { padding: .15rem .7rem; border-radius: 1rem; background: #ffe9d6; color: #6b2d08; font: 700 .85rem/1.5 Nunito, sans-serif; }
+.ignite-cat__chip--topic { background: #e7eaf8; color: #1f2a6b; }
+.ignite-cat__action {
+    display: inline-flex; align-items: center; justify-content: center; justify-self: center;
+    box-sizing: border-box; height: 3.25rem; margin: 0; padding: 0 1.4rem; border: 0; border-radius: 2rem; background: #f07b2a;
+    color: #fff !important; font: 700 1.25rem/1.4 Nunito, sans-serif; text-decoration: none !important; cursor: pointer;
+}
+.ignite-cat__action:hover { background: #d46a20; }
+.ignite-cat__action:focus-visible { outline: 3px solid #214f9b; outline-offset: 3px; }
+.ignite-cat__action--quiet { background: #ffe9d6; color: #6b2d08 !important; }
+.ignite-cat__action--quiet:hover { background: #ffd9b8; }
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .coursebox[data-courseid] { transition: transform .18s ease, box-shadow .18s ease; }
+    .coursebox[data-courseid]:hover { transform: translateY(-3px); }
+}
+@media (max-width: 575.98px) {
+    .ignite-cat__filters { padding: 1rem; }
+    .ignite-cat__action { justify-self: stretch; }
+}
+
+/* Centre the catalog on wide windows: the page container, filter bar and card grid all have a maximum width. */
+:is(#page-course-index, #page-course-index-category, #page-course-search) #page.drawers .main-inner { margin-inline: auto; }
+:is(#page-course-index, #page-course-index-category, #page-course-search) :is(.course_category_tree .courses, .courses.course-search-result) { margin-inline: auto; }
+.ignite-cat__filters, .ignite-cat__none { margin-inline: auto; }
+:is(#page-course-index, #page-course-index-category, #page-course-search) #page.drawers .main-inner { padding: clamp(1.25rem, 3vw, 2.5rem); }
+:is(#page-course-index, #page-course-index-category, #page-course-search) .page-header-headings h1 { margin-bottom: 1.25rem; }
+/* No big white panel behind the catalog: the cream page shows through and the cards stand on their own. */
+:is(#page-course-index, #page-course-index-category, #page-course-search) #page.drawers .main-inner { background: transparent; box-shadow: none; border-radius: 0; }
+/* One shared column: header, filter bar and cards all use the same 76rem width and centre together. */
+:is(#page-course-index, #page-course-index-category, #page-course-search) #page.drawers .main-inner { box-sizing: border-box; max-width: none; margin-inline: 0; padding-inline: clamp(1rem, 3vw, 2rem); }
+:is(#page-course-index, #page-course-index-category, #page-course-search) #page-header { max-width: 76rem; margin-inline: auto; padding-inline: 0; }
+.ignite-cat__filters { box-sizing: border-box; max-width: 76rem; }
+.ignite-cat__foot > form { justify-self: center; }

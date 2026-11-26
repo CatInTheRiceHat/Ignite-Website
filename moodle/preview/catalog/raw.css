@@ -1,0 +1,1534 @@
+.ignite-redirect-icon {
+  display: inline-block;
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  vertical-align: middle;
+  font-size: 0;
+  background-color: currentColor;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+.ignite-redirect-icon--compact {
+  width: 1rem;
+  height: 1rem;
+}
+
+#page-course-index,
+#page-course-index-category,
+#page-course-search {
+  background-color: #FFF8F0;
+}
+#page-course-index #page.drawers,
+#page-course-index-category #page.drawers,
+#page-course-search #page.drawers {
+  background-color: #FFF8F0;
+}
+#page-course-index #page.drawers .main-inner,
+#page-course-index-category #page.drawers .main-inner,
+#page-course-search #page.drawers .main-inner {
+  max-width: 80rem;
+  border-radius: 1.5rem;
+  background: #fff;
+  box-shadow: 0 6px 24px rgba(78, 42, 18, 0.05);
+}
+#page-course-index #page-header,
+#page-course-index-category #page-header,
+#page-course-search #page-header {
+  max-width: 80rem;
+  margin-inline: auto;
+}
+#page-course-index .page-header-headings h1,
+#page-course-index-category .page-header-headings h1,
+#page-course-search .page-header-headings h1 {
+  color: #1A1A2E;
+  font-family: "Rammetto One", "Poppins", "Segoe UI", Arial, sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+#page-course-index #region-main,
+#page-course-index-category #region-main,
+#page-course-search #region-main {
+  color: #4A4A5E;
+  font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+#page-course-index #region-main .simplesearchform:has(input[name=q]),
+#page-course-index #region-main .simplesearchform:has(input[name=search]),
+#page-course-index-category #region-main .simplesearchform:has(input[name=q]),
+#page-course-index-category #region-main .simplesearchform:has(input[name=search]),
+#page-course-search #region-main .simplesearchform:has(input[name=q]),
+#page-course-search #region-main .simplesearchform:has(input[name=search]) {
+  width: 100%;
+  max-width: 48rem;
+  margin-block: 1rem 1.75rem;
+}
+#page-course-index #region-main .simplesearchform form.simplesearchform,
+#page-course-index-category #region-main .simplesearchform form.simplesearchform,
+#page-course-search #region-main .simplesearchform form.simplesearchform {
+  margin: 0;
+}
+#page-course-index #region-main .simplesearchform .input-group:has(input[name=q]),
+#page-course-index #region-main .simplesearchform .input-group:has(input[name=search]),
+#page-course-index-category #region-main .simplesearchform .input-group:has(input[name=q]),
+#page-course-index-category #region-main .simplesearchform .input-group:has(input[name=search]),
+#page-course-search #region-main .simplesearchform .input-group:has(input[name=q]),
+#page-course-search #region-main .simplesearchform .input-group:has(input[name=search]) {
+  flex-wrap: nowrap;
+  border-radius: 0.85rem;
+  box-shadow: 0 4px 14px rgba(78, 42, 18, 0.06);
+}
+#page-course-index #region-main .simplesearchform .input-group:has(input[name=q]) input.form-control,
+#page-course-index #region-main .simplesearchform .input-group:has(input[name=search]) input.form-control,
+#page-course-index-category #region-main .simplesearchform .input-group:has(input[name=q]) input.form-control,
+#page-course-index-category #region-main .simplesearchform .input-group:has(input[name=search]) input.form-control,
+#page-course-search #region-main .simplesearchform .input-group:has(input[name=q]) input.form-control,
+#page-course-search #region-main .simplesearchform .input-group:has(input[name=search]) input.form-control {
+  min-width: 0;
+  min-height: 3.25rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid #83756B;
+  border-radius: 0.85rem 0 0 0.85rem;
+  background: #fff;
+  color: #1A1A2E;
+  font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+#page-course-index #region-main .simplesearchform .input-group:has(input[name=q]) input.form-control::placeholder,
+#page-course-index #region-main .simplesearchform .input-group:has(input[name=search]) input.form-control::placeholder,
+#page-course-index-category #region-main .simplesearchform .input-group:has(input[name=q]) input.form-control::placeholder,
+#page-course-index-category #region-main .simplesearchform .input-group:has(input[name=search]) input.form-control::placeholder,
+#page-course-search #region-main .simplesearchform .input-group:has(input[name=q]) input.form-control::placeholder,
+#page-course-search #region-main .simplesearchform .input-group:has(input[name=search]) input.form-control::placeholder {
+  color: #4A4A5E;
+  opacity: 1;
+}
+#page-course-index #region-main .simplesearchform .input-group:has(input[name=q]) button[type=submit],
+#page-course-index #region-main .simplesearchform .input-group:has(input[name=search]) button[type=submit],
+#page-course-index-category #region-main .simplesearchform .input-group:has(input[name=q]) button[type=submit],
+#page-course-index-category #region-main .simplesearchform .input-group:has(input[name=search]) button[type=submit],
+#page-course-search #region-main .simplesearchform .input-group:has(input[name=q]) button[type=submit],
+#page-course-search #region-main .simplesearchform .input-group:has(input[name=search]) button[type=submit] {
+  flex: 0 0 auto;
+  min-width: 3.5rem;
+  min-height: 3.25rem;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid #A63B00;
+  border-radius: 0 0.85rem 0.85rem 0;
+  background: #F07B2A;
+  color: #fff;
+  font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font-size: var(--button-font-size, 1.25rem);
+  line-height: 1.4;
+  font-weight: 700;
+  transition: background-color 0.18s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  #page-course-index #region-main .simplesearchform .input-group:has(input[name=q]) button[type=submit],
+  #page-course-index #region-main .simplesearchform .input-group:has(input[name=search]) button[type=submit],
+  #page-course-index-category #region-main .simplesearchform .input-group:has(input[name=q]) button[type=submit],
+  #page-course-index-category #region-main .simplesearchform .input-group:has(input[name=search]) button[type=submit],
+  #page-course-search #region-main .simplesearchform .input-group:has(input[name=q]) button[type=submit],
+  #page-course-search #region-main .simplesearchform .input-group:has(input[name=search]) button[type=submit] {
+    transition: none;
+  }
+}
+#page-course-index #region-main .simplesearchform .input-group:has(input[name=q]) button[type=submit]:hover,
+#page-course-index #region-main .simplesearchform .input-group:has(input[name=search]) button[type=submit]:hover,
+#page-course-index-category #region-main .simplesearchform .input-group:has(input[name=q]) button[type=submit]:hover,
+#page-course-index-category #region-main .simplesearchform .input-group:has(input[name=search]) button[type=submit]:hover,
+#page-course-search #region-main .simplesearchform .input-group:has(input[name=q]) button[type=submit]:hover,
+#page-course-search #region-main .simplesearchform .input-group:has(input[name=search]) button[type=submit]:hover {
+  background: #D46A20;
+}
+#page-course-index #region-main .simplesearchform .input-group:has(input[name=q]) button[type=submit] .icon,
+#page-course-index #region-main .simplesearchform .input-group:has(input[name=search]) button[type=submit] .icon,
+#page-course-index-category #region-main .simplesearchform .input-group:has(input[name=q]) button[type=submit] .icon,
+#page-course-index-category #region-main .simplesearchform .input-group:has(input[name=search]) button[type=submit] .icon,
+#page-course-search #region-main .simplesearchform .input-group:has(input[name=q]) button[type=submit] .icon,
+#page-course-search #region-main .simplesearchform .input-group:has(input[name=search]) button[type=submit] .icon {
+  margin: 0;
+}
+#page-course-index #region-main .course_category_tree .courses,
+#page-course-index #region-main .courses.course-search-result,
+#page-course-index-category #region-main .course_category_tree .courses,
+#page-course-index-category #region-main .courses.course-search-result,
+#page-course-search #region-main .course_category_tree .courses,
+#page-course-search #region-main .courses.course-search-result {
+  --ignite-catalog-details-height: 9.25rem;
+}
+#page-course-index #region-main .course_category_tree .courses:has(.coursecat, .customfields-container),
+#page-course-index #region-main .courses.course-search-result:has(.coursecat, .customfields-container),
+#page-course-index-category #region-main .course_category_tree .courses:has(.coursecat, .customfields-container),
+#page-course-index-category #region-main .courses.course-search-result:has(.coursecat, .customfields-container),
+#page-course-search #region-main .course_category_tree .courses:has(.coursecat, .customfields-container),
+#page-course-search #region-main .courses.course-search-result:has(.coursecat, .customfields-container) {
+  --ignite-catalog-details-height: 11.5rem;
+}
+#page-course-index #region-main .course_category_tree .courses,
+#page-course-index #region-main .courses.course-search-result,
+#page-course-index-category #region-main .course_category_tree .courses,
+#page-course-index-category #region-main .courses.course-search-result,
+#page-course-search #region-main .course_category_tree .courses,
+#page-course-search #region-main .courses.course-search-result {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  align-items: start;
+  gap: 1.5rem;
+  max-width: 76rem;
+  margin-block: 1.25rem;
+}
+#page-course-index #region-main .course_category_tree .courses > .paging,
+#page-course-index #region-main .course_category_tree .courses > nav,
+#page-course-index #region-main .course_category_tree .courses > .pagination,
+#page-course-index #region-main .course_category_tree .courses > .pagination-bar,
+#page-course-index #region-main .courses.course-search-result > .paging,
+#page-course-index #region-main .courses.course-search-result > nav,
+#page-course-index #region-main .courses.course-search-result > .pagination,
+#page-course-index #region-main .courses.course-search-result > .pagination-bar,
+#page-course-index-category #region-main .course_category_tree .courses > .paging,
+#page-course-index-category #region-main .course_category_tree .courses > nav,
+#page-course-index-category #region-main .course_category_tree .courses > .pagination,
+#page-course-index-category #region-main .course_category_tree .courses > .pagination-bar,
+#page-course-index-category #region-main .courses.course-search-result > .paging,
+#page-course-index-category #region-main .courses.course-search-result > nav,
+#page-course-index-category #region-main .courses.course-search-result > .pagination,
+#page-course-index-category #region-main .courses.course-search-result > .pagination-bar,
+#page-course-search #region-main .course_category_tree .courses > .paging,
+#page-course-search #region-main .course_category_tree .courses > nav,
+#page-course-search #region-main .course_category_tree .courses > .pagination,
+#page-course-search #region-main .course_category_tree .courses > .pagination-bar,
+#page-course-search #region-main .courses.course-search-result > .paging,
+#page-course-search #region-main .courses.course-search-result > nav,
+#page-course-search #region-main .courses.course-search-result > .pagination,
+#page-course-search #region-main .courses.course-search-result > .pagination-bar {
+  grid-column: 1/-1;
+  min-width: 0;
+  margin: 0;
+}
+#page-course-index #region-main .course_category_tree .courses .pagination,
+#page-course-index #region-main .courses.course-search-result .pagination,
+#page-course-index-category #region-main .course_category_tree .courses .pagination,
+#page-course-index-category #region-main .courses.course-search-result .pagination,
+#page-course-search #region-main .course_category_tree .courses .pagination,
+#page-course-search #region-main .courses.course-search-result .pagination {
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox,
+#page-course-index #region-main .courses.course-search-result > .coursebox,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox,
+#page-course-search #region-main .course_category_tree .courses > .coursebox,
+#page-course-search #region-main .courses.course-search-result > .coursebox {
+  color: #1A1A2E;
+  --bs-secondary-color: #1A1A2E;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto 5.25rem var(--ignite-catalog-details-height);
+  min-width: 0;
+  overflow: auto;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #F2D5BB;
+  border-radius: 1.25rem;
+  background: #fff;
+  box-shadow: 0 5px 18px rgba(78, 42, 18, 0.07);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  #page-course-index #region-main .course_category_tree .courses > .coursebox,
+  #page-course-index #region-main .courses.course-search-result > .coursebox,
+  #page-course-index-category #region-main .course_category_tree .courses > .coursebox,
+  #page-course-index-category #region-main .courses.course-search-result > .coursebox,
+  #page-course-search #region-main .course_category_tree .courses > .coursebox,
+  #page-course-search #region-main .courses.course-search-result > .coursebox {
+    transition: none;
+  }
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox::after,
+#page-course-index #region-main .courses.course-search-result > .coursebox::after,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox::after,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox::after,
+#page-course-search #region-main .course_category_tree .courses > .coursebox::after,
+#page-course-search #region-main .courses.course-search-result > .coursebox::after {
+  display: none;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox:focus-within,
+#page-course-index #region-main .courses.course-search-result > .coursebox:focus-within,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox:focus-within,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox:focus-within,
+#page-course-search #region-main .course_category_tree .courses > .coursebox:focus-within,
+#page-course-search #region-main .courses.course-search-result > .coursebox:focus-within {
+  border-color: #A63B00;
+  box-shadow: 0 6px 22px rgba(78, 42, 18, 0.12);
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox > .info,
+#page-course-index #region-main .courses.course-search-result > .coursebox > .info,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox > .info,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox > .info,
+#page-course-search #region-main .course_category_tree .courses > .coursebox > .info,
+#page-course-search #region-main .courses.course-search-result > .coursebox > .info {
+  grid-column: 1;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: flex-start;
+  gap: 0.5rem;
+  min-width: 0;
+  margin: 1.5rem 1.25rem 0.5rem;
+  padding-inline: 0.25rem;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox > .info > .coursename,
+#page-course-index #region-main .courses.course-search-result > .coursebox > .info > .coursename,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox > .info > .coursename,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox > .info > .coursename,
+#page-course-search #region-main .course_category_tree .courses > .coursebox > .info > .coursename,
+#page-course-search #region-main .courses.course-search-result > .coursebox > .info > .coursename {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  color: #1A1A2E;
+  font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox > .info > .coursename a,
+#page-course-index #region-main .courses.course-search-result > .coursebox > .info > .coursename a,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox > .info > .coursename a,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox > .info > .coursename a,
+#page-course-search #region-main .course_category_tree .courses > .coursebox > .info > .coursename a,
+#page-course-search #region-main .courses.course-search-result > .coursebox > .info > .coursename a {
+  color: #1A1A2E;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  height: 2.8em;
+  max-height: 2.8em;
+  overflow: hidden;
+  text-decoration: none;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox > .info > .coursename a:hover,
+#page-course-index #region-main .course_category_tree .courses > .coursebox > .info > .coursename a:focus-visible,
+#page-course-index #region-main .courses.course-search-result > .coursebox > .info > .coursename a:hover,
+#page-course-index #region-main .courses.course-search-result > .coursebox > .info > .coursename a:focus-visible,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox > .info > .coursename a:hover,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox > .info > .coursename a:focus-visible,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox > .info > .coursename a:hover,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox > .info > .coursename a:focus-visible,
+#page-course-search #region-main .course_category_tree .courses > .coursebox > .info > .coursename a:hover,
+#page-course-search #region-main .course_category_tree .courses > .coursebox > .info > .coursename a:focus-visible,
+#page-course-search #region-main .courses.course-search-result > .coursebox > .info > .coursename a:hover,
+#page-course-search #region-main .courses.course-search-result > .coursebox > .info > .coursename a:focus-visible {
+  text-decoration: underline;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox > .info .moreinfo,
+#page-course-index #region-main .course_category_tree .courses > .coursebox > .info .enrolmenticons,
+#page-course-index #region-main .courses.course-search-result > .coursebox > .info .moreinfo,
+#page-course-index #region-main .courses.course-search-result > .coursebox > .info .enrolmenticons,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox > .info .moreinfo,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox > .info .enrolmenticons,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox > .info .moreinfo,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox > .info .enrolmenticons,
+#page-course-search #region-main .course_category_tree .courses > .coursebox > .info .moreinfo,
+#page-course-search #region-main .course_category_tree .courses > .coursebox > .info .enrolmenticons,
+#page-course-search #region-main .courses.course-search-result > .coursebox > .info .moreinfo,
+#page-course-search #region-main .courses.course-search-result > .coursebox > .info .enrolmenticons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox > .info .moreinfo a,
+#page-course-index #region-main .courses.course-search-result > .coursebox > .info .moreinfo a,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox > .info .moreinfo a,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox > .info .moreinfo a,
+#page-course-search #region-main .course_category_tree .courses > .coursebox > .info .moreinfo a,
+#page-course-search #region-main .courses.course-search-result > .coursebox > .info .moreinfo a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox:not(.collapsed) > .content,
+#page-course-index #region-main .courses.course-search-result > .coursebox:not(.collapsed) > .content,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox:not(.collapsed) > .content,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox:not(.collapsed) > .content,
+#page-course-search #region-main .course_category_tree .courses > .coursebox:not(.collapsed) > .content,
+#page-course-search #region-main .courses.course-search-result > .coursebox:not(.collapsed) > .content {
+  display: contents;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox:not(.collapsed) > .content > .d-flex,
+#page-course-index #region-main .courses.course-search-result > .coursebox:not(.collapsed) > .content > .d-flex,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox:not(.collapsed) > .content > .d-flex,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox:not(.collapsed) > .content > .d-flex,
+#page-course-search #region-main .course_category_tree .courses > .coursebox:not(.collapsed) > .content > .d-flex,
+#page-course-search #region-main .courses.course-search-result > .coursebox:not(.collapsed) > .content > .d-flex {
+  display: contents !important;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox:not(.collapsed) > .content > .d-flex > .flex-grow-1,
+#page-course-index #region-main .courses.course-search-result > .coursebox:not(.collapsed) > .content > .d-flex > .flex-grow-1,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox:not(.collapsed) > .content > .d-flex > .flex-grow-1,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox:not(.collapsed) > .content > .d-flex > .flex-grow-1,
+#page-course-search #region-main .course_category_tree .courses > .coursebox:not(.collapsed) > .content > .d-flex > .flex-grow-1,
+#page-course-search #region-main .courses.course-search-result > .coursebox:not(.collapsed) > .content > .d-flex > .flex-grow-1 {
+  display: flex;
+  flex-direction: column;
+  grid-column: 1;
+  grid-row: 3;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  padding: 0.25rem;
+  margin: 0 1.25rem 1rem;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox:not(.collapsed) > .content > .d-flex > .flex-grow-1 > *,
+#page-course-index #region-main .courses.course-search-result > .coursebox:not(.collapsed) > .content > .d-flex > .flex-grow-1 > *,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox:not(.collapsed) > .content > .d-flex > .flex-grow-1 > *,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox:not(.collapsed) > .content > .d-flex > .flex-grow-1 > *,
+#page-course-search #region-main .course_category_tree .courses > .coursebox:not(.collapsed) > .content > .d-flex > .flex-grow-1 > *,
+#page-course-search #region-main .courses.course-search-result > .coursebox:not(.collapsed) > .content > .d-flex > .flex-grow-1 > * {
+  flex-shrink: 0;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox .content .courseimage,
+#page-course-index #region-main .courses.course-search-result > .coursebox .content .courseimage,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox .content .courseimage,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox .content .courseimage,
+#page-course-search #region-main .course_category_tree .courses > .coursebox .content .courseimage,
+#page-course-search #region-main .courses.course-search-result > .coursebox .content .courseimage {
+  grid-column: 1;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  background: #FFF8F0;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox .content .courseimage:first-child,
+#page-course-index #region-main .courses.course-search-result > .coursebox .content .courseimage:first-child,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox .content .courseimage:first-child,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox .content .courseimage:first-child,
+#page-course-search #region-main .course_category_tree .courses > .coursebox .content .courseimage:first-child,
+#page-course-search #region-main .courses.course-search-result > .coursebox .content .courseimage:first-child {
+  grid-row: 1;
+  border-radius: 1.2rem 1.2rem 0 0;
+  overflow: hidden;
+  border-bottom: 3px solid #F07B2A;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox .content .courseimage img,
+#page-course-index #region-main .courses.course-search-result > .coursebox .content .courseimage img,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox .content .courseimage img,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox .content .courseimage img,
+#page-course-search #region-main .course_category_tree .courses > .coursebox .content .courseimage img,
+#page-course-search #region-main .courses.course-search-result > .coursebox .content .courseimage img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  object-position: center;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox .content .coursefile,
+#page-course-index #region-main .courses.course-search-result > .coursebox .content .coursefile,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox .content .coursefile,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox .content .coursefile,
+#page-course-search #region-main .course_category_tree .courses > .coursebox .content .coursefile,
+#page-course-search #region-main .courses.course-search-result > .coursebox .content .coursefile {
+  grid-column: 1;
+  display: block;
+  max-width: none;
+  margin: 0 1.25rem 1rem;
+  overflow-wrap: anywhere;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox .content .summary,
+#page-course-index #region-main .course_category_tree .courses > .coursebox .content .coursecat,
+#page-course-index #region-main .course_category_tree .courses > .coursebox .content .customfields-container,
+#page-course-index #region-main .courses.course-search-result > .coursebox .content .summary,
+#page-course-index #region-main .courses.course-search-result > .coursebox .content .coursecat,
+#page-course-index #region-main .courses.course-search-result > .coursebox .content .customfields-container,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox .content .summary,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox .content .coursecat,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox .content .customfields-container,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox .content .summary,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox .content .coursecat,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox .content .customfields-container,
+#page-course-search #region-main .course_category_tree .courses > .coursebox .content .summary,
+#page-course-search #region-main .course_category_tree .courses > .coursebox .content .coursecat,
+#page-course-search #region-main .course_category_tree .courses > .coursebox .content .customfields-container,
+#page-course-search #region-main .courses.course-search-result > .coursebox .content .summary,
+#page-course-search #region-main .courses.course-search-result > .coursebox .content .coursecat,
+#page-course-search #region-main .courses.course-search-result > .coursebox .content .customfields-container {
+  margin: 0 0 0.75rem;
+  padding: 0;
+  color: #1A1A2E;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox .summary p:last-child,
+#page-course-index #region-main .courses.course-search-result > .coursebox .summary p:last-child,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox .summary p:last-child,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox .summary p:last-child,
+#page-course-search #region-main .course_category_tree .courses > .coursebox .summary p:last-child,
+#page-course-search #region-main .courses.course-search-result > .coursebox .summary p:last-child {
+  margin-bottom: 0;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox .content .summary,
+#page-course-index #region-main .courses.course-search-result > .coursebox .content .summary,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox .content .summary,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox .content .summary,
+#page-course-search #region-main .course_category_tree .courses > .coursebox .content .summary,
+#page-course-search #region-main .courses.course-search-result > .coursebox .content .summary {
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  height: 3.2em;
+  max-height: 3.2em;
+  overflow: hidden;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox .content .summary div,
+#page-course-index #region-main .course_category_tree .courses > .coursebox .content .summary p,
+#page-course-index #region-main .courses.course-search-result > .coursebox .content .summary div,
+#page-course-index #region-main .courses.course-search-result > .coursebox .content .summary p,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox .content .summary div,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox .content .summary p,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox .content .summary div,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox .content .summary p,
+#page-course-search #region-main .course_category_tree .courses > .coursebox .content .summary div,
+#page-course-search #region-main .course_category_tree .courses > .coursebox .content .summary p,
+#page-course-search #region-main .courses.course-search-result > .coursebox .content .summary div,
+#page-course-search #region-main .courses.course-search-result > .coursebox .content .summary p {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox .content .summary p::after,
+#page-course-index #region-main .courses.course-search-result > .coursebox .content .summary p::after,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox .content .summary p::after,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox .content .summary p::after,
+#page-course-search #region-main .course_category_tree .courses > .coursebox .content .summary p::after,
+#page-course-search #region-main .courses.course-search-result > .coursebox .content .summary p::after {
+  content: " ";
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox .content .summary:focus-within,
+#page-course-index #region-main .courses.course-search-result > .coursebox .content .summary:focus-within,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox .content .summary:focus-within,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox .content .summary:focus-within,
+#page-course-search #region-main .course_category_tree .courses > .coursebox .content .summary:focus-within,
+#page-course-search #region-main .courses.course-search-result > .coursebox .content .summary:focus-within {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: auto;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox .summary img,
+#page-course-index #region-main .course_category_tree .courses > .coursebox .summary video,
+#page-course-index #region-main .courses.course-search-result > .coursebox .summary img,
+#page-course-index #region-main .courses.course-search-result > .coursebox .summary video,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox .summary img,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox .summary video,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox .summary img,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox .summary video,
+#page-course-search #region-main .course_category_tree .courses > .coursebox .summary img,
+#page-course-search #region-main .course_category_tree .courses > .coursebox .summary video,
+#page-course-search #region-main .courses.course-search-result > .coursebox .summary img,
+#page-course-search #region-main .courses.course-search-result > .coursebox .summary video {
+  max-width: 100%;
+  height: auto;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox .content .teachers,
+#page-course-index #region-main .courses.course-search-result > .coursebox .content .teachers,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox .content .teachers,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox .content .teachers,
+#page-course-search #region-main .course_category_tree .courses > .coursebox .content .teachers,
+#page-course-search #region-main .courses.course-search-result > .coursebox .content .teachers {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+  margin-top: 0;
+  padding: 0.85rem 1rem;
+  border-inline-start: 3px solid #F07B2A;
+  border-radius: 0.65rem;
+  background: #FFF8F0;
+  color: #1A1A2E;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox .content .teachers li,
+#page-course-index #region-main .courses.course-search-result > .coursebox .content .teachers li,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox .content .teachers li,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox .content .teachers li,
+#page-course-search #region-main .course_category_tree .courses > .coursebox .content .teachers li,
+#page-course-search #region-main .courses.course-search-result > .coursebox .content .teachers li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox a,
+#page-course-index #region-main .courses.course-search-result > .coursebox a,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox a,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox a,
+#page-course-search #region-main .course_category_tree .courses > .coursebox a,
+#page-course-search #region-main .courses.course-search-result > .coursebox a {
+  color: #1A1A2E;
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-underline-offset: 0.15em;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox .content .flex-grow-1 > :last-child,
+#page-course-index #region-main .courses.course-search-result > .coursebox .content .flex-grow-1 > :last-child,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox .content .flex-grow-1 > :last-child,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox .content .flex-grow-1 > :last-child,
+#page-course-search #region-main .course_category_tree .courses > .coursebox .content .flex-grow-1 > :last-child,
+#page-course-search #region-main .courses.course-search-result > .coursebox .content .flex-grow-1 > :last-child {
+  margin-bottom: 0;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox:not(:has(.courseimage))::before,
+#page-course-index #region-main .courses.course-search-result > .coursebox:not(:has(.courseimage))::before,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox:not(:has(.courseimage))::before,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox:not(:has(.courseimage))::before,
+#page-course-search #region-main .course_category_tree .courses > .coursebox:not(:has(.courseimage))::before,
+#page-course-search #region-main .courses.course-search-result > .coursebox:not(:has(.courseimage))::before {
+  content: "";
+  grid-column: 1;
+  grid-row: 1;
+  aspect-ratio: 16/9;
+  box-sizing: content-box;
+  border-radius: 1.2rem 1.2rem 0 0;
+  border-bottom: 3px solid #F07B2A;
+  background: #FFF8F0 url("https://ignitefindyourfire.org/backgrounds/Program.jpg") center/cover no-repeat;
+  pointer-events: none;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox.collapsed,
+#page-course-index #region-main .courses.course-search-result > .coursebox.collapsed,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox.collapsed,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox.collapsed,
+#page-course-search #region-main .course_category_tree .courses > .coursebox.collapsed,
+#page-course-search #region-main .courses.course-search-result > .coursebox.collapsed {
+  grid-template-rows: auto auto;
+}
+#page-course-index #region-main .course_category_tree .courses > .coursebox.collapsed > .info,
+#page-course-index #region-main .courses.course-search-result > .coursebox.collapsed > .info,
+#page-course-index-category #region-main .course_category_tree .courses > .coursebox.collapsed > .info,
+#page-course-index-category #region-main .courses.course-search-result > .coursebox.collapsed > .info,
+#page-course-search #region-main .course_category_tree .courses > .coursebox.collapsed > .info,
+#page-course-search #region-main .courses.course-search-result > .coursebox.collapsed > .info {
+  margin-bottom: 1.25rem;
+}
+#page-course-index #region-main .courses a:focus-visible,
+#page-course-index #region-main .courses button:focus-visible,
+#page-course-index #region-main .simplesearchform input:focus-visible,
+#page-course-index #region-main .simplesearchform button:focus-visible,
+#page-course-index-category #region-main .courses a:focus-visible,
+#page-course-index-category #region-main .courses button:focus-visible,
+#page-course-index-category #region-main .simplesearchform input:focus-visible,
+#page-course-index-category #region-main .simplesearchform button:focus-visible,
+#page-course-search #region-main .courses a:focus-visible,
+#page-course-search #region-main .courses button:focus-visible,
+#page-course-search #region-main .simplesearchform input:focus-visible,
+#page-course-search #region-main .simplesearchform button:focus-visible {
+  outline: 3px solid #1A1A2E;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 3px #FFF8F0;
+  position: relative;
+  z-index: 2;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  #page-course-index #region-main .courses > .coursebox:hover,
+  #page-course-index-category #region-main .courses > .coursebox:hover,
+  #page-course-search #region-main .courses > .coursebox:hover {
+    border-color: #D46A20;
+    box-shadow: 0 9px 26px rgba(78, 42, 18, 0.12);
+  }
+}
+@media (max-width: 575.98px) {
+  #page-course-index #page.drawers .main-inner,
+  #page-course-index-category #page.drawers .main-inner,
+  #page-course-search #page.drawers .main-inner {
+    padding-inline: 1rem;
+    border-radius: 1rem;
+  }
+}
+
+#page-login-index #page,
+#page-login-signup #page {
+  background: #FFF8F0 url("https://learn.ignitefindyourfire.org/ignite-assets/fall-0ec361cf735c.jpg") center/cover no-repeat;
+  background-attachment: fixed;
+}
+#page-login-index #page-content,
+#page-login-signup #page-content {
+  justify-content: center;
+  align-items: center;
+  padding: clamp(1rem, 3vw, 2.5rem);
+}
+#page-login-index .login-layout-left,
+#page-login-signup .login-layout-left {
+  display: none !important;
+}
+#page-login-index #region-main.login-layout-right,
+#page-login-signup #region-main.login-layout-right {
+  flex: 0 1 32rem;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+}
+#page-login-index .login-layout-right-content,
+#page-login-signup .login-layout-right-content {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+#page-login-index .login-container,
+#page-login-signup .login-container {
+  padding: 2.5rem;
+  border: 1px solid #F2D5BB;
+  border-radius: 1.5rem;
+  background: #fff;
+  box-shadow: 0 8px 32px rgba(78, 42, 18, 0.07);
+}
+#page-login-index #logoimage,
+#page-login-signup #logoimage {
+  width: auto;
+  max-height: 7rem;
+  object-fit: contain;
+}
+#page-login-index .loginform > h1,
+#page-login-index .loginform > p,
+#page-login-index .signupform > h1,
+#page-login-signup .loginform > h1,
+#page-login-signup .loginform > p,
+#page-login-signup .signupform > h1 {
+  text-align: center;
+}
+#page-login-index .loginform > .d-lg-none,
+#page-login-signup .loginform > .d-lg-none {
+  display: none !important;
+}
+#page-login-index .form-control,
+#page-login-index .form-select,
+#page-login-signup .form-control,
+#page-login-signup .form-select {
+  min-height: 3rem;
+  border-radius: 0.75rem;
+}
+#page-login-index #loginbtn,
+#page-login-signup #loginbtn {
+  min-height: 3rem;
+  border-radius: 0.75rem;
+  color: #fff;
+}
+#page-login-index .login-form-recaptcha,
+#page-login-signup .login-form-recaptcha {
+  display: flex;
+  justify-content: center;
+}
+@media (max-width: 575.98px) {
+  #page-login-index #page-content,
+  #page-login-signup #page-content {
+    padding: 1rem;
+  }
+  #page-login-index .login-container,
+  #page-login-signup .login-container {
+    padding: 1.5rem 1rem;
+  }
+}
+@media (max-width: 369.98px) {
+  #page-login-index #page-content,
+  #page-login-signup #page-content {
+    padding: 0.5rem;
+  }
+  #page-login-index .login-container,
+  #page-login-signup .login-container {
+    padding: 1.5rem 0;
+    border: 0;
+    box-shadow: none;
+  }
+}
+
+#page-login-signup .signupform::before {
+  content: "";
+  display: block;
+  width: 7rem;
+  height: 7rem;
+  margin: 0 auto 1.5rem;
+  background: url("https://ignitefindyourfire.org/mascots/Logo.png") center/contain no-repeat;
+}
+#page-login-signup .signupform > h1 {
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+#page-login-signup .signupform .form-control,
+#page-login-signup .signupform .form-select {
+  background-color: #f8f9fa;
+  max-width: 100%;
+}
+#page-login-signup .signupform .form-select {
+  width: 100%;
+}
+#page-login-signup #fgroup_id_buttonar .fitem {
+  flex-basis: 100%;
+  margin-inline: 0 !important;
+}
+#page-login-signup #fgroup_id_buttonar .btn {
+  width: 100%;
+  min-height: 3rem;
+  border-radius: 0.75rem;
+}
+#page-login-signup .ignite-signup-login {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  --bs-btn-color: #F07B2A;
+  --bs-btn-bg: #fff;
+  --bs-btn-border-color: #F07B2A;
+  --bs-btn-hover-color: #D46A20;
+  --bs-btn-hover-bg: #fff;
+  --bs-btn-hover-border-color: #D46A20;
+  --bs-btn-active-color: #D46A20;
+  --bs-btn-active-bg: #fff;
+  --bs-btn-active-border-color: #D46A20;
+  --bs-btn-focus-shadow-rgb: 240, 123, 42;
+}
+@media (min-width: 768px) {
+  #page-login-signup #region-main.login-layout-right {
+    flex-basis: 56rem;
+  }
+  #page-login-signup .login-container {
+    padding: 2rem;
+  }
+  #page-login-signup .signupform::before {
+    width: 5rem;
+    height: 5rem;
+    margin-bottom: 1rem;
+  }
+  #page-login-signup .signupform .mform {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 2rem;
+  }
+  #page-login-signup .signupform .mform > * {
+    grid-column: 1/-1;
+    min-width: 0;
+  }
+  #page-login-signup .signupform .mform > .fitem {
+    margin: 0 !important;
+    --bs-gutter-x: 0;
+  }
+  #page-login-signup #fitem_id_username {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  #page-login-signup #fitem_id_password {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  #page-login-signup #fitem_id_email {
+    grid-column: 1;
+    grid-row: 3;
+  }
+  #page-login-signup #fitem_id_email2 {
+    grid-column: 1;
+    grid-row: 4;
+  }
+  #page-login-signup #fitem_id_firstname {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  #page-login-signup #fitem_id_lastname {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  #page-login-signup #fitem_id_city {
+    grid-column: 2;
+    grid-row: 3;
+  }
+  #page-login-signup #fitem_id_country {
+    grid-column: 2;
+    grid-row: 4;
+  }
+  #page-login-signup #fitem_id_passwordpolicyinfo {
+    grid-row: 5;
+    font-size: 0.875rem;
+  }
+  #page-login-signup #fgroup_id_buttonar {
+    grid-row: 6;
+  }
+  #page-login-signup #fgroup_id_buttonar .felement > .w-100 > .d-flex {
+    gap: 1rem;
+  }
+  #page-login-signup #fgroup_id_buttonar .fitem {
+    flex-basis: calc(50% - 0.5rem);
+    margin-bottom: 0 !important;
+  }
+}
+
+#page-my-index .navbar > .container-fluid,
+#page-my-indexsys .navbar > .container-fluid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+}
+#page-my-index .navbar .navbar-brand,
+#page-my-indexsys .navbar .navbar-brand {
+  display: flex !important;
+  grid-column: 2;
+  grid-row: 1;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 0 !important;
+  color: #F07B2A;
+  font-family: "Rammetto One", "Poppins", "Segoe UI", Arial, sans-serif;
+  font-size: 1.9rem;
+}
+#page-my-index .navbar .navbar-brand .logo,
+#page-my-indexsys .navbar .navbar-brand .logo {
+  content: url("https://ignitefindyourfire.org/mascots/Logo.png");
+  width: 2.5rem;
+  height: 2.5rem;
+  max-height: none;
+  margin: 0 !important;
+  object-fit: contain;
+}
+#page-my-index .navbar .navbar-brand:has(.logo)::after,
+#page-my-indexsys .navbar .navbar-brand:has(.logo)::after {
+  content: "Ignite";
+}
+#page-my-index .navbar .primary-navigation,
+#page-my-index .navbar .navbar-toggler,
+#page-my-indexsys .navbar .primary-navigation,
+#page-my-indexsys .navbar .navbar-toggler {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: start;
+  min-width: 0;
+  max-width: 100%;
+}
+#page-my-index .navbar #usernavigation,
+#page-my-indexsys .navbar #usernavigation {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+  margin: 0 !important;
+}
+@media (min-width: 768px) and (max-width: 1199.98px) {
+  #page-my-index .navbar .navbar-brand,
+  #page-my-indexsys .navbar .navbar-brand {
+    font-size: 1.4rem;
+    gap: 0.35rem;
+  }
+  #page-my-index .navbar .navbar-brand .logo,
+  #page-my-indexsys .navbar .navbar-brand .logo {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+@media (max-width: 767.98px) {
+  #page-my-index .navbar,
+  #page-my-indexsys .navbar {
+    height: 108px;
+    max-height: 108px;
+  }
+  #page-my-index .navbar > .container-fluid,
+  #page-my-indexsys .navbar > .container-fluid {
+    height: 100%;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: 48px 60px;
+  }
+  #page-my-index .navbar .navbar-brand,
+  #page-my-indexsys .navbar .navbar-brand {
+    grid-column: 1/-1;
+    grid-row: 1;
+    font-size: 1.5rem;
+  }
+  #page-my-index .navbar .navbar-brand .logo,
+  #page-my-indexsys .navbar .navbar-brand .logo {
+    width: 2rem;
+    height: 2rem;
+  }
+  #page-my-index .navbar .navbar-toggler,
+  #page-my-indexsys .navbar .navbar-toggler {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  #page-my-index .navbar #usernavigation,
+  #page-my-indexsys .navbar #usernavigation {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  #page-my-index #page,
+  #page-my-indexsys #page {
+    margin-top: 108px;
+  }
+  #page-my-index #page.drawers,
+  #page-my-indexsys #page.drawers {
+    height: calc(100vh - 108px);
+  }
+  #page-my-index .drawer,
+  #page-my-indexsys .drawer {
+    top: 108px;
+    height: calc(100vh - 108px);
+  }
+}
+#page-my-index #page.drawers,
+#page-my-indexsys #page.drawers {
+  padding-inline: clamp(0.75rem, 2vw, 2rem);
+}
+#page-my-index #page.drawers .main-inner,
+#page-my-indexsys #page.drawers .main-inner {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: clamp(1rem, 2vw, 2rem) 0;
+  background: #FFF8F0;
+  box-shadow: none;
+}
+#page-my-index #region-main,
+#page-my-indexsys #region-main {
+  background: transparent;
+}
+#page-my-index .page-header-headings h1,
+#page-my-indexsys .page-header-headings h1 {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+#page-my-index #page-header .page-context-header:has(.page-header-headings h1),
+#page-my-indexsys #page-header .page-context-header:has(.page-header-headings h1) {
+  margin-bottom: 0 !important;
+}
+#page-my-index .block.card,
+#page-my-indexsys .block.card {
+  min-width: 0;
+  border-color: #F2D5BB;
+  border-radius: 1.25rem;
+  box-shadow: 0 3px 16px rgba(78, 42, 18, 0.035);
+}
+#page-my-index .block > .card-body > .d-flex > .card-title,
+#page-my-indexsys .block > .card-body > .d-flex > .card-title {
+  color: #1A1A2E;
+  font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+#page-my-index .course-card,
+#page-my-index .dashboard-card,
+#page-my-indexsys .course-card,
+#page-my-indexsys .dashboard-card {
+  min-width: 0;
+  border: 1px solid #F2D5BB;
+  border-radius: 1rem;
+  box-shadow: none;
+}
+#page-my-index .course-card .card-img-top,
+#page-my-index .course-card .dashboard-card-img,
+#page-my-index .dashboard-card .card-img-top,
+#page-my-index .dashboard-card .dashboard-card-img,
+#page-my-indexsys .course-card .card-img-top,
+#page-my-indexsys .course-card .dashboard-card-img,
+#page-my-indexsys .dashboard-card .card-img-top,
+#page-my-indexsys .dashboard-card .dashboard-card-img {
+  height: 10rem;
+  border-radius: 0.95rem 0.95rem 0 0;
+  background-color: #FFF8F0;
+  background-position: center;
+  background-size: cover;
+}
+#page-my-index .course-card .course-info-container .text-truncate,
+#page-my-index .dashboard-card .course-info-container .text-truncate,
+#page-my-indexsys .course-card .course-info-container .text-truncate,
+#page-my-indexsys .dashboard-card .course-info-container .text-truncate {
+  white-space: normal;
+}
+#page-my-index .course-card .coursename,
+#page-my-index .dashboard-card .coursename,
+#page-my-indexsys .course-card .coursename,
+#page-my-indexsys .dashboard-card .coursename {
+  color: #1A1A2E;
+  font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+  font-weight: 700;
+  text-decoration: none;
+}
+#page-my-index .course-card .coursename:hover,
+#page-my-index .dashboard-card .coursename:hover,
+#page-my-indexsys .course-card .coursename:hover,
+#page-my-indexsys .dashboard-card .coursename:hover {
+  text-decoration: underline;
+}
+#page-my-index .course-card .course-info-container,
+#page-my-index .dashboard-card .course-info-container,
+#page-my-indexsys .course-card .course-info-container,
+#page-my-indexsys .dashboard-card .course-info-container {
+  padding: 1rem;
+}
+#page-my-index .course-card .progress-text,
+#page-my-index .dashboard-card .progress-text,
+#page-my-indexsys .course-card .progress-text,
+#page-my-indexsys .dashboard-card .progress-text {
+  color: #A63B00;
+  font-weight: 800;
+  font-size: 0.875rem;
+}
+#page-my-index .course-card .categoryname,
+#page-my-index .dashboard-card .categoryname,
+#page-my-indexsys .course-card .categoryname,
+#page-my-indexsys .dashboard-card .categoryname {
+  color: #4A4A5E;
+  font-size: 0.8125rem;
+}
+#page-my-index .course-card .progress,
+#page-my-index .dashboard-card .progress,
+#page-my-indexsys .course-card .progress,
+#page-my-indexsys .dashboard-card .progress {
+  height: 0.5rem;
+  border-radius: 999px;
+}
+#page-my-index .ignite-learning-nav,
+#page-my-index .ignite-learning-welcome,
+#page-my-indexsys .ignite-learning-nav,
+#page-my-indexsys .ignite-learning-welcome {
+  font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  color: #1A1A2E;
+}
+#page-my-index .ignite-learning-nav,
+#page-my-indexsys .ignite-learning-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+#page-my-index .ignite-learning-nav > a,
+#page-my-indexsys .ignite-learning-nav > a {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 46px;
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.75rem;
+  color: #4A4A5E;
+  font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font-weight: 700;
+  text-decoration: none;
+}
+#page-my-index .ignite-learning-nav > a > span,
+#page-my-indexsys .ignite-learning-nav > a > span {
+  flex: 0 0 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  font-size: 0;
+  background: currentColor;
+  mask-position: center;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+}
+#page-my-index .ignite-learning-nav > a[aria-current=page],
+#page-my-indexsys .ignite-learning-nav > a[aria-current=page] {
+  background: #F07B2A;
+  color: #fff;
+  font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+#page-my-index .ignite-learning-nav > a:hover,
+#page-my-indexsys .ignite-learning-nav > a:hover {
+  background: #FFF0E2;
+  color: #A63B00;
+}
+#page-my-index .ignite-learning-nav__icon--home,
+#page-my-indexsys .ignite-learning-nav__icon--home {
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z'/%3E%3Cpath d='M9 21v-9h6v9'/%3E%3C/svg%3E");
+}
+#page-my-index .ignite-learning-nav__icon--courses,
+#page-my-indexsys .ignite-learning-nav__icon--courses {
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 7v14M3 3h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5v15h-5a4 4 0 0 0-4 3 4 4 0 0 0-4-3H3Z'/%3E%3C/svg%3E");
+}
+#page-my-index .ignite-learning-nav__icon--explore,
+#page-my-indexsys .ignite-learning-nav__icon--explore {
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='m16 8-3 5-5 3 3-5Z'/%3E%3C/svg%3E");
+}
+#page-my-index .ignite-learning-nav__icon--calendar,
+#page-my-indexsys .ignite-learning-nav__icon--calendar {
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='16' rx='2'/%3E%3Cpath d='M16 3v4M8 3v4M3 11h18M8 16h2M14 16h2'/%3E%3C/svg%3E");
+}
+#page-my-index .ignite-learning-nav__brand,
+#page-my-indexsys .ignite-learning-nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0 0.5rem 1.1rem;
+  font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+#page-my-index .ignite-learning-nav__brand img,
+#page-my-indexsys .ignite-learning-nav__brand img {
+  object-fit: contain;
+}
+#page-my-index .ignite-learning-nav__help,
+#page-my-indexsys .ignite-learning-nav__help {
+  margin-top: 1.25rem;
+  padding: 1rem;
+  border: 1px solid #F2D5BB;
+  border-radius: 1rem;
+  background: #fff;
+  font-size: 0.8125rem;
+}
+#page-my-index .ignite-learning-nav__help p,
+#page-my-indexsys .ignite-learning-nav__help p {
+  margin: 0.35rem 0 0.65rem;
+  color: #4A4A5E;
+}
+#page-my-index .ignite-learning-nav__help a,
+#page-my-indexsys .ignite-learning-nav__help a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #A63B00;
+  font-weight: 800;
+  text-underline-offset: 0.2em;
+}
+#page-my-index .ignite-learning-welcome,
+#page-my-indexsys .ignite-learning-welcome {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: clamp(17rem, 30vh, 22rem);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border: 1px solid #F07B2A;
+  border-radius: 1.25rem;
+  color: #fff;
+  background: linear-gradient(100deg, rgba(26, 26, 46, 0.94), rgba(26, 26, 46, 0.86) 55%, rgba(26, 26, 46, 0.68)), url("https://ignitefindyourfire.org/backgrounds/Program.jpg") center/cover no-repeat;
+  overflow: hidden;
+}
+#page-my-index .ignite-learning-welcome h2,
+#page-my-indexsys .ignite-learning-welcome h2 {
+  margin: 0.75rem 0;
+  color: #fff;
+  font-family: "Rammetto One", "Poppins", "Segoe UI", Arial, sans-serif;
+  font-size: clamp(1.75rem, 2.7vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.35;
+}
+#page-my-index .ignite-learning-welcome__copy,
+#page-my-indexsys .ignite-learning-welcome__copy {
+  flex: 1;
+  min-width: 0;
+}
+#page-my-index .ignite-learning-welcome__copy > p:not(.ignite-learning-welcome__eyebrow),
+#page-my-indexsys .ignite-learning-welcome__copy > p:not(.ignite-learning-welcome__eyebrow) {
+  max-width: 26rem;
+  margin: 0;
+  line-height: 1.65;
+}
+#page-my-index .ignite-learning-welcome__eyebrow,
+#page-my-indexsys .ignite-learning-welcome__eyebrow {
+  margin: 0;
+  color: #F07B2A;
+  font-size: 0.6875rem;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+}
+#page-my-index .ignite-learning-welcome__mascot,
+#page-my-indexsys .ignite-learning-welcome__mascot {
+  width: 28%;
+  max-width: 16rem;
+  height: auto;
+  object-fit: contain;
+}
+#page-my-index .ignite-learning-welcome__actions,
+#page-my-indexsys .ignite-learning-welcome__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  margin-top: 1.5rem;
+}
+#page-my-index .ignite-learning-welcome__actions a,
+#page-my-indexsys .ignite-learning-welcome__actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  color: #fff;
+  font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font-size: var(--button-font-size, 1.25rem);
+  line-height: 1.4;
+  font-weight: 700;
+}
+#page-my-index .ignite-learning-welcome__actions .ignite-learning-welcome__primary,
+#page-my-indexsys .ignite-learning-welcome__actions .ignite-learning-welcome__primary {
+  padding: 0.8rem 1.1rem;
+  border-radius: 0.75rem;
+  background: #F07B2A;
+  color: #fff;
+  text-decoration: none;
+}
+#page-my-index .ignite-learning-welcome__actions .ignite-learning-welcome__primary:hover,
+#page-my-indexsys .ignite-learning-welcome__actions .ignite-learning-welcome__primary:hover {
+  background: #D46A20;
+}
+#page-my-index .ignite-learning-nav a:focus-visible,
+#page-my-indexsys .ignite-learning-nav a:focus-visible {
+  outline: 3px solid #1A1A2E;
+  outline-offset: 3px;
+}
+#page-my-index .ignite-learning-welcome a:focus-visible,
+#page-my-indexsys .ignite-learning-welcome a:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+#page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome),
+#page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) {
+  display: grid;
+  grid-template-columns: 13rem minmax(0, 1fr);
+  column-gap: 1.5rem;
+  align-items: start;
+}
+#page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > *,
+#page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > * {
+  grid-column: 2;
+  min-width: 0;
+}
+#page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block,
+#page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block {
+  margin-bottom: 1.25rem !important;
+}
+#page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block_html:has(.ignite-learning-nav),
+#page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block_html:has(.ignite-learning-nav) {
+  grid-column: 1;
+  grid-row: 1/span 2;
+}
+#page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block_html:has(.ignite-learning-welcome),
+#page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block_html:has(.ignite-learning-welcome) {
+  grid-row: 1;
+  align-self: stretch;
+}
+#page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block_html:has(.ignite-learning-welcome) > .card-body,
+#page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block_html:has(.ignite-learning-welcome) > .card-body {
+  display: flex;
+  flex-direction: column;
+}
+#page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block_html:has(.ignite-learning-welcome) .card-text.content,
+#page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block_html:has(.ignite-learning-welcome) .card-text.content {
+  display: flex;
+  flex: 1;
+}
+#page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block_html:has(.ignite-learning-welcome) .card-text.content > .no-overflow,
+#page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block_html:has(.ignite-learning-welcome) .card-text.content > .no-overflow {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+}
+#page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block_html:has(.ignite-learning-welcome) .ignite-learning-welcome,
+#page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block_html:has(.ignite-learning-welcome) .ignite-learning-welcome {
+  flex: 1;
+}
+#page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block_html:has(.ignite-learning-nav, .ignite-learning-welcome),
+#page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block_html:has(.ignite-learning-nav, .ignite-learning-welcome) {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+#page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block_html:has(.ignite-learning-nav, .ignite-learning-welcome) > .card-body,
+#page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block_html:has(.ignite-learning-nav, .ignite-learning-welcome) > .card-body {
+  padding: 0 !important;
+}
+#page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block_html:has(.ignite-learning-nav, .ignite-learning-welcome) .card-text.content,
+#page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block_html:has(.ignite-learning-nav, .ignite-learning-welcome) .card-text.content {
+  margin: 0 !important;
+}
+#page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block_html:has(.ignite-learning-nav, .ignite-learning-welcome) > .card-body > .d-flex:empty,
+#page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block_html:has(.ignite-learning-nav, .ignite-learning-welcome) > .card-body > .d-flex:empty {
+  display: none !important;
+}
+#page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) .block_myoverview,
+#page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) .block_myoverview {
+  container-type: inline-size;
+  grid-row: 2;
+}
+#page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) .block_myoverview .card-grid,
+#page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) .block_myoverview .card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 1rem;
+}
+#page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) .block_myoverview .card-grid > .col,
+#page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) .block_myoverview .card-grid > .col {
+  width: auto;
+  min-width: 0;
+  max-width: none;
+}
+#page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) .block_myoverview .card-grid .course-card,
+#page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) .block_myoverview .card-grid .course-card {
+  width: 100%;
+  margin-inline: 0 !important;
+}
+#page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome),
+#page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) {
+  container-type: inline-size;
+}
+@container (max-width: 48rem) {
+  #page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) .ignite-learning-welcome__mascot,
+  #page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) .ignite-learning-welcome__mascot {
+    display: none;
+  }
+}
+#page-my-index:not(.editing) #block-region-content:has(.ignite-first-course) > .block_html:has(.ignite-learning-welcome),
+#page-my-indexsys:not(.editing) #block-region-content:has(.ignite-first-course) > .block_html:has(.ignite-learning-welcome) {
+  display: none;
+}
+#page-my-index:not(.editing) #block-region-content:has(.ignite-first-course) > .block_myoverview:has(.ignite-first-course),
+#page-my-indexsys:not(.editing) #block-region-content:has(.ignite-first-course) > .block_myoverview:has(.ignite-first-course) {
+  grid-row: 1;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+#page-my-index:not(.editing) #block-region-content:has(.ignite-first-course) > .block_myoverview:has(.ignite-first-course) > .card-body,
+#page-my-indexsys:not(.editing) #block-region-content:has(.ignite-first-course) > .block_myoverview:has(.ignite-first-course) > .card-body {
+  padding: 0 !important;
+}
+#page-my-index:not(.editing) #block-region-content:has(.ignite-first-course) > .block_myoverview:has(.ignite-first-course) > .card-body > .d-flex:has(.card-title),
+#page-my-indexsys:not(.editing) #block-region-content:has(.ignite-first-course) > .block_myoverview:has(.ignite-first-course) > .card-body > .d-flex:has(.card-title) {
+  display: none !important;
+}
+@media (max-width: 991.98px) {
+  #page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome),
+  #page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) {
+    display: block;
+  }
+  #page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block_html:has(.ignite-learning-nav),
+  #page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) > .block_html:has(.ignite-learning-nav) {
+    margin-bottom: 1rem !important;
+  }
+  #page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) .ignite-learning-nav,
+  #page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) .ignite-learning-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+  #page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) .ignite-learning-nav > a,
+  #page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) .ignite-learning-nav > a {
+    font-size: 0.8125rem;
+    padding: 0.5rem 0.7rem;
+  }
+  #page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) .ignite-learning-nav__brand,
+  #page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) .ignite-learning-nav__help,
+  #page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) .ignite-learning-nav__brand,
+  #page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) .ignite-learning-nav__help {
+    display: none;
+  }
+  #page-my-index:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) .ignite-learning-welcome,
+  #page-my-indexsys:not(.editing) #block-region-content:has(.ignite-learning-nav):has(.ignite-learning-welcome) .ignite-learning-welcome {
+    min-height: 0;
+  }
+}
+@media (max-width: 575.98px) {
+  #page-my-index .ignite-learning-welcome,
+  #page-my-indexsys .ignite-learning-welcome {
+    padding: 1.5rem;
+  }
+  #page-my-index .ignite-learning-welcome__mascot,
+  #page-my-indexsys .ignite-learning-welcome__mascot {
+    display: none;
+  }
+  #page-my-index .ignite-learning-welcome__actions,
+  #page-my-indexsys .ignite-learning-welcome__actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  #page-my-index .ignite-learning-welcome__actions a,
+  #page-my-indexsys .ignite-learning-welcome__actions a {
+    justify-content: center;
+  }
+}
+
+.ignite-first-course {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  min-height: 24rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 2px solid #F2D5BB;
+  border-radius: 1.5rem;
+  background: #FFF8F0;
+  color: #1A1A2E;
+  font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+.ignite-first-course h3 {
+  margin: 0.6rem 0 1rem;
+  color: #1A1A2E;
+  font-family: "Rammetto One", "Poppins", "Segoe UI", Arial, sans-serif;
+  font-size: clamp(1.6rem, 2.8vw, 2.25rem);
+  font-weight: 400;
+  line-height: 1.4;
+}
+.ignite-first-course p {
+  max-width: 38rem;
+  margin: 0;
+  color: #4A4A5E;
+  line-height: 1.7;
+}
+.ignite-first-course .ignite-first-course__eyebrow {
+  color: #A63B00;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+.ignite-first-course .ignite-first-course__mascot {
+  flex: none;
+  width: clamp(9rem, 18vw, 13.75rem);
+  height: auto;
+}
+.ignite-first-course .ignite-first-course__copy {
+  min-width: 0;
+}
+.ignite-first-course .ignite-first-course__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+.ignite-first-course .ignite-first-course__actions .singlebutton, .ignite-first-course .ignite-first-course__actions form {
+  margin: 0;
+}
+.ignite-first-course .ignite-first-course__actions .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  padding: 0.8rem 1.1rem;
+  border-radius: 0.75rem;
+  font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font-size: var(--button-font-size, 1.25rem);
+  line-height: 1.4;
+  font-weight: 700;
+}
+.ignite-first-course .ignite-first-course__actions .btn:focus-visible {
+  outline: 3px solid #1A1A2E;
+  outline-offset: 3px;
+}
+@media (max-width: 575.98px) {
+  .ignite-first-course {
+    flex-direction: column;
+    min-height: 0;
+    text-align: center;
+  }
+  .ignite-first-course .ignite-first-course__mascot {
+    width: 10rem;
+  }
+  .ignite-first-course .ignite-first-course__actions {
+    justify-content: center;
+  }
+}

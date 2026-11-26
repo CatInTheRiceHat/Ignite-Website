@@ -6,6 +6,8 @@ defined('MOODLE_INTERNAL') || die();
 $callbacks = [
     ['hook' => \core\hook\output\before_footer_html_generation::class,
         'callback' => '\local_ignite\xp::activity_receipt'],
+    ['hook' => \core\hook\output\before_footer_html_generation::class,
+        'callback' => '\local_ignite\course_catalog::footer'],
     ['hook' => \core_completion\hook\after_cm_completion_updated::class,
         'callback' => '\local_ignite\xp::completion_updated'],
     ['hook' => \core_user\hook\extend_user_menu::class,

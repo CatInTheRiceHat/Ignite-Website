@@ -139,5 +139,9 @@ function xmldb_local_ignite_upgrade(int $oldversion): bool {
         }
         upgrade_plugin_savepoint(true, 2026112402, 'local', 'ignite');
     }
+    if ($oldversion < 2026112600) {
+        \local_ignite\course_catalog::ensure_fields();
+        upgrade_plugin_savepoint(true, 2026112600, 'local', 'ignite');
+    }
     return true;
 }
