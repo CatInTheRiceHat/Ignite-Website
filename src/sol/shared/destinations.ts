@@ -3,7 +3,7 @@ export const destinations = {
   about: { label: 'About Ignite', path: '/about', source: 'src/pages/About.tsx' },
   team: { label: 'Meet the team', path: '/team', source: 'src/pages/Mentors.tsx' },
   program: { label: 'Explore the program', path: '/program', source: 'src/pages/Program.tsx' },
-  apply: { label: 'Student pre-enrollment', url: 'https://forms.fillout.com/t/oqB8WMKbJ6us', source: 'src/lib/links.ts' },
+  apply: { label: 'Student pre-enrollment', url: 'https://forms.ignitefindyourfire.org/t/oqB8WMKbJ6us', source: 'src/lib/links.ts' },
   faq: { label: 'Read FAQs', path: '/faq', source: 'src/pages/FAQ.tsx' },
   hiring: { label: 'Join the team', path: '/hiring', source: 'src/pages/Hiring.tsx' },
   records: { label: 'Explore records & student work', path: '/records', source: 'src/config/records.ts' },

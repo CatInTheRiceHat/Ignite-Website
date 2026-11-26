@@ -48,7 +48,7 @@ test('offline configuration keeps all verified quick links usable', async ({ pag
   for (const [label, path] of [['Explore the program', '/program'], ['Join the team', '/hiring'], ['FAQs', '/faq']]) {
     await expect(page.getByRole('navigation', { name: 'Quick actions' }).getByRole('link', { name: new RegExp(label) })).toHaveAttribute('href', `${new URL(page.url()).origin}${path}`);
   }
-  await expect(page.getByRole('navigation', { name: 'Quick actions' }).getByRole('link', { name: /^Student pre-enrollment/ })).toHaveAttribute('href', 'https://forms.fillout.com/t/oqB8WMKbJ6us');
+  await expect(page.getByRole('navigation', { name: 'Quick actions' }).getByRole('link', { name: /^Student pre-enrollment/ })).toHaveAttribute('href', 'https://forms.ignitefindyourfire.org/t/oqB8WMKbJ6us');
   await expect(page.getByRole('link', { name: 'Email Ignite', exact: false })).toHaveAttribute('href', 'mailto:ignitefindyourfire@gmail.com');
 });
 
