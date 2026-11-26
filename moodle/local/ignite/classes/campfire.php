@@ -8,6 +8,8 @@ defined('MOODLE_INTERNAL') || die();
 final class campfire {
     public const TEAMS = ['lanternlings' => 'Lanternlings', 'forgelings' => 'Forgelings', 'candlelings' => 'Candlelings'];
     public const TIMEZONE = 'America/Los_Angeles';
+    /** The order the teams are met in the chooser, which also decides who sits either side of a member's own fire. */
+    public const ORDER = ['forgelings', 'candlelings', 'lanternlings'];
 
     /** Stable house IDs, including installations that already used these names under a custom code. */
     public static function ids(): array {
@@ -78,7 +80,8 @@ final class campfire {
         $rows = [];
         foreach (self::ranks($scores) as $code => $rank) {
             $champion = $published && $rank === 1 && $scores[$code] > 0;
-            $rows[] = ['name' => self::TEAMS[$code], 'halves' => $scores[$code], 'rank' => $rank,
+            $rows[] = ['code' => $code, 'name' => self::TEAMS[$code], 'halves' => $scores[$code], 'rank' => $rank,
+                'ownhalves' => (int)($totals[$ids[$code]]->own ?? 0),
                 'representing' => $period == $current && (int)$houseid === (int)$ids[$code],
                 'champion' => $champion, 'trophy' => $champion ? campfire_cup::title($params['month']) : '',
                 'total' => xp::team_points($scores[$code]), 'own' => xp::team_points((int)($totals[$ids[$code]]->own ?? 0)),
@@ -96,5 +99,57 @@ final class campfire {
             'rows' => $rows, 'empty' => $rows[0]['halves'] === 0, 'closed' => $period < $current,
             'previousurl' => $period > $first ? $url($period->modify('-1 month')) : '',
             'nexturl' => $period < $current ? $url($period->modify('+1 month')) : ''];
+    }
+
+    /** A member's own Campfire page for the current month's Heat, or null for someone without a Campfire. */
+    public static function home(array $standings): ?array {
+        global $OUTPUT;
+        $rows = array_column($standings['rows'], null, 'code');
+        $mine = current(array_filter($rows, static fn($row) => $row['representing']));
+        if (!$mine || array_diff(self::ORDER, array_keys($rows))) {
+            return null;
+        }
+        $leader = max(array_column($rows, 'halves'));
+        $shared = array_count_values(array_column($rows, 'rank'));
+        $place = static function(array $row) use ($shared): string {
+            $ordinal = get_string('home_rank' . $row['rank'], 'local_ignite');
+            return $shared[$row['rank']] > 1 ? get_string('home_tied', 'local_ignite', $ordinal) : $ordinal;
+        };
+        $image = static fn(string $name): string => $OUTPUT->image_url('campfire/' . $name, 'local_ignite')->out(false);
+        // The member's fire burns in the middle, with the other two on the sides they held in the chooser.
+        $index = array_search($mine['code'], self::ORDER, true);
+        $fires = [];
+        foreach ([2, 0, 1] as $step) {
+            $row = $rows[self::ORDER[($index + $step) % 3]];
+            $fires[] = ['code' => $row['code'], 'name' => $row['name'], 'yours' => $row['representing'],
+                'lit' => $leader > 0, 'place' => $leader ? $place($row) : '', 'xp' => $row['total'],
+                // The leader's flame is full size; any Team XP at all keeps a small flame alight.
+                'size' => $row['halves'] ? number_format(.4 + .6 * $row['halves'] / $leader, 3, '.', '') : '0',
+                'flame' => $image($row['code'] . '-flame')];
+        }
+        $share = $mine['halves'] ? (int)round($mine['ownhalves'] / $mine['halves'] * 100) : 0;
+        if ($mine['ownhalves']) {
+            $contribution = get_string($share ? 'home_added' : 'home_addedsmall', 'local_ignite',
+                (object)['xp' => $mine['own'], 'share' => $share, 'team' => $mine['name']]);
+        } else {
+            $contribution = get_string($leader ? 'home_notyet' : 'home_nofires', 'local_ignite', $mine['name']);
+        }
+        $minutes = max(1, (int)ceil($standings['rolloverseconds'] / 60));
+        $unit = static fn(int $count, string $word): string =>
+            $count . ' ' . get_string('home_' . $word . ($count === 1 ? '' : 's'), 'local_ignite');
+        [$days, $hours] = [intdiv($minutes, 1440), intdiv($minutes % 1440, 60)];
+        $timeleft = $days ? $unit($days, 'day') . ' ' . $unit($hours, 'hour') :
+            ($hours ? $unit($hours, 'hour') . ' ' . $unit($minutes % 60, 'minute') : $unit($minutes, 'minute'));
+        $month = userdate(time(), '%B', self::TIMEZONE);
+        return ['code' => $mine['code'], 'name' => $mine['name'], 'letters' => \core_text::strlen($mine['name']),
+            'line' => get_string('tagline_' . $mine['code'], 'local_ignite'),
+            'artlarge' => $image($mine['code'] . '-large'), 'topcrest' => $image($mine['code'] . '-top'),
+            'medal' => $image($mine['code'] . '-medal'), 'bottomcrest' => $image($mine['code'] . '-bottom'),
+            'logs' => $image('logs'), 'teamxp' => $mine['total'],
+            'lit' => $leader > 0, 'place' => $leader ? $place($mine) : '',
+            'firesheading' => get_string('home_fires', 'local_ignite', $month),
+            'heatends' => get_string('home_heatends', 'local_ignite', $month),
+            'timeleft' => $timeleft, 'rolloverseconds' => $standings['rolloverseconds'],
+            'fires' => $fires, 'contribution' => $contribution, 'learnurl' => $standings['learnurl']];
     }
 }

@@ -17,7 +17,8 @@ async function login(page: Page, username: string) {
 
 test('monthly standings, archive, personal XP and the original activity award on mobile', async ({ page }) => {
   await login(page, fixture.user);
-  await page.goto('/local/ignite/passport.php');
+  // A member's Campfire opens on their team's page; the full standings board stays reachable for browsing.
+  await page.goto('/local/ignite/passport.php?browse=1');
   const board = page.locator('#campfire-standings');
   await expect(board.getByRole('listitem')).toHaveCount(3);
   await board.getByRole('link', { name: 'Previous month' }).click();
@@ -94,16 +95,20 @@ test('choose a Campfire and support it through an eligible activity', async ({ p
   await intro.getByRole('button', { name: 'Join Forgelings' }).click();
   await expect(page).toHaveURL(/\/local\/ignite\/passport\.php$/);
   await expect(intro).toHaveCount(0);
-  const forge = page.locator('.campfire-team').filter({ hasText: 'Forgelings' });
-  await expect(forge).toContainText('Your Campfire');
-  await expect(forge).toContainText('You contributed 0 Team XP');
-  await forge.getByRole('link', { name: 'Find a course to support your team' }).click();
+  const home = page.locator('.camp-home');
+  await expect(home.getByRole('heading', { level: 1 })).toHaveText('Forgelings');
+  await expect(home.locator('.fire--yours')).toContainText('Forgelings');
+  await expect(home.locator('.camp-heat')).toContainText(/The \w+ Heat ends in \d+ (day|hour|minute)/);
+  await expect(home.locator('.camp-yours')).toContainText(/(You haven’t added Team XP yet|No fires are lit yet) this month\./);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(361);
+  await home.getByRole('link', { name: 'Find a course' }).click();
   await expect(page).toHaveURL(/\/(my\/courses|course\/index)\.php/);
   await page.goto('/mod/page/view.php?id=' + fixture.manualcmid);
   await page.locator('[data-action="toggle-manual-completion"]').first().click();
   await expect(page.locator('.ignite-xp-receipt')).toContainText('+20 Regular XP · +10 Team XP for the Forgelings');
   await page.goto('/local/ignite/passport.php');
-  await expect(forge).toContainText('You contributed 10 Team XP');
+  await expect(home.locator('.camp-yours')).toContainText('You’ve added 10 Team XP this month.');
+  await expect(home.locator('.fire--yours')).toContainText('10 Team XP');
 });
 
 test('My Hearth shows the switched contributor’s Cup, native detail and current team trophies', async ({ page }) => {

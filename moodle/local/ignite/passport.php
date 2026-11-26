@@ -39,6 +39,12 @@ if (!$browse && $month === '' && $data['standings']['chooseurl']) {
             }
         }
     }
+} else if (!$browse && $month === '' && ($home = \local_ignite\campfire::home($data['standings']))) {
+    // A member opens Campfire on their own team's page for this month's Heat.
+    $PAGE->requires->css(new moodle_url('/local/ignite/campfire-home.css', ['rev' => filemtime(__DIR__ . '/campfire-home.css')]));
+    $PAGE->add_body_class('ignite-campfire-home');
+    $template = 'local_ignite/campfire_home';
+    $data = $home;
 }
 echo $OUTPUT->header();
 echo $OUTPUT->render_from_template($template, $data);

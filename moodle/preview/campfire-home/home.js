@@ -92,25 +92,18 @@ function render(team, situation) {
         item.classList.toggle('fire--yours', Boolean(fire.yours));
         const flame = item.querySelector('.fire__flame');
         [flame.width, flame.height] = TEAMS[fire.team].flame;
-        flame.src = `art/flame-${fire.team}.png`;
+        flame.src = `${ART}${fire.team}-flame.png`;
         item.querySelector('.fire__name').textContent = TEAMS[fire.team].name;
         const score = item.querySelector('.fire__score');
         if (leader) {
             score.innerHTML = `<b>${place(fire)}</b> <span><span class="fire__with">with </span><i></i> Team XP</span>`;
-            score.querySelector('i').style.fontStyle = 'normal';
             countTo(score.querySelector('i'), fire.xp);
         } else {
             score.textContent = 'Not lit yet';
         }
         // The leader's flame is full size; any Team XP at all keeps a small flame alight.
-        item.dataset.size = fire.xp ? (.4 + .6 * fire.xp / leader).toFixed(3) : 0;
+        item.style.setProperty('--size', fire.xp ? (.4 + .6 * fire.xp / leader).toFixed(3) : 0);
         return item;
-    }));
-    // Let the unlit fires paint first, so each flame grows up from its logs.
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-        for (const item of list.children) {
-            item.style.setProperty('--size', item.dataset.size);
-        }
     }));
 
     const share = mine.xp ? Math.round(sample.own / mine.xp * 100) : 0;
