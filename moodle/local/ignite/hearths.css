@@ -75,11 +75,6 @@
     border-radius: 1rem;
 }
 .hearth-carousel__viewport::-webkit-scrollbar { display: none; }
-.hearth-carousel__viewport:has(> [hidden]) {
-    display: block;
-    overflow: visible;
-    touch-action: pan-y pinch-zoom;
-}
 .hearth-slide {
     box-sizing: border-box;
     min-width: 0;
@@ -87,14 +82,71 @@
     scroll-snap-stop: always;
     padding: clamp(8px, 2vw, 24px);
 }
-@media (prefers-reduced-motion: no-preference) {
-    .hearth-carousel--browsing .hearth-slide:not([hidden]) {
-        animation: hearth-card-enter .24s ease-out;
-    }
+
+/* With scripting, the chosen card stands in front while its neighbours wait behind it on either side. */
+.hearth-carousel--coverflow {
+    --side-scale: .74;
+    /* How far a neighbour shows past the chosen card: the width of each outer track. */
+    --peek: 25%;
+    --turn: 1;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 4fr) minmax(0, 1fr);
+    /* Cards in motion never widen the page. */
+    overflow-x: clip;
 }
-@keyframes hearth-card-enter {
-    from { opacity: 0; }
-    to { opacity: 1; }
+[dir="rtl"] .hearth-carousel--coverflow { --turn: -1; }
+.hearth-carousel--coverflow .hearth-carousel__viewport {
+    display: grid;
+    grid-auto-flow: row;
+    overflow: visible;
+    scroll-snap-type: none;
+    touch-action: pan-y pinch-zoom;
+}
+.hearth-carousel--coverflow .hearth-slide {
+    grid-area: 1 / 1;
+    align-self: center;
+    opacity: 0;
+    transform: scale(.6);
+    pointer-events: none;
+}
+.hearth-carousel--coverflow .hearth-slide[data-position="active"] {
+    z-index: 2;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+}
+.hearth-carousel--coverflow .hearth-slide:is([data-position="previous"], [data-position="next"]) {
+    z-index: 1;
+    opacity: .5;
+    transform: translateX(calc(var(--turn) * var(--side) * ((1 - var(--side-scale)) * 50% + var(--peek)))) scale(var(--side-scale));
+    pointer-events: auto;
+    cursor: pointer;
+}
+.hearth-carousel--coverflow .hearth-slide[data-position="previous"] { --side: -1; }
+.hearth-carousel--coverflow .hearth-slide[data-position="next"] { --side: 1; }
+.hearth-carousel--coverflow .hearth-slide:is([data-position="previous"], [data-position="next"]):hover { opacity: .8; }
+.hearth-carousel--coverflow .hearth-slide:not([data-position="active"]) .hearth-slide__content { pointer-events: none; }
+/* Only the chosen card offers Join; a half-covered button would read as clutter. */
+.hearth-carousel--coverflow .hearth-slide:not([data-position="active"]) form { opacity: 0; }
+.hearth-carousel--coverflow .hearth-slide[data-position="active"] .hearth-slide__content {
+    filter: drop-shadow(0 1.1rem 1.6rem #15101b59);
+}
+@media (prefers-reduced-motion: no-preference) {
+    /* Every card shares one duration, so they all set off and settle together. */
+    .hearth-carousel--coverflow { --shift: .65s; }
+    .hearth-carousel--coverflow .hearth-slide {
+        transition: transform var(--shift) cubic-bezier(.22, .8, .3, 1), opacity .35s ease-out;
+    }
+    .hearth-carousel--coverflow .hearth-slide :is(form, .hearth-slide__description > *) { transition: opacity .25s ease-out; }
+    /* The chosen card overshoots slightly as it arrives, so it pops into place. It turns solid at once so nothing shows through it. */
+    .hearth-carousel--coverflow .hearth-slide[data-position="active"] {
+        transition-duration: var(--shift), .1s;
+        transition-timing-function: cubic-bezier(.34, 1.45, .64, 1), ease-out;
+    }
+    .hearth-carousel--coverflow .hearth-slide--crossing { animation: hearth-slide-cross var(--shift) linear; }
+}
+/* A neighbour changing sides passes behind the chosen card unseen, then fades in gradually while it slides out on the other side. */
+@keyframes hearth-slide-cross {
+    10%, 30% { opacity: 0; }
 }
 
 /* Intrinsic pixel heights of the 1320px-wide crest strips. */
@@ -173,8 +225,9 @@
 .hearth-slide form { display: flex; justify-content: center; margin: 24px 0 0; }
 .hearth-carousel button { min-height: 44px; color: #352b29; box-shadow: none; font: 700 1rem/1.4 Nunito, sans-serif; cursor: pointer; }
 .hearth-carousel .hearth-slide__join {
-    padding: .6rem 1.5rem;
-    border: 2px solid var(--accent);
+    /* No outline: the padding takes up the width the border used to. */
+    padding: calc(.6rem + 2px) calc(1.5rem + 2px);
+    border: 0;
     border-radius: .7rem;
     background: var(--button);
     box-shadow: 0 2px 0 var(--accent), 0 6px 12px -4px #51362e55;
@@ -195,14 +248,28 @@
 .hearth-carousel__controls [data-step="1"] { grid-column: 3; }
 [dir="rtl"] .hearth-carousel__controls button > [aria-hidden] { display: inline-block; transform: scaleX(-1); }
 .hearth-carousel__controls button:disabled { opacity: .5; cursor: default; }
-.hearth-carousel button:enabled:hover { border-color: #352b29; }
+.hearth-carousel .hearth-slide__join:enabled:hover { filter: brightness(1.06); }
+/* The arrows sit over the waiting cards, so they carry their own backing. */
+.hearth-carousel--coverflow .hearth-carousel__controls button {
+    z-index: 3;
+    justify-self: center;
+    background: #15101bb3;
+    color: #fff;
+    box-shadow: 0 4px 14px #15101b55;
+}
+.hearth-carousel--coverflow .hearth-carousel__controls button:enabled:hover { background: #15101be6; }
 .hearth-carousel :is(button, [tabindex]):focus-visible { outline: 3px solid #214f9b; outline-offset: 2px; }
 @media (min-width: 601px) {
     /* Fit the landscape illustration while leaving room for the description and Join action. */
-    .hearth-carousel { column-gap: .5rem; max-width: clamp(46rem, calc(155svh - 18rem), 85rem); }
+    .hearth-carousel { --hearth-width: clamp(46rem, calc(155svh - 18rem), 85rem); column-gap: .5rem; max-width: var(--hearth-width); }
+    /* Keep the chosen card its usual size, then add room for a neighbour on each side. */
+    .hearth-carousel--coverflow { column-gap: 0; max-width: calc((var(--hearth-width) - 6.5rem) * 1.5); }
 }
 @media (max-width: 600px) {
     .hearth-carousel { margin-inline: -.75rem; }
+    .hearth-carousel--coverflow { --side-scale: .8; --peek: 44px; grid-template-columns: 44px minmax(0, 1fr) 44px; }
+    /* Too little of a waiting card shows here for its words to be legible. */
+    .hearth-carousel--coverflow .hearth-slide:not([data-position="active"]) .hearth-slide__description > * { opacity: 0; }
     .hearth-slide { padding-inline: 0; }
     .hearth-slide form { margin-top: 20px; }
 }

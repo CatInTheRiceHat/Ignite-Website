@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 56" width="800" height="280">
+  <!-- Placeholder logs, shared by all three campfires. Replace with the painted log pile: transparent background. -->
+  <g transform="rotate(-13 80 34)"><rect x="14" y="24" width="132" height="20" rx="10" fill="#6b4a3a"/><circle cx="24" cy="34" r="8" fill="#a67c5b"/><circle cx="24" cy="34" r="3.5" fill="#6b4a3a"/></g>
+  <g transform="rotate(13 80 34)"><rect x="14" y="24" width="132" height="20" rx="10" fill="#7d5846"/><circle cx="136" cy="34" r="8" fill="#b98d69"/><circle cx="136" cy="34" r="3.5" fill="#7d5846"/></g>
+</svg>

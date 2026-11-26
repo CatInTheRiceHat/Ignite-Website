@@ -64,14 +64,14 @@ test('teamless activity completion links directly to the three Campfire choices'
   const join = chooser.getByRole('button', { name: /^Join / });
   await expect(join).toHaveText('Join Forgelings');
   await expect(join).toHaveAttribute('value', String(fixture.teamids.forgelings));
-  await expect(chooser.getByRole('button', { name: 'Previous Hearth' })).toBeDisabled();
+  await expect(chooser.getByRole('button', { name: 'Previous: Lanternlings' })).toBeEnabled();
   await chooser.getByRole('button', { name: 'Next: Candlelings' }).click();
   await expect(join).toHaveText('Join Candlelings');
   await expect(join).toHaveAttribute('value', String(fixture.teamids.candlelings));
   await chooser.locator('.hearth-carousel__viewport').press('ArrowRight');
   await expect(join).toHaveText('Join Lanternlings');
   await expect(join).toHaveAttribute('value', String(fixture.teamids.lanternlings));
-  await expect(chooser.getByRole('button', { name: 'Next Hearth' })).toBeDisabled();
+  await expect(chooser.getByRole('button', { name: 'Next: Forgelings' })).toBeEnabled();
   await chooser.getByRole('button', { name: 'Previous: Candlelings' }).click();
   await expect(join).toHaveText('Join Candlelings');
   await page.reload();

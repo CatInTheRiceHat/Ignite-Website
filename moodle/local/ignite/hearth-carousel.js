@@ -8,11 +8,29 @@ for (const carousel of document.querySelectorAll('.hearth-carousel')) {
     const rtl = getComputedStyle(viewport).direction === 'rtl';
     let activeIndex = 0;
 
+    // The chosen card sits in front; the others wait behind it, one on each side.
+    function place(slide, position) {
+        const sides = ['previous', 'next'];
+        slide.classList.toggle('hearth-slide--crossing', position !== slide.dataset.position &&
+            sides.includes(position) && sides.includes(slide.dataset.position));
+        slide.dataset.position = position;
+        // Only the chosen card can be read or joined; the others are chosen by clicking the card itself.
+        if (position === 'active') {
+            slide.removeAttribute('aria-hidden');
+        } else {
+            slide.setAttribute('aria-hidden', 'true');
+        }
+        slide.firstElementChild.inert = position !== 'active';
+    }
     function show(index) {
+        const count = slides.length;
         activeIndex = index;
-        slides.forEach((slide, i) => { slide.hidden = i !== index; });
-        setControl(previous, slides[index - 1]?.dataset.previous);
-        setControl(next, slides[index + 1]?.dataset.next);
+        slides.forEach((slide, i) => {
+            const offset = (i - index + count) % count;
+            place(slide, offset === 0 ? 'active' : offset === 1 ? 'next' : offset === count - 1 ? 'previous' : 'away');
+        });
+        setControl(previous, slides[(index - 1 + count) % count].dataset.previous);
+        setControl(next, slides[(index + 1) % count].dataset.next);
         const name = slides[index].querySelector('h3').textContent;
         if (status.textContent !== name) {
             status.textContent = name;
@@ -23,18 +41,21 @@ for (const carousel of document.querySelectorAll('.hearth-carousel')) {
         button.querySelector('.hearth-carousel__label').textContent = label || button.dataset.default;
     }
     function move(step) {
-        const index = activeIndex + step;
-        if (index < 0 || index >= slides.length) {
-            return;
-        }
         viewport.focus({ preventScroll: true });
-        carousel.classList.add('hearth-carousel--browsing');
-        show(index);
+        show((activeIndex + step + slides.length) % slides.length);
     }
     controls.addEventListener('click', event => {
         const button = event.target.closest('button');
         if (button) {
             move(Number(button.dataset.step));
+        }
+    });
+    // A waiting card comes forward when it is chosen directly.
+    viewport.addEventListener('click', event => {
+        const index = slides.indexOf(event.target.closest('.hearth-slide'));
+        if (index >= 0 && index !== activeIndex) {
+            viewport.focus({ preventScroll: true });
+            show(index);
         }
     });
     carousel.addEventListener('keydown', event => {
@@ -86,6 +107,7 @@ for (const carousel of document.querySelectorAll('.hearth-carousel')) {
     });
     viewport.addEventListener('touchcancel', () => { touchStart = null; });
     window.addEventListener('pageshow', () => show(0));
+    carousel.classList.add('hearth-carousel--coverflow');
     show(0);
     controls.hidden = slides.length < 2;
 }

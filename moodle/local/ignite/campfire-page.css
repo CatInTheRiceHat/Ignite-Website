@@ -43,6 +43,6 @@ body.ignite-campfire-choosing,
 @media (min-width: 601px) {
     .campfire-chooser-screen { padding-block: 1rem; }
     .campfire-chooser-screen .hearth-carousel {
-        max-width: clamp(40rem, calc(155svh - 26rem), 85rem);
+        --hearth-width: clamp(40rem, calc(155svh - 26rem), 85rem);
     }
 }
