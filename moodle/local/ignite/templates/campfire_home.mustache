@@ -1,0 +1,100 @@
+{{!
+    @template local_ignite/campfire_home
+    A member's own Campfire page for the current month's Heat. Example context (json):
+    {"code":"forgelings","name":"Forgelings","letters":10,"line":"The builders of Ignite.","teamxp":"412",
+     "lit":true,"place":"1st","firesheading":"November’s fires","heatends":"The November Heat ends in",
+     "timeleft":"5 days 2 hours","rolloverseconds":439200,"learnurl":"#","contribution":"You’ve added <b>36 Team XP</b>.",
+     "fires":[{"code":"lanternlings","name":"Lanternlings","yours":false,"lit":true,"place":"3rd","xp":"148","size":"0.616"},
+              {"code":"forgelings","name":"Forgelings","yours":true,"lit":true,"place":"1st","xp":"412","size":"1.000"},
+              {"code":"candlelings","name":"Candlelings","yours":false,"lit":true,"place":"2nd","xp":"305.5","size":"0.845"}]}
+}}
+<div class="camp-home" data-team="{{code}}">
+    <header class="camp-banner">
+        <div class="camp-plate">
+            <div class="camp-plate__top">
+                <img class="camp-plate__crest" src="{{topcrest}}" alt="">
+                <img class="camp-plate__medal" src="{{medal}}" alt="" width="384" height="384">
+            </div>
+            <img class="camp-plate__picture" src="{{artlarge}}" alt="" width="1920" height="1071">
+            <img class="camp-plate__crest camp-plate__crest--bottom" src="{{bottomcrest}}" alt="">
+        </div>
+        <div class="camp-banner__words">
+            <p class="camp-banner__lead">{{#str}}home_lead, local_ignite{{/str}}</p>
+            <h1 style="--letters: {{letters}};">{{name}}</h1>
+            <p class="camp-banner__line">{{line}}</p>
+            <dl class="camp-figures">
+                <div><dt>{{#str}}home_teamxp, local_ignite{{/str}}</dt><dd data-count="{{teamxp}}">{{teamxp}}</dd></div>
+                {{#lit}}<div><dt>{{#str}}home_place, local_ignite{{/str}}</dt><dd>{{place}}</dd></div>{{/lit}}
+                {{^lit}}<div><dt>{{#str}}home_untilfirst, local_ignite{{/str}}</dt><dd>{{#str}}home_unlit, local_ignite{{/str}}</dd></div>{{/lit}}
+            </dl>
+        </div>
+    </header>
+
+    <section class="camp-fires" aria-labelledby="camp-fires-title">
+        <div class="camp-fires__heading">
+            <h2 id="camp-fires-title">{{firesheading}}</h2>
+            <p class="camp-heat">{{heatends}} <strong
+                data-day="{{#str}}home_day, local_ignite{{/str}}" data-days="{{#str}}home_days, local_ignite{{/str}}"
+                data-hour="{{#str}}home_hour, local_ignite{{/str}}" data-hours="{{#str}}home_hours, local_ignite{{/str}}"
+                data-minute="{{#str}}home_minute, local_ignite{{/str}}" data-minutes="{{#str}}home_minutes, local_ignite{{/str}}">{{timeleft}}</strong></p>
+        </div>
+        <ul class="camp-fires__list">
+            {{#fires}}
+            <li class="fire{{#yours}} fire--yours{{/yours}}" data-team="{{code}}" style="--size: {{size}};">
+                <div class="fire__stage">
+                    <span class="fire__glow"></span>
+                    <span class="fire__grow"><img class="fire__flame" src="{{flame}}" alt=""></span>
+                    <img class="fire__logs" src="{{logs}}" alt="" width="900" height="367">
+                </div>
+                <p class="fire__yours"><span class="fire__wide">{{#str}}home_yours, local_ignite{{/str}}</span><span class="fire__narrow">{{#str}}home_yoursshort, local_ignite{{/str}}</span></p>
+                <h3 class="fire__name">{{name}}</h3>
+                <p class="fire__score">
+                    {{#lit}}<b>{{place}}</b> <span><span class="fire__with">{{#str}}home_with, local_ignite{{/str}} </span><i data-count="{{xp}}">{{xp}}</i> {{#str}}home_teamxpunit, local_ignite{{/str}}</span>{{/lit}}
+                    {{^lit}}{{#str}}home_notlit, local_ignite{{/str}}{{/lit}}
+                </p>
+            </li>
+            {{/fires}}
+        </ul>
+    </section>
+
+    <section class="camp-yours" aria-label="{{#str}}home_yourpart, local_ignite{{/str}}">
+        <p>{{{contribution}}}</p>
+        <a class="camp-button" href="{{learnurl}}">{{#str}}home_findcourse, local_ignite{{/str}}</a>
+    </section>
+</div>
+{{#js}}
+const home = document.querySelector('.camp-home');
+const left = home.querySelector('.camp-heat strong');
+const deadline = Date.now() + {{rolloverseconds}} * 1000;
+const count = (number, word) => number + ' ' + left.dataset[number === 1 ? word : word + 's'];
+// Keep the time left current, and load the new Heat's standings when the month turns over.
+function tick() {
+    const minutes = Math.ceil((deadline - Date.now()) / 60000);
+    if (minutes <= 0) {
+        window.location.reload();
+        return;
+    }
+    const days = Math.floor(minutes / 1440);
+    const hours = Math.floor(minutes % 1440 / 60);
+    left.textContent = days ? count(days, 'day') + ' ' + count(hours, 'hour') :
+        hours ? count(hours, 'hour') + ' ' + count(minutes % 60, 'minute') : count(minutes, 'minute');
+}
+tick();
+window.setInterval(tick, 30000);
+// Count each Team XP figure up once, so the total reads as something the team built.
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const start = performance.now();
+    const figures = Array.from(home.querySelectorAll('[data-count]'), element => [element, Number(element.dataset.count)]);
+    const step = now => {
+        const progress = Math.min(1, (now - start) / 900);
+        for (const [element, value] of figures) {
+            const shown = value * (1 - Math.pow(1 - progress, 3));
+            element.textContent = progress === 1 ? element.dataset.count : Number.isInteger(value) ? Math.round(shown) : shown.toFixed(1);
+        }
+        if (progress < 1) {
+            window.requestAnimationFrame(step);
+        }
+    };
+    window.requestAnimationFrame(step);
+}
+{{/js}}
