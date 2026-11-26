@@ -13,6 +13,7 @@ final class navigation {
         $items = ['local_ignite' => ['label' => get_string('dash_dashboard', 'local_ignite'), 'path' => !empty($CFG->enabledashboard) ? '/my/' : '/local/ignite/index.php'],
             'local_ignite_explore' => ['label' => get_string('nav_explore', 'local_ignite'), 'path' => '/course/index.php']];
         if (access::enabled('passport')) { $items['local_ignite_passport'] = ['label' => get_string('passport', 'local_ignite'), 'path' => '/local/ignite/passport.php']; }
+        if (access::enabled('fuse')) { $items['local_ignite_shop'] = ['label' => get_string('shop', 'local_ignite'), 'path' => '/local/ignite/shop.php']; }
         return $items;
     }
     public static function primary(\core\hook\navigation\primary_extend $hook): void {

@@ -1,4 +1,9 @@
 /* Shop: what a learner's saved embers can be cashed in for. */
+/* On Moodle the Shop fills the page: no side padding, no page heading, nothing under it. */
+.ignite-shop-page #page.drawers { padding-inline: 0; background: none; }
+.ignite-shop-page #page.drawers .main-inner { width: 100%; max-width: none; margin: 0 auto; padding: 0; border: 0; box-shadow: none; }
+.ignite-shop-page #page-header { display: none; }
+.ignite-shop-page #page-content { padding-bottom: 0 !important; }
 /* The page stops dead at its ends rather than bouncing, and anything a browser still shows beyond the foot is floor-coloured, not white. */
 html:has(.ignite-shop) { overscroll-behavior: none; background-color: #e2c6ad; }
 body:has(.ignite-shop) { overscroll-behavior: none; }

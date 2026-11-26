@@ -101,6 +101,16 @@ final class campfire {
             'nexturl' => $period < $current ? $url($period->modify('+1 month')) : ''];
     }
 
+    /** The time left in a month's Heat, in its two largest units: "5 days 2 hours". */
+    public static function timeleft(int $seconds): string {
+        $minutes = max(1, (int)ceil($seconds / 60));
+        $unit = static fn(int $count, string $word): string =>
+            $count . ' ' . get_string('home_' . $word . ($count === 1 ? '' : 's'), 'local_ignite');
+        [$days, $hours] = [intdiv($minutes, 1440), intdiv($minutes % 1440, 60)];
+        return $days ? $unit($days, 'day') . ' ' . $unit($hours, 'hour') :
+            ($hours ? $unit($hours, 'hour') . ' ' . $unit($minutes % 60, 'minute') : $unit($minutes, 'minute'));
+    }
+
     /** A member's own Campfire page for the current month's Heat, or null for someone without a Campfire. */
     public static function home(array $standings): ?array {
         global $OUTPUT;
@@ -134,12 +144,6 @@ final class campfire {
         } else {
             $contribution = get_string($leader ? 'home_notyet' : 'home_nofires', 'local_ignite', $mine['name']);
         }
-        $minutes = max(1, (int)ceil($standings['rolloverseconds'] / 60));
-        $unit = static fn(int $count, string $word): string =>
-            $count . ' ' . get_string('home_' . $word . ($count === 1 ? '' : 's'), 'local_ignite');
-        [$days, $hours] = [intdiv($minutes, 1440), intdiv($minutes % 1440, 60)];
-        $timeleft = $days ? $unit($days, 'day') . ' ' . $unit($hours, 'hour') :
-            ($hours ? $unit($hours, 'hour') . ' ' . $unit($minutes % 60, 'minute') : $unit($minutes, 'minute'));
         $month = userdate(time(), '%B', self::TIMEZONE);
         return ['code' => $mine['code'], 'name' => $mine['name'], 'letters' => \core_text::strlen($mine['name']),
             'line' => get_string('tagline_' . $mine['code'], 'local_ignite'),
@@ -149,7 +153,7 @@ final class campfire {
             'lit' => $leader > 0, 'place' => $leader ? $place($mine) : '',
             'firesheading' => get_string('home_fires', 'local_ignite', $month),
             'heatends' => get_string('home_heatends', 'local_ignite', $month),
-            'timeleft' => $timeleft, 'rolloverseconds' => $standings['rolloverseconds'],
+            'timeleft' => self::timeleft($standings['rolloverseconds']), 'rolloverseconds' => $standings['rolloverseconds'],
             'fires' => $fires, 'contribution' => $contribution, 'learnurl' => $standings['learnurl']];
     }
 }

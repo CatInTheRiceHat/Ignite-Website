@@ -39,7 +39,7 @@ final class dashboard {
             'resumeonboarding' => access::enabled('onboarding') && onboarding_policy::eligible($USER) && in_array($prefs->status, ['notstarted', 'inprogress', 'dismissed']),
             'hearthsenabled' => access::enabled('houses'), 'passportenabled' => access::enabled('passport'),
             'course' => false, 'primary' => false, 'recommendations' => [], 'hearth' => false,
-            'heat' => false, 'offer' => false, 'deferred' => false,
+            'heat' => false, 'offer' => false, 'deferred' => false, 'fuse' => false,
             'selectionunavailable' => !empty($prefs->targetkey) && !isset($courses[$chosenid]),
         ];
         if ($course) {
@@ -67,6 +67,8 @@ final class dashboard {
             }
         }
         $data['hasrecommendations'] = (bool)$data['recommendations'];
+        // The month's fuse takes the welcome's place at the top of Home.
+        if (access::enabled('fuse')) { $data['fuse'] = fuse::current(); }
         // Home only needs the welcome/action. Hidden sections must not read badges or consume invitations.
         if ($summaryonly) { return $data; }
         if ($data['hearthsenabled']) {

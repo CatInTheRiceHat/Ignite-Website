@@ -1,5 +1,7 @@
 {{! A single current-user projection, shared by the native block and optional Ignite home. }}
 <div class="ignite-dashboard">
+    {{#fuse}}{{> local_ignite/fuse_home}}{{/fuse}}
+    {{^fuse}}
     <section class="ignite-dashboard__welcome" aria-label="{{welcome}}">
         <div>
             <p class="ignite-dashboard__eyebrow">{{#str}}dash_yourspace, local_ignite{{/str}}</p>
@@ -13,6 +15,7 @@
         </div>
         <img src="{{solurl}}" alt="" width="144" height="144">
     </section>
+    {{/fuse}}
 
     {{#selectionunavailable}}<p class="ignite-dashboard__notice">{{#str}}dash_selectionunavailable, local_ignite{{/str}}</p>{{/selectionunavailable}}
     {{#resumeonboarding}}<p><a href="{{onboardingurl}}">{{#str}}dash_resume, local_ignite{{/str}}</a></p>{{/resumeonboarding}}

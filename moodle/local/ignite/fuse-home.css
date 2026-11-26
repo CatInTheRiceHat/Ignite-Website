@@ -67,7 +67,9 @@
 .fuse-chip svg { grid-row: span 2; width: 1.75rem; height: 1.75rem; }
 .fuse-chip strong { font: 700 1.125rem/1.2 Poppins, system-ui, sans-serif; }
 .fuse-chip span { color: var(--haze); font-size: .8125rem; line-height: 1.3; }
-a.fuse-chip:hover { background: #ffffff26; }
+/* Home's own link colour and underline do not apply to the chip. */
+.fuse-home a.fuse-chip { color: var(--cream); text-decoration: none; }
+.fuse-home a.fuse-chip:hover { background: #ffffff26; }
 a.fuse-chip span { text-decoration: underline; text-underline-offset: .2em; }
 
 /* The fuse itself. Its shapes are drawn in the page's script; these are their materials. */
