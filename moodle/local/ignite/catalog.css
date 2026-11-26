@@ -63,3 +63,11 @@
 :is(#page-course-index, #page-course-index-category, #page-course-search) #page-header { max-width: 76rem; margin-inline: auto; padding-inline: 0; }
 .ignite-cat__filters { box-sizing: border-box; max-width: 76rem; }
 .ignite-cat__foot > form { justify-self: center; }
+
+/* Teachers read as one line of names ("Kireeti Kotha, Alice Meina Xi"), so a card body never needs a scroll bar. */
+:is(#page-course-index, #page-course-index-category, #page-course-search) #region-main .coursebox .content .teachers { display: block !important; }
+:is(#page-course-index, #page-course-index-category, #page-course-search) #region-main .coursebox .content .teachers li { display: inline !important; margin: 0 !important; padding: 0 !important; }
+:is(#page-course-index, #page-course-index-category, #page-course-search) #region-main .coursebox .content .teachers li + li::before { content: ", "; }
+:is(#page-course-index, #page-course-index-category, #page-course-search) #region-main .coursebox .content .teachers { grid-template-columns: none !important; }
+:is(#page-course-index, #page-course-index-category, #page-course-search) #region-main .coursebox .content .teachers li > span:first-child { display: none !important; }
+:is(#page-course-index, #page-course-index-category, #page-course-search) #region-main .coursebox .content > .d-flex > .flex-grow-1 { overflow: hidden; }
