@@ -52,15 +52,17 @@ foreach ($DB->get_records('course', null, 'id', 'id, shortname') as $course) {
             continue;
         }
         if ($field->get('type') === 'select') {
-            $wanted = array_search($wanted, $field->get_options(), true);
+            // Moodle returns option labels HTML-escaped.
+            $wanted = array_search($wanted, array_map(fn($o) => html_entity_decode($o, ENT_QUOTES), $field->get_options()), true);
             if ($wanted === false) {
                 echo "ERROR {$course->id} {$short}: unknown option for {$name}\n";
                 continue;
             }
         }
         echo ($apply ? 'SET   ' : 'WOULD ') . "{$course->id} {$short} {$name} = " .
-            ($field->get('type') === 'select' ? $field->get_options()[$wanted] : $wanted) . "\n";
+            ($field->get('type') === 'select' ? html_entity_decode($field->get_options()[$wanted], ENT_QUOTES) : $wanted) . "\n";
         if ($apply) {
+            $data->set('contextid', $handler->get_instance_context($course->id)->id);
             $data->instance_form_save((object)[$data->get_form_element_name() => $wanted]);
         }
     }

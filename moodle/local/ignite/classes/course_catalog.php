@@ -60,7 +60,7 @@ final class course_catalog {
     public static function facts(): array {
         global $USER;
         $handler = \core_course\customfield\course_handler::create();
-        $courses = array_filter(get_courses('all', 'c.sortorder', 'c.id'), fn($c) => $c->visible);
+        $courses = array_filter(get_courses('all', 'c.sortorder', 'c.id'), fn($c) => $c->visible && $c->id != SITEID);
         $data = $handler->get_instances_data(array_keys($courses), true);
         $facts = [];
         foreach ($courses as $course) {
@@ -68,7 +68,8 @@ final class course_catalog {
             foreach ($data[$course->id] ?? [] as $controller) {
                 $short = $controller->get_field()->get('shortname');
                 if (in_array($short, ['ignite_audience', 'ignite_weeks', 'ignite_topic'], true)) {
-                    $row[substr($short, 7)] = (string)($controller->export_value() ?? '');
+                    // Moodle returns option labels HTML-escaped; the page compares and prints plain text.
+                    $row[substr($short, 7)] = html_entity_decode((string)($controller->export_value() ?? ''), ENT_QUOTES);
                 }
             }
             $context = \context_course::instance($course->id);
