@@ -18,7 +18,7 @@ const Partnerships = () => (
   <div className="bg-[var(--bg-cream)]">
     <section className="bg-[var(--primary-orange)] py-20 text-white text-center shadow-lg relative overflow-hidden" aria-labelledby="partnerships-heading">
       <div className="absolute inset-y-0 right-0 w-full md:w-[46%] pointer-events-none opacity-20 sm:opacity-25 md:opacity-30">
-        <img src="/mascots/Partnerships.png" alt="" className="h-full w-full object-contain object-right-bottom" loading="lazy" />
+        <img src="/mascots/Partnerships.webp" alt="" className="h-full w-full object-contain object-right-bottom" loading="lazy" />
       </div>
       <div className="container relative z-10 mx-auto px-4">
         <h1 id="partnerships-heading" className="text-4xl/[1.4] sm:text-5xl/[1.4] md:text-7xl/[1.4] font-rammetto text-white">Partnerships</h1>
@@ -27,7 +27,7 @@ const Partnerships = () => (
     </section>
 
     <section className="relative overflow-hidden px-4 py-32" aria-labelledby="partnership-intro-heading">
-      <img src="/backgrounds/Practical%20Learning.jpg" alt="" className="absolute inset-0 h-full w-full object-cover object-center" loading="lazy" />
+      <img src="/backgrounds/Practical%20Learning.webp" alt="" className="absolute inset-0 h-full w-full object-cover object-center" loading="lazy" />
       <div className="relative mx-auto max-w-4xl rounded-3xl bg-white/90 p-8 shadow-xl backdrop-blur-sm sm:p-10 md:p-14">
           <h2 id="partnership-intro-heading" className="text-balance font-rammetto text-3xl/[1.4] text-[var(--primary-orange)] sm:text-4xl/[1.4]">Bring practical learning to your community.</h2>
           <p className="mt-8 text-lg leading-relaxed text-[var(--text-light)] md:text-xl">
@@ -47,7 +47,7 @@ const Partnerships = () => (
     <Partners />
 
     <section className="relative overflow-hidden pt-24 pb-52 md:pb-64" aria-labelledby="collaboration-heading">
-      <img src="/backgrounds/Together.jpg" alt="" className="absolute bottom-0 left-0 h-[28rem] w-full object-cover object-right-bottom sm:inset-0 sm:h-full" loading="lazy" />
+      <img src="/backgrounds/Together.webp" alt="" className="absolute bottom-0 left-0 h-[28rem] w-full object-cover object-right-bottom sm:inset-0 sm:h-full" loading="lazy" />
       <div className="relative mx-auto grid max-w-5xl grid-cols-1 gap-12 px-4 md:gap-16">
         <div className="mx-auto max-w-3xl text-center">
           <h2 id="collaboration-heading" className="text-balance font-rammetto text-3xl/[1.4] text-[var(--primary-orange)] sm:text-4xl/[1.4] md:text-5xl/[1.4]">What could we build together?</h2>

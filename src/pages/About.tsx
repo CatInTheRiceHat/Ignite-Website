@@ -9,7 +9,7 @@ const About = () => {
       <section className="bg-[var(--primary-orange)] py-20 text-white text-center shadow-lg relative overflow-hidden">
         <div className="absolute inset-y-0 right-0 w-full md:w-[46%] pointer-events-none opacity-20 sm:opacity-25 md:opacity-30">
           <img
-            src="/mascots/Curious.png"
+            src="/mascots/Curious.webp"
             alt=""
             className="h-full w-full object-contain object-right-bottom"
             loading="lazy"
@@ -24,7 +24,7 @@ const About = () => {
       {/* Our Story */}
       <section className="py-24 relative overflow-hidden">
         <img
-          src="/backgrounds/Story.png"
+          src="/backgrounds/Story.webp"
           alt=""
           className="absolute inset-0 h-full w-full object-cover object-center"
           loading="lazy"
@@ -97,7 +97,7 @@ const About = () => {
       {/* Why It Matters */}
       <section className="relative grid overflow-hidden bg-[var(--bg-cream)]" aria-labelledby="why-matters-heading">
         <img
-          src="/backgrounds/Matters.jpg?v=426bc722"
+          src="/backgrounds/Matters.webp?v=426bc722"
           alt=""
           className="col-start-1 row-start-2 block h-auto w-full self-end xl:row-start-1"
           width={2752}

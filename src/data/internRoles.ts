@@ -1,7 +1,7 @@
 export const internRoles = [
   {
     title: 'Course Developer',
-    image: '/mascots/Course%20Developer.png',
+    image: '/mascots/Course%20Developer.webp',
     desc: 'Build a course you can put your name to. Take ownership of lessons, slides, activities, videos, and other materials for a live or independent Ignite course. Showcase what you created in college applications, résumés, and portfolios, including your course’s documented student reach and your role in making it happen.',
     details: {
       title: 'Payout',
@@ -10,7 +10,7 @@ export const internRoles = [
   },
   {
     title: 'Asynchronous or Synchronous Mentor',
-    image: '/mascots/Mentor.png',
+    image: '/mascots/Mentor.webp',
     desc: 'Serve as a mentor for either a synchronous or asynchronous Ignite course. Mentors are responsible for becoming familiar with the course materials, supporting students, reviewing and grading assignments, providing feedback, and completing any other responsibilities associated with the course.',
     details: {
       title: 'Payout',
@@ -19,7 +19,7 @@ export const internRoles = [
   },
   {
     title: 'Sponsor Researchers',
-    image: '/mascots/Sponsor%20Researcher.png',
+    image: '/mascots/Sponsor%20Researcher.webp',
     desc: 'Identify potential sponsors, conduct outreach, and help secure financial support for Ignite.',
     details: {
       title: 'Payout',
@@ -31,7 +31,7 @@ export const internRoles = [
   },
   {
     title: 'Marketing Ambassador',
-    image: '/mascots/Marketing%20Ambassador.png',
+    image: '/mascots/Marketing%20Ambassador.webp',
     desc: 'Create promotional content and help more students and families discover Ignite. Assignments may include graphics, social-media posts, videos, writing, or community outreach.',
     details: {
       title: 'Payout',
@@ -43,7 +43,7 @@ export const internRoles = [
   },
   {
     title: 'Miscellaneous Projects',
-    image: '/mascots/Miscellaneous.png',
+    image: '/mascots/Miscellaneous.webp',
     desc: 'Help with additional assignments such as research, organization, technology, website updates, writing, events, or other projects.',
     details: {
       title: 'Payout',

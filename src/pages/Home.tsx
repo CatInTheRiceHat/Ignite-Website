@@ -108,9 +108,9 @@ function CountStat({
 }
 
 const featuredStatistics = [
-  { value: 110, label: 'Students', icon: UsersRound, mascot: '/mascots/Curious.png' },
-  { value: 295, label: 'Course selections', icon: BookOpenCheck, mascot: '/mascots/Laptop.png' },
-  { value: 77, label: 'Schools', icon: School, mascot: '/mascots/Graduation.png' },
+  { value: 110, label: 'Students', icon: UsersRound, mascot: '/mascots/Curious.webp' },
+  { value: 295, label: 'Course selections', icon: BookOpenCheck, mascot: '/mascots/Laptop.webp' },
+  { value: 77, label: 'Schools', icon: School, mascot: '/mascots/Graduation.webp' },
 ];
 
 const programStatistics = [
@@ -132,7 +132,7 @@ const Home = () => {
       <section className="relative pt-32 pb-24 md:pb-28 overflow-hidden flex items-center justify-center text-center px-4 min-h-[90vh]">
         <div className="absolute inset-0 z-10 pointer-events-none">
           <img
-            src="/backgrounds/Hero.jpg?v=cada5551"
+            src="/backgrounds/Hero.webp?v=cada5551"
             alt=""
             className="h-full w-full object-cover object-[center_52%] md:object-[center_50%] lg:object-center"
             loading="eager"
@@ -148,12 +148,12 @@ const Home = () => {
           </BlurFade>
           <BlurFade delay={0.15}>
             <p className="text-lg sm:text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto font-medium leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
-              Ignite’s 50+ interns are building free live and independent courses in practical life skills. 5,000+ students have started enrolling. Find what sparks your curiosity.
+              Ignite’s 50+ interns are building free live and independent courses in practical life skills. Find what sparks your curiosity.
             </p>
           </BlurFade>
           <BlurFade delay={0.25}>
             <div className="flex flex-wrap gap-4 justify-center">
-              <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex w-full max-w-xs items-center justify-center gap-2 bg-[var(--primary-orange-dark)] text-white px-8 py-5 rounded-full hover:scale-105 active:scale-95 transition-transform sm:w-auto sm:px-10 font-sans font-bold text-button">
+              <a href={STUDENT_PREENROLLMENT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex w-full max-w-xs items-center justify-center gap-2 bg-[var(--primary-orange)] text-white hover:bg-[var(--primary-orange-dark)] px-8 py-5 rounded-full hover:scale-105 active:scale-95 transition-transform sm:w-auto sm:px-10 font-sans font-bold text-button">
                 Enroll Now
                 <RedirectArrow />
               </a>
@@ -170,7 +170,7 @@ const Home = () => {
       {/* Summer 2026 Results */}
       <section className="relative grid overflow-hidden bg-[var(--text-charcoal)] shadow-sm" aria-labelledby="home-statistics-heading">
         <img
-          src="/backgrounds/Summer.jpg?v=4f114139"
+          src="/backgrounds/Summer.webp?v=4f114139"
           alt=""
           className="absolute inset-0 h-full w-full object-cover object-bottom xl:static xl:col-start-1 xl:row-start-1 xl:-mt-12 xl:h-auto xl:self-end"
           width={2752}
@@ -206,7 +206,7 @@ const Home = () => {
       {/* Key Benefits Section */}
       <section className="py-24 md:py-32 min-h-[64vw] relative overflow-hidden">
         <img
-          src="/backgrounds/Hero%202.jpg?v=ba7dbc62"
+          src="/backgrounds/Hero%202.webp?v=ba7dbc62"
           alt=""
           className="absolute inset-0 h-full w-full object-cover object-top"
           loading="lazy"
@@ -221,9 +221,9 @@ const Home = () => {
           </BlurFade>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
             {[
-              { img: '/assets/Career%20Skills.png',   title: 'Useful Skills',       desc: "Build habits for managing time, communicating, staying safe online, and understanding money." },
-              { img: '/assets/Mentorship.png',        title: 'Student-led Learning', desc: "Students help shape practical courses, building on our Summer 2026 mentorship program." },
-              { img: '/assets/No%20Experience.png',   title: 'Stay Curious',       desc: "Start with what interests you. Check each course description for any prerequisites." }
+              { img: '/assets/Career%20Skills.webp',   title: 'Useful Skills',       desc: "Build habits for managing time, communicating, staying safe online, and understanding money." },
+              { img: '/assets/Mentorship.webp',        title: 'Student-led Learning', desc: "Students help shape practical courses, building on our Summer 2026 mentorship program." },
+              { img: '/assets/No%20Experience.webp',   title: 'Stay Curious',       desc: "Start with what interests you." }
             ].map((feature, i) => (
               <BlurFade key={i} delay={i * 0.08}>
                 <div className="bg-white/90 backdrop-blur-md p-10 md:p-12 rounded-3xl border border-orange-50 hover:bg-white hover:shadow-xl transition-all duration-300 group h-full">
@@ -241,7 +241,7 @@ const Home = () => {
       {/* Who Is Ignite For? */}
       <section className="relative grid overflow-hidden bg-[var(--text-charcoal)] xl:min-h-[64vw]" aria-labelledby="home-audience-heading">
         <img
-          src="/backgrounds/Hero%203.jpg?v=a3a5e919"
+          src="/backgrounds/Hero%203.webp?v=a3a5e919"
           alt=""
           className="absolute inset-0 h-full w-full object-cover object-bottom"
           width={2752}
@@ -258,9 +258,9 @@ const Home = () => {
             imageStyle="open"
             autoPlay={false}
             items={[
-              { image: '/mascots/Grades.png',  title: 'All Students', desc: programCopy.eligibility },
-              { image: '/mascots/Zoom.png',    title: 'Online Learning Plans', desc: 'We are developing live and independent online courses. Student pre-enrollment is open; launch dates and class schedules are still being planned.' },
-              { image: '/mascots/Curious.png', title: 'Curious Students', desc: "You do not need to know what you want to do yet." },
+              { image: '/mascots/Grades.webp',  title: 'All Students', desc: programCopy.eligibility },
+              { image: '/mascots/Zoom.webp',    title: 'Online Learning Plans', desc: 'We are developing live and independent online courses. Student pre-enrollment is open; launch dates and class schedules are still being planned.' },
+              { image: '/mascots/Curious.webp', title: 'Curious Students', desc: "You do not need to know what you want to do yet." },
             ]}
           />
         </div>
@@ -269,7 +269,7 @@ const Home = () => {
       {/* Meet Our Team Section */}
       <section className="relative grid overflow-hidden">
         <img
-          src="/backgrounds/Hero%204.jpg?v=f0898cf4"
+          src="/backgrounds/Hero%204.webp?v=f0898cf4"
           alt=""
           className="col-start-1 row-start-1 -mt-[6vw] block h-auto w-full self-end"
           width={2752}

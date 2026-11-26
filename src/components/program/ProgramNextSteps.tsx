@@ -17,7 +17,7 @@ const ProgramNextSteps = () => (
           <RedirectArrow />
         </a>
         <a href={LEARNING_HUB_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-orange-50 text-[var(--text-charcoal)] px-8 py-4 rounded-full hover:bg-orange-100 transition-colors font-sans font-bold text-button">
-          Learning Hub (Moodle Sign-in)
+          Learning Hub
           <RedirectArrow />
         </a>
         <Link to="/faq" className="inline-flex items-center justify-center bg-orange-50 text-[var(--text-charcoal)] px-8 py-4 rounded-full hover:bg-orange-100 transition-colors font-sans font-bold text-button">Program FAQ</Link>

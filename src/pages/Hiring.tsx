@@ -11,7 +11,7 @@ const Hiring = () => {
       <section className="relative overflow-hidden bg-[var(--primary-orange)] py-20 text-center text-white shadow-lg">
         <div className="absolute inset-y-0 right-0 w-full md:w-[46%] pointer-events-none opacity-20 sm:opacity-25 md:opacity-30">
           <img
-            src="/mascots/Laptop.png"
+            src="/mascots/Laptop.webp"
             alt=""
             className="h-full w-full object-contain object-right-bottom"
             loading="lazy"
@@ -31,7 +31,7 @@ const Hiring = () => {
         aria-labelledby="intern-application-heading"
       >
         <img
-          src="/backgrounds/Hiring.jpg"
+          src="/backgrounds/Hiring.webp"
           alt=""
           className="absolute inset-0 h-full w-full object-cover object-bottom"
           loading="lazy"

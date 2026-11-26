@@ -14,11 +14,11 @@ export default function ThankYou() {
   }, []);
 
   return <div className="thank-you-page">
-    <img className="thank-you-background" src="/backgrounds/Thank%20You.jpg" alt="" fetchPriority="high" />
+    <img className="thank-you-background" src="/backgrounds/Thank%20You.webp" alt="" fetchPriority="high" />
 
     <header className="thank-you-header">
       <Link className="thank-you-brand" to="/" aria-label="Ignite home">
-        <img src="/mascots/Logo.png" width="36" height="36" alt="" />
+        <img src="/mascots/Logo.webp" width="36" height="36" alt="" />
         Ignite
       </Link>
     </header>

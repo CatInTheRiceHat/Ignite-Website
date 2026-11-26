@@ -20,6 +20,11 @@
     {
       "src": "/(about|team|mentors|program|faq|statistics|hiring|records|partnerships|sponsors|confirmation|thank-you)/?",
       "dest": "/index.html"
+    },
+    {
+      "src": "/(.*)",
+      "status": 404,
+      "dest": "/index.html"
     }
   ],
   "functions": {

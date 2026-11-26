@@ -45,9 +45,9 @@ test('partner logos link to their websites and stay still with reduced motion', 
   await partners.scrollIntoViewIfNeeded();
   await expect(page.getByRole('heading', { name: 'Start small. Build together.', exact: true })).toHaveCount(0);
   await expect(partners.getByRole('link', { name: /^Visit Doorstop Education/ })).toHaveAttribute('href', 'https://doorstopeducation.org/');
-  await expect(partners.getByRole('img', { name: 'Sophie logo', exact: true })).toHaveAttribute('src', '/partnerships/Sophie.png');
+  await expect(partners.getByRole('img', { name: 'Sophie logo', exact: true })).toHaveAttribute('src', '/partnerships/Sophie.webp');
   await expect(partners.getByRole('link', { name: /^Visit Sophie/ })).toHaveAttribute('href', 'https://hello-sophie.com/');
-  await expect(partners.getByRole('img', { name: 'Innovate Education logo', exact: true })).toHaveAttribute('src', '/partnerships/Innovate Education.png');
+  await expect(partners.getByRole('img', { name: 'Innovate Education logo', exact: true })).toHaveAttribute('src', '/partnerships/Innovate Education.webp');
   await expect(partners.getByRole('link', { name: /^Visit Innovate Education/ })).toHaveAttribute('href', 'https://innovate-education.org/');
   await expect(partners.getByRole('link')).toHaveCount(3);
   await expect(partners.getByRole('button')).toHaveCount(0);

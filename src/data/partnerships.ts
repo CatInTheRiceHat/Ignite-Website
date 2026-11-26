@@ -16,12 +16,12 @@ export const confirmedPartners: Partner[] = [
   },
   {
     name: 'Sophie',
-    logo: '/partnerships/Sophie.png',
+    logo: '/partnerships/Sophie.webp',
     website: 'https://hello-sophie.com/',
   },
   {
     name: 'Innovate Education',
-    logo: '/partnerships/Innovate Education.png',
+    logo: '/partnerships/Innovate Education.webp',
     website: 'https://innovate-education.org/',
   },
 ];

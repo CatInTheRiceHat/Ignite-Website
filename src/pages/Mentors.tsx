@@ -1,5 +1,5 @@
 import { RedirectArrow } from '../components/ui/redirect-arrow';
-import { BookOpen, GraduationCap, Mail, MapPin } from 'lucide-react';
+import { BookOpen, GraduationCap, MapPin } from 'lucide-react';
 import StaffImage from '../components/ui/staff-image';
 import { teamMembers } from '../data/mentors';
 import { INTERN_FORM_URL } from '../lib/links';
@@ -48,7 +48,7 @@ const Mentors = () => {
       <section className="bg-[var(--primary-orange)] py-20 text-white text-center shadow-lg relative overflow-hidden">
         <div className="absolute inset-y-0 right-0 w-full md:w-[46%] pointer-events-none opacity-20 sm:opacity-25 md:opacity-30">
           <img
-            src="/mascots/Mentors.png"
+            src="/mascots/Mentors.webp"
             alt=""
             className="h-full w-full object-contain object-right-bottom"
             loading="lazy"
@@ -79,14 +79,14 @@ const Mentors = () => {
               <h2 id={id} className="mb-10 text-3xl font-rammetto text-[var(--primary-orange)] md:text-4xl">{title}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 {members.map((member) => (
-                  <article key={member.email ?? member.name}>
+                  <article key={member.name}>
                     <div
                       className={`${
                         isCoFounder(member.role)
                           ? 'border-0 text-white shadow-orange-200/70'
                           : 'border-b-8 border-[var(--primary-orange)] bg-white'
                       } h-full overflow-hidden rounded-3xl p-6 shadow-sm sm:p-8`}
-                      style={isCoFounder(member.role) ? { background: 'linear-gradient(135deg, var(--primary-orange) 0%, #E87324 55%, var(--primary-orange-dark) 100%)' } : undefined}
+                      style={isCoFounder(member.role) ? { background: 'linear-gradient(135deg, var(--primary-orange) 0%, var(--primary-orange-dark) 100%)' } : undefined}
                     >
                       <div className="mb-8 flex items-start gap-4 sm:gap-5">
                         <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-inner flex-shrink-0">
@@ -106,19 +106,6 @@ const Mentors = () => {
                             ))}
                           </p>
                         </div>
-                        {member.email && (
-                          <a
-                            href={`mailto:${member.email}`}
-                            aria-label={`Email ${member.name}`}
-                            className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-[var(--text-charcoal)] ${
-                              isCoFounder(member.role)
-                                ? 'border-white text-white hover:bg-white hover:text-[var(--primary-orange)]'
-                                : 'border-[var(--primary-orange)] text-[var(--primary-orange)] hover:bg-[var(--primary-orange)] hover:text-white'
-                            }`}
-                          >
-                            <Mail className="h-4 w-4" />
-                          </a>
-                        )}
                       </div>
                       <div className="space-y-3">
                         {member.school && (

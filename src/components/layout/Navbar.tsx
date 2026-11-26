@@ -6,7 +6,7 @@ import { ChevronDown, Megaphone, Menu, X } from 'lucide-react';
 import { RECORDS_PAGE } from '../../config/records';
 import { STUDENT_PREENROLLMENT_URL } from '../../lib/links';
 
-const announcementText = '2,500+ students have started enrolling. Join them!';
+const announcementText = '5,000+ students have started enrolling. Join them!';
 const navSections = [
   {
     id: 'program',
@@ -111,7 +111,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 h-20 md:h-24 flex items-center justify-between transition-all duration-300">
         <Link to="/" onClick={closeMenus} aria-label="Ignite home" className={`flex items-center gap-2 rounded-lg text-[1.4rem] md:text-[1.65rem] font-rammetto text-[var(--primary-orange)] group ${focusStyles}`}>
           <img
-            src="/mascots/Logo.png"
+            src="/mascots/Logo.webp"
             alt=""
             className="w-8 h-8 object-contain transition-transform group-hover:scale-105"
           />

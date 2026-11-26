@@ -74,7 +74,7 @@ const Program = () => {
     <div className="bg-[var(--bg-cream)]">
       <section className="bg-[var(--primary-orange)] py-20 text-white text-center shadow-lg relative overflow-hidden">
         <div className="absolute inset-y-0 right-0 w-full md:w-[46%] pointer-events-none opacity-20 sm:opacity-25 md:opacity-30">
-          <img src="/mascots/Graduation.png" alt="" className="h-full w-full object-contain object-right-bottom" loading="lazy" />
+          <img src="/mascots/Graduation.webp" alt="" className="h-full w-full object-contain object-right-bottom" loading="lazy" />
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <h1 className="text-5xl md:text-7xl font-rammetto text-white">The Program</h1>
@@ -96,7 +96,7 @@ const Program = () => {
       </section>
 
       <div className="relative isolate overflow-hidden">
-        <img src="/backgrounds/Program.jpg" alt="" className="absolute inset-0 h-full w-full object-cover object-center" loading="lazy" />
+        <img src="/backgrounds/Program.webp" alt="" className="absolute inset-0 h-full w-full object-cover object-center" loading="lazy" />
         <div className="absolute inset-0 bg-black/35" />
         <section className="px-4 pt-20 pb-8 md:pt-24 md:pb-12 relative z-10" aria-labelledby="formats-heading">
           <div className="max-w-7xl mx-auto">
@@ -128,9 +128,9 @@ const Program = () => {
             <h2 id="learning-heading" className="text-3xl md:text-5xl font-rammetto text-center text-white mb-12 drop-shadow-[0_3px_10px_rgba(0,0,0,0.35)]">Learn by Doing</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
-                { icon: '/mascots/Research.png', title: 'Learn & Practice', desc: 'The independent plans pair weekly lessons with practice and quizzes. Live plans include guided activities and discussion.' },
-                { icon: '/mascots/Mentors.png', title: 'Feedback & Revision', desc: 'The draft formats include feedback so students can improve their applied work. Support details will vary by course.' },
-                { icon: '/mascots/Project.png', title: 'A Final Project', desc: 'Both planned formats build toward a final project that shows how students can use what they learn.' },
+                { icon: '/mascots/Research.webp', title: 'Learn & Practice', desc: 'The independent plans pair weekly lessons with practice and quizzes. Live plans include guided activities and discussion.' },
+                { icon: '/mascots/Mentors.webp', title: 'Feedback & Revision', desc: 'The draft formats include feedback so students can improve their applied work. Support details will vary by course.' },
+                { icon: '/mascots/Project.webp', title: 'A Final Project', desc: 'Both planned formats build toward a final project that shows how students can use what they learn.' },
               ].map((item) => (
                 <div key={item.title} className="bg-[rgba(26,26,46,0.82)] backdrop-blur-md rounded-[2rem] p-8 text-center shadow-lg border border-white/30">
                   <img src={item.icon} alt="" className="h-14 w-14 mx-auto object-contain mb-5" loading="lazy" />

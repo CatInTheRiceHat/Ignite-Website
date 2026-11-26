@@ -1,8 +1,8 @@
 import { expect, test } from '@playwright/test';
 
 const carousels = [
-  { path: '/', first: 'All Students', last: 'Curious Students', image: '**/mascots/Curious.png', count: 3 },
-  { path: '/hiring', first: 'Course Developer', last: 'Miscellaneous Projects', image: '**/mascots/Miscellaneous.png', count: 5 },
+  { path: '/', first: 'All Students', last: 'Curious Students', image: '**/mascots/Curious.webp', count: 3 },
+  { path: '/hiring', first: 'Course Developer', last: 'Miscellaneous Projects', image: '**/mascots/Miscellaneous.webp', count: 5 },
 ];
 
 for (const carousel of carousels) {

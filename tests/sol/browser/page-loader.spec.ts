@@ -24,7 +24,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('waits for the hero, shows the GIF, then unlocks the site', async ({ page }) => {
-  const release = await holdRequest(page, '**/backgrounds/Hero.jpg*');
+  const release = await holdRequest(page, '**/backgrounds/Hero.webp*');
   try {
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     const loader = page.getByRole('status', { name: 'Lighting things up…' });
@@ -60,7 +60,7 @@ test('fast pages skip both the loader and its artwork downloads', async ({ page 
 });
 
 test('offscreen images do not hold up the page', async ({ page }) => {
-  const release = await holdRequest(page, '**/backgrounds/Summer.jpg*');
+  const release = await holdRequest(page, '**/backgrounds/Summer.webp*');
   try {
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     await expect(page.getByRole('link', { name: 'Explore Course Plans', exact: true })).toBeVisible();
@@ -72,7 +72,7 @@ test('offscreen images do not hold up the page', async ({ page }) => {
 test('a failed hero download releases the page', async ({ page }) => {
   let release!: () => void;
   const pending = new Promise<void>(resolve => { release = resolve; });
-  await page.route('**/backgrounds/Hero.jpg*', async route => { await pending; await route.abort(); });
+  await page.route('**/backgrounds/Hero.webp*', async route => { await pending; await route.abort(); });
   try {
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('.page-loader')).toBeVisible();
@@ -84,7 +84,7 @@ test('a failed hero download releases the page', async ({ page }) => {
 
 test('reduced motion keeps a static mascot and avoids downloading the GIF', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  const release = await holdRequest(page, '**/backgrounds/Hero.jpg*');
+  const release = await holdRequest(page, '**/backgrounds/Hero.webp*');
   const gifs: string[] = [];
   page.on('request', request => { if (request.url().endsWith('/Loading.gif')) gifs.push(request.url()); });
   try {
@@ -97,7 +97,7 @@ test('reduced motion keeps a static mascot and avoids downloading the GIF', asyn
 });
 
 test('stalled graphics time out instead of blocking the site indefinitely', async ({ page }) => {
-  const release = await holdRequest(page, '**/backgrounds/Hero.jpg*');
+  const release = await holdRequest(page, '**/backgrounds/Hero.webp*');
   try {
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('.page-loader')).toBeVisible();
@@ -121,7 +121,7 @@ test('waits for a lazy route before checking its graphics', async ({ page }) => 
 test('checks graphics again after navigating to another page', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('.page-loader')).toHaveCount(0);
-  const release = await holdRequest(page, '**/mascots/Puzzled.png');
+  const release = await holdRequest(page, '**/mascots/Puzzled.webp');
   try {
     await page.locator('footer').getByRole('link', { name: 'FAQ', exact: true }).click();
     await expect(page).toHaveURL(/\/faq$/);
@@ -141,7 +141,7 @@ for (const [date, season] of [
 ]) {
   test(`uses ${season} artwork at ${date}, matching Moodle's London time`, async ({ page }) => {
     await page.clock.setFixedTime(new Date(date));
-    const release = await holdRequest(page, '**/backgrounds/Hero.jpg*');
+    const release = await holdRequest(page, '**/backgrounds/Hero.webp*');
     try {
       await page.goto('/', { waitUntil: 'domcontentloaded' });
       await expect(page.locator('.page-loader__background')).toHaveAttribute('data-season', season);

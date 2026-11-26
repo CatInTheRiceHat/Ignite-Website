@@ -20,7 +20,7 @@ const Footer = () => {
     <footer className="relative overflow-hidden bg-[var(--primary-orange)] text-white shadow-[0_-16px_40px_rgba(240,123,42,0.12)]">
       <div className="absolute inset-y-0 right-0 w-full md:w-[48%] pointer-events-none opacity-15 sm:opacity-20 md:opacity-25">
         <img
-          src="/mascots/Celebrate.png"
+          src="/mascots/Celebrate.webp"
           alt=""
           className="h-full w-full object-contain object-right-bottom"
           loading="lazy"
@@ -31,7 +31,7 @@ const Footer = () => {
         <div className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
           <div className="max-w-2xl">
             <Link to="/" className="inline-flex items-center gap-3 text-3xl md:text-4xl font-rammetto text-white">
-              <img src="/mascots/Logo.png" alt="Ignite" className="w-12 h-12 object-contain drop-shadow-md" />
+              <img src="/mascots/Logo.webp" alt="Ignite" className="w-12 h-12 object-contain drop-shadow-md" />
               Ignite
             </Link>
             <p className="mt-5 text-xl md:text-2xl font-semibold leading-relaxed text-white/90">
@@ -49,7 +49,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 border-2 border-white bg-transparent px-8 py-4 rounded-full text-white hover:bg-white hover:text-[var(--primary-orange)] active:scale-95 transition-all font-sans font-bold text-button"
               >
-                Learning Hub (Moodle Sign-in)
+                Learning Hub
                 <RedirectArrow />
               </a>
               <a

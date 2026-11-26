@@ -31,21 +31,21 @@ const studentWork = [
     course: 'Project / Nonprofit Building',
     title: 'Cleanse Nonprofit',
     description: 'A student project pitch exploring the dangers of misinformation.',
-    image: '/assets/StudentProject.png',
+    image: '/assets/StudentProject.webp',
     alt: 'Cover slide for a student Cleanse Nonprofit project pitch about misinformation',
   },
   {
     course: 'Marketing & Digital Design',
     title: 'Nice Tea campaign',
     description: 'A student-created promotional design featuring products, store details, and a special offer.',
-    image: '/assets/StudentDesign.png',
+    image: '/assets/StudentDesign.webp',
     alt: 'Student promotional design for Nice Tea with drinks, pastries, store hours, and an offer',
   },
   {
     course: 'Science Research',
     title: 'Plant light-absorption study',
     description: 'A student research results page comparing basil growth under red, green, blue, and white light.',
-    image: '/assets/StudentResearch.png',
+    image: '/assets/StudentResearch.webp',
     alt: 'Student science research results comparing basil plant growth under red, green, blue, and white light',
   },
 ];
@@ -85,7 +85,7 @@ const Records = () => {
       <section className="relative overflow-hidden bg-[var(--primary-orange)] py-20 text-white shadow-lg">
         <div className="pointer-events-none absolute inset-y-0 right-0 w-full opacity-20 sm:opacity-25 md:w-[46%] md:opacity-30">
           <img
-            src="/mascots/Trophy.png"
+            src="/mascots/Trophy.webp"
             alt=""
             className="h-full w-full object-contain object-right-bottom"
             loading="eager"

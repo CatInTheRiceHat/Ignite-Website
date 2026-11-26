@@ -2,7 +2,7 @@ import type { Mentor } from './mentors.js';
 
 export interface Intern extends Mentor { graduatingClass: string; }
 
-export const DEFAULT_STAFF_IMAGE = "/staff/Default.png";
+export const DEFAULT_STAFF_IMAGE = "/staff/Default.webp";
 
 export const interns: Intern[] = [
   {
@@ -13,8 +13,7 @@ export const interns: Intern[] = [
     country: "Vietnam",
     educationLevel: "High School",
     graduatingClass: "Class of 2027",
-    email: "tungkhue1999@gmail.com",
-    image: "/staff/dang_tung.png",
+    image: "/staff/dang_tung.webp",
   },
   {
     initial: "R",
@@ -24,8 +23,7 @@ export const interns: Intern[] = [
     country: "Nigeria",
     educationLevel: "University",
     graduatingClass: "Class of 2027",
-    email: "damilolaolanrewaju111@gmail.com",
-    image: "/staff/ridwanullah_ashiru.png",
+    image: "/staff/ridwanullah_ashiru.webp",
   },
   {
     initial: "M",
@@ -35,8 +33,7 @@ export const interns: Intern[] = [
     country: "United States",
     educationLevel: "High School",
     graduatingClass: "Class of 2027",
-    email: "mariomeraja@gmail.com",
-    image: "/staff/mario_meraja.png",
+    image: "/staff/mario_meraja.webp",
   },
   {
     initial: "H",
@@ -46,7 +43,6 @@ export const interns: Intern[] = [
     country: "United States",
     educationLevel: "High School",
     graduatingClass: "Class of 2029",
-    email: "ihaila@icloud.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -57,7 +53,6 @@ export const interns: Intern[] = [
     country: "United States",
     educationLevel: "High School",
     graduatingClass: "Class of 2030",
-    email: "gary.he.wm@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -68,8 +63,7 @@ export const interns: Intern[] = [
     country: "United States",
     educationLevel: "High School",
     graduatingClass: "Class of 2028",
-    email: "aanand.neil@gmail.com",
-    image: "/staff/neil_anand.png",
+    image: "/staff/neil_anand.webp",
   },
   {
     initial: "S",
@@ -79,7 +73,6 @@ export const interns: Intern[] = [
     country: "United States",
     educationLevel: "High School",
     graduatingClass: "Class of 2028",
-    email: "zixuan.wang.shawn@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -87,11 +80,10 @@ export const interns: Intern[] = [
     name: "Abhi Patel",
     role: "Course Developer",
     school: "John Hersey High School",
-    email: "abhispatel27@gmail.com",
     country: "United States",
     educationLevel: "High School",
     graduatingClass: "Class of 2028",
-    image: "/staff/abhi_patel.png",
+    image: "/staff/abhi_patel.webp",
   },
   {
     initial: "I",
@@ -101,8 +93,7 @@ export const interns: Intern[] = [
     country: "Nigeria",
     educationLevel: "University",
     graduatingClass: "Class of 2027",
-    email: "babatundelight97@gmail.com",
-    image: "/staff/babatunde_imoleayo.png",
+    image: "/staff/babatunde_imoleayo.webp",
   },
   {
     initial: "P",
@@ -112,8 +103,7 @@ export const interns: Intern[] = [
     country: "United States",
     educationLevel: "High School",
     graduatingClass: "Class of 2029",
-    email: "pragyamahawar6@gmail.com",
-    image: "/staff/pragya_mahawar.png",
+    image: "/staff/pragya_mahawar.webp",
   },
   {
     initial: "S",
@@ -123,8 +113,7 @@ export const interns: Intern[] = [
     country: "United States",
     educationLevel: "High School",
     graduatingClass: "Class of 2028",
-    email: "sobanjee12@gmail.com",
-    image: "/staff/soraya_banerjee.png",
+    image: "/staff/soraya_banerjee.webp",
   },
   {
     initial: "K",
@@ -134,7 +123,6 @@ export const interns: Intern[] = [
     country: "United States",
     educationLevel: "High School",
     graduatingClass: "Class of 2030",
-    email: "kireeti498@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -145,8 +133,7 @@ export const interns: Intern[] = [
     country: "United States",
     educationLevel: "High School",
     graduatingClass: "Class of 2028",
-    email: "anisachandra765@gmail.com",
-    image: "/staff/anisa_doshichandra.png",
+    image: "/staff/anisa_doshichandra.webp",
   },
   {
     initial: "J",
@@ -154,8 +141,7 @@ export const interns: Intern[] = [
     role: "Course Developer",
     school: "Woodlands College Park High School",
     graduatingClass: "Class of 2029",
-    email: "hujake2020@gmail.com",
-    image: "/staff/jake_hu.png",
+    image: "/staff/jake_hu.webp",
   },
   {
     initial: "J",
@@ -163,7 +149,6 @@ export const interns: Intern[] = [
     role: "Course Developer",
     school: "Santa Teresa High School",
     graduatingClass: "Class of 2028",
-    email: "imjoshuahwang@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -172,7 +157,6 @@ export const interns: Intern[] = [
     role: "Marketing Ambassador",
     school: "Saratoga High School",
     graduatingClass: "Class of 2028",
-    email: "daisy.j.ispas@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -181,7 +165,6 @@ export const interns: Intern[] = [
     role: "Course Developer",
     school: "NASTP Institute of Information and Technology",
     graduatingClass: "Class of 2029",
-    email: "talha.ahmad.farooq@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -190,7 +173,6 @@ export const interns: Intern[] = [
     role: "Course Developer",
     school: "Manipal Academy of Higher Education Dubai",
     graduatingClass: "Class of 2024",
-    email: "Faizfs.data@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -199,7 +181,6 @@ export const interns: Intern[] = [
     role: "Course Developer",
     school: "Saratoga High School",
     graduatingClass: "Class of 2028",
-    email: "daniel.px.yeh@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -208,7 +189,6 @@ export const interns: Intern[] = [
     role: "Course Developer",
     school: "University of California, Santa Cruz",
     graduatingClass: "Class of 2030",
-    email: "michellethomatis@icloud.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -217,8 +197,7 @@ export const interns: Intern[] = [
     role: "Course Developer",
     school: "Saratoga High School",
     graduatingClass: "Class of 2028",
-    email: "yuenchingshao@gmail.com",
-    image: "/staff/yuenching_shao.png",
+    image: "/staff/yuenching_shao.webp",
   },
   {
     initial: "B",
@@ -226,7 +205,6 @@ export const interns: Intern[] = [
     role: "Course Developer",
     school: "Federal University of Agriculture Abeokuta (FUNAAB)",
     graduatingClass: "Class of 2029",
-    email: "benjaminoluyemi1@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -235,7 +213,6 @@ export const interns: Intern[] = [
     role: "Marketing Ambassador, Course Developer",
     school: "Western University",
     graduatingClass: "Class of 2025",
-    email: "liukevin907@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -244,7 +221,6 @@ export const interns: Intern[] = [
     role: "Course Developer",
     school: "J Em International WisdomEmpire Learning & Development Center",
     graduatingClass: "Class of 2027",
-    email: "iitslihruh@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -253,7 +229,6 @@ export const interns: Intern[] = [
     role: "Course Developer",
     school: "University of the Pacific",
     graduatingClass: "Class of 2026",
-    email: "patildarshu55@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -262,8 +237,7 @@ export const interns: Intern[] = [
     role: "Course Developer",
     school: "North Creek High School",
     graduatingClass: "Class of 2028",
-    email: "ronit_agarwal@outlook.com",
-    image: "/staff/ronit_agarwal.png",
+    image: "/staff/ronit_agarwal.webp",
   },
   {
     initial: "E",
@@ -271,7 +245,6 @@ export const interns: Intern[] = [
     role: "Course Developer",
     school: "Heritage High School",
     graduatingClass: "Class of 2027",
-    email: "elliekwon09@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -280,7 +253,6 @@ export const interns: Intern[] = [
     role: "Course Developer",
     school: "San Luis High School",
     graduatingClass: "Class of 2028",
-    email: "gccornejo2020@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -289,7 +261,6 @@ export const interns: Intern[] = [
     role: "Marketing Ambassador",
     school: "Stockdale High School",
     graduatingClass: "Class of 2027",
-    email: "aryabpandya@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -298,7 +269,6 @@ export const interns: Intern[] = [
     role: "Marketing Ambassador",
     school: "Teso Parents' Nursery and Primary School",
     graduatingClass: "Class of 2027",
-    email: "tesoparents@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -307,7 +277,6 @@ export const interns: Intern[] = [
     role: "Course Developer",
     school: "Unique Public High School",
     graduatingClass: "Class of 2030",
-    email: "laebakhan71@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -316,7 +285,6 @@ export const interns: Intern[] = [
     role: "Course Developer",
     school: "Panther Creek High School",
     graduatingClass: "Class of 2029",
-    email: "shivmanas.kamarsu@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -325,7 +293,6 @@ export const interns: Intern[] = [
     role: "Course Developer",
     school: "Johns Hopkins University",
     graduatingClass: "Class of 2030",
-    email: "janicejiminkim@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -380,7 +347,6 @@ export const interns: Intern[] = [
     school: "New Utrecht High School",
     educationLevel: "High School",
     graduatingClass: "Class of 2027",
-    email: "rgmeza1113@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -390,7 +356,6 @@ export const interns: Intern[] = [
     school: "University of Iowa",
     educationLevel: "University",
     graduatingClass: "Class of 2030",
-    email: "daniyasshivapur@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
   {
@@ -400,8 +365,7 @@ export const interns: Intern[] = [
     school: "The Bronx High School of Science",
     educationLevel: "High School",
     graduatingClass: "Class of 2029",
-    email: "emilycstarz@gmail.com",
-    image: "/staff/emily_chen.png",
+    image: "/staff/emily_chen.webp",
   },
   {
     initial: "K",
@@ -410,7 +374,6 @@ export const interns: Intern[] = [
     school: "Bellevue Digital Discovery (Running Start at Bellevue College)",
     educationLevel: "High School",
     graduatingClass: "Class of 2028",
-    email: "Khadeejasathak11@gmail.com",
     image: DEFAULT_STAFF_IMAGE,
   },
 ];
