@@ -497,3 +497,4 @@ $string['catalog_count'] = '{$a} courses';
 $string['catalog_enrol'] = 'Enroll now';
 $string['catalog_continue'] = 'Continue';
 $string['catalog_view'] = 'View course';
+$string['catalog_title'] = 'Courses';

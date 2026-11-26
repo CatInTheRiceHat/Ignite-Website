@@ -104,7 +104,7 @@ final class course_catalog {
         $json = json_encode(['facts' => self::facts(), 'audiences' => self::AUDIENCES, 'topics' => self::TOPICS,
             'enrolurl' => (new \moodle_url('/local/ignite/catalog_enrol.php'))->out(false),
             'sesskey' => sesskey(),
-            'text' => ['audience' => get_string('catalog_audience', 'local_ignite'),
+            'text' => ['title' => get_string('catalog_title', 'local_ignite'), 'audience' => get_string('catalog_audience', 'local_ignite'),
                 'topic' => get_string('catalog_topic', 'local_ignite'),
                 'all' => get_string('catalog_all', 'local_ignite'),
                 'weeks' => get_string('catalog_weeks', 'local_ignite'),

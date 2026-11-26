@@ -4,6 +4,9 @@
     var node = document.getElementById('ignite-catalog-data');
     if (!node) { return; }
     var data = JSON.parse(node.textContent);
+    // Moodle titles this page with the site name; the catalog is simply "Courses".
+    var heading = document.querySelector('.page-header-headings h1');
+    if (heading && data.text.title) { heading.textContent = data.text.title; }
     var boxes = Array.prototype.slice.call(document.querySelectorAll('.coursebox[data-courseid]'));
     if (!boxes.length) { return; }
     var state = {audience: '', topic: ''};
