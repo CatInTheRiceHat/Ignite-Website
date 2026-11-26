@@ -1,0 +1,173 @@
+/* Fuse home: the monthly rope and bombs at the top of a learner's Home. */
+.fuse-home, .fuse-home *, .fuse-home *::before, .fuse-home *::after { box-sizing: border-box; }
+
+.fuse-home {
+    --night: #0c1225;
+    --cream: #fff8f0;
+    --orange: #f07b2a;
+    --rope: #d9b98a;
+    --haze: #cfc8d8;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: clamp(1.25rem, 3vw, 2.25rem);
+    border-radius: 1.5rem;
+    /* A warm glow where the rope starts, fading into the night. */
+    background:
+        radial-gradient(46rem 20rem at 0% 48%, #f07b2a33, transparent 62%),
+        linear-gradient(160deg, #16204a, var(--night) 62%);
+    color: var(--cream);
+    font: 400 1.0625rem/1.55 Nunito, system-ui, sans-serif;
+    container: fuse-home / inline-size;
+}
+/* A few fixed stars, so the band reads as the same night as the Campfire page. */
+.fuse-home::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(2px 2px at 52% 7%, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 61% 21%, #fffc, transparent),
+        radial-gradient(2px 2px at 69% 5%, #fffc, transparent),
+        radial-gradient(1.5px 1.5px at 76% 27%, #fff, transparent),
+        radial-gradient(2px 2px at 84% 30%, #fffa, transparent),
+        radial-gradient(1.5px 1.5px at 96% 24%, #fffc, transparent),
+        radial-gradient(1.5px 1.5px at 57% 31%, #fff9, transparent),
+        radial-gradient(2px 2px at 90% 3%, #fff8, transparent),
+        radial-gradient(1.5px 1.5px at 72% 16%, #fff9, transparent),
+        radial-gradient(1.5px 1.5px at 98% 9%, #fffc, transparent);
+}
+.fuse-home p { margin: 0; }
+.fuse-home a:focus-visible { outline: 3px solid var(--cream); outline-offset: 3px; }
+
+/* Heading on the left; the streak and the embers saved so far on the right. */
+.fuse-home__head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 1rem 2rem; }
+.fuse-home__eyebrow { color: #f7c9a1; font-size: .8125rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.fuse-home h2 {
+    margin: .25rem 0 .35rem;
+    color: var(--cream);
+    font: 400 clamp(1.75rem, 5cqi, 2.75rem)/1.15 "Rammetto One", Poppins, system-ui, sans-serif;
+}
+.fuse-home__sub { max-width: 34rem; color: var(--haze); }
+.fuse-home__chips { display: flex; flex-wrap: wrap; gap: .75rem; margin: 0; padding: 0; list-style: none; }
+.fuse-chip {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0 .6rem;
+    min-height: 3.5rem;
+    padding: .55rem .9rem;
+    border: 1px solid #ffffff2e;
+    border-radius: 1rem;
+    background: #ffffff14;
+    color: var(--cream);
+    text-decoration: none;
+}
+.fuse-chip svg { grid-row: span 2; width: 1.75rem; height: 1.75rem; }
+.fuse-chip strong { font: 700 1.125rem/1.2 Poppins, system-ui, sans-serif; }
+.fuse-chip span { color: var(--haze); font-size: .8125rem; line-height: 1.3; }
+a.fuse-chip:hover { background: #ffffff26; }
+a.fuse-chip span { text-decoration: underline; text-underline-offset: .2em; }
+
+/* The fuse itself. Its shapes are drawn in the page's script; these are their materials. */
+.fuse { position: relative; margin-top: clamp(.75rem, 2vw, 1.5rem); }
+.fuse__svg { display: block; width: 100%; height: auto; overflow: visible; }
+.fuse__rope, .fuse__sheen, .fuse__ash, .fuse__smoulder { fill: none; stroke-width: 11; stroke-linecap: round; }
+.fuse__rope { stroke: var(--rope); }
+/* A light edge along the top of the unburnt rope, so it reads as one smooth cord. */
+.fuse__sheen { stroke: #f3e2c2; stroke-width: 3; transform: translateY(-2.5px); }
+.fuse__ash { stroke: #4b4556; }
+/* The short glowing stretch just behind the flame. */
+.fuse__smoulder { stroke: #ff8a2a; filter: drop-shadow(0 0 6px #ff8a2a); }
+.fuse__body circle { fill: #1c1930; stroke: #575170; stroke-width: 2.5; }
+.fuse__shine { fill: #fff; opacity: .4; }
+.fuse__cap { fill: #575170; }
+.fuse__wick { fill: none; stroke: var(--rope); stroke-width: 3; stroke-linecap: round; }
+.fuse__spark-tip { fill: #ffd36b; }
+/* The embers a bomb drops, shown as a small flame and a number. */
+.fuse__label text { fill: var(--cream); font: 700 16px Poppins, system-ui, sans-serif; }
+.fuse__bomb.is-exploded .fuse__label text { fill: #ffd36b; }
+.fuse__coin { fill: #ff8a2a; }
+.fuse__coin-core { fill: #ffd36b; }
+
+/* An exploded bomb leaves that grade of the month's badge in its place on the rope. */
+.fuse__medal, .fuse__bomb.is-exploded .fuse__body { display: none; }
+.fuse__bomb.is-exploded .fuse__medal { display: inline; }
+.fuse__burst { fill: var(--orange); opacity: .45; }
+.fuse__star { fill: #fff8f0; opacity: .85; }
+.fuse__medal circle { stroke-width: 2.5; }
+.fuse__medal[data-grade="bronze"] circle { fill: #b9773f; stroke: #e6ad7c; }
+.fuse__medal[data-grade="silver"] circle { fill: #9aa5b5; stroke: #e3e9f1; }
+.fuse__medal[data-grade="gold"] circle { fill: #e0a526; stroke: #ffe08a; }
+
+.fuse__flame.is-out { display: none; }
+.fuse__glow { fill: var(--orange); opacity: .45; filter: blur(9px); }
+.fuse__flame-shape { fill: #ff8a2a; transform-box: fill-box; transform-origin: 50% 100%; animation: fuse-flicker .45s ease-in-out infinite alternate; }
+.fuse__flame-core { fill: #ffd36b; animation-duration: .3s; }
+.fuse__spark { fill: #ffd36b; animation: fuse-spark 1.1s ease-out infinite; }
+.fuse__flash { fill: #ffe9b0; transform-box: fill-box; transform-origin: center; animation: fuse-flash .55s ease-out forwards; }
+.fuse__shard { fill: #ffb347; animation: fuse-shard .85s cubic-bezier(.1, .7, .3, 1) forwards; }
+.fuse__bomb.is-fresh .fuse__medal { transform-box: fill-box; transform-origin: center; animation: fuse-pop .5s cubic-bezier(.3, 1.6, .5, 1) both; }
+.fuse-home.is-shaking .fuse__svg { animation: fuse-shake .4s linear; }
+@keyframes fuse-flicker { from { transform: scale(1) rotate(-4deg); } to { transform: scale(.9, 1.14) rotate(4deg); } }
+@keyframes fuse-spark { from { opacity: 1; transform: translate(0, -6px); } to { opacity: 0; transform: translate(var(--dx), -46px); } }
+@keyframes fuse-flash { from { opacity: .95; transform: scale(.4); } to { opacity: 0; transform: scale(3.6); } }
+@keyframes fuse-shard { to { opacity: 0; transform: translate(var(--dx), var(--dy)); } }
+@keyframes fuse-pop { from { transform: scale(.2); } }
+@keyframes fuse-shake { 20% { transform: translate(-5px, 3px); } 40% { transform: translate(5px, -3px); } 60% { transform: translate(-3px, -2px); } 80% { transform: translate(3px, 2px); } }
+
+.fuse__summary { color: var(--haze); font-size: .9375rem; font-weight: 700; }
+/* What the latest bomb gave. Empty until a bomb goes off. */
+.fuse__toast { min-height: 1.6em; margin-top: .25rem !important; color: #ffd36b; font-weight: 700; }
+
+.fuse-home__foot { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.25rem; margin-top: .5rem; }
+.fuse-home a.fuse-home__go {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    min-height: 48px;
+    padding: .7rem 1.4rem;
+    border-radius: 2rem;
+    background: var(--orange);
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.4;
+    text-decoration: none;
+}
+.fuse-home a.fuse-home__go:hover { background: #d46a20; }
+.fuse-home__go svg { width: 1.25rem; height: 1.25rem; }
+.fuse-home__next { color: var(--cream); }
+.fuse-home__legend { max-width: 46rem; margin-top: 1rem !important; color: var(--haze); font-size: .9375rem; }
+
+/* Someone with nothing left to earn has no fuse to show. */
+.fuse-home.is-spent :is(.fuse, .fuse-home__legend) { display: none; }
+
+/* One badge a month, in the best grade reached; months to come are empty slots. */
+.fuse-shelf { margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid #ffffff24; }
+.fuse-shelf h3 { margin: 0 0 .75rem; color: var(--cream); font: 700 1rem/1.3 Poppins, system-ui, sans-serif; }
+.fuse-shelf ul { display: flex; flex-wrap: wrap; gap: 1rem; margin: 0; padding: 0; list-style: none; }
+.fuse-medal { display: grid; justify-items: center; gap: .3rem; min-width: 4rem; color: var(--haze); font-size: .8125rem; text-align: center; white-space: nowrap; }
+.fuse-medal__disc {
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border: 2px dashed #ffffff4d;
+    border-radius: 50%;
+    color: var(--haze);
+    font: 700 .875rem/1 Poppins, system-ui, sans-serif;
+}
+.fuse-medal[data-grade="bronze"] .fuse-medal__disc { border: 3px solid #e6ad7c; background: #b9773f; color: #1a1a2e; }
+.fuse-medal[data-grade="silver"] .fuse-medal__disc { border: 3px solid #e3e9f1; background: #9aa5b5; color: #1a1a2e; }
+.fuse-medal[data-grade="gold"] .fuse-medal__disc { border: 3px solid #ffe08a; background: #e0a526; color: #1a1a2e; }
+.fuse-medal[data-grade="current"] .fuse-medal__disc { border: 2px solid var(--orange); color: var(--cream); }
+
+@container fuse-home (max-width: 34rem) {
+    .fuse-home__chips { width: 100%; }
+    .fuse-chip { flex: 1 1 9rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .fuse-home *, .fuse-home *::before, .fuse-home *::after { animation: none !important; transition: none !important; }
+}

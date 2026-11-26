@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fuse home preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Poppins:wght@600;700;800&family=Rammetto+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../local/ignite/fuse-home.css">
+    <link rel="stylesheet" href="preview.css">
+</head>
+<body>
+    <nav class="preview-nav" aria-label="Site">Ignite <a href="index.html" aria-current="page">Home</a> <span>Courses</span> <span>Campfire</span> <a href="../shop/index.html">Shop</a></nav>
+
+    <main class="preview-page">
+        <section class="fuse-home" aria-labelledby="fuse-title">
+            <div class="fuse-home__head">
+                <div>
+                    <p class="fuse-home__eyebrow" data-text="eyebrow"></p>
+                    <h2 id="fuse-title" data-text="title"></h2>
+                    <p class="fuse-home__sub" data-text="sub"></p>
+                </div>
+                <ul class="fuse-home__chips">
+                    <li class="fuse-chip">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#ffd36b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4M9 15l2 2 4-4"/></svg>
+                        <strong data-text="streak"></strong>
+                        <span data-text="streaknote"></span>
+                    </li>
+                    <li>
+                        <a class="fuse-chip" href="../shop/index.html">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#ff8a2a" d="M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 1.5-4.5 2-7 1.5 1 2 2.5 2 4 1.5-2 2-5 2-9Z"/><path fill="#ffd36b" d="M12 12c.7 2 3 3 3 5.5a3 3 0 0 1-6 0c0-1.5.8-2.3 1-3.5.8.5 1 1.2 1 2 .7-1 1-2.5 1-4Z"/></svg>
+                            <strong data-text="embers"></strong>
+                            <span>Spend them in the Shop</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="fuse">
+                <svg class="fuse__svg" role="img" aria-labelledby="fuse-summary"></svg>
+                <p id="fuse-summary" class="fuse__summary" data-text="summary"></p>
+                <p class="fuse__toast" role="status" data-text="toast"></p>
+            </div>
+
+            <div class="fuse-home__foot">
+                <a class="fuse-home__go" href="#next"><span data-text="go"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+                <p class="fuse-home__next" data-text="next"></p>
+            </div>
+            <p class="fuse-home__legend" data-text="legend"></p>
+
+            <div class="fuse-shelf">
+                <h3>Your bomb badges</h3>
+                <ul></ul>
+            </div>
+        </section>
+
+        <div class="preview-block">Timeline <span>Moodle’s own block, unchanged</span></div>
+        <div class="preview-block">Course overview <span>Moodle’s own block, unchanged</span></div>
+    </main>
+
+    <form class="preview-controls" aria-label="Preview controls">
+        <strong>Preview only</strong>
+        <label>Monthly goal (set by staff) <select name="fuse"></select></label>
+        <label>Burned <input name="passed" type="range" min="0" step="1"> <output name="shown"></output></label>
+        <button type="button" name="pass">Earn 20 XP</button>
+        <label>Month <select name="history">
+            <option value="first">First month</option>
+            <option value="later">A few months in</option>
+        </select></label>
+        <label>Team <select name="team">
+            <option value="forgelings">Forgelings</option>
+            <option value="candlelings">Candlelings</option>
+            <option value="lanternlings">Lanternlings</option>
+        </select></label>
+        <label><input name="spent" type="checkbox"> Nothing left to earn</label>
+    </form>
+
+    <template id="medal">
+        <li class="fuse-medal"><span class="fuse-medal__disc"></span><span class="fuse-medal__grade"></span></li>
+    </template>
+
+    <script src="preview.js"></script>
+</body>
+</html>

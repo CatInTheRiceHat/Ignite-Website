@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shop preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Poppins:wght@600;700;800&family=Rammetto+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../local/ignite/shop.css">
+    <link rel="stylesheet" href="../fuse-home/preview.css">
+</head>
+<body class="preview-shop">
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+        <symbol id="ember" viewBox="0 0 24 24">
+            <path fill="#f07b2a" d="M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 1.5-4.5 2-7 1.5 1 2 2.5 2 4 1.5-2 2-5 2-9Z"/>
+            <path fill="#ffd36b" d="M12 12c.7 2 3 3 3 5.5a3 3 0 0 1-6 0c0-1.5.8-2.3 1-3.5.8.5 1 1.2 1 2 .7-1 1-2.5 1-4Z"/>
+        </symbol>
+    </svg>
+
+    <nav class="preview-nav" aria-label="Site">Ignite <a href="../fuse-home/index.html">Home</a> <span>Courses</span> <span>Campfire</span> <a href="index.html" aria-current="page">Shop</a></nav>
+
+    <main class="ignite-shop">
+        <div class="ignite-shop__inner">
+            <header class="ignite-shop__head">
+                <div>
+                    <h1>Shop</h1>
+                    <p class="ignite-shop__lead">Bombs drop Embers. Save them up, then cash in for everything at once so it all arrives in one package.</p>
+                </div>
+                <p class="ignite-shop__balance">
+                    <strong><svg class="ignite-shop__ember" aria-hidden="true"><use href="#ember"/></svg><span data-text="balance"></span></strong>
+                    <span data-text="saved"></span>
+                </p>
+            </header>
+
+            <div class="ignite-shop__tiers"></div>
+        </div>
+    </main>
+
+    <form class="preview-controls" aria-label="Preview controls">
+        <strong>Preview only</strong>
+        <label>Embers saved <input name="embers" type="range" min="0" max="60" step="1"> <output name="shown"></output></label>
+    </form>
+
+    <template id="tier">
+        <section class="ignite-shop__tier">
+            <header class="ignite-shop__tier-head">
+                <h2></h2>
+                <p class="ignite-shop__price"><svg class="ignite-shop__ember" aria-hidden="true"><use href="#ember"/></svg><span></span></p>
+                <p class="ignite-shop__togo"><progress></progress><span></span></p>
+            </header>
+            <ul class="ignite-shop__prizes"></ul>
+        </section>
+    </template>
+    <template id="prize">
+        <li class="ignite-shop__prize">
+            <img class="ignite-shop__photo" alt="" width="800" height="800" loading="lazy">
+            <div class="ignite-shop__body"><h3></h3><p></p></div>
+        </li>
+    </template>
+
+    <script src="shop.js"></script>
+</body>
+</html>

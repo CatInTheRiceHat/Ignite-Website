@@ -1,0 +1,89 @@
+/* Shop: what a learner's saved embers can be cashed in for. */
+/* The page stops dead at its ends rather than bouncing, and anything a browser still shows beyond the foot is floor-coloured, not white. */
+html:has(.ignite-shop) { overscroll-behavior: none; background-color: #e2c6ad; }
+body:has(.ignite-shop) { overscroll-behavior: none; }
+.ignite-shop, .ignite-shop *, .ignite-shop *::before, .ignite-shop *::after { box-sizing: border-box; }
+.ignite-shop {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    /* Edge to edge and at least a full window tall. */
+    min-height: 100vh;
+    padding: clamp(1.25rem, 4vw, 3rem) clamp(1rem, 4vw, 3rem) 0;
+    /* The plain colour of the picture's top edge. It carries on upward for as many prizes as there are. */
+    background: #fdf0d5;
+    color: #1a1a2e;
+    font: 400 1.0625rem/1.55 Nunito, system-ui, sans-serif;
+}
+/* The words and prizes keep to a readable column while the background runs the full width. */
+.ignite-shop__inner { max-width: 72rem; margin-inline: auto; container: ignite-shop / inline-size; }
+/* Sol's shopping trip, pinned to the foot of the section. Its top fades out, so it meets the plain colour without an edge. */
+.ignite-shop::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: auto 0 0;
+    aspect-ratio: 2752 / 1536;
+    background: url("pix/shop/background.jpg") center / cover no-repeat;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%);
+    mask-image: linear-gradient(to bottom, transparent, #000 18%);
+}
+/* Space below the prizes for the scene, plus about half of the picture's plain top as open air above Sol. */
+.ignite-shop::after { content: ""; display: block; aspect-ratio: 2752 / 1290; }
+/* On a phone the full-width picture would be tiny, so it is shown larger and cropped to Sol and the trolley. */
+@media (max-width: 40rem) {
+    .ignite-shop::before { aspect-ratio: 4 / 3; background-position: 30% bottom; }
+    .ignite-shop::after { aspect-ratio: 8 / 5; }
+}
+.ignite-shop p { margin: 0; }
+.ignite-shop :is(h1, h2, h3) { margin: 0; color: #1a1a2e; }
+.ignite-shop h1 { font: 400 clamp(2.25rem, 7cqi, 3.25rem)/1.1 "Rammetto One", Poppins, system-ui, sans-serif; }
+.ignite-shop h2 { margin: 2rem 0 .75rem; font: 700 1.25rem/1.3 Poppins, system-ui, sans-serif; }
+.ignite-shop h3 { font: 700 1.125rem/1.3 Poppins, system-ui, sans-serif; }
+/* The ember icon, wherever a number of embers is shown. */
+.ignite-shop__ember { flex: none; width: 1.1em; height: 1.1em; vertical-align: -.15em; }
+
+/* Title on the left; the learner's balance on a piece of the Home page's night sky on the right. */
+.ignite-shop__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem; }
+.ignite-shop__lead { max-width: 34rem; margin-top: .5rem !important; color: #4a4a5e; }
+.ignite-shop__balance {
+    display: grid;
+    gap: .1rem;
+    /* No minimum width: the card is as wide as its number and label, so a short balance leaves no empty space. */
+    padding: 1rem 1.5rem;
+    border-radius: 1.25rem;
+    background: radial-gradient(14rem 8rem at 0% 50%, #f07b2a40, transparent 70%), linear-gradient(160deg, #16204a, #0c1225 70%);
+    color: #cfc8d8;
+    font-size: .9375rem;
+}
+.ignite-shop__balance strong { display: flex; align-items: center; gap: .5rem; color: #fff8f0; font: 700 2.5rem/1.1 Poppins, system-ui, sans-serif; font-variant-numeric: tabular-nums; }
+
+/* A tier is a name, what everything in it costs, how close the learner is, and its prizes. */
+.ignite-shop__tier { margin-top: 2.5rem; }
+.ignite-shop__tier-head { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; margin-bottom: 1rem; }
+.ignite-shop .ignite-shop__tier-head h2 { margin: 0; font: 400 1.75rem/1.2 "Rammetto One", Poppins, system-ui, sans-serif; }
+.ignite-shop__price { display: flex; align-items: center; gap: .3rem; padding: .3rem .9rem; border-radius: 2rem; background: #1a1a2e; color: #fff8f0; font-weight: 700; }
+.ignite-shop__togo { display: flex; align-items: center; gap: .6rem; margin-left: auto !important; color: #4a4a5e; font-size: .9375rem; font-weight: 700; }
+/* The bar is drawn by hand so every browser shows the style guide's orange on a white track. */
+.ignite-shop__togo progress { appearance: none; overflow: hidden; width: 8rem; height: .75rem; border: 0; border-radius: 1rem; background: #fff; color: #f07b2a; }
+.ignite-shop__togo progress::-webkit-progress-bar { background: #fff; }
+.ignite-shop__togo progress::-webkit-progress-value { border-radius: 1rem; background: #f07b2a; }
+.ignite-shop__togo progress::-moz-progress-bar { border-radius: 1rem; background: #f07b2a; }
+
+.ignite-shop__prizes { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1.25rem; margin: 0; padding: 0; list-style: none; }
+.ignite-shop__prize { display: grid; grid-template-rows: auto 1fr; overflow: hidden; border: 1px solid #e7d3b6; border-radius: 1.25rem; background: #fff; box-shadow: 0 3px 14px #1a1a2e12; }
+.ignite-shop__photo { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; background: #e8732a; }
+.ignite-shop__body { display: grid; align-content: start; gap: .35rem; padding: 1rem 1.25rem 1.25rem; }
+.ignite-shop__body p { color: #4a4a5e; font-size: .9375rem; }
+/* On a phone the progress line gets a row to itself under the tier's name. */
+@container ignite-shop (max-width: 34rem) {
+    .ignite-shop__togo { width: 100%; margin-left: 0 !important; }
+    .ignite-shop__togo progress { flex: 1; }
+}
+/* A tier with a single prize shows it large, photo beside the words. */
+@container ignite-shop (min-width: 44rem) {
+    .ignite-shop__prize:only-child { grid-template: none / minmax(0, 2fr) minmax(0, 3fr); align-items: center; }
+    .ignite-shop__prize:only-child .ignite-shop__body { padding: 2rem 2.5rem; }
+    .ignite-shop__prize:only-child h3 { font-size: 1.75rem; }
+    .ignite-shop__prize:only-child p { font-size: 1.125rem; }
+}
