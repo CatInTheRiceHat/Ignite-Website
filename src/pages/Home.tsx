@@ -157,7 +157,7 @@ const Home = () => {
                 Enroll Now
                 <RedirectArrow />
               </a>
-              <Link to="/program" className="w-full max-w-xs bg-[var(--text-charcoal)] text-white px-8 py-5 rounded-full hover:scale-105 active:scale-95 transition-transform sm:w-auto sm:px-10 font-sans font-bold text-button">
+              <Link to="/program" className="w-full max-w-xs bg-white text-[var(--primary-orange-dark)] px-8 py-5 rounded-full hover:scale-105 active:scale-95 transition-transform sm:w-auto sm:px-10 font-sans font-bold text-button">
                 Explore Course Plans
               </Link>
             </div>
