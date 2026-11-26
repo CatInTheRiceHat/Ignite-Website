@@ -1,9 +1,9 @@
 // Campfire home preview. Sample numbers stand in for what the plugin reports for the signed-in member.
 const ART = '../../local/ignite/pix/campfire/';
 const TEAMS = {
-    forgelings: { name: 'Forgelings', line: 'The builders of Ignite.' },
-    candlelings: { name: 'Candlelings', line: 'The curious minds of Ignite.' },
-    lanternlings: { name: 'Lanternlings', line: 'The ones who bring people together.' },
+    forgelings: { name: 'Forgelings', line: 'The builders of Ignite.', flame: [550, 760] },
+    candlelings: { name: 'Candlelings', line: 'The curious minds of Ignite.', flame: [512, 760] },
+    lanternlings: { name: 'Lanternlings', line: 'The ones who bring people together.', flame: [527, 760] },
 };
 const ORDER = Object.keys(TEAMS);
 // Team XP this month for: the member's team, the team to its right, the team to its left, and the member.
@@ -44,7 +44,7 @@ function countTo(element, value) {
     })(start);
 }
 
-/** Time left until the month rolls over in the Campfire's own time zone. */
+/** Each month is one Heat. Names the current one and the time left until it ends in the Campfire's own time zone. */
 function countdown() {
     const parts = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: ZONE, hourCycle: 'h23',
         year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' })
@@ -54,7 +54,9 @@ function countdown() {
     const unit = (count, word) => `${count} ${word}${count === 1 ? '' : 's'}`;
     const [d, h, m] = [Math.floor(minutes / 1440), Math.floor(minutes % 1440 / 60), minutes % 60];
     text('countdown').textContent = d ? `${unit(d, 'day')} ${unit(h, 'hour')}` : h ? `${unit(h, 'hour')} ${unit(m, 'minute')}` : unit(m, 'minute');
-    text('month').textContent = new Intl.DateTimeFormat('en-US', { timeZone: ZONE, month: 'long' }).format(new Date()) + '’s fires';
+    const month = new Intl.DateTimeFormat('en-US', { timeZone: ZONE, month: 'long' }).format(new Date());
+    text('month').textContent = month + '’s Fires';
+    text('heat').textContent = month;
 }
 
 function render(team, situation) {
@@ -88,7 +90,9 @@ function render(team, situation) {
         const item = document.getElementById('fire').content.firstElementChild.cloneNode(true);
         item.dataset.team = fire.team;
         item.classList.toggle('fire--yours', Boolean(fire.yours));
-        item.querySelector('.fire__flame').src = `art/flame-${fire.team}.svg`;
+        const flame = item.querySelector('.fire__flame');
+        [flame.width, flame.height] = TEAMS[fire.team].flame;
+        flame.src = `art/flame-${fire.team}.png`;
         item.querySelector('.fire__name').textContent = TEAMS[fire.team].name;
         const score = item.querySelector('.fire__score');
         if (leader) {
@@ -126,6 +130,7 @@ for (const field of ['team', 'situation']) {
     }
 }
 controls.addEventListener('change', current);
+// Refreshed twice a minute, so the time left stays current and the name changes when a new month's Heat begins.
 countdown();
 setInterval(countdown, 30000);
 current();

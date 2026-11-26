@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120" width="500" height="600">
-  <!-- Placeholder flame. Replace with the painted lanternlings flame: transparent background, base of the flame at the bottom centre. -->
-  <path d="M50 3 C58 28 35 39 49 55 C61 45 65 34 63 25 C99 67 99 103 75 114 C48 130 10 111 9 81 C7 67 17 49 27 43 C21 65 32 72 37 68 C22 35 49 28 50 3Z" fill="#ddb75d"/>
-  <path d="M50 3 C58 28 35 39 49 55 C61 45 65 34 63 25 C99 67 99 103 75 114 C48 130 10 111 9 81 C7 67 17 49 27 43 C21 65 32 72 37 68 C22 35 49 28 50 3Z" fill="#f8db8a" transform="translate(50 118) scale(.7) translate(-50 -118)"/>
-  <path d="M50 3 C58 28 35 39 49 55 C61 45 65 34 63 25 C99 67 99 103 75 114 C48 130 10 111 9 81 C7 67 17 49 27 43 C21 65 32 72 37 68 C22 35 49 28 50 3Z" fill="#fff7d8" transform="translate(50 118) scale(.4) translate(-50 -118)"/>
-  <ellipse cx="41" cy="86" rx="3.2" ry="5.2" fill="#352b29"/>
-  <ellipse cx="59" cy="86" rx="3.2" ry="5.2" fill="#352b29"/>
-</svg>

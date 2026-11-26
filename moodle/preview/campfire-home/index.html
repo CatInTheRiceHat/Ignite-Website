@@ -36,10 +36,7 @@
         <section class="camp-fires" aria-labelledby="camp-fires-title">
             <div class="camp-fires__heading">
                 <h2 id="camp-fires-title" data-text="month"></h2>
-                <p class="camp-cup">
-                    <img src="../../local/ignite/pix/campfire/cup.png" alt="" width="104" height="106">
-                    <span>The Campfire Cup is decided in <strong data-text="countdown"></strong></span>
-                </p>
+                <p class="camp-heat">The <span data-text="heat"></span> Heat ends in <strong data-text="countdown"></strong></p>
             </div>
             <ul class="camp-fires__list"></ul>
         </section>
@@ -63,15 +60,14 @@
             <option value="tie">Tie</option>
             <option value="empty">New month</option>
         </select></label>
-        <span class="preview-controls__note">Flames, logs and backdrops are placeholders.</span>
     </form>
 
     <template id="fire">
         <li class="fire">
             <div class="fire__stage">
                 <span class="fire__glow"></span>
-                <span class="fire__grow"><img class="fire__flame" alt="" width="500" height="600"></span>
-                <img class="fire__logs" src="art/logs.svg" alt="" width="800" height="280">
+                <span class="fire__grow"><img class="fire__flame" alt=""></span>
+                <img class="fire__logs" src="art/logs.png" alt="" width="900" height="367">
             </div>
             <p class="fire__yours">Your<span class="fire__wide"> Campfire</span><span class="fire__narrow">s</span></p>
             <h3 class="fire__name"></h3>
