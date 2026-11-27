@@ -4,7 +4,7 @@ import { configuredOrigins, readConfig } from './config.js';
 import { MAX_BODY_BYTES, parseChatInput } from '../../src/sol/shared/protocol.js';
 import { resolveDestination } from '../../src/sol/shared/destinations.js';
 import { reserveRequest } from './rate-limit.js';
-import { askOpenAI } from './openai.js';
+import { askClaude } from './anthropic.js';
 
 type ApiRequest = IncomingMessage & { body?: unknown };
 type Dependencies = {
@@ -95,7 +95,7 @@ export function createHandler(endpoint: 'chat' | 'status', dependencies: Depende
       return send(503, { error: { code: 'protection_unavailable', message: UNAVAILABLE } });
     }
     try {
-      const reply = await askOpenAI(config, input, fetcher);
+      const reply = await askClaude(config, input, fetcher);
       const navigation = reply.destinationIds.map(id => resolveDestination(id, config.websiteBaseUrl));
       return send(200, { ...reply, navigation });
     } catch {

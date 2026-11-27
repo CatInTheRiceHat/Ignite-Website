@@ -9,5 +9,5 @@ export default defineConfig({
     { name: 'mobile', use: { ...devices['iPhone SE'], defaultBrowserType: 'chromium' } },
     { name: 'webkit', use: { ...devices['iPhone 13'] } },
   ],
-  webServer: { command: 'npm run dev', url: 'http://127.0.0.1:5186', reuseExistingServer: false, env: { SOL_DEV_PORT: '5186', OPENAI_API_KEY: '', UPSTASH_REDIS_REST_TOKEN: '' } },
+  webServer: { command: 'npm run dev', url: 'http://127.0.0.1:5186', reuseExistingServer: false, env: { SOL_DEV_PORT: '5186', ANTHROPIC_API_KEY: '', UPSTASH_REDIS_REST_TOKEN: '' } },
 });

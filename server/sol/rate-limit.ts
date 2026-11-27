@@ -1,7 +1,7 @@
 import { createHmac } from 'node:crypto';
 import type { ServerConfig } from './config.js';
 
-// One atomic reservation before any OpenAI call. Shared keys span Vercel instances.
+// One atomic reservation before any Claude API call. Shared keys span Vercel instances.
 // Redis TIME avoids disagreement between serverless clocks. No transcript or raw IP is stored.
 export const RESERVE_SCRIPT = `
 local now = tonumber(redis.call('TIME')[1])

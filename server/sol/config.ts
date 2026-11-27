@@ -22,7 +22,7 @@ function positiveInteger(value: string | undefined, fallback: number) {
 
 export function readConfig(env: Record<string, string | undefined>): ServerConfig | null {
   try {
-    const required = ['OPENAI_API_KEY', 'WEBSITE_BASE_URL', 'ALLOWED_ORIGINS', 'UPSTASH_REDIS_REST_URL', 'UPSTASH_REDIS_REST_TOKEN', 'RATE_LIMIT_SALT'];
+    const required = ['ANTHROPIC_API_KEY', 'WEBSITE_BASE_URL', 'ALLOWED_ORIGINS', 'UPSTASH_REDIS_REST_URL', 'UPSTASH_REDIS_REST_TOKEN', 'RATE_LIMIT_SALT'];
     if (required.some(key => !env[key]?.trim())) return null;
     const origins = env.ALLOWED_ORIGINS!.split(',').map(value => value.trim());
     if (origins.some(origin => new URL(safeHttpUrl(origin)).origin !== origin)) return null;
@@ -32,7 +32,7 @@ export function readConfig(env: Record<string, string | undefined>): ServerConfi
     const namespace = env.RATE_LIMIT_NAMESPACE || 'sol';
     if (!/^[a-zA-Z0-9_-]{1,64}$/.test(namespace)) return null;
     return {
-      apiKey: env.OPENAI_API_KEY!, model: env.OPENAI_MODEL?.trim() || 'gpt-4.1-mini',
+      apiKey: env.ANTHROPIC_API_KEY!, model: env.ANTHROPIC_MODEL?.trim() || 'claude-haiku-5-5',
       websiteBaseUrl: safeHttpUrl(env.WEBSITE_BASE_URL!), allowedOrigins: [...new Set(origins)],
       redisUrl: redis.origin, redisToken: env.UPSTASH_REDIS_REST_TOKEN!, salt: env.RATE_LIMIT_SALT!, namespace,
       perMinute: positiveInteger(env.RATE_LIMIT_PER_MINUTE, 10),

@@ -19,7 +19,7 @@ describe.skipIf(!enabled)('real Redis atomic budgets', () => {
   let directory: string;
   let socket: string;
   const env = {
-    OPENAI_API_KEY: 'test-only', WEBSITE_BASE_URL: 'https://ignitefindyourfire.org', ALLOWED_ORIGINS: 'https://ignitefindyourfire.org',
+    ANTHROPIC_API_KEY: 'test-only', WEBSITE_BASE_URL: 'https://ignitefindyourfire.org', ALLOWED_ORIGINS: 'https://ignitefindyourfire.org',
     UPSTASH_REDIS_REST_URL: 'https://test.upstash.io', UPSTASH_REDIS_REST_TOKEN: 'test-only',
     RATE_LIMIT_SALT: 'this-is-a-test-only-salt-longer-than-32-characters',
     RATE_LIMIT_PER_MINUTE: '100', GLOBAL_RATE_LIMIT_PER_MINUTE: '100', DAILY_REQUEST_CAP: '7',

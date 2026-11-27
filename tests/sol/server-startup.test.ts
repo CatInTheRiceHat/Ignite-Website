@@ -1,6 +1,6 @@
 import { it, expect } from 'vitest';
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, writeFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, rmSync, symlinkSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -15,6 +15,8 @@ it('starts compiled Vercel entrypoints in plain Node without a TypeScript loader
       cwd: root, timeout: 20000, encoding: 'utf8',
     });
     writeFileSync(join(directory, 'package.json'), '{"type":"module"}');
+    // The deployed functions sit beside installed packages; give the emitted copy the same view.
+    symlinkSync(join(root, 'node_modules'), join(directory, 'node_modules'), 'dir');
     // A bundler or tsx would accept extensionless imports and hide the deployment bug.
     // Import both emitted entrypoints in a fresh Node process with no loaders or secrets.
     const statusUrl = pathToFileURL(join(directory, 'api/status.js')).href;
