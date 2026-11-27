@@ -5,10 +5,11 @@ const DROPS = [20, 30, 50]; // Embers dropped by the first mini bomb, the second
 const BLAST = 150; // Bonus XP the big bomb blasts onto the learner's team.
 const GRADES = ['bronze', 'silver', 'gold'];
 const TEAMS = { forgelings: 'Forgelings', candlelings: 'Candlelings', lanternlings: 'Lanternlings', '': '' };
-// Earlier months: the grade each one ended on (empty for a month with no bomb), and the Embers they banked.
+// Earlier months: the Embers they banked, and the streak they left running.
 const HISTORY = {
-    first: { month: 'December', next: 'January', shelf: [], upcoming: ['Jan', 'Feb', 'Mar', 'Apr'], banked: 0, streak: 1 },
-    later: { month: 'March', next: 'April', shelf: [['Dec', 'gold'], ['Jan', 'silver'], ['Feb', '']], upcoming: ['Apr', 'May'], banked: 150, streak: 3 },
+    first: { month: 'December', next: 'January', banked: 0, streak: 1, photo: '../../local/ignite/pix/badges/202612.jpg' },
+    // March has no picture of its own yet, so its badge is the drawn star.
+    later: { month: 'March', next: 'April', banked: 150, streak: 3, photo: '' },
 };
 const home = document.querySelector('.fuse-home');
 const controls = document.querySelector('.preview-controls');
@@ -53,7 +54,7 @@ function words() {
         boom2: `Boom! Your ${past.month} badge is now Silver. +${DROPS[1]} Embers banked.`,
         boom3: team ? `Boom! Gold ${past.month} badge, +${DROPS[2]} Embers, and +${blast} XP blasted onto the ${team}’ fire.`
             : `Boom! Gold ${past.month} badge and +${DROPS[2]} Embers banked.` });
-    text('eyebrow').textContent = `${past.month} fuse · ends in 5 days 2 hours`;
+    text('eyebrow').textContent = `${past.month} Heat · ends in 5 days 2 hours`;
     text('title').textContent = title;
     text('sub').textContent = sub;
     text('go').textContent = go;
@@ -69,17 +70,18 @@ function words() {
     // The Shop preview shows the same sample balance.
     home.querySelector('a.fuse-chip').href = `../shop/index.html?embers=${embers}`;
 
-    // One badge a month in its best grade so far, then the months still to come.
-    const grade = earned ? GRADES[earned - 1] : 'current';
-    const medals = [...past.shelf, [past.month.slice(0, 3), grade], ...past.upcoming.map(month => [month, 'upcoming'])];
-    home.querySelector('.fuse-shelf ul').replaceChildren(...medals.map(([month, medal]) => {
-        const item = document.getElementById('medal').content.firstElementChild.cloneNode(true);
-        item.dataset.grade = medal || 'missed';
-        item.querySelector('.fuse-medal__disc').textContent = month;
-        item.querySelector('.fuse-medal__grade').textContent =
-            { '': 'No bomb', current: 'This month', upcoming: '' }[medal] ?? medal[0].toUpperCase() + medal.slice(1);
-        return item;
-    }));
+    // This month's badge: the grade of the latest bomb set off, and the bomb that gives each grade.
+    const grade = earned ? GRADES[earned - 1] : 'none';
+    const badge = document.querySelector('.fuse-badge');
+    badge.dataset.grade = grade;
+    badge.querySelector('.fuse-badge__photo').hidden = !past.photo;
+    badge.querySelector('svg').style.display = past.photo ? 'none' : '';
+    badge.querySelector('img').src = past.photo;
+    text('badge').textContent = `${past.month} badge`;
+    text('grade').textContent = earned ? grade[0].toUpperCase() + grade.slice(1) : 'Not earned yet';
+    document.querySelectorAll('.fuse-badge__steps li').forEach((step, index) => {
+        step.dataset.grade = index < earned ? GRADES[index] : '';
+    });
 }
 
 /** XP arrives one graded activity at a time, so a fuse is finished by the award that reaches or passes its length. */

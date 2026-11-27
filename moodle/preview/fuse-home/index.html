@@ -48,15 +48,25 @@
                 <p class="fuse-home__next" data-text="next"></p>
             </div>
             <p class="fuse-home__legend" data-text="legend"></p>
-
-            <div class="fuse-shelf">
-                <h3>Your bomb badges</h3>
-                <ul></ul>
-            </div>
         </section>
 
         <div class="preview-block">Timeline <span>Moodle’s own block, unchanged</span></div>
         <div class="preview-block">Course overview <span>Moodle’s own block, unchanged</span></div>
+
+        <!-- The month's badge closes the page, under Moodle's own blocks. -->
+        <section class="fuse-badge" data-grade="none" aria-labelledby="fuse-badge-title">
+            <span class="fuse-badge__art fuse-badge__photo"><img alt=""></span>
+            <svg class="fuse-badge__art" viewBox="-64 -64 128 128" aria-hidden="true"><polygon class="fuse__burst" points="0.0,-60.0 11.6,-43.3 30.0,-52.0 31.7,-31.7 52.0,-30.0 43.3,-11.6 60.0,0.0 43.3,11.6 52.0,30.0 31.7,31.7 30.0,52.0 11.6,43.3 0.0,60.0 -11.6,43.3 -30.0,52.0 -31.7,31.7 -52.0,30.0 -43.3,11.6 -60.0,0.0 -43.3,-11.6 -52.0,-30.0 -31.7,-31.7 -30.0,-52.0 -11.6,-43.3"/><circle r="36.8"/><polygon class="fuse__star" points="0.0,-33.6 10.3,-14.2 32.0,-10.4 16.7,5.4 19.7,27.2 0.0,17.6 -19.7,27.2 -16.7,5.4 -32.0,-10.4 -10.3,-14.2"/></svg>
+            <div>
+                <h3 id="fuse-badge-title" data-text="badge"></h3>
+                <p class="fuse-badge__grade" data-text="grade"></p>
+            </div>
+            <ul class="fuse-badge__steps" aria-label="The bomb that gives each grade">
+                <li class="fuse-medal"><span class="fuse-medal__disc">20</span><span class="fuse-medal__grade">Bronze</span></li>
+                <li class="fuse-medal"><span class="fuse-medal__disc">30</span><span class="fuse-medal__grade">Silver</span></li>
+                <li class="fuse-medal"><span class="fuse-medal__disc">50</span><span class="fuse-medal__grade">Gold</span></li>
+            </ul>
+        </section>
     </main>
 
     <form class="preview-controls" aria-label="Preview controls">
@@ -76,10 +86,6 @@
         </select></label>
         <label><input name="spent" type="checkbox"> Nothing left to earn</label>
     </form>
-
-    <template id="medal">
-        <li class="fuse-medal"><span class="fuse-medal__disc"></span><span class="fuse-medal__grade"></span></li>
-    </template>
 
     <script src="../../local/ignite/fuse-home.js"></script>
     <script src="preview.js"></script>

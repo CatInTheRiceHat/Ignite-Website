@@ -25,6 +25,9 @@ class block_ignite extends block_base {
         if ($data['fuse']) {
             $this->page->requires->css('/local/ignite/fuse-home.css');
             $this->page->requires->js('/local/ignite/fuse-home.js');
+            // The month's badge goes at the very end of the Dashboard, under Moodle's own blocks.
+            \local_ignite\fuse::$handed = $data['fuse']['badge'];
+            $data['fuse']['badge'] = false;
         }
         $this->content->text = $this->page->get_renderer('core')->render_from_template('local_ignite/dashboard', $data);
         if ($data['offer']) { \local_ignite\invitations::shown(); }

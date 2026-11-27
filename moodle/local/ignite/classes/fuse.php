@@ -15,8 +15,6 @@ final class fuse {
     public const DROPS = [20, 30, 50];
     /** The grade a month's badge reaches with each bomb. */
     public const GRADES = ['bronze', 'silver', 'gold'];
-    /** How many past months and months to come the badge shelf shows around the current one. */
-    private const SHELF = [5, 2];
 
     /** The XP at which each bomb goes off: the first award, about halfway, and the goal. */
     public static function marks(int $goal, int $award): array {
@@ -128,7 +126,25 @@ final class fuse {
         return self::kept_for(self::kept('fuseblasts', 'fuseblast', self::DEFAULT_BLAST), $month);
     }
 
-    /** The signed-in learner's fuse this month, with their streak, Embers and monthly badges. */
+    /** The badge the Ignite block has handed on, to be shown at the end of the Dashboard. */
+    public static array $handed = [];
+
+    /** Show the month's badge at the very end of the Dashboard, under Moodle's own blocks. */
+    public static function footer(\core\hook\output\before_footer_html_generation $hook): void {
+        global $OUTPUT;
+        if (self::$handed) {
+            $hook->add_html($OUTPUT->render_from_template('local_ignite/fuse_badge', self::$handed));
+        }
+    }
+
+    /** The address of a month's own badge picture (pix/badges/YYYYMM.jpg), or nothing for a month that has none yet. */
+    public static function art(int $month): string {
+        global $OUTPUT;
+        return is_file(__DIR__ . '/../pix/badges/' . $month . '.jpg')
+            ? $OUTPUT->image_url('badges/' . $month, 'local_ignite')->out(false) : '';
+    }
+
+    /** The signed-in learner's fuse this month, with their streak, Embers and this month's badge. */
     public static function current(): array {
         global $DB;
         $userid = access::learner('fuse');
@@ -153,25 +169,27 @@ final class fuse {
             $weeks[] = self::week((int)$earned->timeearned);
         }
 
-        // Every month since the fuse began leaves a badge in the best grade reached, and its bombs' Embers.
+        // Every month since the fuse began has banked the Embers of the bombs set off in it.
         $balance = 0;
-        $shelf = [];
-        $start = \DateTimeImmutable::createFromFormat('!Ym', (string)$first, new \DateTimeZone(campfire::TIMEZONE));
-        for ($date = $start; $date <= $period->modify('+' . self::SHELF[1] . ' months'); $date = $date->modify('+1 month')) {
-            $key = (int)$date->format('Ym');
-            $bombs = $key > $month ? 0 : self::bombs($xp[$key] ?? 0, self::marks(self::kept_for($goals, $key), $award));
-            $balance += self::embers($bombs);
-            $state = $bombs ? self::GRADES[$bombs - 1] : ($key < $month ? 'missed' : ($key === $month ? 'current' : 'upcoming'));
-            $shelf[] = ['label' => userdate($date->getTimestamp(), '%b', campfire::TIMEZONE), 'grade' => $state,
-                'gradelabel' => $state === 'upcoming' ? '' : get_string('fuse_grade_' . $state, 'local_ignite')];
+        foreach ($xp as $key => $earned) {
+            if ($key >= $first && $key <= $month) {
+                $balance += self::embers(self::bombs($earned, self::marks(self::kept_for($goals, $key), $award)));
+            }
         }
-        $shelf = array_slice($shelf, -(self::SHELF[0] + 1 + self::SHELF[1]));
 
         $marks = self::marks($goals[$month], $award);
         $goal = $marks[2];
         $burned = min($xp[$month] ?? 0, $goal);
         $streak = self::streak($weeks, self::week($now));
         $monthname = userdate($now, '%B', campfire::TIMEZONE);
+        // This month's badge: the grade of the latest bomb set off, and the bomb that gives each grade.
+        $bombs = self::bombs($xp[$month] ?? 0, $marks);
+        $grade = $bombs ? self::GRADES[$bombs - 1] : 'none';
+        $steps = [];
+        foreach (self::GRADES as $index => $name) {
+            $steps[] = ['grade' => $index < $bombs ? $name : '', 'drop' => self::DROPS[$index],
+                'label' => get_string('fuse_grade_' . $name, 'local_ignite')];
+        }
         $state = !$burned ? 'unlit' : ($burned < $goal ? 'burning' : 'burned');
         // A learner on a team is told what their big bomb does for it.
         $houseid = access::enabled('houses') ? (int)$DB->get_field('local_ignite_member', 'houseid', ['userid' => $userid]) : 0;
@@ -194,7 +212,9 @@ final class fuse {
             'streaknote' => get_string($streak ? 'fuse_streakkeep' : 'fuse_streakstart', 'local_ignite'),
             'embers' => get_string($balance === 1 ? 'fuse_ember' : 'fuse_embers', 'local_ignite', $balance),
             'shopurl' => (new \moodle_url('/local/ignite/shop.php'))->out(false),
-            'shelf' => $shelf,
+            'badge' => ['grade' => $grade, 'title' => get_string('fuse_badge', 'local_ignite', $monthname),
+                'gradelabel' => get_string('fuse_grade_' . $grade, 'local_ignite'), 'steps' => $steps,
+                'photo' => self::art($month)],
         ];
         // What each bomb says when it goes off.
         foreach (self::GRADES as $index => $grade) {

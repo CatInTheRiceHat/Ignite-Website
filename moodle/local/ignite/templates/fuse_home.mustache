@@ -2,13 +2,12 @@
     @template local_ignite/fuse_home
     The month's fuse at the top of a learner's Home, shown inside the dashboard template. Example context (json):
     {"xp":40,"goal":100,"award":20,"marks":"20,60,100","drops":"2,3,5","key":"7-202612","balance":2,
-     "eyebrow":"December fuse · ends in 5 days 2 hours","title":"Your fuse is burning.","sub":"60 XP to the big bomb.",
+     "eyebrow":"December Heat · ends in 5 days 2 hours","title":"Your fuse is burning.","sub":"60 XP to the big bomb.",
      "summary":"40 of 100 XP burned this month","legend":"The mini bombs drop 2 and 3 Embers; the big bomb drops 5.",
      "streak":"1-week streak","streaknote":"Earn XP by Sunday to keep it","embers":"2 Embers","shopurl":"#",
      "boom1":"Boom! Your December badge is now Bronze. +2 Embers banked.",
      "boom2":"Boom! Your December badge is now Silver. +3 Embers banked.",
      "boom3":"Boom! Gold December badge and +5 Embers banked.",
-     "shelf":[{"label":"Dec","grade":"bronze","gradelabel":"Bronze"},{"label":"Jan","grade":"upcoming","gradelabel":""}],
      "primary":{"url":"#","name":"Loops and lists quiz"},"catalogurl":"#"}
 }}
 <section class="fuse-home" aria-labelledby="fuse-title" data-xp="{{xp}}" data-goal="{{goal}}" data-award="{{award}}"
@@ -51,13 +50,4 @@
         {{/primary}}
     </div>
     <p class="fuse-home__legend">{{legend}}</p>
-
-    <div class="fuse-shelf">
-        <h3>{{#str}}fuse_shelf, local_ignite{{/str}}</h3>
-        <ul>
-            {{#shelf}}
-            <li class="fuse-medal" data-grade="{{grade}}"><span class="fuse-medal__disc">{{label}}</span><span class="fuse-medal__grade">{{gradelabel}}</span></li>
-            {{/shelf}}
-        </ul>
-    </div>
 </section>

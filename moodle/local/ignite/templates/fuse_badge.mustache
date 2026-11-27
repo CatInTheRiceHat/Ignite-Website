@@ -1,0 +1,22 @@
+{{!
+    @template local_ignite/fuse_badge
+    This month's badge, in a box of its own at the end of a learner's Home. Example context (json):
+    {"grade":"bronze","title":"December badge","gradelabel":"Bronze","photo":"",
+     "steps":[{"grade":"bronze","drop":20,"label":"Bronze"},{"grade":"","drop":30,"label":"Silver"},{"grade":"","drop":50,"label":"Gold"}]}
+}}
+<section class="fuse-badge" data-grade="{{grade}}" aria-labelledby="fuse-badge-title">
+    {{! The month's own picture where it has one: blacked out until the first bomb, then ringed in the grade reached. }}
+    {{#photo}}<span class="fuse-badge__art fuse-badge__photo"><img src="{{photo}}" alt=""></span>{{/photo}}
+    {{^photo}}
+    <svg class="fuse-badge__art" viewBox="-64 -64 128 128" aria-hidden="true"><polygon class="fuse__burst" points="0.0,-60.0 11.6,-43.3 30.0,-52.0 31.7,-31.7 52.0,-30.0 43.3,-11.6 60.0,0.0 43.3,11.6 52.0,30.0 31.7,31.7 30.0,52.0 11.6,43.3 0.0,60.0 -11.6,43.3 -30.0,52.0 -31.7,31.7 -52.0,30.0 -43.3,11.6 -60.0,0.0 -43.3,-11.6 -52.0,-30.0 -31.7,-31.7 -30.0,-52.0 -11.6,-43.3"/><circle r="36.8"/><polygon class="fuse__star" points="0.0,-33.6 10.3,-14.2 32.0,-10.4 16.7,5.4 19.7,27.2 0.0,17.6 -19.7,27.2 -16.7,5.4 -32.0,-10.4 -10.3,-14.2"/></svg>
+    {{/photo}}
+    <div>
+        <h3 id="fuse-badge-title">{{title}}</h3>
+        <p class="fuse-badge__grade">{{gradelabel}}</p>
+    </div>
+    <ul class="fuse-badge__steps" aria-label="{{#str}}fuse_badge_steps, local_ignite{{/str}}">
+        {{#steps}}
+        <li class="fuse-medal" data-grade="{{grade}}"><span class="fuse-medal__disc">{{drop}}</span><span class="fuse-medal__grade">{{label}}</span></li>
+        {{/steps}}
+    </ul>
+</section>

@@ -1,9 +1,6 @@
 // Fuse home: draws a month's rope and bombs, and burns the rope on from where the learner last saw it.
 (function() {
     const NS = 'http://www.w3.org/2000/svg';
-    // The Ember icon, on a 24 unit square: a flame and its core.
-    const EMBER = ['M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 1.5-4.5 2-7 1.5 1 2 2.5 2 4 1.5-2 2-5 2-9Z',
-        'M12 12c.7 2 3 3 3 5.5a3 3 0 0 1-6 0c0-1.5.8-2.3 1-3.5.8.5 1 1.2 1 2 .7-1 1-2.5 1-4Z'];
     const GRADES = ['bronze', 'silver', 'gold'];
     const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -40,17 +37,17 @@
         function layout() {
             const width = Math.max(300, Math.round(svg.parentElement.clientWidth));
             const wide = width >= 640;
-            const [left, right, level] = wide ? [30, width - 70, 100] : [14, width - 40, 86];
+            // The drawing is just tall enough for a bomb, its tip and the badge it leaves, with no empty band above or below.
+            const [left, right, level] = wide ? [30, width - 70, 62] : [14, width - 40, 41];
             const total = right - left;
             const drops = home.dataset.drops.split(',').map(Number);
             goal = Number(home.dataset.goal);
             svg.replaceChildren();
-            svg.setAttribute('viewBox', `0 0 ${width} ${wide ? 196 : 160}`);
+            svg.setAttribute('viewBox', `0 0 ${width} ${wide ? 124 : 82}`);
             const d = `M${left} ${level}H${right}`;
             draw(svg, 'path', { class: 'fuse__rope', d });
             draw(svg, 'path', { class: 'fuse__sheen', d });
             const ash = draw(svg, 'path', { class: 'fuse__ash', d });
-            const smoulder = draw(svg, 'path', { class: 'fuse__smoulder', d });
 
             // The flame is drawn before the bombs, so it burns in under a bomb it is about to reach.
             const flame = draw(svg, 'g', { class: 'fuse__flame' });
@@ -65,8 +62,9 @@
             draw(flame, 'path', { class: 'fuse__flame-shape fuse__flame-core', d: 'M0 6C-7 6-9-1-4-9-3-6-1-7 0-17 4-10 9-4 7 1 6 6 3 6 0 6Z' });
 
             const bombs = home.dataset.marks.split(',').map(Number).map((at, index) => {
+                // All three bombs are drawn the same size; the last one is the big bomb, with the louder blast.
                 const big = index === 2;
-                const radius = (big ? 2 : 1) * (wide ? 20 : 13);
+                const radius = wide ? 40 : 26;
                 const along = total * at / goal;
                 const centre = [left + along, level];
                 const group = draw(svg, 'g', { class: 'fuse__bomb', transform: `translate(${centre[0]} ${centre[1]})` });
@@ -87,26 +85,17 @@
                 draw(medal, 'circle', { r: radius * .92 });
                 draw(medal, 'polygon', { class: 'fuse__star', points: star(5, radius * .84, radius * .44) });
                 draw(medal, 'text', { class: 'fuse__count', 'font-size': radius * .6 }).textContent = drops[index];
-                // What the bomb drops: an Ember icon and how many.
-                const label = draw(group, 'g', { class: 'fuse__label', transform: `translate(0 ${radius * 1.5 + 18})` });
-                const amount = '+' + drops[index];
-                // The icon and the number sit side by side, centred as a pair: about 10 units for each character.
-                const start = -(19 + amount.length * 10) / 2;
-                const icon = draw(label, 'g', { transform: `translate(${start} -14) scale(.7)` });
-                draw(icon, 'path', { class: 'fuse__coin', d: EMBER[0] });
-                draw(icon, 'path', { class: 'fuse__coin-core', d: EMBER[1] });
-                draw(label, 'text', { x: start + 19 }).textContent = amount;
                 return { at, big, group, centre, radius, along, says: home.dataset['boom' + (index + 1)] };
             });
-            scene = { left, level, ash, smoulder, bombs, flame, total, fx: draw(svg, 'g') };
+            scene = { left, level, ash, bombs, flame, total, fx: draw(svg, 'g') };
             paint(shown);
         }
 
         /** Show the fuse burnt as far as the given XP. */
         function paint(value) {
-            const { left, level, ash, smoulder, bombs, flame, total } = scene;
+            const { left, level, ash, bombs, flame, total } = scene;
             let burnt = total * Math.min(value, goal) / goal;
-            // Just past a mini bomb that has gone off, the flame stands clear of the badge it left on the rope.
+            // Just past an earlier bomb that has gone off, the flame stands clear of the badge it left on the rope.
             const cleared = bombs.find(bomb => !bomb.big && value >= bomb.at && burnt - bomb.along < bomb.radius + 10);
             if (cleared) {
                 burnt = Math.min(total, cleared.along + cleared.radius + 10);
@@ -114,10 +103,6 @@
             const alight = value > 0 && value < goal;
             ash.style.strokeDasharray = `${burnt} ${total}`;
             ash.style.visibility = burnt ? '' : 'hidden';
-            // A short glowing stretch just behind the flame.
-            smoulder.style.strokeDasharray = `${Math.min(30, burnt)} ${total}`;
-            smoulder.style.strokeDashoffset = -Math.max(0, burnt - 30);
-            smoulder.style.visibility = alight ? '' : 'hidden';
             flame.setAttribute('transform', `translate(${left + burnt} ${level})`);
             flame.classList.toggle('is-out', !alight);
             bombs.forEach(bomb => bomb.group.classList.toggle('is-exploded', value >= bomb.at));

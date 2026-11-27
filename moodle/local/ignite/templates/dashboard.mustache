@@ -25,4 +25,7 @@
     </section>{{/timeline}}
 
     {{#onboarding}}<nav class="ignite-dashboard__help" aria-label="{{#str}}dash_help, local_ignite{{/str}}"><a href="{{interestsurl}}">{{#str}}editinterests, local_ignite{{/str}}</a><a href="{{toururl}}">{{#str}}dash_help, local_ignite{{/str}}</a></nav>{{/onboarding}}
+
+    {{! On the Dashboard the block hands the badge on, to be shown under Moodle's own blocks instead. }}
+    {{#fuse}}{{#badge}}{{> local_ignite/fuse_badge}}{{/badge}}{{/fuse}}
 </div>

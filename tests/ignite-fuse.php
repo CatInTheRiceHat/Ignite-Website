@@ -15,6 +15,16 @@ namespace local_ignite {
     }
 }
 
+namespace core\hook\output {
+    /** Stand-in for Moodle's end-of-page hook: it keeps what it is given. */
+    final class before_footer_html_generation {
+        public string $html = '';
+        public function add_html(?string $output): void {
+            $this->html .= $output;
+        }
+    }
+}
+
 namespace {
     if (PHP_SAPI !== 'cli') {
         exit(1);
@@ -78,6 +88,9 @@ namespace {
     final class fixture_output {
         public function image_url(string $name, string $component): moodle_url {
             return new moodle_url('http://127.0.0.1:8765/local/ignite/pix/' . $name . '.jpg');
+        }
+        public function render_from_template(string $template, array $data): string {
+            return $template . ' ' . $data['grade'];
         }
     }
     $DB = new fixture_db();
@@ -149,9 +162,11 @@ namespace {
         $home['summary'] === '40 of 100 XP burned this month', 'The burning fuse says how far there is to go');
     check($home['streak'] === '1-week streak', 'XP this week starts a streak');
     check(json_decode($config['fusegoals'], true) === [$month => 100], 'The month keeps the goal it opened with');
-    $current = array_values(array_filter($home['shelf'], static fn($medal) => $medal['grade'] !== 'upcoming'));
-    check(count($current) === 1 && $current[0]['grade'] === 'bronze' && count($home['shelf']) === 3,
-        'The shelf shows this month in bronze and the two months to come');
+    check($home['badge']['grade'] === 'bronze' && $home['badge']['gradelabel'] === 'Bronze' &&
+        str_ends_with($home['badge']['title'], ' badge') &&
+        array_column($home['badge']['steps'], 'grade') === ['bronze', '', ''] &&
+        array_column($home['badge']['steps'], 'drop') === [20, 30, 50],
+        'After the 20 bomb, this month’s badge is Bronze, with Silver at 30 and Gold at 50 still to earn');
     check(str_contains($home['boom3'], 'Gold') && str_contains($home['boom1'], '+20 Embers'), 'Each bomb has its message');
 
     // Staff lengthen the fuse mid-month: this month is unchanged.
@@ -170,8 +185,8 @@ namespace {
         $awards[] = award($month, 20, $now);
     }
     $later = fuse::current();
-    $grades = array_column($later['shelf'], 'grade');
-    check($grades === ['gold', 'missed', 'silver', 'upcoming', 'upcoming'], 'Past months keep their best grade, or none');
+    check($later['badge']['grade'] === 'silver' && array_column($later['badge']['steps'], 'grade') === ['bronze', 'silver', ''],
+        'Two bombs this month make the badge Silver, whatever earlier months reached');
     check($later['balance'] === 150 && $later['xp'] === 60, 'Embers add up across months: 100 from the gold month and 50 from this one');
     check($later['goal'] === 100, 'A month with no goal of its own carries the earlier one forward');
 
@@ -180,11 +195,24 @@ namespace {
     $done = fuse::current();
     check($done['xp'] === 100 && $done['title'] === 'Boom. Fuse burned.' && str_contains($done['summary'], '100 of 100'),
         'XP beyond the goal still reads as a finished fuse');
+    check($done['badge']['grade'] === 'gold' && $done['badge']['gradelabel'] === 'Gold', 'A finished fuse makes the badge Gold');
+    // On the Dashboard the block hands the badge on, and it is shown at the end of the page.
+    $end = new \core\hook\output\before_footer_html_generation();
+    fuse::footer($end);
+    check($end->html === '', 'Nothing is added to the end of a page the fuse is not on');
+    fuse::$handed = $done['badge'];
+    fuse::footer($end);
+    check($end->html === 'local_ignite/fuse_badge gold', 'A badge the block hands on is shown at the end of the Dashboard');
+    fuse::$handed = [];
+    check(str_contains(fuse::art(202612), 'badges/202612') && fuse::art(199901) === '' &&
+        $done['badge']['photo'] === fuse::art($month), 'A month shows its own badge picture when it has one, and none otherwise');
     $awards = [];
     $config['fusegoals'] = json_encode([$month => 100]);
     $unlit = fuse::current();
     check($unlit['xp'] === 0 && $unlit['balance'] === 0 && $unlit['title'] === 'Light the fuse.' &&
         $unlit['embers'] === '0 Embers' && $unlit['streak'] === 'No streak yet', 'A learner with no XP sees an unlit fuse');
+    check($unlit['badge']['grade'] === 'none' && $unlit['badge']['gradelabel'] === 'Not earned yet' &&
+        array_column($unlit['badge']['steps'], 'grade') === ['', '', ''], 'Before the first bomb the badge is not earned yet');
 
     // The Shop, with 150 Embers saved.
     $config['fusegoals'] = json_encode([(int)$two->format('Ym') => 100]);

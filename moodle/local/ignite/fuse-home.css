@@ -1,42 +1,24 @@
-/* Fuse home: the monthly rope and bombs at the top of a learner's Home. */
-.fuse-home, .fuse-home *, .fuse-home *::before, .fuse-home *::after { box-sizing: border-box; }
+/* Fuse home: the monthly rope and bombs at the top of a learner's Home, and the month's badge in a box below. */
+:is(.fuse-home, .fuse-badge), :is(.fuse-home, .fuse-badge) *, .fuse-home *::before, .fuse-home *::after { box-sizing: border-box; }
 
-.fuse-home {
+.fuse-home, .fuse-badge {
     --night: #0c1225;
     --cream: #fff8f0;
     --orange: #f07b2a;
     --rope: #d9b98a;
     --haze: #cfc8d8;
+    border-radius: 1.5rem;
+    color: var(--cream);
+    font: 400 1.0625rem/1.55 Nunito, system-ui, sans-serif;
+}
+.fuse-home {
     position: relative;
     isolation: isolate;
     overflow: hidden;
     padding: clamp(1.25rem, 3vw, 2.25rem);
-    border-radius: 1.5rem;
-    /* A warm glow where the rope starts, fading into the night. */
-    background:
-        radial-gradient(46rem 20rem at 0% 48%, #f07b2a33, transparent 62%),
-        linear-gradient(160deg, #16204a, var(--night) 62%);
-    color: var(--cream);
-    font: 400 1.0625rem/1.55 Nunito, system-ui, sans-serif;
+    /* Hero 3, the Campfire's night sky, with its three flames in the bottom right corner. */
+    background: var(--night) url("pix/campfire/hero-3.jpg") right bottom / cover no-repeat;
     container: fuse-home / inline-size;
-}
-/* A few fixed stars, so the band reads as the same night as the Campfire page. */
-.fuse-home::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background:
-        radial-gradient(2px 2px at 52% 7%, #fff, transparent),
-        radial-gradient(1.5px 1.5px at 61% 21%, #fffc, transparent),
-        radial-gradient(2px 2px at 69% 5%, #fffc, transparent),
-        radial-gradient(1.5px 1.5px at 76% 27%, #fff, transparent),
-        radial-gradient(2px 2px at 84% 30%, #fffa, transparent),
-        radial-gradient(1.5px 1.5px at 96% 24%, #fffc, transparent),
-        radial-gradient(1.5px 1.5px at 57% 31%, #fff9, transparent),
-        radial-gradient(2px 2px at 90% 3%, #fff8, transparent),
-        radial-gradient(1.5px 1.5px at 72% 16%, #fff9, transparent),
-        radial-gradient(1.5px 1.5px at 98% 9%, #fffc, transparent);
 }
 .fuse-home p { margin: 0; }
 .fuse-home a:focus-visible { outline: 3px solid var(--cream); outline-offset: 3px; }
@@ -75,13 +57,11 @@ a.fuse-chip span { text-decoration: underline; text-underline-offset: .2em; }
 /* The fuse itself. Its shapes are drawn in the page's script; these are their materials. */
 .fuse { position: relative; margin-top: clamp(.75rem, 2vw, 1.5rem); }
 .fuse__svg { display: block; width: 100%; height: auto; overflow: visible; }
-.fuse__rope, .fuse__sheen, .fuse__ash, .fuse__smoulder { fill: none; stroke-width: 11; stroke-linecap: round; }
+.fuse__rope, .fuse__sheen, .fuse__ash { fill: none; stroke-width: 11; stroke-linecap: round; }
 .fuse__rope { stroke: var(--rope); }
 /* A light edge along the top of the unburnt rope, so it reads as one smooth cord. */
 .fuse__sheen { stroke: #f3e2c2; stroke-width: 3; transform: translateY(-2.5px); }
 .fuse__ash { stroke: #4b4556; }
-/* The short glowing stretch just behind the flame. */
-.fuse__smoulder { stroke: #ff8a2a; filter: drop-shadow(0 0 6px #ff8a2a); }
 .fuse__body circle { fill: #1c1930; stroke: #575170; stroke-width: 2.5; }
 .fuse__shine { fill: #fff; opacity: .4; }
 /* The Embers a bomb drops, written on it and on the star it leaves; sized to the bomb where it is drawn. */
@@ -90,21 +70,17 @@ a.fuse-chip span { text-decoration: underline; text-underline-offset: .2em; }
 .fuse__cap { fill: #575170; }
 .fuse__wick { fill: none; stroke: var(--rope); stroke-width: 3; stroke-linecap: round; }
 .fuse__spark-tip { fill: #ffd36b; }
-/* The embers a bomb drops, shown as a small flame and a number. */
-.fuse__label text { fill: var(--cream); font: 700 16px Poppins, system-ui, sans-serif; }
-.fuse__bomb.is-exploded .fuse__label text { fill: #ffd36b; }
-.fuse__coin { fill: #ff8a2a; }
-.fuse__coin-core { fill: #ffd36b; }
 
 /* An exploded bomb leaves that grade of the month's badge in its place on the rope. */
 .fuse__medal, .fuse__bomb.is-exploded .fuse__body { display: none; }
 .fuse__bomb.is-exploded .fuse__medal { display: inline; }
 .fuse__burst { fill: var(--orange); opacity: .45; }
 .fuse__star { fill: #fff8f0; }
-.fuse__medal circle { stroke-width: 2.5; }
-.fuse__medal[data-grade="bronze"] circle { fill: #b9773f; stroke: #e6ad7c; }
-.fuse__medal[data-grade="silver"] circle { fill: #9aa5b5; stroke: #e3e9f1; }
-.fuse__medal[data-grade="gold"] circle { fill: #e0a526; stroke: #ffe08a; }
+/* The same badge is drawn large in the month's badge box. */
+:is(.fuse__medal, .fuse-badge__art) circle { stroke-width: 2.5; }
+:is(.fuse__medal, .fuse-badge)[data-grade="bronze"] circle { fill: #b9773f; stroke: #e6ad7c; }
+:is(.fuse__medal, .fuse-badge)[data-grade="silver"] circle { fill: #9aa5b5; stroke: #e3e9f1; }
+:is(.fuse__medal, .fuse-badge)[data-grade="gold"] circle { fill: #e0a526; stroke: #ffe08a; }
 
 .fuse__flame.is-out { display: none; }
 .fuse__flame-shape { fill: #ff8a2a; transform-box: fill-box; transform-origin: 50% 100%; animation: fuse-flicker .45s ease-in-out infinite alternate; }
@@ -148,29 +124,58 @@ a.fuse-chip span { text-decoration: underline; text-underline-offset: .2em; }
 /* Someone with nothing left to earn has no fuse to show. */
 .fuse-home.is-spent :is(.fuse, .fuse-home__legend) { display: none; }
 
-/* One badge a month, in the best grade reached; months to come are empty slots. */
-.fuse-shelf { margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid #ffffff24; }
-.fuse-shelf h3 { margin: 0 0 .75rem; color: var(--cream); font: 700 1rem/1.3 Poppins, system-ui, sans-serif; }
-.fuse-shelf ul { display: flex; flex-wrap: wrap; gap: 1rem; margin: 0; padding: 0; list-style: none; }
-.fuse-medal { display: grid; justify-items: center; gap: .3rem; min-width: 4rem; color: var(--haze); font-size: .8125rem; text-align: center; white-space: nowrap; }
+/* This month's badge, in a box of its own under the fuse: the grade reached so far, and the bomb that gives each grade. */
+.fuse-badge {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    margin-top: 1.25rem;
+    padding: 1.25rem clamp(1.25rem, 3vw, 2.25rem);
+    /* The style guide's navy, Text Charcoal. */
+    background: #1a1a2e;
+}
+.fuse-badge p { margin: 0; }
+.fuse-badge__art { flex: none; width: 5.5rem; height: 5.5rem; }
+/* The month's own picture: blacked out until the first bomb, then shown inside a ring of the grade reached. */
+.fuse-badge__photo { width: 6.5rem; height: 6.5rem; overflow: hidden; border: 3px dashed #ffffff4d; border-radius: 50%; }
+.fuse-badge__photo img { display: block; width: 100%; height: 100%; object-fit: cover; filter: brightness(.16) saturate(0); }
+.fuse-badge:not([data-grade="none"]) .fuse-badge__photo { border-style: solid; border-width: 5px; }
+.fuse-badge:not([data-grade="none"]) .fuse-badge__photo img { filter: none; }
+.fuse-badge[data-grade="bronze"] .fuse-badge__photo { border-color: #b9773f; box-shadow: 0 0 0 2px #e6ad7c; }
+.fuse-badge[data-grade="silver"] .fuse-badge__photo { border-color: #9aa5b5; box-shadow: 0 0 0 2px #e3e9f1; }
+.fuse-badge[data-grade="gold"] .fuse-badge__photo { border-color: #e0a526; box-shadow: 0 0 0 2px #ffe08a; }
+/* Before the first bomb the badge is an empty outline. */
+.fuse-badge[data-grade="none"] .fuse-badge__art :is(.fuse__burst, .fuse__star) { display: none; }
+.fuse-badge[data-grade="none"] .fuse-badge__art circle { fill: none; stroke: #ffffff4d; stroke-dasharray: 7 7; }
+.fuse-badge h3 { margin: 0; color: var(--haze); font: 700 .9375rem/1.3 Poppins, system-ui, sans-serif; }
+.fuse-badge__grade { color: var(--cream); font: 700 1.5rem/1.25 Poppins, system-ui, sans-serif; }
+.fuse-badge__steps { display: flex; gap: .5rem; margin: 0 0 0 auto; padding: 0 0 0 1.5rem; border-left: 1px solid #ffffff24; list-style: none; }
+.fuse-medal { display: grid; justify-items: center; gap: .4rem; min-width: 5.25rem; color: var(--haze); font-size: .9375rem; text-align: center; white-space: nowrap; }
 .fuse-medal__disc {
     display: grid;
     place-items: center;
-    width: 3.25rem;
-    height: 3.25rem;
-    border: 2px dashed #ffffff4d;
+    width: 4.5rem;
+    height: 4.5rem;
+    border: 3px dashed #ffffff4d;
     border-radius: 50%;
     color: var(--haze);
-    font: 700 .875rem/1 Poppins, system-ui, sans-serif;
+    font: 700 1.375rem/1 Poppins, system-ui, sans-serif;
+    /* Centre the digits themselves, not the taller line they sit in. */
+    text-box: trim-both cap alphabetic;
 }
-.fuse-medal[data-grade="bronze"] .fuse-medal__disc { border: 3px solid #e6ad7c; background: #b9773f; color: #1a1a2e; }
-.fuse-medal[data-grade="silver"] .fuse-medal__disc { border: 3px solid #e3e9f1; background: #9aa5b5; color: #1a1a2e; }
-.fuse-medal[data-grade="gold"] .fuse-medal__disc { border: 3px solid #ffe08a; background: #e0a526; color: #1a1a2e; }
-.fuse-medal[data-grade="current"] .fuse-medal__disc { border: 2px solid var(--orange); color: var(--cream); }
+.fuse-medal[data-grade="bronze"] .fuse-medal__disc { border: 4px solid #e6ad7c; background: #b9773f; color: #1a1a2e; }
+.fuse-medal[data-grade="silver"] .fuse-medal__disc { border: 4px solid #e3e9f1; background: #9aa5b5; color: #1a1a2e; }
+.fuse-medal[data-grade="gold"] .fuse-medal__disc { border: 4px solid #ffe08a; background: #e0a526; color: #1a1a2e; }
 
 @container fuse-home (max-width: 34rem) {
     .fuse-home__chips { width: 100%; }
     .fuse-chip { flex: 1 1 9rem; }
+}
+/* On a narrow screen the three steps drop under the badge, and the fuse keeps to the plain sky so its words stay clear. */
+@media (max-width: 36rem) {
+    .fuse-home { background-position: left bottom; }
+    .fuse-badge__steps { width: 100%; justify-content: space-around; margin: 0; padding: 1rem 0 0; border-top: 1px solid #ffffff24; border-left: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
     .fuse-home *, .fuse-home *::before, .fuse-home *::after { animation: none !important; transition: none !important; }

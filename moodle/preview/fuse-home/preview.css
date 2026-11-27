@@ -7,6 +7,8 @@ body { margin: 0; background: #fff8f0; }
 .preview-nav [aria-current] { color: #111; text-decoration: underline; text-underline-offset: .4em; }
 .preview-block { padding: 1.5rem; border: 2px dashed #c9b9aa; border-radius: 1rem; color: #4a4a5e; font: 700 1rem/1.4 system-ui, sans-serif; }
 .preview-block span { font-weight: 400; }
+/* The page already spaces its boxes. */
+.preview-page .fuse-badge { margin-top: 0; }
 .preview-controls {
     position: fixed;
     inset: auto 0 0 0;
