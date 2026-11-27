@@ -55,8 +55,9 @@
 a.fuse-chip span { text-decoration: underline; text-underline-offset: .2em; }
 
 /* The fuse itself. Its shapes are drawn in the page's script; these are their materials. */
-.fuse { position: relative; margin-top: clamp(.75rem, 2vw, 1.5rem); }
-.fuse__svg { display: block; width: 100%; height: auto; overflow: visible; }
+/* The drawing takes a row of its own; under it, what the latest bomb gave sits beside the month's XP. */
+.fuse { position: relative; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 1.25rem; margin-top: clamp(.75rem, 2vw, 1.5rem); }
+.fuse__svg { display: block; flex: none; width: 100%; height: auto; overflow: visible; }
 .fuse__rope, .fuse__sheen, .fuse__ash { fill: none; stroke-width: 11; stroke-linecap: round; }
 .fuse__rope { stroke: var(--rope); }
 /* A light edge along the top of the unburnt rope, so it reads as one smooth cord. */
@@ -99,9 +100,10 @@ a.fuse-chip span { text-decoration: underline; text-underline-offset: .2em; }
 
 .fuse__summary { color: var(--haze); font-size: .9375rem; font-weight: 700; }
 /* What the latest bomb gave. Empty until a bomb goes off. */
-.fuse__toast { min-height: 1.6em; margin-top: .25rem !important; color: #ffd36b; font-weight: 700; }
+.fuse__toast { color: #ffd36b; font-weight: 700; }
 
-.fuse-home__foot { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.25rem; margin-top: .5rem; }
+/* The button row has the same space above it as below. */
+.fuse-home__foot { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.25rem; margin-top: 1rem; }
 .fuse-home a.fuse-home__go {
     display: inline-flex;
     align-items: center;

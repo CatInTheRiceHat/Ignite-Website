@@ -7,9 +7,9 @@ const GRADES = ['bronze', 'silver', 'gold'];
 const TEAMS = { forgelings: 'Forgelings', candlelings: 'Candlelings', lanternlings: 'Lanternlings', '': '' };
 // Earlier months: the Embers they banked, and the streak they left running.
 const HISTORY = {
-    first: { month: 'December', next: 'January', banked: 0, streak: 1, photo: '../../local/ignite/pix/badges/202612.jpg' },
+    first: { month: 'December', year: 2026, next: 'January', banked: 0, streak: 1, photo: '../../local/ignite/pix/badges/202612.jpg' },
     // March has no picture of its own yet, so its badge is the drawn star.
-    later: { month: 'March', next: 'April', banked: 150, streak: 3, photo: '' },
+    later: { month: 'March', year: 2027, next: 'April', banked: 150, streak: 3, photo: '' },
 };
 const home = document.querySelector('.fuse-home');
 const controls = document.querySelector('.preview-controls');
@@ -77,7 +77,7 @@ function words() {
     badge.querySelector('.fuse-badge__photo').hidden = !past.photo;
     badge.querySelector('svg').style.display = past.photo ? 'none' : '';
     badge.querySelector('img').src = past.photo;
-    text('badge').textContent = `${past.month} badge`;
+    text('badge').textContent = `${past.month} ${past.year} Badge`;
     text('grade').textContent = earned ? grade[0].toUpperCase() + grade.slice(1) : 'Not earned yet';
     document.querySelectorAll('.fuse-badge__steps li').forEach((step, index) => {
         step.dataset.grade = index < earned ? GRADES[index] : '';

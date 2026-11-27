@@ -212,7 +212,8 @@ final class fuse {
             'streaknote' => get_string($streak ? 'fuse_streakkeep' : 'fuse_streakstart', 'local_ignite'),
             'embers' => get_string($balance === 1 ? 'fuse_ember' : 'fuse_embers', 'local_ignite', $balance),
             'shopurl' => (new \moodle_url('/local/ignite/shop.php'))->out(false),
-            'badge' => ['grade' => $grade, 'title' => get_string('fuse_badge', 'local_ignite', $monthname),
+            'badge' => ['grade' => $grade,
+                'title' => get_string('fuse_badge', 'local_ignite', userdate($now, '%B %Y', campfire::TIMEZONE)),
                 'gradelabel' => get_string('fuse_grade_' . $grade, 'local_ignite'), 'steps' => $steps,
                 'photo' => self::art($month)],
         ];

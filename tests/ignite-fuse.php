@@ -57,7 +57,7 @@ namespace {
     }
     function userdate(int $time, string $format, string $zone): string {
         return (new DateTimeImmutable('@' . $time))->setTimezone(new DateTimeZone($zone))
-            ->format(['%b' => 'M', '%B' => 'F'][$format]);
+            ->format(['%b' => 'M', '%B' => 'F', '%B %Y' => 'F Y'][$format]);
     }
     final class moodle_url {
         public function __construct(private string $path) {
@@ -163,7 +163,7 @@ namespace {
     check($home['streak'] === '1-week streak', 'XP this week starts a streak');
     check(json_decode($config['fusegoals'], true) === [$month => 100], 'The month keeps the goal it opened with');
     check($home['badge']['grade'] === 'bronze' && $home['badge']['gradelabel'] === 'Bronze' &&
-        str_ends_with($home['badge']['title'], ' badge') &&
+        $home['badge']['title'] === $period->format('F Y') . ' Badge' &&
         array_column($home['badge']['steps'], 'grade') === ['bronze', '', ''] &&
         array_column($home['badge']['steps'], 'drop') === [20, 30, 50],
         'After the 20 bomb, this month’s badge is Bronze, with Silver at 30 and Gold at 50 still to earn');
