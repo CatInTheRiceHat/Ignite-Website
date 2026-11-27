@@ -7,8 +7,8 @@ defined('MOODLE_INTERNAL') || die();
 
 /** The monthly fuse: proof XP burns a rope past two mini bombs to a big one, and each bomb drops Embers. */
 final class fuse {
-    /** About one course's worth of XP. At the usual 20 XP a time, the thirteenth graded activity finishes it. */
-    public const DEFAULT_GOAL = 250;
+    /** At the usual 20 XP a time, the fifteenth graded activity finishes it. */
+    public const DEFAULT_GOAL = 300;
     /** The bonus XP a finished fuse blasts onto the learner's team. */
     public const DEFAULT_BLAST = 150;
     /** Embers dropped by the first mini bomb, the second, and the big one. */
@@ -18,11 +18,11 @@ final class fuse {
     /** Embers for a team's place in a month's Campfire Cup, given to each member who added Team XP to it. */
     public const PLACES = [1 => 100, 2 => 50, 3 => 30];
 
-    /** The XP at which each bomb goes off: the first award, about halfway, and the goal. */
+    /** The XP at which each bomb goes off: a sixth of the way, halfway, and the goal. On a 300 XP fuse, 50, 150 and 300. */
     public static function marks(int $goal, int $award): array {
-        // A fuse is never shorter than three awards, so the three bombs stay apart.
-        $steps = max(3, intdiv($goal + $award - 1, $award));
-        return [$award, intdiv($steps + 1, 2) * $award, max($goal, 3 * $award)];
+        // A fuse is never shorter than three awards, so each bomb takes a new award to reach.
+        $goal = max($goal, 3 * $award);
+        return [intdiv($goal, 6), intdiv($goal, 2), $goal];
     }
 
     /** How many of a month's bombs the XP earned in it has set off. */

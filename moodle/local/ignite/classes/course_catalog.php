@@ -5,12 +5,14 @@ namespace local_ignite;
 
 defined('MOODLE_INTERNAL') || die();
 
-/** Audience, length and topic facts for the course catalog, plus its filter bar and one-click enrol. */
+/** Audience, length and topic facts for the course catalog and the Course overview, plus the catalog's filter bar and one-click enrol. */
 final class course_catalog {
     public const CATEGORY = 'Ignite catalog';
     public const AUDIENCES = ['For everyone', 'Grades 4–8', 'Grades 9–12', 'College & professional'];
     public const TOPICS = ['Technology & Design', 'Science', 'Money & Business', 'Civics & Careers', 'Life Skills', 'Math'];
     private const PAGES = ['course-index', 'course-index-category', 'course-search'];
+    /** The Dashboard and My courses, which both carry Moodle's Course overview. */
+    private const OVERVIEW = 'my-index';
 
     /** Create the field category and the three course fields once. Existing fields are left alone. */
     public static function ensure_fields(): void {
@@ -64,14 +66,7 @@ final class course_catalog {
         $data = $handler->get_instances_data(array_keys($courses), true);
         $facts = [];
         foreach ($courses as $course) {
-            $row = ['audience' => '', 'weeks' => '', 'topic' => '', 'action' => 'view'];
-            foreach ($data[$course->id] ?? [] as $controller) {
-                $short = $controller->get_field()->get('shortname');
-                if (in_array($short, ['ignite_audience', 'ignite_weeks', 'ignite_topic'], true)) {
-                    // Moodle returns option labels HTML-escaped; the page compares and prints plain text.
-                    $row[substr($short, 7)] = html_entity_decode((string)($controller->export_value() ?? ''), ENT_QUOTES);
-                }
-            }
+            $row = self::fields($data[$course->id] ?? []) + ['action' => 'view'];
             $context = \context_course::instance($course->id);
             if (is_enrolled($context, $USER, '', true)) {
                 $row['action'] = 'continue';
@@ -81,6 +76,39 @@ final class course_catalog {
             $facts[$course->id] = $row;
         }
         return $facts;
+    }
+
+    /** One course's audience, weeks and topic, from its custom field values. */
+    private static function fields(array $controllers): array {
+        $row = ['audience' => '', 'weeks' => '', 'topic' => ''];
+        foreach ($controllers as $controller) {
+            $short = $controller->get_field()->get('shortname');
+            if (in_array($short, ['ignite_audience', 'ignite_weeks', 'ignite_topic'], true)) {
+                // Moodle returns option labels HTML-escaped; the page compares and prints plain text.
+                $row[substr($short, 7)] = html_entity_decode((string)($controller->export_value() ?? ''), ENT_QUOTES);
+            }
+        }
+        return $row;
+    }
+
+    /** Course id => audience, weeks, topic, summary and teachers, for each course the learner is enrolled in. */
+    public static function cards(): array {
+        $courses = enrol_get_my_courses(['summary', 'summaryformat']);
+        $data = \core_course\customfield\course_handler::create()->get_instances_data(array_keys($courses), true);
+        $cards = [];
+        foreach ($courses as $course) {
+            // The card prints plain text, so the summary's markup goes and its entities are decoded.
+            $summary = format_text($course->summary, $course->summaryformat, ['context' => \context_course::instance($course->id)]);
+            $summary = trim(preg_replace('/\s+/u', ' ', html_entity_decode(strip_tags(str_replace('<', ' <', $summary)), ENT_QUOTES)));
+            $teachers = [];
+            foreach ((new \core_course_list_element($course))->get_course_contacts() as $userid => $contact) {
+                $teachers[] = ['name' => $contact['username'],
+                    'url' => (new \moodle_url('/user/view.php', ['id' => $userid, 'course' => SITEID]))->out(false)];
+            }
+            $cards[$course->id] = self::fields($data[$course->id] ?? []) +
+                ['summary' => \core_text::substr($summary, 0, 300), 'teachers' => $teachers];
+        }
+        return $cards;
     }
 
     /** The open, key-free self-enrolment instance of a course, or null. */
@@ -98,11 +126,16 @@ final class course_catalog {
 
     public static function footer(\core\hook\output\before_footer_html_generation $hook): void {
         global $PAGE;
-        if (!in_array($PAGE->pagetype, self::PAGES, true) || !isloggedin() || isguestuser()) {
+        $overview = $PAGE->pagetype === self::OVERVIEW;
+        if ((!$overview && !in_array($PAGE->pagetype, self::PAGES, true)) || !isloggedin() || isguestuser()) {
             return;
         }
         $version = get_config('local_ignite', 'version');
-        $json = json_encode(['facts' => self::facts(), 'audiences' => self::AUDIENCES, 'topics' => self::TOPICS,
+        // On the Course overview each card shows what the catalog shows, in place of the category line.
+        $json = $overview ? json_encode(['cards' => self::cards(), 'text' => [
+            'weeks' => get_string('catalog_weeks', 'local_ignite'),
+            'continue' => get_string('catalog_continue', 'local_ignite')]], JSON_HEX_TAG | JSON_HEX_AMP) :
+            json_encode(['facts' => self::facts(), 'audiences' => self::AUDIENCES, 'topics' => self::TOPICS,
             'enrolurl' => (new \moodle_url('/local/ignite/catalog_enrol.php'))->out(false),
             'sesskey' => sesskey(),
             'text' => ['title' => get_string('catalog_title', 'local_ignite'), 'audience' => get_string('catalog_audience', 'local_ignite'),

@@ -41,6 +41,19 @@
 .ignite-cat__action--quiet { background: #ffe9d6; color: #6b2d08 !important; }
 .ignite-cat__action--quiet:hover { background: #ffd9b8; }
 
+/* Course overview (Dashboard and My courses): each card shows what the catalog shows, in place of its category line. */
+.block_myoverview .categoryname { display: none !important; }
+.ignite-cat__more { display: grid; gap: .9rem; margin-top: .6rem; font-family: Nunito, system-ui, sans-serif; white-space: normal; }
+.ignite-cat__summary {
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+    margin: 0; color: #1a1a2e; line-height: 1.6;
+}
+.ignite-cat__teachers {
+    margin: 0; padding: .7rem 1rem; border-inline-start: 3px solid #f07b2a; border-radius: .65rem;
+    background: #fff8f0; color: #1a1a2e; font-size: .95rem; line-height: 1.6; overflow-wrap: anywhere;
+}
+.ignite-cat__teachers a { color: #1a1a2e; text-decoration: underline; text-underline-offset: .15em; }
+
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
     .coursebox[data-courseid] { transition: transform .18s ease, box-shadow .18s ease; }
     .coursebox[data-courseid]:hover { transform: translateY(-3px); }

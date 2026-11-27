@@ -17,13 +17,13 @@ const controls = document.querySelector('.preview-controls');
 const text = name => document.querySelector(`[data-text="${name}"]`);
 const plural = (count, word) => `${count} ${word}${count === 1 ? '' : 's'}`;
 // The fuse's length and the XP earned so far this month.
-const state = { goal: 250, xp: 100, team: 'forgelings', history: 'first', spent: false };
+const state = { goal: 300, xp: 100, team: 'forgelings', history: 'first', spent: false };
 let control;
 
-/** The XP at which each bomb goes off: the first award, about halfway, and the goal. As the plugin's fuse::marks(). */
+/** The XP at which each bomb goes off: a sixth of the way, halfway, and the goal. As the plugin's fuse::marks(). */
 function marks(goal) {
-    const steps = Math.max(3, Math.ceil(goal / XP));
-    return [XP, Math.floor((steps + 1) / 2) * XP, Math.max(goal, 3 * XP)];
+    const length = Math.max(goal, 3 * XP);
+    return [Math.floor(length / 6), Math.floor(length / 2), length];
 }
 
 /** Everything written around the fuse, and the numbers the fuse is drawn from. */

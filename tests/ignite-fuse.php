@@ -136,9 +136,11 @@ namespace {
     use local_ignite\xp;
 
     // Where the bombs sit, and what they give.
-    check(fuse::marks(100, 20) === [20, 60, 100], 'A 100 XP fuse has bombs at 20, 60 and 100 XP');
-    check(fuse::marks(140, 20) === [20, 80, 140], 'A 140 XP fuse has its second bomb at 80 XP');
-    check(fuse::marks(50, 20) === [20, 40, 60], 'A fuse is never shorter than three awards');
+    check(fuse::marks(300, 20) === [50, 150, 300], 'A 300 XP fuse has bombs at 50, 150 and 300 XP');
+    check(fuse::marks(100, 20) === [16, 50, 100], 'A 100 XP fuse has its bombs a sixth of the way, halfway and at the end');
+    check(fuse::marks(50, 20) === [10, 30, 60], 'A fuse is never shorter than three awards');
+    check(array_map(static fn(int $xp): int => fuse::bombs($xp, fuse::marks(60, 20)), [20, 40, 60]) === [1, 2, 3],
+        'On the shortest fuse each award sets off one bomb');
     check(fuse::bombs(0, [20, 60, 100]) === 0 && fuse::bombs(20, [20, 60, 100]) === 1 &&
         fuse::bombs(59, [20, 60, 100]) === 1 && fuse::bombs(60, [20, 60, 100]) === 2 &&
         fuse::bombs(250, [20, 60, 100]) === 3, 'A bomb goes off exactly when its XP is reached');
@@ -156,10 +158,10 @@ namespace {
     check(fuse::kept_for([202612 => 100, 202702 => 140], 202701) === 100 &&
         fuse::kept_for([202612 => 100, 202702 => 140], 202703) === 140, 'A month without its own goal keeps the one before it');
 
-    check(fuse::marks(fuse::DEFAULT_GOAL, xp::DEFAULT_AWARD) === [20, 140, 250],
-        'Out of the box a fuse is one course’s worth: 250 XP, with bombs at 20, 140 and 250');
-    check(fuse::bombs(240, [20, 140, 250]) === 2 && fuse::bombs(260, [20, 140, 250]) === 3,
-        'At 20 XP a time, twelve activities stop just short of a 250 XP fuse and the thirteenth finishes it');
+    check(fuse::marks(fuse::DEFAULT_GOAL, xp::DEFAULT_AWARD) === [50, 150, 300],
+        'Out of the box a fuse is 300 XP, with bombs at 50, 150 and 300');
+    check(array_map(static fn(int $xp): int => fuse::bombs($xp, [50, 150, 300]), [40, 60, 140, 160, 280, 300]) === [0, 1, 1, 2, 2, 3],
+        'At 20 XP a time, the third, eighth and fifteenth activities set off the bombs of a 300 XP fuse');
 
     check(fuse::DEFAULT_BLAST === 150, 'Out of the box the big bomb blasts 150 XP onto the team');
 
@@ -171,8 +173,8 @@ namespace {
     $month = (int)$period->format('Ym');
     $awards = [award($month, 20, $now), award($month, 20, $now)];
     $home = fuse::current();
-    check($home['xp'] === 40 && $home['goal'] === 100 && $home['marks'] === '20,60,100' && $home['key'] === '7-' . $month,
-        'Home reports 40 of 100 XP with bombs at 20, 60 and 100');
+    check($home['xp'] === 40 && $home['goal'] === 100 && $home['marks'] === '16,50,100' && $home['key'] === '7-' . $month,
+        'Home reports 40 of 100 XP with bombs at 16, 50 and 100');
     check($home['balance'] === 20 && $home['embers'] === '20 Embers', 'One bomb so far has banked 20 Embers');
     check($home['title'] === 'Your fuse is burning.' && $home['sub'] === '60 XP to the big bomb.' &&
         $home['summary'] === '40 of 100 XP burned this month', 'The burning fuse says how far there is to go');

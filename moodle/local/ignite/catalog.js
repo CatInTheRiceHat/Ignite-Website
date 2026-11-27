@@ -1,15 +1,10 @@
-/* Course catalog: facts, filters and one-click enrol on Moodle's own course boxes. */
+/* Course catalog: facts, filters and one-click enrol on Moodle's own course boxes.
+   Dashboard and My courses: the same facts on the cards of Moodle's Course overview. */
 (function () {
     'use strict';
     var node = document.getElementById('ignite-catalog-data');
     if (!node) { return; }
     var data = JSON.parse(node.textContent);
-    // Moodle titles this page with the site name; the catalog is simply "Courses".
-    var heading = document.querySelector('.page-header-headings h1');
-    if (heading && data.text.title) { heading.textContent = data.text.title; }
-    var boxes = Array.prototype.slice.call(document.querySelectorAll('.coursebox[data-courseid]'));
-    if (!boxes.length) { return; }
-    var state = {audience: '', topic: ''};
 
     function el(tag, className, text) {
         var made = document.createElement(tag);
@@ -18,15 +13,70 @@
         return made;
     }
 
-    boxes.forEach(function (box) {
-        var facts = data.facts[box.getAttribute('data-courseid')];
-        if (!facts || box.querySelector('.ignite-cat__foot')) { return; }
-        var foot = el('div', 'ignite-cat__foot');
+    /** A course's audience, weeks and topic as chips, or nothing when it has none of them. */
+    function chipsFor(facts) {
         var chips = el('ul', 'ignite-cat__chips');
         if (facts.audience) { chips.appendChild(el('li', 'ignite-cat__chip', facts.audience)); }
         if (facts.weeks) { chips.appendChild(el('li', 'ignite-cat__chip', data.text.weeks.replace('{$a}', facts.weeks))); }
         if (facts.topic) { chips.appendChild(el('li', 'ignite-cat__chip ignite-cat__chip--topic', facts.topic)); }
-        if (chips.children.length) { foot.appendChild(chips); }
+        return chips.children.length ? chips : null;
+    }
+
+    // The Course overview draws its cards after the page loads, and again on every search, filter and page change.
+    if (data.cards) {
+        var dress = function () {
+            Array.prototype.forEach.call(document.querySelectorAll('.block_myoverview [data-course-id]'), function (card) {
+                // The category line gives way to the course's own facts. Its screen-reader label goes with it.
+                var category = card.querySelector('.categoryname');
+                var label = category && category.previousElementSibling;
+                if (label && /sr-only|visually-hidden/.test(label.className)) { label.hidden = true; }
+                var facts = data.cards[card.getAttribute('data-course-id')];
+                var info = card.querySelector('.course-info-container');
+                if (!facts || !info || card.querySelector('.ignite-cat__more')) { return; }
+                var more = el('div', 'ignite-cat__more');
+                // The summary layout already prints the summary.
+                if (facts.summary && !card.querySelector('.summary')) { more.appendChild(el('p', 'ignite-cat__summary', facts.summary)); }
+                if (facts.teachers.length) {
+                    var teachers = el('p', 'ignite-cat__teachers');
+                    facts.teachers.forEach(function (teacher, index) {
+                        if (index) { teachers.appendChild(document.createTextNode(', ')); }
+                        var name = el('a', '', teacher.name);
+                        name.href = teacher.url;
+                        teachers.appendChild(name);
+                    });
+                    more.appendChild(teachers);
+                }
+                var chips = chipsFor(facts);
+                if (chips) { more.appendChild(chips); }
+                var course = card.querySelector('a.coursename');
+                if (course) {
+                    var go = el('a', 'ignite-cat__action', data.text['continue']);
+                    go.href = course.href;
+                    more.appendChild(go);
+                }
+                info.appendChild(more);
+            });
+        };
+        dress();
+        Array.prototype.forEach.call(document.querySelectorAll('.block_myoverview'), function (block) {
+            new MutationObserver(dress).observe(block, {childList: true, subtree: true});
+        });
+        return;
+    }
+
+    // Moodle titles this page with the site name; the catalog is simply "Courses".
+    var heading = document.querySelector('.page-header-headings h1');
+    if (heading && data.text.title) { heading.textContent = data.text.title; }
+    var boxes = Array.prototype.slice.call(document.querySelectorAll('.coursebox[data-courseid]'));
+    if (!boxes.length) { return; }
+    var state = {audience: '', topic: ''};
+
+    boxes.forEach(function (box) {
+        var facts = data.facts[box.getAttribute('data-courseid')];
+        if (!facts || box.querySelector('.ignite-cat__foot')) { return; }
+        var foot = el('div', 'ignite-cat__foot');
+        var chips = chipsFor(facts);
+        if (chips) { foot.appendChild(chips); }
         var link = box.querySelector('.coursename a');
         var courseurl = link ? link.href : '#';
         var action;
