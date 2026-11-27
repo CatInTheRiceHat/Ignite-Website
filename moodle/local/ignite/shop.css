@@ -1,7 +1,11 @@
 /* Shop: what a learner's saved embers can be cashed in for. */
 /* On Moodle the Shop fills the page: no side padding, no page heading, nothing under it. */
-.ignite-shop-page #page.drawers { padding-inline: 0; background: none; }
-.ignite-shop-page #page.drawers .main-inner { width: 100%; max-width: none; margin: 0 auto; padding: 0; border: 0; box-shadow: none; }
+/* Each rule is written to outrank the theme rule it replaces, whichever stylesheet loads first. */
+html body.ignite-shop-page #page.drawers { padding-inline: 0; background: none; }
+html body.ignite-shop-page #page.drawers .main-inner { width: 100%; max-width: none; margin: 0 auto; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
+/* The theme pads the main area by 15px each side on a white ground, which showed as a white line down the Shop's edges. */
+html body.ignite-shop-page #page.drawers div[role="main"] { padding-inline: 0; }
+html body.ignite-shop-page #page.drawers #region-main { padding: 0; border: 0; background: none; }
 .ignite-shop-page #page-header { display: none; }
 .ignite-shop-page #page-content { padding-bottom: 0 !important; }
 /* The page stops dead at its ends rather than bouncing, and anything a browser still shows beyond the foot is floor-coloured, not white. */
