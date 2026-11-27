@@ -30,10 +30,13 @@ final class xp {
         $period = $DB->get_field_sql('SELECT m.conditiontype FROM {local_ignite_milestone} m
             JOIN {local_ignite_challenge} c ON c.id = m.challengeid
             WHERE m.cmid = ? AND c.active = 1 AND c.timestart <= ? AND c.timeend > ?', [$cm->id, $when, $when]);
-        if ($personal === 'complete' || $period === 'complete') {
-            return 'complete';
+        $designated = $personal === 'complete' || $period === 'complete' ? 'complete' : ($personal ?? ($period ?: null));
+        // With the monthly fuse on, every activity that completes by its grade earns XP without being designated.
+        if ($designated === null && access::enabled('fuse') && (int)$cm->completion === 2 &&
+                $cm->completiongradeitemnumber !== null) {
+            return empty($cm->completionpassgrade) ? 'complete' : 'pass';
         }
-        return $personal ?? ($period ?: null);
+        return $designated;
     }
 
     public static function observe(\core\event\course_module_completion_updated $event): void {
@@ -101,6 +104,10 @@ final class xp {
         }
         $cm = get_fast_modinfo($course, $userid)->get_cms()[$cmid] ?? null;
         if (!$cm || !($condition = self::condition($cm, $when))) {
+            return;
+        }
+        // A box the learner ticks themselves is not proof of anything, so it earns no XP once the fuse is on.
+        if (access::enabled('fuse') && (int)$cm->completion === 1) {
             return;
         }
         require_once($CFG->libdir . '/completionlib.php');
@@ -175,7 +182,7 @@ final class xp {
         require_once($CFG->libdir . '/completionlib.php');
         $cmid = (int)$PAGE->cm->id;
         $receipt = self::receipts([$cmid])[$cmid] ?? null;
-        if ($PAGE->cm->completion == COMPLETION_TRACKING_MANUAL) {
+        if ($PAGE->cm->completion == COMPLETION_TRACKING_MANUAL && !access::enabled('fuse')) {
             $hook->add_html($hook->renderer->render_from_template('local_ignite/manual_xp_receipt',
                 ['cmid' => $cmid, 'contextid' => $PAGE->cm->context->id, 'receipt' => $receipt]));
         } else if ($receipt) {
@@ -194,17 +201,21 @@ final class xp {
             'withinlevel' => $points % $step, 'levelstep' => $step];
     }
 
+    /** Team XP as it is shown: the XP itself once the monthly fuse is on, and half of it before. */
     public static function team_points(int $halves): string {
-        return intdiv($halves, 2) . ($halves % 2 ? '.5' : '');
+        return access::enabled('fuse') ? (string)$halves : intdiv($halves, 2) . ($halves % 2 ? '.5' : '');
     }
 
     public static function team_current(): string {
         global $DB;
         $userid = access::learner('houses');
-        // Each Regular XP on an attributed award is exactly one half-unit of Team XP.
-        $halves = (int)$DB->get_field_sql('SELECT SUM(x.regularxp) FROM {local_ignite_xp} x
-            JOIN {local_ignite_member} m ON m.houseid = x.houseid
-            WHERE m.userid = ? AND x.earnmonth = ? AND x.reversed = 0', [$userid, self::month(time())]);
-        return self::team_points($halves);
+        $houseid = (int)$DB->get_field('local_ignite_member', 'houseid', ['userid' => $userid]);
+        if (!$houseid) {
+            return self::team_points(0);
+        }
+        $month = self::month(time());
+        $halves = (int)$DB->get_field_sql('SELECT SUM(regularxp) FROM {local_ignite_xp}
+            WHERE houseid = ? AND earnmonth = ? AND reversed = 0', [$houseid, $month]);
+        return self::team_points($halves + (fuse::blasts($month)['teams'][$houseid] ?? 0));
     }
 }

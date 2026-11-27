@@ -42,6 +42,16 @@ final class campfire_cup {
         } finally {
             $records->close();
         }
+        // A finished fuse's blast counts for the team, and for the learner who set it off.
+        foreach (fuse::blasts($month)['users'] as $userid => $blast) {
+            if (isset($codes[$blast['houseid']])) {
+                $team = $codes[$blast['houseid']];
+                $totals[$team] += $blast['xp'];
+                if (isset($contributions[$userid][$team])) {
+                    $contributions[$userid][$team] += $blast['xp'];
+                }
+            }
+        }
         $winners = campfire::winners($totals);
         $recipients = [];
         foreach ($contributions as $userid => $points) {

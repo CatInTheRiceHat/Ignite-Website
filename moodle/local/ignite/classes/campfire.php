@@ -65,9 +65,12 @@ final class campfire {
             GROUP BY houseid", $params);
         $published = $period < $current ? $DB->get_record('local_ignite_cup', ['earnmonth' => $params['month']]) : null;
         $scores = $published ? json_decode($published->totals, true) : [];
+        // A finished fuse blasts bonus XP onto the learner's team. Published months already carry theirs.
+        $blasts = fuse::blasts($params['month']);
         foreach ($ids as $code => $id) {
-            $scores[$code] ??= (int)($totals[$id]->total ?? 0);
+            $scores[$code] ??= (int)($totals[$id]->total ?? 0) + ($blasts['teams'][$id] ?? 0);
         }
+        $blast = $blasts['users'][$userid] ?? null;
         $chooseurl = '';
         $houseid = 0;
         if (access::enabled('houses')) {
@@ -80,19 +83,26 @@ final class campfire {
         $rows = [];
         foreach (self::ranks($scores) as $code => $rank) {
             $champion = $published && $rank === 1 && $scores[$code] > 0;
+            $own = (int)($totals[$ids[$code]]->own ?? 0) + ($blast && $blast['houseid'] === (int)$ids[$code] ? $blast['xp'] : 0);
             $rows[] = ['code' => $code, 'name' => self::TEAMS[$code], 'halves' => $scores[$code], 'rank' => $rank,
-                'ownhalves' => (int)($totals[$ids[$code]]->own ?? 0),
+                'ownhalves' => $own,
                 'representing' => $period == $current && (int)$houseid === (int)$ids[$code],
                 'champion' => $champion, 'trophy' => $champion ? campfire_cup::title($params['month']) : '',
-                'total' => xp::team_points($scores[$code]), 'own' => xp::team_points((int)($totals[$ids[$code]]->own ?? 0)),
+                'total' => xp::team_points($scores[$code]), 'own' => xp::team_points($own),
                 'art' => $OUTPUT->image_url('campfire/' . $code, 'local_ignite')->out(false)];
         }
+        // The latest big bombs on the member's own team this month, newest first and without names.
+        $feed = array_filter($blasts['users'], static fn(array $shared): bool => $houseid && $shared['houseid'] === (int)$houseid);
+        usort($feed, static fn(array $one, array $other): int => $other['time'] <=> $one['time']);
+        $feed = array_map(static fn(array $shared): string => get_string('home_blast', 'local_ignite', (object)[
+            'xp' => xp::team_points($shared['xp']), 'ago' => format_time(max(60, $now - $shared['time']))]), array_slice($feed, 0, 5));
         $url = static fn($date) => (new \moodle_url('/local/ignite/passport.php',
             $date == $current ? [] : ['month' => $date->format('Y-m')], 'campfire-standings'))->out(false);
         return ['chooseurl' => $chooseurl,
             'learnurl' => (new \moodle_url(empty($CFG->enablemycourses) ? '/course/index.php' : '/my/courses.php'))->out(false),
             'cupart' => $rows[0]['champion'] ? $OUTPUT->image_url('campfire/cup', 'local_ignite')->out(false) : '',
             'reviewneeded' => !empty($published->reviewneeded), 'awaitingclose' => $period < $current && !$published,
+            'feed' => $period == $current ? $feed : [],
             'live' => $month === '', 'archives' => $current > $first,
             'rolloverseconds' => $current->modify('+1 month')->getTimestamp() - $now,
             'month' => userdate($period->getTimestamp(), '%B %Y', self::TIMEZONE),
@@ -154,6 +164,7 @@ final class campfire {
             'firesheading' => get_string('home_fires', 'local_ignite', $month),
             'heatends' => get_string('home_heatends', 'local_ignite', $month),
             'timeleft' => self::timeleft($standings['rolloverseconds']), 'rolloverseconds' => $standings['rolloverseconds'],
-            'fires' => $fires, 'contribution' => $contribution, 'learnurl' => $standings['learnurl']];
+            'fires' => $fires, 'contribution' => $contribution, 'learnurl' => $standings['learnurl'],
+            'feed' => $standings['feed'], 'hasfeed' => (bool)$standings['feed']];
     }
 }

@@ -22,7 +22,7 @@ if ($hassiteconfig && has_capability('local/ignite:configure', context_system::i
     $settings->add(new \local_ignite\admin\selection_route_setting('local_ignite/hearthselectionroute',
         get_string('selectionroute', 'local_ignite'), get_string('selectionroute_desc', 'local_ignite'), '', PARAM_RAW));
     foreach (['xpaward' => \local_ignite\xp::DEFAULT_AWARD, 'xplevelstep' => \local_ignite\xp::DEFAULT_LEVEL_STEP,
-            'fusegoal' => \local_ignite\fuse::DEFAULT_GOAL] as $key => $default) {
+            'fusegoal' => \local_ignite\fuse::DEFAULT_GOAL, 'fuseblast' => \local_ignite\fuse::DEFAULT_BLAST] as $key => $default) {
         $settings->add(new admin_setting_configtext('local_ignite/' . $key, get_string($key, 'local_ignite'),
             get_string($key . '_desc', 'local_ignite'), $default, '/^[1-9][0-9]{0,8}$/', 9));
     }

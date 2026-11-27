@@ -3,13 +3,14 @@
 // small stand-ins for the Moodle functions they call. Run with: php tests/ignite-fuse.php
 // With --json it also prints the data the Home and Shop templates receive.
 namespace local_ignite {
-    /** Stand-in for the plugin's access checks: one signed-in learner, every feature on. */
+    /** Stand-in for the plugin's access checks: one signed-in learner, and a fuse switch the checks can flip. */
     final class access {
+        public static bool $fuse = true;
         public static function learner(?string $feature = null): int {
             return 7;
         }
         public static function enabled(?string $feature = null): bool {
-            return true;
+            return $feature !== 'fuse' || self::$fuse;
         }
     }
 }
@@ -24,6 +25,8 @@ namespace {
     require $plugin . '/lang/en/local_ignite.php';
     $config = [];
     $awards = [];
+    $shares = []; // Every learner's proof XP by team for a month, as the blast query groups it.
+    $team = 0; // The signed-in learner's team.
 
     function get_config(string $component, string $name) {
         global $config;
@@ -53,13 +56,23 @@ namespace {
             return $this->path;
         }
     }
-    /** Hands back the learner's awards, after checking the query asks only for proof XP. */
+    /** Hands back sample awards, after checking each query asks only for standing proof XP. */
     final class fixture_db {
         public function get_records_sql(string $sql, array $params): array {
-            global $awards;
-            check(str_contains($sql, "x.conditiontype = 'pass' OR cm.completiongradeitemnumber IS NOT NULL") &&
-                str_contains($sql, 'x.reversed = 0') && $params === [7], 'Only the learner’s own, standing proof XP is read');
+            global $awards, $shares;
+            $proof = str_contains($sql, "x.conditiontype = 'pass' OR cm.completiongradeitemnumber IS NOT NULL") &&
+                str_contains($sql, 'x.reversed = 0');
+            if (str_contains($sql, 'GROUP BY x.userid, x.houseid')) {
+                check($proof && count($params) === 1, 'Blasts are worked out from one month of standing proof XP');
+                return $shares;
+            }
+            check($proof && $params === [7], 'Only the learner’s own, standing proof XP is read');
             return $awards;
+        }
+        public function get_field(string $table, string $field, array $conditions) {
+            global $team;
+            check($table === 'local_ignite_member' && $field === 'houseid' && $conditions === ['userid' => 7], 'The learner’s own team is looked up');
+            return $team ?: false;
         }
     }
     final class fixture_output {
@@ -76,6 +89,9 @@ namespace {
         }
         fwrite(STDERR, "PASS $message\n");
     }
+    function share(int $userid, int $houseid, int $xp, int $latest): stdClass {
+        return (object)['userid' => $userid, 'houseid' => $houseid, 'xp' => $xp, 'latest' => $latest];
+    }
     function award(int $month, int $xp, int $time): stdClass {
         static $id = 0;
         return (object)['id' => ++$id, 'earnmonth' => $month, 'regularxp' => $xp, 'timeearned' => $time];
@@ -88,6 +104,7 @@ namespace {
     use local_ignite\campfire;
     use local_ignite\fuse;
     use local_ignite\shop;
+    use local_ignite\xp;
 
     // Where the bombs sit, and what they give.
     check(fuse::marks(100, 20) === [20, 60, 100], 'A 100 XP fuse has bombs at 20, 60 and 100 XP');
@@ -96,8 +113,8 @@ namespace {
     check(fuse::bombs(0, [20, 60, 100]) === 0 && fuse::bombs(20, [20, 60, 100]) === 1 &&
         fuse::bombs(59, [20, 60, 100]) === 1 && fuse::bombs(60, [20, 60, 100]) === 2 &&
         fuse::bombs(250, [20, 60, 100]) === 3, 'A bomb goes off exactly when its XP is reached');
-    check([fuse::embers(0), fuse::embers(1), fuse::embers(2), fuse::embers(3)] === [0, 2, 5, 10],
-        'The bombs drop 2, 3 and 5 Embers, 10 for a whole fuse');
+    check([fuse::embers(0), fuse::embers(1), fuse::embers(2), fuse::embers(3)] === [0, 20, 50, 100],
+        'The bombs drop 20, 30 and 50 Embers, 100 for a whole fuse');
 
     // Weeks run Monday to Sunday in Campfire time.
     $zone = new DateTimeZone(campfire::TIMEZONE);
@@ -107,10 +124,19 @@ namespace {
     check(fuse::streak([10, 9, 8, 6], 10) === 3, 'A streak counts back through weeks without a gap');
     check(fuse::streak([9, 8], 10) === 2, 'A streak survives the current week until it ends');
     check(fuse::streak([8], 10) === 0 && fuse::streak([], 10) === 0, 'A missed week ends the streak');
-    check(fuse::goal_for([202612 => 100, 202702 => 140], 202701) === 100 &&
-        fuse::goal_for([202612 => 100, 202702 => 140], 202703) === 140, 'A month without its own goal keeps the one before it');
+    check(fuse::kept_for([202612 => 100, 202702 => 140], 202701) === 100 &&
+        fuse::kept_for([202612 => 100, 202702 => 140], 202703) === 140, 'A month without its own goal keeps the one before it');
 
-    // A learner's first month: two passes so far.
+    check(fuse::marks(fuse::DEFAULT_GOAL, xp::DEFAULT_AWARD) === [20, 140, 250],
+        'Out of the box a fuse is one course’s worth: 250 XP, with bombs at 20, 140 and 250');
+    check(fuse::bombs(240, [20, 140, 250]) === 2 && fuse::bombs(260, [20, 140, 250]) === 3,
+        'At 20 XP a time, twelve activities stop just short of a 250 XP fuse and the thirteenth finishes it');
+
+    check(fuse::DEFAULT_BLAST === 150, 'Out of the box the big bomb blasts 150 XP onto the team');
+
+    // A learner's first month on a 100 XP fuse with a 50 XP blast: two passes so far.
+    $config['fusegoal'] = 100;
+    $config['fuseblast'] = 50;
     $now = time();
     $period = campfire::period($now);
     $month = (int)$period->format('Ym');
@@ -118,7 +144,7 @@ namespace {
     $home = fuse::current();
     check($home['xp'] === 40 && $home['goal'] === 100 && $home['marks'] === '20,60,100' && $home['key'] === '7-' . $month,
         'Home reports 40 of 100 XP with bombs at 20, 60 and 100');
-    check($home['balance'] === 2 && $home['embers'] === '2 Embers', 'One bomb so far has banked 2 Embers');
+    check($home['balance'] === 20 && $home['embers'] === '20 Embers', 'One bomb so far has banked 20 Embers');
     check($home['title'] === 'Your fuse is burning.' && $home['sub'] === '60 XP to the big bomb.' &&
         $home['summary'] === '40 of 100 XP burned this month', 'The burning fuse says how far there is to go');
     check($home['streak'] === '1-week streak', 'XP this week starts a streak');
@@ -126,12 +152,12 @@ namespace {
     $current = array_values(array_filter($home['shelf'], static fn($medal) => $medal['grade'] !== 'upcoming'));
     check(count($current) === 1 && $current[0]['grade'] === 'bronze' && count($home['shelf']) === 3,
         'The shelf shows this month in bronze and the two months to come');
-    check(str_contains($home['boom3'], 'Gold') && str_contains($home['boom1'], '+2 Embers'), 'Each bomb has its message');
+    check(str_contains($home['boom3'], 'Gold') && str_contains($home['boom1'], '+20 Embers'), 'Each bomb has its message');
 
     // Staff lengthen the fuse mid-month: this month is unchanged.
     $config['fusegoal'] = 200;
     check(fuse::current()['goal'] === 100, 'A new fuse length waits for the next month');
-    unset($config['fusegoal']);
+    $config['fusegoal'] = 100;
 
     // Three months in: a gold month, a missed month, and two bombs this month.
     $two = $period->modify('-2 months');
@@ -146,7 +172,7 @@ namespace {
     $later = fuse::current();
     $grades = array_column($later['shelf'], 'grade');
     check($grades === ['gold', 'missed', 'silver', 'upcoming', 'upcoming'], 'Past months keep their best grade, or none');
-    check($later['balance'] === 15 && $later['xp'] === 60, 'Embers add up across months: 10 from the gold month and 5 from this one');
+    check($later['balance'] === 150 && $later['xp'] === 60, 'Embers add up across months: 100 from the gold month and 50 from this one');
     check($later['goal'] === 100, 'A month with no goal of its own carries the earlier one forward');
 
     // A finished fuse, and nothing yet.
@@ -160,7 +186,7 @@ namespace {
     check($unlit['xp'] === 0 && $unlit['balance'] === 0 && $unlit['title'] === 'Light the fuse.' &&
         $unlit['embers'] === '0 Embers' && $unlit['streak'] === 'No streak yet', 'A learner with no XP sees an unlit fuse');
 
-    // The Shop, with 15 Embers saved.
+    // The Shop, with 150 Embers saved.
     $config['fusegoals'] = json_encode([(int)$two->format('Ym') => 100]);
     $awards = [];
     for ($pass = 0; $pass < 6; $pass++) {
@@ -170,12 +196,12 @@ namespace {
         $awards[] = award($month, 20, $now);
     }
     $shop = shop::data();
-    check($shop['balance'] === 15 && array_column($shop['tiers'], 'name') === ['Kindling', 'Flame', 'Blaze', 'Bonfire'] &&
-        array_column($shop['tiers'], 'price') === [5, 10, 25, 50], 'The Shop lists four tiers at 5, 10, 25 and 50 Embers');
+    check($shop['balance'] === 150 && array_column($shop['tiers'], 'name') === ['Kindling', 'Flame', 'Blaze', 'Bonfire'] &&
+        array_column($shop['tiers'], 'price') === [50, 100, 250, 500], 'The Shop lists four tiers at 50, 100, 250 and 500 Embers');
     check(array_column($shop['tiers'], 'status') === ['You have enough for one of these!', 'You have enough for one of these!',
-        '10 more to go', '35 more to go'], 'Each tier says whether the learner can afford it');
+        '100 more to go', '350 more to go'], 'Each tier says whether the learner can afford it');
     check(array_map(static fn($tier) => count($tier['prizes']), $shop['tiers']) === [3, 3, 3, 1] &&
-        $shop['tiers'][3]['prizes'][0]['name'] === 'Carry the Torch Tote' && $shop['tiers'][3]['pricelabel'] === '50 Embers',
+        $shop['tiers'][3]['prizes'][0]['name'] === 'Carry the Torch Tote' && $shop['tiers'][3]['pricelabel'] === '500 Embers',
         'All ten prizes are listed, with the tote alone in Bonfire');
     foreach ($shop['tiers'] as $tier) {
         foreach ($tier['prizes'] as $prize) {
@@ -184,8 +210,43 @@ namespace {
         }
     }
 
+    // The big bomb's blast for a team.
+    $blasts = fuse::share([share(1, 11, 60, 500), share(1, 12, 40, 900), share(2, 11, 100, 300), share(3, 12, 80, 100),
+        share(4, 0, 120, 50), share(5, 11, 40, 10), share(5, 0, 60, 20)], 100, 50);
+    check($blasts['teams'] === [12 => 50, 11 => 50], 'Each finished fuse blasts the bonus onto one team');
+    check($blasts['users'][1] === ['houseid' => 12, 'xp' => 50, 'time' => 900],
+        'XP earned with two teams counts together, and the blast goes to the team of the latest award');
+    check(!isset($blasts['users'][3]), 'An unfinished fuse blasts nothing');
+    check(!isset($blasts['users'][4]) && !isset($blasts['users'][5]), 'A learner with no team at the end blasts nothing');
+    $config['fusegoals'] = json_encode([$month => 100]);
+    $shares = [share(7, 11, 100, $now), share(8, 12, 140, $now)];
+    check(fuse::blasts($month)['teams'] === [11 => 50, 12 => 50] && fuse::blasts($month)['users'][7]['xp'] === 50,
+        'This month’s blasts use this month’s fuse length and blast');
+    $config['fuseblast'] = 150;
+    check(fuse::blasts($month)['teams'] === [11 => 50, 12 => 50], 'A new blast size waits for the next month');
+    check(fuse::blasts((int)$two->format('Ym')) === ['teams' => [], 'users' => []], 'Months before the fuse began have no blasts');
+    local_ignite\access::$fuse = false;
+    check(fuse::blasts($month) === ['teams' => [], 'users' => []] && xp::team_points(25) === '12.5',
+        'With the switch off there are no blasts and Team XP is still half the XP');
+    local_ignite\access::$fuse = true;
+    check(xp::team_points(25) === '25' && xp::team_points(0) === '0', 'With the switch on, Team XP equals the XP earned');
+
+    // A learner on a team is told what the big bomb does for it.
+    $config['campfireids'] = json_encode(['lanternlings' => 10, 'forgelings' => 11, 'candlelings' => 12]);
+    $team = 11;
+    $awards = [award($month, 100, $now)];
+    $teamed = fuse::current();
+    check(str_contains($teamed['sub'], 'blasted +50 XP onto the Forgelings’ fire') &&
+        str_contains($teamed['boom3'], '+50 XP blasted onto the Forgelings’ fire') &&
+        str_contains($teamed['legend'], 'blasts +50 XP onto the Forgelings’ fire'), 'A learner on a team sees what their big bomb adds to it');
+    $team = 0;
+    $alone = fuse::current();
+    check(!str_contains($alone['sub'] . $alone['boom3'] . $alone['legend'], 'blast'), 'A learner without a team is not promised a blast');
+    $team = 11;
+    $home = $teamed;
+
     if (in_array('--json', $argv, true)) {
-        echo json_encode(['home' => $later, 'done' => $done, 'unlit' => $unlit, 'shop' => $shop, 'strings' => $string]);
+        echo json_encode(['home' => $later, 'teamed' => $home, 'done' => $done, 'unlit' => $unlit, 'shop' => $shop, 'strings' => $string]);
     }
     fwrite(STDERR, "All fuse and Shop checks passed\n");
 }

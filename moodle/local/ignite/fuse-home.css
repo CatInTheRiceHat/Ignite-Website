@@ -84,6 +84,9 @@ a.fuse-chip span { text-decoration: underline; text-underline-offset: .2em; }
 .fuse__smoulder { stroke: #ff8a2a; filter: drop-shadow(0 0 6px #ff8a2a); }
 .fuse__body circle { fill: #1c1930; stroke: #575170; stroke-width: 2.5; }
 .fuse__shine { fill: #fff; opacity: .4; }
+/* The Embers a bomb drops, written on it and on the star it leaves; sized to the bomb where it is drawn. */
+.fuse__count { fill: var(--cream); font-family: Poppins, system-ui, sans-serif; font-weight: 700; text-anchor: middle; dominant-baseline: central; }
+.fuse__medal .fuse__count { fill: #1a1a2e; }
 .fuse__cap { fill: #575170; }
 .fuse__wick { fill: none; stroke: var(--rope); stroke-width: 3; stroke-linecap: round; }
 .fuse__spark-tip { fill: #ffd36b; }
@@ -97,14 +100,13 @@ a.fuse-chip span { text-decoration: underline; text-underline-offset: .2em; }
 .fuse__medal, .fuse__bomb.is-exploded .fuse__body { display: none; }
 .fuse__bomb.is-exploded .fuse__medal { display: inline; }
 .fuse__burst { fill: var(--orange); opacity: .45; }
-.fuse__star { fill: #fff8f0; opacity: .85; }
+.fuse__star { fill: #fff8f0; }
 .fuse__medal circle { stroke-width: 2.5; }
 .fuse__medal[data-grade="bronze"] circle { fill: #b9773f; stroke: #e6ad7c; }
 .fuse__medal[data-grade="silver"] circle { fill: #9aa5b5; stroke: #e3e9f1; }
 .fuse__medal[data-grade="gold"] circle { fill: #e0a526; stroke: #ffe08a; }
 
 .fuse__flame.is-out { display: none; }
-.fuse__glow { fill: var(--orange); opacity: .45; filter: blur(9px); }
 .fuse__flame-shape { fill: #ff8a2a; transform-box: fill-box; transform-origin: 50% 100%; animation: fuse-flicker .45s ease-in-out infinite alternate; }
 .fuse__flame-core { fill: #ffd36b; animation-duration: .3s; }
 .fuse__spark { fill: #ffd36b; animation: fuse-spark 1.1s ease-out infinite; }

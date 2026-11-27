@@ -54,7 +54,11 @@
 
             // The flame is drawn before the bombs, so it burns in under a bomb it is about to reach.
             const flame = draw(svg, 'g', { class: 'fuse__flame' });
-            draw(flame, 'circle', { class: 'fuse__glow', r: 38 });
+            // The glow fades out through a gradient of its own, which every browser draws the same way.
+            const glow = draw(draw(svg, 'defs'), 'radialGradient', { id: 'fuse-glow-' + Math.random().toString(36).slice(2) });
+            draw(glow, 'stop', { offset: '0', 'stop-color': '#f07b2a', 'stop-opacity': .75 });
+            draw(glow, 'stop', { offset: '1', 'stop-color': '#f07b2a', 'stop-opacity': 0 });
+            draw(flame, 'circle', { class: 'fuse__glow', r: 46, fill: `url(#${glow.id})` });
             [-8, 3, 9].forEach((drift, index) => draw(flame, 'circle', { class: 'fuse__spark', r: 2.2,
                 style: `--dx: ${drift}px; animation-delay: ${index * -.37}s` }));
             draw(flame, 'path', { class: 'fuse__flame-shape', d: 'M0 7C-13 7-17-6-9-17-6-11-3-14 0-33 7-20 17-11 13 0 11 7 6 7 0 7Z' });
@@ -76,16 +80,22 @@
                 draw(body, 'circle', { r: radius });
                 draw(body, 'ellipse', { class: 'fuse__shine', cx: -radius * .35, cy: -radius * .4, rx: radius * .28, ry: radius * .17,
                     transform: `rotate(-35 ${-radius * .35} ${-radius * .4})` });
+                // The Embers it drops are written on the bomb, and on the star it leaves behind.
+                draw(body, 'text', { class: 'fuse__count', 'font-size': radius * .8 }).textContent = drops[index];
                 const medal = draw(group, 'g', { class: 'fuse__medal', 'data-grade': GRADES[index] });
                 draw(medal, 'polygon', { class: 'fuse__burst', points: star(12, radius * 1.5, radius * 1.12) });
                 draw(medal, 'circle', { r: radius * .92 });
-                draw(medal, 'polygon', { class: 'fuse__star', points: star(5, radius * .55, radius * .24) });
+                draw(medal, 'polygon', { class: 'fuse__star', points: star(5, radius * .84, radius * .44) });
+                draw(medal, 'text', { class: 'fuse__count', 'font-size': radius * .6 }).textContent = drops[index];
                 // What the bomb drops: an Ember icon and how many.
                 const label = draw(group, 'g', { class: 'fuse__label', transform: `translate(0 ${radius * 1.5 + 18})` });
-                const icon = draw(label, 'g', { transform: 'translate(-21 -14) scale(.7)' });
+                const amount = '+' + drops[index];
+                // The icon and the number sit side by side, centred as a pair: about 10 units for each character.
+                const start = -(19 + amount.length * 10) / 2;
+                const icon = draw(label, 'g', { transform: `translate(${start} -14) scale(.7)` });
                 draw(icon, 'path', { class: 'fuse__coin', d: EMBER[0] });
                 draw(icon, 'path', { class: 'fuse__coin-core', d: EMBER[1] });
-                draw(label, 'text', { x: -2 }).textContent = '+' + drops[index];
+                draw(label, 'text', { x: start + 19 }).textContent = amount;
                 return { at, big, group, centre, radius, along, says: home.dataset['boom' + (index + 1)] };
             });
             scene = { left, level, ash, smoulder, bombs, flame, total, fx: draw(svg, 'g') };

@@ -9,10 +9,10 @@ defined('MOODLE_INTERNAL') || die();
 final class shop {
     /** Each tier's price in Embers and its prizes, cheapest tier first. A prize's code names its photo and its words. */
     public const TIERS = [
-        'kindling' => [5, ['button-pin', 'sticky-notes', 'sticker']],
-        'flame' => [10, ['enamel-pin', 'keychain', 'pen']],
-        'blaze' => [25, ['pencil-pouch', 'notebook', 'sol-mate']],
-        'bonfire' => [50, ['tote']],
+        'kindling' => [50, ['button-pin', 'sticky-notes', 'sticker']],
+        'flame' => [100, ['enamel-pin', 'keychain', 'pen']],
+        'blaze' => [250, ['pencil-pouch', 'notebook', 'sol-mate']],
+        'bonfire' => [500, ['tote']],
     ];
 
     public static function data(): array {
