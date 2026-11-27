@@ -37,6 +37,8 @@ namespace {
     $awards = [];
     $shares = []; // Every learner's proof XP by team for a month, as the blast query groups it.
     $team = 0; // The signed-in learner's team.
+    $cups = []; // Published Campfire Cups: each closed month's team totals, as they are stored.
+    $sides = []; // The signed-in learner's standing awards with a team, oldest first.
 
     function get_config(string $component, string $name) {
         global $config;
@@ -69,7 +71,12 @@ namespace {
     /** Hands back sample awards, after checking each query asks only for standing proof XP. */
     final class fixture_db {
         public function get_records_sql(string $sql, array $params): array {
-            global $awards, $shares;
+            global $awards, $shares, $sides;
+            if (str_contains($sql, 'x.houseid <> 0')) {
+                check(str_contains($sql, 'x.reversed = 0') && str_contains($sql, 'ORDER BY x.timeearned') && $params === [7],
+                    'The learner’s team in each month comes from their own standing awards, oldest first');
+                return $sides;
+            }
             $proof = str_contains($sql, "x.conditiontype = 'pass' OR cm.completiongradeitemnumber IS NOT NULL") &&
                 str_contains($sql, 'x.reversed = 0');
             if (str_contains($sql, 'GROUP BY x.userid, x.houseid')) {
@@ -78,6 +85,11 @@ namespace {
             }
             check($proof && $params === [7], 'Only the learner’s own, standing proof XP is read');
             return $awards;
+        }
+        public function get_records_menu(string $table, array $conditions, string $sort, string $fields): array {
+            global $cups;
+            check($table === 'local_ignite_cup' && $conditions === [] && $fields === 'earnmonth, totals', 'The published Cups are read');
+            return $cups;
         }
         public function get_field(string $table, string $field, array $conditions) {
             global $team;
@@ -104,6 +116,10 @@ namespace {
     }
     function share(int $userid, int $houseid, int $xp, int $latest): stdClass {
         return (object)['userid' => $userid, 'houseid' => $houseid, 'xp' => $xp, 'latest' => $latest];
+    }
+    function side(int $month, int $houseid): stdClass {
+        static $id = 0;
+        return (object)['id' => ++$id, 'earnmonth' => $month, 'houseid' => $houseid];
     }
     function award(int $month, int $xp, int $time): stdClass {
         static $id = 0;
@@ -273,8 +289,51 @@ namespace {
     $team = 11;
     $home = $teamed;
 
+    // The Campfire Cup: a team's place drops Embers for each member who added Team XP.
+    $cup = ['lanternlings' => 300, 'forgelings' => 500, 'candlelings' => 100];
+    check([fuse::prize($cup, 'forgelings'), fuse::prize($cup, 'lanternlings'), fuse::prize($cup, 'candlelings')] === [100, 50, 30],
+        'A Cup gives 100 Embers for 1st place, 50 for 2nd and 30 for 3rd');
+    $cup = ['lanternlings' => 300, 'forgelings' => 300, 'candlelings' => 100];
+    check([fuse::prize($cup, 'forgelings'), fuse::prize($cup, 'lanternlings'), fuse::prize($cup, 'candlelings')] === [100, 100, 30],
+        'Two teams tied for 1st both get 100, and the next team is 3rd');
+    $cup = ['lanternlings' => 100, 'forgelings' => 300, 'candlelings' => 100];
+    check(fuse::prize($cup, 'lanternlings') === 50 && fuse::prize($cup, 'candlelings') === 50, 'Two teams tied for 2nd both get 50');
+    check(fuse::prize(['lanternlings' => 0, 'forgelings' => 300, 'candlelings' => 0], 'candlelings') === 0 &&
+        fuse::prize($cup, '') === 0, 'A team with no Team XP, and a learner with no team, get nothing');
+    check(str_contains(get_string('home_prizes', 'local_ignite', (object)['first' => fuse::PLACES[1], 'second' => fuse::PLACES[2],
+        'third' => fuse::PLACES[3]]), '100 for 1st, 50 for 2nd, 30 for 3rd'), 'The Campfire page says what each place is worth');
+
+    // The fuse began last month. Its Cup is published: Lanternlings 1st, Forgelings 2nd, Candlelings 3rd.
+    $one = $period->modify('-1 month');
+    [$lastmonth, $before] = [(int)$one->format('Ym'), (int)$two->format('Ym')];
+    $config['fusegoals'] = json_encode([$lastmonth => 100]);
+    $cups = [$before => json_encode(['lanternlings' => 0, 'forgelings' => 80, 'candlelings' => 0]),
+        $lastmonth => json_encode(['lanternlings' => 300, 'forgelings' => 200, 'candlelings' => 100])];
+    $awards = [];
+    $sides = [side($before, 11), side($lastmonth, 12), side($lastmonth, 11)];
+    $cupped = fuse::current();
+    check($cupped['balance'] === 50, 'A member who added Team XP banks their team’s place: 50 Embers for 2nd, and nothing for a Cup from before the fuse');
+    check($cupped['cup'] === 'The Forgelings finished 2nd in ' . $one->format('F') . '’s Campfire Cup: +50 Embers for you.',
+        'Home says what last month’s Cup gave');
+    $sides = [side($lastmonth, 11), side($lastmonth, 12)];
+    check(fuse::current()['balance'] === 30, 'XP with two teams in a month counts with the team of the latest award');
+    $awards = [award($month, 20, $now)];
+    check(fuse::current()['balance'] === 50 && shop::data()['balance'] === 50, 'Cup Embers add to the Embers from bombs, in the Shop too');
+    $awards = [];
+    $sides = [side($before, 11)];
+    $quiet = fuse::current();
+    check($quiet['balance'] === 0 && $quiet['cup'] === '', 'A member who added no Team XP that month gets no Cup Embers');
+    // Two months in: the first month's Cup still counts, and is no longer news.
+    $config['fusegoals'] = json_encode([$before => 100]);
+    $cups = [$before => json_encode(['lanternlings' => 0, 'forgelings' => 80, 'candlelings' => 0])];
+    $older = fuse::current();
+    check($older['balance'] === 100 && $older['cup'] === '', 'Embers from an earlier Cup stay banked without being announced again');
+    $cups = [];
+    $sides = [];
+    $config['fusegoals'] = json_encode([$month => 100]);
+
     if (in_array('--json', $argv, true)) {
-        echo json_encode(['home' => $later, 'teamed' => $home, 'done' => $done, 'unlit' => $unlit, 'shop' => $shop, 'strings' => $string]);
+        echo json_encode(['home' => $later, 'teamed' => $home, 'cupped' => $cupped, 'done' => $done, 'unlit' => $unlit, 'shop' => $shop, 'strings' => $string]);
     }
     fwrite(STDERR, "All fuse and Shop checks passed\n");
 }

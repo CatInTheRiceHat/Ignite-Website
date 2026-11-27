@@ -133,6 +133,8 @@
 .camp-fires h2 { margin: 0; font: 400 clamp(1.5rem, 3vw, 2.1rem)/1.2 "Rammetto One", Poppins, sans-serif; }
 .camp-heat { margin: 0; line-height: 1.3; text-align: end; }
 .camp-heat strong { display: block; font: 700 1.3rem/1.2 Poppins, sans-serif; font-variant-numeric: tabular-nums; }
+/* What each place is worth when the Heat ends. */
+.camp-prizes { max-width: 62ch; margin: .6rem 0 0; color: #e9e4f5; }
 .camp-fires__list {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));

@@ -3,6 +3,7 @@
     A member's own Campfire page for the current month's Heat. Example context (json):
     {"code":"forgelings","name":"Forgelings","letters":10,"line":"The builders of Ignite.","teamxp":"412",
      "lit":true,"place":"1st","firesheading":"November’s fires","heatends":"The November Heat ends in",
+     "prizes":"When the Heat ends, your team’s place drops Embers for everyone who added Team XP: 100 for 1st, 50 for 2nd, 30 for 3rd.",
      "hasfeed":true,"feed":["A teammate set off their big bomb: +50 Team XP · 2 hours ago"],
      "timeleft":"5 days 2 hours","rolloverseconds":439200,"learnurl":"#","contribution":"You’ve added <b>36 Team XP</b>.",
      "fires":[{"code":"lanternlings","name":"Lanternlings","yours":false,"lit":true,"place":"3rd","xp":"148","size":"0.616"},
@@ -39,6 +40,7 @@
                 data-hour="{{#str}}home_hour, local_ignite{{/str}}" data-hours="{{#str}}home_hours, local_ignite{{/str}}"
                 data-minute="{{#str}}home_minute, local_ignite{{/str}}" data-minutes="{{#str}}home_minutes, local_ignite{{/str}}">{{timeleft}}</strong></p>
         </div>
+        {{#prizes}}<p class="camp-prizes">{{prizes}}</p>{{/prizes}}
         <ul class="camp-fires__list">
             {{#fires}}
             <li class="fire{{#yours}} fire--yours{{/yours}}" data-team="{{code}}" style="--size: {{size}};">

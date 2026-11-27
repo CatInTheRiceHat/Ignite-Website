@@ -4,12 +4,13 @@ const XP = 20; // XP for each graded activity.
 const DROPS = [20, 30, 50]; // Embers dropped by the first mini bomb, the second, and the big one.
 const BLAST = 150; // Bonus XP the big bomb blasts onto the learner's team.
 const GRADES = ['bronze', 'silver', 'gold'];
+const CUP = 50; // Embers each member who added Team XP gets when their team finishes 2nd in a month's Campfire Cup.
 const TEAMS = { forgelings: 'Forgelings', candlelings: 'Candlelings', lanternlings: 'Lanternlings', '': '' };
-// Earlier months: the Embers they banked, and the streak they left running.
+// Earlier months: the Embers their bombs banked, the streak they left running, and last month's Cup if there was one.
 const HISTORY = {
     first: { month: 'December', year: 2026, next: 'January', banked: 0, streak: 1, photo: '../../local/ignite/pix/badges/202612.jpg' },
     // March has no picture of its own yet, so its badge is the drawn star.
-    later: { month: 'March', year: 2027, next: 'April', banked: 150, streak: 3, photo: '' },
+    later: { month: 'March', year: 2027, next: 'April', banked: 150, streak: 3, photo: '', cup: 'February' },
 };
 const home = document.querySelector('.fuse-home');
 const controls = document.querySelector('.preview-controls');
@@ -31,10 +32,12 @@ function words() {
     const set = marks(state.goal);
     const burned = Math.min(state.xp, state.goal);
     const earned = set.filter(mark => state.xp >= mark).length;
-    const embers = past.banked + DROPS.slice(0, earned).reduce((sum, drop) => sum + drop, 0);
     const streak = state.history === 'later' || state.xp ? past.streak : 0;
     // A learner on a team is told what their big bomb adds to its fire.
     const team = TEAMS[state.team];
+    // Last month's Cup drops Embers for a learner whose team placed in it.
+    const cup = past.cup && team ? CUP : 0;
+    const embers = past.banked + cup + DROPS.slice(0, earned).reduce((sum, drop) => sum + drop, 0);
     const blast = BLAST;
     let [title, sub, go, next] = ['Your fuse is burning.',
         `${state.goal - burned} XP to the big bomb.`, 'Continue learning', 'Up next: Loops and lists quiz'];
@@ -60,6 +63,8 @@ function words() {
     text('go').textContent = go;
     text('next').textContent = next;
     text('summary').textContent = `${burned} of ${state.goal} XP burned this month`;
+    text('cup').textContent = cup ? `The ${team} finished 2nd in ${past.cup}’s Campfire Cup: +${cup} Embers for you.` : '';
+    text('cup').hidden = !cup;
     text('legend').textContent = `The mini bombs drop ${DROPS[0]} and ${DROPS[1]} Embers; the big bomb drops ${DROPS[2]}` +
         `${team ? ` and blasts +${blast} XP onto the ${team}’ fire` : ''}. ` +
         `Everyone’s fuse is the same length: ${state.goal} XP a month. Activities you pass or are graded on burn the fuse.`;

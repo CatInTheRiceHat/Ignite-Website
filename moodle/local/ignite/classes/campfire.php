@@ -162,6 +162,9 @@ final class campfire {
             'logs' => $image('logs'), 'teamxp' => $mine['total'],
             'lit' => $leader > 0, 'place' => $leader ? $place($mine) : '',
             'firesheading' => get_string('home_fires', 'local_ignite', $month),
+            // What each place is worth in Embers once the Heat ends.
+            'prizes' => access::enabled('fuse') ? get_string('home_prizes', 'local_ignite', (object)[
+                'first' => fuse::PLACES[1], 'second' => fuse::PLACES[2], 'third' => fuse::PLACES[3]]) : '',
             'heatends' => get_string('home_heatends', 'local_ignite', $month),
             'timeleft' => self::timeleft($standings['rolloverseconds']), 'rolloverseconds' => $standings['rolloverseconds'],
             'fires' => $fires, 'contribution' => $contribution, 'learnurl' => $standings['learnurl'],

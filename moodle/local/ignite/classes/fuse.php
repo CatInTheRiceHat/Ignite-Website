@@ -15,6 +15,8 @@ final class fuse {
     public const DROPS = [20, 30, 50];
     /** The grade a month's badge reaches with each bomb. */
     public const GRADES = ['bronze', 'silver', 'gold'];
+    /** Embers for a team's place in a month's Campfire Cup, given to each member who added Team XP to it. */
+    public const PLACES = [1 => 100, 2 => 50, 3 => 30];
 
     /** The XP at which each bomb goes off: the first award, about halfway, and the goal. */
     public static function marks(int $goal, int $award): array {
@@ -30,6 +32,11 @@ final class fuse {
 
     public static function embers(int $bombs): int {
         return array_sum(array_slice(self::DROPS, 0, $bombs));
+    }
+
+    /** The Embers a team's place in a month's published Cup gives its members. Teams that tie share the better place. */
+    public static function prize(array $totals, string $team): int {
+        return ($totals[$team] ?? 0) > 0 ? self::PLACES[campfire::ranks($totals)[$team]] ?? 0 : 0;
     }
 
     /** A whole-week number for a moment in Campfire time. Weeks run Monday to Sunday. */
@@ -177,6 +184,35 @@ final class fuse {
             }
         }
 
+        // Each published Cup since the fuse began pays the team's place to every member who added Team XP that month.
+        // Someone who earned XP with two teams in a month is counted with the team of their latest award.
+        $cups = array_filter($DB->get_records_menu('local_ignite_cup', [], '', 'earnmonth, totals'),
+            static fn($key): bool => $key >= $first && $key < $month, ARRAY_FILTER_USE_KEY);
+        $sides = [];
+        if ($cups) {
+            foreach ($DB->get_records_sql("SELECT x.id, x.earnmonth, x.houseid
+                  FROM {local_ignite_xp} x
+                 WHERE x.userid = ? AND x.reversed = 0 AND x.houseid <> 0
+              ORDER BY x.timeearned, x.id", [$userid]) as $earned) {
+                $sides[(int)$earned->earnmonth] = (int)$earned->houseid;
+            }
+        }
+        $codes = array_flip(campfire::ids());
+        $last = $period->modify('-1 month');
+        $cup = '';
+        foreach ($cups as $key => $totals) {
+            $code = $codes[$sides[$key] ?? 0] ?? '';
+            $totals = json_decode($totals, true);
+            $prize = self::prize($totals, $code);
+            $balance += $prize;
+            // Last month's Cup is news on Home for as long as this month lasts.
+            if ($prize && $key === (int)$last->format('Ym')) {
+                $cup = get_string('fuse_cup', 'local_ignite', (object)['team' => campfire::TEAMS[$code], 'embers' => $prize,
+                    'place' => get_string('home_rank' . campfire::ranks($totals)[$code], 'local_ignite'),
+                    'month' => userdate($last->getTimestamp(), '%B', campfire::TIMEZONE)]);
+            }
+        }
+
         $marks = self::marks($goals[$month], $award);
         $goal = $marks[2];
         $burned = min($xp[$month] ?? 0, $goal);
@@ -201,7 +237,7 @@ final class fuse {
             'team' => $team, 'blast' => self::blast($month)];
         $data = [
             'xp' => $burned, 'goal' => $goal, 'award' => $award, 'marks' => implode(',', $marks),
-            'drops' => implode(',', self::DROPS), 'key' => $userid . '-' . $month, 'balance' => $balance,
+            'drops' => implode(',', self::DROPS), 'key' => $userid . '-' . $month, 'balance' => $balance, 'cup' => $cup,
             'eyebrow' => get_string('fuse_eyebrow', 'local_ignite', (object)['month' => $monthname,
                 'left' => campfire::timeleft($period->modify('+1 month')->getTimestamp() - $now)]),
             'title' => get_string('fuse_title_' . $state, 'local_ignite'),
