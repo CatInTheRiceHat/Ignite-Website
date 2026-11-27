@@ -22,6 +22,10 @@ The managed Boost template override at `public/theme/boost/templates/block_myove
 
 Seasonal artwork comes from `public/backgrounds/Spring.jpg`, `Summer.jpg`, `Fall.jpg`, and `Winter.jpg`. Deployment publishes immutable copies under Moodle's `ignite-assets` directory and verifies their checksums before updating settings. Both authentication screens use **Europe/London** time, including British Summer Time: spring begins March 1, summer June 1, fall September 1, and winter December 1, each at 00:00. The page checks at minute boundaries and when a tab returns to view, so an open page can switch without a reload. Old image versions remain available for configuration restores. Without JavaScript, the existing fall artwork is the fallback.
 
+## Short addresses
+
+`/home`, `/courses`, `/campfire` and `/shop` are Apache rewrite rules, kept in `moodle/short-urls.conf` and installed on the server as `/etc/apache2/ignite-short-urls.conf`, which the HTTPS virtual host includes. A plain visit to the long address (`/my/`, `/course/index.php`, `/local/ignite/passport.php`, `/local/ignite/shop.php`) is redirected to the short one; anything with a query string keeps the long address. No Moodle code or setting depends on the rules, so removing the `Include` line and reloading Apache restores the long addresses. To change them, edit the file, copy it up, run `apachectl configtest`, then `systemctl reload apache2`.
+
 ## Site administration layout
 
 The live Boost theme uses two templates from `moodle/templates/` for the expandable settings directory. When replacing or upgrading Boost, copy `core/settings_link_page.mustache` and `ignite_admin_group.mustache` to the same relative paths under `public/theme/boost/templates/`, then run `php admin/cli/purge_caches.php --theme` as the web user. To restore the stock layout, remove those two overrides and purge the theme cache. These templates are deployed separately from `moodle:deploy`.
