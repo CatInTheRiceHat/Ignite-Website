@@ -61,6 +61,16 @@ namespace {
         return (new DateTimeImmutable('@' . $time))->setTimezone(new DateTimeZone($zone))
             ->format(['%b' => 'M', '%B' => 'F', '%B %Y' => 'F Y'][$format]);
     }
+    $staff = true; // Whether the signed-in account may configure the site.
+    function has_capability(string $capability, $context): bool {
+        global $staff;
+        return $capability === 'moodle/site:config' && $staff;
+    }
+    final class context_system {
+        public static function instance(): self {
+            return new self();
+        }
+    }
     final class moodle_url {
         public function __construct(private string $path) {
         }
@@ -231,6 +241,17 @@ namespace {
         $unlit['embers'] === '0 Embers' && $unlit['streak'] === 'No streak yet', 'A learner with no XP sees an unlit fuse');
     check($unlit['badge']['grade'] === 'none' && $unlit['badge']['gradelabel'] === 'Not earned yet' &&
         array_column($unlit['badge']['steps'], 'grade') === ['', '', ''], 'Before the first bomb the badge is not earned yet');
+
+    // Staff trying the fuse out from the view-as page, on the same 100 XP fuse with no real XP.
+    $SESSION = (object)['local_ignite_pretendxp' => 50];
+    $tried = fuse::current();
+    check($tried['xp'] === 50 && $tried['balance'] === 50 && $tried['badge']['grade'] === 'silver' && shop::data()['balance'] === 50,
+        'Staff pretending to have 50 XP see the fuse, badge and Embers that much XP gives, in the Shop too');
+    $staff = false;
+    check(fuse::current()['xp'] === 0, 'A pretend amount does nothing for an account that is not staff');
+    $staff = true;
+    $SESSION = null;
+    check(fuse::current()['xp'] === 0, 'Without a pretend amount the fuse shows real XP again');
 
     // The Shop, with 150 Embers saved.
     $config['fusegoals'] = json_encode([(int)$two->format('Ym') => 100]);

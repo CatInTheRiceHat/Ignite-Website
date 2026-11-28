@@ -133,6 +133,27 @@ final class fuse {
         return self::kept_for(self::kept('fuseblasts', 'fuseblast', self::DEFAULT_BLAST), $month);
     }
 
+    /**
+     * The XP a staff member is pretending to have earned this month, set on the view-as page, or null for their real XP.
+     * It lives in their own session only, so it ends when they log out. Anything that spends Embers must not count it.
+     */
+    public static function pretend(): ?int {
+        global $SESSION;
+        return isset($SESSION->local_ignite_pretendxp) && has_capability('moodle/site:config', \context_system::instance())
+            ? (int)$SESSION->local_ignite_pretendxp : null;
+    }
+
+    public static function set_pretend(?int $xp): void {
+        global $SESSION;
+        access::administrator();
+        require_sesskey();
+        if ($xp === null) {
+            unset($SESSION->local_ignite_pretendxp);
+        } else {
+            $SESSION->local_ignite_pretendxp = max(0, min(99999, $xp));
+        }
+    }
+
     /** The badge the Ignite block has handed on, to be shown at the end of the Dashboard. */
     public static array $handed = [];
 
@@ -174,6 +195,10 @@ final class fuse {
         foreach ($awards as $earned) {
             $xp[(int)$earned->earnmonth] = ($xp[(int)$earned->earnmonth] ?? 0) + (int)$earned->regularxp;
             $weeks[] = self::week((int)$earned->timeearned);
+        }
+        // Staff trying out the fuse see a pretend amount for this month. Nothing is saved and no team score moves.
+        if (($pretend = self::pretend()) !== null) {
+            $xp[$month] = $pretend;
         }
 
         // Every month since the fuse began has banked the Embers of the bombs set off in it.
