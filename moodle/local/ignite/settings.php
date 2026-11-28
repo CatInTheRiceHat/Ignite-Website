@@ -58,6 +58,9 @@ if ($hassiteconfig && has_capability('local/ignite:configure', context_system::i
     $ADMIN->add('localplugins', new admin_externalpage('local_ignite_houses',
         get_string('managehouses', 'local_ignite'), new moodle_url('/local/ignite/houses.php'),
         ['moodle/site:config', 'local/ignite:configure']));
+    $ADMIN->add('localplugins', new admin_externalpage('local_ignite_viewas',
+        get_string('viewas', 'local_ignite'), new moodle_url('/local/ignite/viewas.php'),
+        ['moodle/site:config', 'local/ignite:configure']));
 }
 
 if (!$hassiteconfig && has_capability('local/ignite:viewreport',context_system::instance())) {
