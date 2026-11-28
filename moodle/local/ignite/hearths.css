@@ -219,7 +219,8 @@
 .hearth-carousel .hearth-slide h3 {
     margin: 0 0 .45rem;
     color: inherit;
-    font: 700 clamp(1.5rem, 3vw, 2rem)/1.15 Poppins, sans-serif;
+    /* A team's name is display text: Rammetto One here, as on the team's own page. */
+    font: 400 clamp(1.5rem, 3vw, 2rem)/1.15 "Rammetto One", Poppins, sans-serif;
 }
 .hearth-slide__description p { margin: 0; color: inherit; line-height: 1.5; }
 .hearth-slide form { display: flex; justify-content: center; margin: 24px 0 0; }
@@ -258,7 +259,9 @@
     box-shadow: 0 4px 14px #15101b55;
 }
 .hearth-carousel--coverflow .hearth-carousel__controls button:enabled:hover { background: #15101be6; }
-.hearth-carousel :is(button, [tabindex]):focus-visible { outline: 3px solid #214f9b; outline-offset: 2px; }
+.hearth-carousel button:focus-visible { outline: 3px solid #214f9b; outline-offset: 2px; }
+/* The arrow keys put focus on the cards as a whole; the card in front already shows where you are, so it gets no ring. */
+.hearth-carousel .hearth-carousel__viewport:is(:focus, :focus-visible) { outline: 0; box-shadow: none; }
 @media (min-width: 601px) {
     /* Fit the landscape illustration while leaving room for the description and Join action. */
     .hearth-carousel { --hearth-width: clamp(46rem, calc(155svh - 18rem), 85rem); column-gap: .5rem; max-width: var(--hearth-width); }

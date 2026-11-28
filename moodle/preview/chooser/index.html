@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Campfire team picker preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Poppins:wght@600;700&family=Rammetto+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../local/ignite/campfire-page.css">
+    <link rel="stylesheet" href="../../local/ignite/hearths.css">
+    <style>
+        /* Stand-ins for what Moodle's theme gives the real page: its resets, body font and hidden-text helper. */
+        *, *::before, *::after { box-sizing: border-box; }
+        body { margin: 0; font-family: Nunito, system-ui, sans-serif; }
+        img { max-width: 100%; }
+        .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    </style>
+</head>
+<body class="ignite-campfire-page ignite-campfire-choosing">
+    <!-- The picker a learner without a team sees on Campfire, with the markup of templates/campfire_chooser.mustache. -->
+    <div id="page" class="drawers"><div class="main-inner"><div id="page-content"><div id="region-main">
+        <section class="campfire-chooser-screen" aria-labelledby="campfire-chooser-title">
+            <h1 id="campfire-chooser-title" class="visually-hidden">Who will you represent?</h1>
+            <div class="hearth-carousel" role="region" aria-label="Browse Hearths">
+                <div class="hearth-carousel__viewport" tabindex="0" role="group" aria-label="Browse Hearths"></div>
+                <div class="hearth-carousel__controls" hidden>
+                    <button type="button" data-step="-1" data-default="Previous Hearth">
+                        <span aria-hidden="true">←</span> <span class="hearth-carousel__label sr-only visually-hidden"></span>
+                    </button>
+                    <button type="button" data-step="1" data-default="Next Hearth">
+                        <span aria-hidden="true">→</span> <span class="hearth-carousel__label sr-only visually-hidden"></span>
+                    </button>
+                </div>
+                <span class="sr-only visually-hidden" role="status"></span>
+            </div>
+        </section>
+    </div></div></div></div>
+    <script>
+        // The three teams, in the order and with the words the plugin gives them (hearth_ui::preview_slides).
+        const teams = [
+            ['forgelings', 'Forgelings', 'Have an idea you want to try, even if you’re still figuring out how it works? Forgelings are the builders of Ignite. They take on challenges, test things out, and help each other make the next version better.'],
+            ['candlelings', 'Candlelings', 'Ever look up one question and end up reading about five more? Candlelings are the curious minds of Ignite. They trade discoveries, explore ideas together, and make room for anyone who wants to think out loud.'],
+            ['lanternlings', 'Lanternlings', 'Are you the one who waves someone over when they don’t know where to sit? Lanternlings bring people together. They start conversations, cheer each other on, and make it easier to try something new with a friend.'],
+        ];
+        const art = '../../local/ignite/pix/campfire/';
+        document.querySelector('.hearth-carousel__viewport').innerHTML = teams.map(([team, name, description]) => `
+            <article class="hearth-slide hearth-slide--${team}" aria-labelledby="hearth-preview-${team}"
+                    data-previous="Previous: ${name}" data-next="Next: ${name}">
+                <div class="hearth-slide__content">
+                    <div class="hearth-slide__top-border">
+                        <img class="hearth-slide__crest hearth-slide__crest--top" src="${art}${team}-top.png" alt="">
+                        <img class="hearth-slide__medal" src="${art}${team}-medal.png" alt="" width="384" height="384">
+                    </div>
+                    <img class="hearth-slide__illustration" src="${art}${team}.jpg" alt="" width="640" height="357"
+                         srcset="${art}${team}.jpg 640w, ${art}${team}-large.jpg 1920w" sizes="(max-width: 600px) calc(91vw - 5rem), min(90vw, 120svh, 70rem)">
+                    <img class="hearth-slide__crest hearth-slide__crest--bottom" src="${art}${team}-bottom.png" alt="">
+                    <div class="hearth-slide__description">
+                        <h3 id="hearth-preview-${team}">${name}</h3>
+                        <p>${description}</p>
+                    </div>
+                    <form onsubmit="return false">
+                        <button type="submit" class="hearth-slide__join">Join ${name}</button>
+                    </form>
+                </div>
+            </article>`).join('');
+    </script>
+    <script src="../../local/ignite/hearth-carousel.js"></script>
+</body>
+</html>

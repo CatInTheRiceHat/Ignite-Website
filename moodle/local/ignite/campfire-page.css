@@ -20,7 +20,7 @@
 .ignite-campfire-choosing #page-header { display: none; }
 .campfire-chooser-screen {
     padding: clamp(1rem, 3vw, 2rem);
-    font: 16px/1.5 system-ui, sans-serif;
+    font: 400 1rem/1.5 Nunito, system-ui, sans-serif;
 }
 .campfire-chooser-screen .hearth-carousel {
     /* Keep the card centered below the Moodle navigation. */

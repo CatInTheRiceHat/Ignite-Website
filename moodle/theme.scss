@@ -80,6 +80,15 @@ body.pagelayout-incourse {
     font-weight: 700;
 }
 
+// Every page title is Rammetto One; the headings under it stay Poppins and everything else Nunito.
+// Moodle gives its page title a size class (h1.h2), so the second selector is needed to outrank that class's Poppins.
+h1,
+h1[class] {
+    font-family: "Rammetto One", "Poppins", sans-serif;
+    font-weight: 400;
+    letter-spacing: -.025em;
+}
+
 // Limit larger visual changes to the learner landing screens.
 #page-site-index,
 #page-my-index,
